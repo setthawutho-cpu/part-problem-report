@@ -88,11 +88,49 @@ textarea{
     font-weight:bold;
 }
 
-.result{
-    background:#9acd32;
-    padding:5px;
+.inspection-box{
+    background:#b7c7d8;
+    border:1px solid #999;
     margin-top:10px;
+}
+
+.result{
+    background:#95c11f;
+    padding:8px;
     font-weight:bold;
+    font-size:18px;
+}
+
+.inspection-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+}
+
+.inspection-grid > div{
+    padding:0;
+}
+
+.inspection-grid label{
+    display:block;
+    padding:3px;
+    font-weight:normal;
+}
+
+.inspection-grid input,
+.inspection-grid select{
+    width:100%;
+    height:42px;
+    font-size:18px;
+    margin:0;
+}
+
+.total-ng-box{
+    padding:5px;
+}
+
+.total-ng-box input{
+    width:35%;
+    height:40px;
 }
 
 button{
@@ -125,6 +163,13 @@ button{
     padding:10px;
     border:1px solid #ccc;
     white-space:pre-wrap;
+
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    overflow-x:hidden;
 }
 
 </style>
@@ -210,21 +255,56 @@ button{
 <option>Wait Rework</option>
 </select>
 
-<div class="result">
-📊 INSPECTION RESULT
+<div class="inspection-box">
+
+    <div class="result">
+        📊 INSPECTION RESULT
+    </div>
+
+    <div class="inspection-grid">
+
+        <div>
+            <label>SKC-A MFG พบ NG</label>
+            <input type="number" id="skcaNg" value="0">
+        </div>
+
+        <div>
+            <label>Part NG</label>
+            <select id="partNg">
+                <option>Rework</option>
+                <option>Reject</option>
+                <option>Defect</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Qty</label>
+            <input type="number" id="partNgQty" value="0">
+        </div>
+
+        <div>
+            <label>Check Stock</label>
+            <input type="number" id="stockNg" value="0">
+        </div>
+
+        <div>
+            <label>OK Qty</label>
+            <input type="number" id="okQty" value="0">
+        </div>
+
+        <div>
+            <label>NG Qty</label>
+            <input type="number" id="ngQty" value="0">
+        </div>
+
+    </div>
+
+    <div class="total-ng-box">
+        <label><b>Total NG</b></label>
+        <input type="number" id="totalNg" value="0" readonly>
+    </div>
+
 </div>
-
-<label>SKC-A MFG พบ NG</label>
-<input type="number" id="skcaNg" value="0">
-
-<label>Check Stock</label>
-<input type="number" id="stockNg" value="0">
-
-<label>OK Qty</label>
-<input type="number" id="okQty" value="0">
-
-<label>NG Qty</label>
-<input type="number" id="ngQty" value="0">
 
 <button class="review" onclick="reviewReport()">
 🔍 Review Report
@@ -350,7 +430,6 @@ function reviewReport(){
 ⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec" : "-"}
 
 🔴 Problem
-
 ${problem.value}
 
 🔍 Detail
@@ -362,9 +441,8 @@ ${detail.value}
 📋 Result : ${reworkResult.value}
 ━━━━━━━━━━━━━━
 📊 INSPECTION RESULT
-
 • Line พบ NG : ${skca} Pcs.
-• Part NG Rework : ${rework.value || 0} Pcs.
+• Part NG (${partNg.value}) : ${partNgQty.value} Pcs.
 • ผลการ Rework : ${reworkResult.value}
 
 • Check Stock SKC : ${stock} Pcs.
