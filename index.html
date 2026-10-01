@@ -173,9 +173,9 @@ button{
 }
 
 #reworkResult{
-    width:50%;
+    width:60%;
     height:42px;
-    font-size:16px;
+    font-size:18px;
     box-sizing:border-box;
 }
 
@@ -184,6 +184,48 @@ select,
 textarea,
 button{
     border-radius:0 !important;
+}
+
+label,
+.inspection-grid label{
+    font-size:16px !important;
+    font-weight:400;
+}
+
+#date,
+#type,
+#document,
+#reworkResult,
+#partNg{
+    background:#ffffff !important;
+    background-color:#ffffff !important;
+    color:#000000 !important;
+    opacity:1 !important;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    border:1px solid #999;
+}
+
+#skcaNg,
+#partNgQty,
+#stockNg,
+#okQty,
+#ngQty,
+#totalNg,
+#partNg{
+    font-size:18px !important;
+}
+``
+
+@media (max-width:500px){
+
+    label,
+    .inspection-grid label{
+        font-size:15px !important;
+    }
+
 }
 
 @media (max-width:500px){
@@ -281,9 +323,11 @@ button{
 <label>Result</label>
 <select id="reworkResult">
 <option>-</option>
-<option>OK</option>
-<option>NG</option>
+<option>Rework OK</option>
 <option>Wait Rework</option>
+<option>เปลี่ยนชิ้นงานใน Stock</option>
+<option>Reject</option>
+<option>Defect</option>
 </select>
 
 <div class="inspection-box">
@@ -302,6 +346,7 @@ button{
         <div>
             <label>Part NG</label>
             <select id="partNg">
+                <option> </option>
                 <option>Rework</option>
                 <option>Reject</option>
                 <option>Defect</option>
@@ -434,6 +479,38 @@ document
 
 });
 
+function calculateNG(){
+
+    let lineNg =
+    Number(document.getElementById("skcaNg").value || 0);
+
+    let stock =
+    Number(document.getElementById("stockNg").value || 0);
+
+    let ok =
+    Number(document.getElementById("okQty").value || 0);
+
+    let partQty =
+    Number(document.getElementById("partNgQty").value || 0);
+
+    let partType =
+    document.getElementById("partNg").value;
+
+    let ngQty = stock - ok;
+
+    if(ngQty < 0) ngQty = 0;
+
+    document.getElementById("ngQty").value = ngQty;
+
+    let total = ngQty;
+
+if(partType === "Reject" || partType === "Defect"){
+    total += partQty;
+}
+
+    document.getElementById("totalNg").value = total;
+}
+
 function reviewReport(){
 
     let skca =
@@ -446,7 +523,14 @@ function reviewReport(){
     Number(document.getElementById("ngQty").value || 0);
 
     let totalNg =
-    skca + stock + ng;
+    document.getElementById("totalNg").value;
+
+const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
+const stockUnit = stock == 1 ? "Pc." : "Pcs.";
+const okUnit = okQty.value == 1 ? "Pc." : "Pcs.";
+const ngUnit = ng == 1 ? "Pc." : "Pcs.";
+const partUnit = partNgQty.value == 1 ? "Pc." : "Pcs.";
+const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 
     let text = `🚨 PARTS PROBLEM REPORT 🚨
 🗓️ Date : ${date.value.split("-").reverse().join("-")}
@@ -472,15 +556,15 @@ ${detail.value}
 📋 Result : ${reworkResult.value}
 ━━━━━━━━━━━━━━
 📊 INSPECTION RESULT
-• Line พบ NG : ${skca} Pcs.
-• Part NG (${partNg.value}) : ${partNgQty.value} Pcs.
+• SKC-A MFG พบ NG : ${skca} ${skcaUnit}
+• Part NG (${partNg.value}) : ${partNgQty.value} ${partUnit}
 • ผลการ Rework : ${reworkResult.value}
 
-• Check Stock SKC : ${stock} Pcs.
-• OK : ${okQty.value} Pc.
-• NG : ${ngQty.value} Pcs.
-
-➡️ Total NG : ${totalNg} Pcs.
+• Check Stock SKC : ${stock} ${stockUnit}
+• OK : ${okQty.value} ${okUnit}
+• NG : ${ng} ${ngUnit}
+ 
+➡️ Total NG : ${totalNg} ${totalUnit}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
@@ -501,11 +585,19 @@ document
 .querySelectorAll("input,select,textarea")
 .forEach(el => {
 
-    el.addEventListener("input", reviewReport);
-    el.addEventListener("change", reviewReport);
+    el.addEventListener("input", () => {
+        calculateNG();
+        reviewReport();
+    });
+
+    el.addEventListener("change", () => {
+        calculateNG();
+        reviewReport();
+    });
 
 });
 
+calculateNG();
 reviewReport();
 
 
