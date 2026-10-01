@@ -172,6 +172,37 @@ button{
     overflow-x:hidden;
 }
 
+#reworkResult{
+    width:50%;
+    height:42px;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+input,
+select,
+textarea,
+button{
+    border-radius:0 !important;
+}
+
+@media (max-width:500px){
+
+    .inspection-grid{
+        grid-template-columns:45% 30% 25%;
+    }
+
+    .inspection-grid label{
+        font-size:12px;
+    }
+
+    .inspection-grid input,
+    .inspection-grid select{
+        font-size:14px;
+    }
+
+}
+
 </style>
 
 </head>
