@@ -183,7 +183,7 @@ button{
         <label>Line Stop</label>
         <div class="line-stop-box">
             <input type="number" id="linestop">
-            <span>Sec</span>
+            <span>sec</span>
         </div>
     </div>
 
@@ -264,8 +264,8 @@ async function loadExcel(){
     rows.forEach(row=>{
 
         const partNo = String(
-            row.PartNo || ""
-        ).trim();
+    row.PartNo || ""
+).trim().substring(0,10);
 
         if(partNo){
 
@@ -300,7 +300,7 @@ document
 .addEventListener("input",function(){
 
     const partNo =
-    this.value.trim();
+    this.value.trim().substring(0,10);
 
     if(partMaster[partNo]){
 
@@ -347,7 +347,7 @@ function reviewReport(){
 🏭 Supplier : ${supplier.value}
 🔢 Unit No. : ${unitno.value}
 📄 Document : ${document.getElementById("document").value}
-⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec." : "-"}
+⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec" : "-"}
 
 🔴 Problem
 
