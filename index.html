@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PART PROBLEM REPORT</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:5px;
+    background:#dfeaf3;
+    font-family:'Segoe UI',sans-serif;
+    font-size:12px;
+}
+
+.container{
+    width:100%;
+    max-width:420px;
+    margin:auto;
+    background:#c7d9ea;
+    padding:10px;
+    box-sizing:border-box;
+textarea{
+    border:1px solid #4f8fd1;
+    padding:2px;
+    font-size:12px;
+    box-sizing:border-box;
+}
+
+input[type=text]{
+    width:105px;
+}
+
+input[type=number]{
+    width:45px;
+}
+
+input[type=date]{
+    width:95px;
+}
+
+textarea{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.section{
+    background:#f6c000;
+    padding:4px;
+    font-weight:bold;
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+.result-title{
+    background:#9acd32;
+    padding:4px;
+    font-weight:bold;
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+.review-btn{
+    background:#198cff;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.submit-btn{
+    width:100%;
+    background:#e91e63;
+    color:white;
+    border:none;
+    padding:8px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.copy-btn{
+    width:100%;
+    background:#9c27b0;
+    color:white;
+    border:none;
+    padding:8px;
+    font-weight:bold;
+    margin-top:5px;
+    cursor:pointer;
+}
+
+.report{
+    background:white;
+    margin-top:10px;
+    padding:8px;
+    border:1px solid #ccc;
+
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+#preview{
+    display:none;
+    width:100%;
+    margin-top:5px;
+    border:1px solid #ccc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+🚨 PART PROBLEM REPORT 🚨
+</div>
+
+<div class="row">
+<label>Date :</label>
+<input type="date" id="date">
+
+<label>Type :</label>
+<select id="type">
+<option>New</option>
+<option>Repeat</option>
+</select>
+</div>
+
+<div class="row">
+    <label>Part No.:</label>
+    <input type="text" id="partno">
+</div>
+
+<div class="row">
+<label>Part Name :</label>
+<input type="text" id="partname" readonly>
+</div>
+
+<div class="row">
+<label>Model :</label>
+<input type="text" id="model" readonly>
+</div>
+
+<div class="row">
+<label>Supplier :</label>
+<input type="text" id="supplier" readonly>
+</div>
+
+<div class="row">
+    <label>Unit No.:</label>
+    <input type="text" id="unitno">
+
+    <label style="width:70px">Line Stop:</label>
+    <input type="number" id="linestop">
+</div>
+
+<div class="row">
+<label>Document :</label>
+<select id="document">
+<option>-</option>
+<option>Drawing</option>
+<option>Spec</option>
+<option>Photo</option>
+</select>
+</div>
+
+<div class="row-column">
+    <label>🔴 Problem :</label>
+    <textarea id="problem"></textarea>
+</div>
+
+<div class="row-column">
+    <label>🔍 Detail :</label>
+    <textarea id="detail"></textarea>
+</div>
+
+<div class="section">
+🟡 CONTAINMENT ACTION
+</div>
+
+<div class="row">
+<label>Rework :</label>
+<input type="number" id="rework" min="0">
+
+<label>Result :</label>
+<select id="reworkResult">
+<option>-</option>
+<option>OK</option>
+<option>NG</option>
+<option>Wait Rework</option>
+</select>
+</div>
+
+<div class="row">
+<label>SKCA NG :</label>
+<select id="skcaNg"></select>
+
+<select id="skcaResult">
+<option>-</option>
+<option>OK</option>
+<option>NG</option>
+</select>
+</div>
+
+<div class="result-title">
+📊 INSPECTION RESULT
+</div>
+
+<div class="row">
+<label>Check Stock :</label>
+
+<select id="stockNg"></select>
+</div>
+
+<div class="row">
+✅ OK :
+<select id="okQty"></select>
+
+❌ NG :
+<select id="ngQty"></select>
+</div>
+
+<div class="row">
+<label>Photo :</label>
+<input type="file" id="photo" accept="image/*">
+</div>
+
+<img id="preview">
+
+<button class="review-btn" onclick="reviewReport()">
+🔍 Review Report
+</button>
+
+<button class="submit-btn" onclick="reviewReport()">
+📤 Submit
+</button>
+
+<button class="copy-btn" onclick="copyReport()">
+📋 Copy Report
+</button>
+
+<div id="report" class="report"></div>
+
+</div>
+
+<script src="partMaster.js"></script>
+
+<script>
+
+function fillDropdown(id){
+
+    let html = "";
+
+    for(let i=0;i<=100;i++){
+
+        html += `<option value="${i}">${i}</option>`;
+
+    }
+
+    document.getElementById(id).innerHTML = html;
+}
+
+fillDropdown("skcaNg");
+fillDropdown("stockNg");
+fillDropdown("okQty");
+fillDropdown("ngQty");
+
+document.getElementById("date").value =
+new Date().toISOString().split("T")[0];
+
+document.getElementById("partno")
+.addEventListener("input",function(){
+
+    const partNo = this.value.trim().toUpperCase();
+
+    if(typeof partMaster !== "undefined" && partMaster[partNo]){
+
+        document.getElementById("partname").value =
+        partMaster[partNo].partName || "";
+
+        document.getElementById("supplier").value =
+        partMaster[partNo].supplier || "";
+
+        document.getElementById("model").value =
+        partMaster[partNo].model || "";
+
+    }else{
+
+        document.getElementById("partname").value = "";
+        document.getElementById("supplier").value = "";
+        document.getElementById("model").value = "";
+    }
+
+    reviewReport();
+
+});
+
+function reviewReport(){
+
+    let skca =
+    Number(document.getElementById("skcaNg").value || 0);
+
+    let stock =
+    Number(document.getElementById("stockNg").value || 0);
+
+    let ng =
+    Number(document.getElementById("ngQty").value || 0);
+
+    let totalNg =
+    skca + stock + ng;
+
+    let text = `
+🚨 PARTS PROBLEM REPORT 🚨
+
+📅 Date : ${document.getElementById("date").value}
+🏷️ Type : ${document.getElementById("type").value}
+
+📦 Part No. : ${document.getElementById("partno").value}
+📋 Part Name : ${document.getElementById("partname").value}
+🚜 Model : ${document.getElementById("model").value}
+🔢 Unit No. : ${document.getElementById("unitno").value}
+🏭 Supplier : ${document.getElementById("supplier").value}
+📄 เอกสาร : ${document.getElementById("document").value}
+⏱️ Line Stop : ${document.getElementById("linestop").value || "-"}
+━━━━━━━━━━━━━━
+
+🔴 PROBLEM
+
+${document.getElementById("problem").value}
+
+━━━━━━━━━━━━━━
+🔍 DEFECT DETAIL
+
+${document.getElementById("detail").value}
+━━━━━━━━━━━━━━
+🟡 CONTAINMENT ACTION
+✅ Rework : ${document.getElementById("rework").value}
+📋 Result : ${document.getElementById("reworkResult").value}
+━━━━━━━━━━━━━━
+📊 INSPECTION RESULT
+• Line พบ NG : ${skca} Pcs.
+• Part NG Rework : ${document.getElementById("rework").value || 0} Pcs.
+• ผลการ Rework : ${document.getElementById("reworkResult").value}
+
+• Check Stock SKC : ${stock} Pcs.
+• OK : ${document.getElementById("okQty").value} Pc.
+• NG : ${document.getElementById("ngQty").value} Pcs.
+➡️ Total NG : ${totalNg} Pcs.
+${document.getElementById("reworkResult").value === "OK"
+? "✅ Rework OK ทั้งหมด\n🟢 Mark บ่งชี้สีเขียว"
+: ""}
+━━━━━━━━━━━━━━
+🔵 ACTION REQUEST
+Supplier : ${document.getElementById("supplier").value}
+
+□ ตรวจสอบ Stock คงเหลือทั้งหมด
+□ แจ้งจำนวน OK / NG
+□ แนบรูป Mark Check
+□ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+□ ขยายผลไปยัง Spare Part (ถ้ามี)
+━━━━━━━━━━━━━━
+👤 Reporter : Diesel
+📷 Photo : Attached
+`;
+
+    document.getElementById("report").innerHTML =
+    text.replace(/\n/g,"<br>");
+}
+
+function copyReport(){
+
+    navigator.clipboard.writeText(
+        document.getElementById("report").innerText
+    );
+
+    alert("Copied");
+}
+
+document.getElementById("photo")
+.addEventListener("change",function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        document.getElementById("preview").src =
+        e.target.result;
+
+        document.getElementById("preview").style.display =
+        "block";
+    };
+
+    reader.readAsDataURL(file);
+});
+
+document
+.querySelectorAll("input,select,textarea")
+.forEach(el=>{
+
+    el.addEventListener("input",reviewReport);
+    el.addEventListener("change",reviewReport);
+
+});
+
+reviewReport();
+
+</script>
+
+</body>
+</html>
