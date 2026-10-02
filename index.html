@@ -663,25 +663,24 @@ function copyReport(){
     const text =
     document.getElementById("report").innerText;
 
-    navigator.clipboard.writeText(text)
-    .then(() => {
-        alert("📋 Copy Report สำเร็จ");
-    })
-    .catch(() => {
+    const temp =
+    document.createElement("textarea");
 
-        const textarea =
-        document.createElement("textarea");
+    temp.value = text;
 
-        textarea.value = text;
-        document.body.appendChild(textarea);
+    document.body.appendChild(temp);
 
-        textarea.select();
-        document.execCommand("copy");
+    temp.select();
+    temp.setSelectionRange(
+        0,
+        99999
+    );
 
-        document.body.removeChild(textarea);
+    document.execCommand("copy");
 
-        alert("📋 Copy Report สำเร็จ");
-    });
+    document.body.removeChild(temp);
+
+    alert("📋 Copy Report สำเร็จ");
 
 }
 
