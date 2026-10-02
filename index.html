@@ -9,6 +9,16 @@
 
 <style>
 
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
 body{
     margin:0;
     padding:10px;
@@ -217,7 +227,11 @@ label,
 #partNg{
     font-size:18px !important;
 }
-``
+
+.line{
+    background:#06C755;
+    color:white;
+}
 
 @media (max-width:500px){
 
@@ -390,6 +404,10 @@ label,
 📋 Copy Report
 </button>
 
+<button class="line" onclick="sendLine()">
+📤 Send LINE
+</button>
+
 <div id="report" class="report"></div>
 
 </div>
@@ -548,7 +566,6 @@ const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 ${problem.value}
 
 🔍 Detail
-
 ${detail.value}
 ━━━━━━━━━━━━━━
 🟡 CONTAINMENT ACTION
@@ -579,7 +596,7 @@ Supplier : ${supplier.value}
 📷 Photo : Attached
 `;
 
-    document.getElementById("report").innerText = text;
+    document.getElementById("report").innerText = text.trim();
 }
 document
 .querySelectorAll("input,select,textarea")
@@ -600,6 +617,18 @@ document
 calculateNG();
 reviewReport();
 
+function sendLine(){
+
+    const text =
+    document.getElementById("report").innerText;
+
+    const lineUrl =
+    "https://line.me/R/share?text=" +
+    encodeURIComponent(text);
+
+    window.open(lineUrl,"_blank");
+
+}
 
 </script>
 
