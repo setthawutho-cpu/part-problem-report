@@ -570,7 +570,17 @@ if(partType === "Reject" || partType === "Defect"){
     document.getElementById("totalNg").value = total;
 }
 
+let reportVisible = false;
+
 function reviewReport(){
+
+    if(reportVisible){
+        document.getElementById("report").style.display = "none";
+        reportVisible = false;
+        return;
+    }
+
+    reportVisible = true;
 
     let skca =
     Number(document.getElementById("skcaNg").value || 0);
@@ -637,26 +647,26 @@ Supplier : ${supplier.value}
 📷 Photo : Attached
 `;
 
-    document.getElementById("report").innerText = text.trim();
+    document.getElementById("report").style.display = "block";
+document.getElementById("report").innerText = text.trim();
 }
 document
 .querySelectorAll("input,select,textarea")
 .forEach(el => {
 
     el.addEventListener("input", () => {
-        calculateNG();
-        reviewReport();
-    });
+    calculateNG();
+});
 
-    el.addEventListener("change", () => {
-        calculateNG();
-        reviewReport();
-    });
+el.addEventListener("change", () => {
+    calculateNG();
+});
 
 });
 
 calculateNG();
-reviewReport();
+
+document.getElementById("report").style.display = "none";
 
 function copyReport(){
 
