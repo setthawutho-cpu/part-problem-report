@@ -405,7 +405,7 @@ label,
 
     <select id="reworkResult" style="flex:1;">
         <option>-</option>
-        <option>Rework OK</option>
+        <option>OK</option>
         <option>Wait Rework</option>
         <option>เปลี่ยนชิ้นงานใน Stock</option>
         <option>Reject</option>
@@ -657,6 +657,33 @@ document
 
 calculateNG();
 reviewReport();
+
+function copyReport(){
+
+    const text =
+    document.getElementById("report").innerText;
+
+    navigator.clipboard.writeText(text)
+    .then(() => {
+        alert("📋 Copy Report สำเร็จ");
+    })
+    .catch(() => {
+
+        const textarea =
+        document.createElement("textarea");
+
+        textarea.value = text;
+        document.body.appendChild(textarea);
+
+        textarea.select();
+        document.execCommand("copy");
+
+        document.body.removeChild(textarea);
+
+        alert("📋 Copy Report สำเร็จ");
+    });
+
+}
 
 function sendLine(){
 
