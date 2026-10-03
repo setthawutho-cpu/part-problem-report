@@ -253,6 +253,95 @@ label,
     padding:0;
 }
 
+.total-ng-box{
+    padding:5px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.total-ng-box input[type="radio"]{
+    display:none;
+}
+
+.green,
+.yellow,
+.pink,
+.blue,
+.white{
+    display:inline-block;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:3px solid;
+    cursor:pointer;
+}
+
+.green{
+    border-color:#22aa44;
+}
+
+.yellow{
+    border-color:#ffe600;
+}
+
+.pink{
+    border-color:#ff9db6;
+}
+
+.blue{
+    border-color:#0000FF;
+}
+
+.white{
+    border-color:#ffffff;
+    background:#d9d9d9;
+}
+
+input[name="okmark"]:checked + .green{
+    background:#22aa44;
+}
+
+input[name="okmark"]:checked + .yellow{
+    background:#ffe600;
+}
+
+input[name="okmark"]:checked + .pink{
+    background:#ff9db6;
+}
+
+input[name="okmark"]:checked + .blue{
+    background:#0000FF;
+}
+
+input[name="okmark"]:checked + .white{
+    background:#ffffff;
+}
+
+@media (max-width:500px){
+
+    .total-ng-box{
+        gap:4px;
+    }
+
+    .okmark-label{
+        font-size:14px;
+                margin-left:10px;
+    }
+
+    .green,
+    .yellow,
+    .pink,
+    .blue,
+    .white{
+        width:16px;
+        height:16px;
+        border-width:2px;
+    }
+
+}
+
 @media (max-width:500px){
 
     .inspection-grid{
@@ -442,9 +531,23 @@ label,
     </div>
 
     <div class="total-ng-box">
-        <label><b>Total NG</b></label>
-        <input type="number" id="totalNg" value="0" readonly>
-    </div>
+
+    <label><b>Total NG</b></label>
+    <input type="number" id="totalNg" value="0" readonly>
+
+    <span class="okmark-label"><b>OK Mark</b></span>
+
+    <label><input type="radio" name="okmark" value="Green"> <span class="green"></span></label>
+
+    <label><input type="radio" name="okmark" value="Yellow"> <span class="yellow"></span></label>
+
+    <label><input type="radio" name="okmark" value="Pink"> <span class="pink"></span></label>
+
+    <label><input type="radio" name="okmark" value="Blue"> <span class="blue"></span></label>
+
+    <label><input type="radio" name="okmark" value="White"> <span class="white"></span></label>
+
+</div>
 
 </div>
 
@@ -604,6 +707,10 @@ function reviewReport(){
 
     let totalNg =
     document.getElementById("totalNg").value;
+const okMark =
+document.querySelector(
+'input[name="okmark"]:checked'
+)?.value || "-";
 
 const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
 const stockUnit = stock == 1 ? "Pc." : "Pcs.";
@@ -644,6 +751,7 @@ ${detail.value}
 • NG : ${ng} ${ngUnit}
  
 ➡️ Total NG : ${totalNg} ${totalUnit}
+🏷️ OK Mark : ${okMark}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
