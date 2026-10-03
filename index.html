@@ -697,13 +697,16 @@ function copyReport(){
 function sendLine(){
 
     const text =
-    document.getElementById("report").innerText;
+    document.getElementById("report").innerText.trim();
 
-    const lineUrl =
+    if(!text){
+        alert("กรุณากด Review Report ก่อน");
+        return;
+    }
+
+    location.href =
     "https://line.me/R/share?text=" +
     encodeURIComponent(text);
-
-    window.open(lineUrl,"_blank");
 
 }
 
