@@ -317,8 +317,19 @@ label,
 <label>Part Name</label>
 <input type="text" id="partname" readonly>
 
-<label>Model</label>
-<input type="text" id="model" readonly>
+<div style="display:flex; gap:6px;">
+
+    <div style="flex:1;">
+        <label>Model</label>
+        <input type="text" id="model" readonly>
+    </div>
+
+    <div style="flex:1;">
+        <label>Model Manual</label>
+        <input type="text" id="modelManual">
+    </div>
+
+</div>
 
 <label>Supplier</label>
 <input type="text" id="supplier" readonly>
@@ -607,7 +618,7 @@ const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 
 📦 Part No. : ${partno.value}
 📋 Part Name : ${partname.value}
-🚜 Model : ${model.value}
+🚜 Model : ${modelManual.value || model.value || "-"}
 🏭 Supplier : ${supplier.value}
 🔢 Unit No. : ${unitno.value}
 📄 Document : ${document.getElementById("document").value}
@@ -637,13 +648,12 @@ ${detail.value}
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
 
-□ ตรวจสอบ Stock คงเหลือทั้งหมด
-□ แจ้งจำนวน OK / NG
-□ แนบรูป Mark Check
-□ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
-□ ขยายผลไปยัง Spare Part (ถ้ามี)
+✅ ตรวจสอบ Stock คงเหลือทั้งหมด
+✅ แจ้งจำนวน OK / NG
+✅ แนบรูป Mark Check
+✅ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+✅ ขยายผลไปยัง Spare Part (ถ้ามี)
 ━━━━━━━━━━━━━━
-👤 Reporter : Diesel
 📷 Photo : Attached
 `;
 
@@ -690,7 +700,31 @@ function copyReport(){
 
     document.body.removeChild(temp);
 
-    alert("📋 Copy Report สำเร็จ");
+    const msg = document.createElement("div");
+
+msg.innerHTML = "📋 Copy Report สำเร็จ";
+
+msg.style.cssText = `
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#333;
+color:#fff;
+padding:15px 25px;
+border-radius:10px;
+z-index:9999;
+font-size:16px;
+text-align:center;
+white-space:nowrap;
+box-shadow:0 4px 12px rgba(0,0,0,0.3);
+`;
+
+document.body.appendChild(msg);
+
+setTimeout(()=>{
+    msg.remove();
+},2000);
 
 }
 
