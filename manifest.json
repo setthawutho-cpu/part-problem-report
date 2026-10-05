@@ -1,6 +1,6 @@
 {
   "name": "Inspection Part",
-  "short_name": "Inspect",
+  "short_name": "Inspection",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#dfeaf3",
