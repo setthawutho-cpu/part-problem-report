@@ -475,12 +475,12 @@ input[name="okmark"]:checked + .white{
 <div class="row-info">
 
     <div>
-        <label>Unit No.</label>
+        <label>Serial Number</label>
         <input type="text" id="unitno">
     </div>
 
     <div>
-        <label>Document</label>
+        <label>Issue Doc</label>
         <select id="document">
             <option>-</option>
             <option>UAR</option>
@@ -898,8 +898,8 @@ const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 📋 Part Name : ${partname.value}
 🚜 Model : ${model.value || "-"}
 🏭 Supplier : ${supplier.value}
-🔢 Unit No. : ${unitno.value}
-📄 Document : ${document.getElementById("document").value}
+🔢 Serial Number : ${unitno.value}
+📄 Issue Doc : ${document.getElementById("document").value}
 ⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec" : "-"}
 
 🔴 Problem
