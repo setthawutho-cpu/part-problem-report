@@ -1,6 +1,6 @@
 {
-  "name": "PART PROBLEM REPORT",
-  "short_name": "PART REPORT",
+  "name": "Inspection Part",
+  "short_name": "Inspection",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#dfeaf3",
