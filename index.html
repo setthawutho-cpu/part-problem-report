@@ -1248,10 +1248,41 @@ window.addEventListener("pageshow", () => {
 
     if(!std) return;
 
-    document.getElementById("problem").value +=
-    " " + std;
+    const fieldId =
+    localStorage.getItem("activeFieldId");
+
+    if(fieldId){
+
+        const field =
+        document.getElementById(fieldId);
+
+        if(field){
+
+            field.value += " " + std;
+
+        }
+
+    }
 
     localStorage.removeItem("selectedStd");
+
+});
+
+let activeField = null;
+
+document.querySelectorAll("textarea,input")
+.forEach(el => {
+
+    el.addEventListener("focus", () => {
+
+        activeField = el;
+
+        localStorage.setItem(
+            "activeFieldId",
+            el.id
+        );
+
+    });
 
 });
 
