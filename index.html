@@ -1241,6 +1241,20 @@ calculateNG();
 
 document.getElementById("report").style.display = "none";
 
+window.addEventListener("load", () => {
+
+    const std =
+    localStorage.getItem("selectedStd");
+
+    if(!std) return;
+
+    document.getElementById("problem").value +=
+    " " + std;
+
+    localStorage.removeItem("selectedStd");
+
+});
+
 function copyReport(){
 
     const text =
@@ -1370,6 +1384,11 @@ function openReport(){
 }
 
 function openStandard(){
+
+    sessionStorage.setItem(
+        "returnPage",
+        "index.html"
+    );
 
     location.href = "standard.html";
 
