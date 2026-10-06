@@ -83,8 +83,10 @@ body{
     margin:auto;
     background:#c7d9ea;
     padding:10px;
+    padding-top:50px;
     border-radius:8px;
 }
+
 
 input,select,textarea{
     width:100%;
@@ -371,21 +373,6 @@ input[name="okmark"]:checked + .white{
     background:#ffffff;
 }
 
-.top-nav{
-    margin-bottom:10px;
-}
-
-.top-nav span{
-    color:#000000;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-.top-nav span:active{
-    opacity:.7;
-}
-
 @media (max-width:500px){
 
     .total-ng-box{
@@ -523,17 +510,23 @@ input[name="okmark"]:checked + .white{
     margin-bottom:40px;
 }
 
-.menu-btn{
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
     width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    border-radius:12px;
-    font-size:18px;
-    font-weight:bold;
-    color:white;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:22px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
 }
 
 .report-btn{
