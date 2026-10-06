@@ -2,7 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <link rel="manifest" href="manifest.json">
 
@@ -373,6 +374,10 @@ input[name="okmark"]:checked + .white{
     background:#ffffff;
 }
 
+#partNgShow{
+    height:30px;
+}
+
 @media (max-width:500px){
 
     .total-ng-box{
@@ -425,7 +430,7 @@ input[name="okmark"]:checked + .white{
 
     .inspection-grid input,
     .inspection-grid select{
-        font-size:14px;
+        font-size:16px;
     }
 
 }
@@ -583,6 +588,12 @@ input[name="okmark"]:checked + .white{
 
 .borrow-btn{
     background:#009688;
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
 }
     
 </style>
@@ -764,7 +775,7 @@ input[name="okmark"]:checked + .white{
 
         <div>
             <label>SKC-A MFG พบ NG</label>
-            <input type="number" id="skcaNg" value="0">
+            <input type="number" id="skcaNg">
         </div>
 
         <div>
@@ -772,6 +783,7 @@ input[name="okmark"]:checked + .white{
             <select id="partNg">
                 <option> </option>
                 <option>Rework</option>
+                <option>แลกเปลี่ยน</option>
                 <option>Reject</option>
                 <option>Defect</option>
             </select>
@@ -779,13 +791,14 @@ input[name="okmark"]:checked + .white{
 
         <div>
             <label>Qty</label>
-            <input type="number" id="partNgQty" value="0">
+            <input type="number" id="partNgQty">
         </div>
 
 <div style="grid-column:1 / span 3; display:flex; align-items:center; gap:10px;">
     <label style="margin:0; width:120px;">ผลการ Rework</label>
 
     <select id="reworkResult" style="flex:1;">
+        <option> </option>
         <option>-</option>
         <option>OK</option>
         <option>Wait Rework</option>
@@ -797,25 +810,46 @@ input[name="okmark"]:checked + .white{
 
         <div>
             <label>Check Stock</label>
-            <input type="number" id="stockNg" value="0">
+            <input type="number" id="stockNg">
         </div>
 
         <div>
             <label>OK Qty</label>
-            <input type="number" id="okQty" value="0">
+            <input type="number" id="okQty">
         </div>
 
         <div>
             <label>NG Qty</label>
-            <input type="number" id="ngQty" value="0">
+            <input type="number" id="ngQty" readonly>
         </div>
 
     </div>
 
     <div class="total-ng-box">
 
-    <label><b>Total NG</b></label>
-    <input type="number" id="totalNg" value="0" readonly>
+<div style="width:100%; display:flex; align-items:center; gap:10px; margin-top:5px;">
+
+    <label style="width:70px; margin:0;">
+        <b>Part NG</b>
+    </label>
+
+    <select id="partNgShow" style="flex:1; height:30px;">
+        <option> </option>
+        <option>-</option>
+        <option>Rework</option>
+        <option>Wait Rework</option>
+        <option>Reject</option>
+        <option>Defect</option>
+    </select>
+
+</div>
+
+<div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+    <label style="width:70px; margin:0;">
+        <b>Total NG</b>
+    </label>
+    <input type="number" id="totalNg" readonly style="width:70px;">
+</div>
 
     <span class="okmark-label"><b>OK Mark</b></span>
 
@@ -1060,6 +1094,8 @@ function calculateNG(){
 
     let lineNg =
     Number(document.getElementById("skcaNg").value || 0);
+document.getElementById("partNgQty").value =
+lineNg === 0 ? "" : lineNg;
 
     let stock =
     Number(document.getElementById("stockNg").value || 0);
@@ -1077,7 +1113,8 @@ function calculateNG(){
 
     if(ngQty < 0) ngQty = 0;
 
-    document.getElementById("ngQty").value = ngQty;
+    document.getElementById("ngQty").value =
+ngQty === 0 ? "" : ngQty;
 
     let total = ngQty;
 
@@ -1085,7 +1122,8 @@ if(partType === "Reject" || partType === "Defect"){
     total += partQty;
 }
 
-    document.getElementById("totalNg").value = total;
+    document.getElementById("totalNg").value =
+(total === 0) ? "" : total;
 }
 
 let reportVisible = false;
@@ -1123,6 +1161,9 @@ const ngUnit = ng == 1 ? "Pc." : "Pcs.";
 const partUnit = partNgQty.value == 1 ? "Pc." : "Pcs.";
 const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 
+const totalNgType =
+document.getElementById("partNgShow").value.trim();
+
     let text = `🚨 PARTS PROBLEM REPORT 🚨
 🗓️ Date : ${date.value.split("-").reverse().join("-")}
 🏷️ Type : ${type.value}
@@ -1147,19 +1188,17 @@ ${detail.value}
 ━━━━━━━━━━━━━━
 📊 INSPECTION RESULT
 • SKC-A MFG พบ NG : ${skca} ${skcaUnit}
-• Part NG (${partNg.value}) : ${partNgQty.value} ${partUnit}
+• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}
 • ผลการ Rework : ${reworkResult.value}
 
 • Check Stock SKC : ${stock} ${stockUnit}
 • OK : ${okQty.value} ${okUnit}
 • NG : ${ng} ${ngUnit}
- 
-➡️ Total NG : ${totalNg} ${totalUnit}
-🏷️ OK Mark : ${okMark}
+➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
+🖍️ OK Mark : ${okMark}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
-
 ✅ ตรวจสอบ Stock คงเหลือทั้งหมด
 ✅ แจ้งจำนวน OK / NG
 ✅ แนบรูป Mark Check
