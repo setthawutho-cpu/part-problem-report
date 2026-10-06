@@ -450,6 +450,43 @@ input[name="okmark"]:checked + .white{
 #app{
     display:none;
 }
+
+#menuPage{
+    display:none;
+    min-height:100vh;
+    background:#dfeaf3;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.menu-title{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    color:white;
+}
+
+.report-btn{
+    background:#2196f3;
+}
+
+.setting-btn{
+    background:#ff9800;
+}
     
 </style>
 
@@ -460,7 +497,23 @@ input[name="okmark"]:checked + .white{
     <img src="icon-512.png" alt="Logo">
 </div>
 
-<div id="app">
+<div id="menuPage">
+
+    <div class="menu-title">
+        INSPECTION PART
+    </div>
+
+    <button class="menu-btn report-btn" onclick="openReport()">
+        📋 PART PROBLEM REPORT
+    </button>
+
+    <button class="menu-btn setting-btn">
+        ⚙️ SETTINGS
+    </button>
+
+</div>
+
+<div id="app" style="display:none;">
 
 <div class="container">
 
@@ -1123,6 +1176,13 @@ document.querySelectorAll('input[name="okmark"]')
 
 });
 
+function openReport(){
+
+    document.getElementById("menuPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+}
+
 </script>
     <script>
 if ("serviceWorker" in navigator) {
@@ -1137,7 +1197,7 @@ window.addEventListener("load", () => {
     setTimeout(() => {
 
         document.getElementById("splash").style.display = "none";
-        document.getElementById("app").style.display = "block";
+                document.getElementById("menuPage").style.display = "block";
 
     }, 1000);
 
