@@ -163,16 +163,40 @@ function showStd(type){
         `;
     }
 
-    if(type === "appearance"){
+if(type === "appearance"){
 
-        stdArea.innerHTML = `
-        <h3>👀 Appearance Standard</h3>
+    stdArea.innerHTML = `
+    <h3>👀 Appearance Standard</h3>
 
-        <div class="std-item" onclick="sendToProblem('No Scratch')">No Scratch</div>
-        <div class="std-item" onclick="sendToProblem('No Dent')">No Dent</div>
-        <div class="std-item" onclick="sendToProblem('No Crack')">No Crack</div>
-        <div class="std-item" onclick="sendToProblem('No Rust')">No Rust</div>
-        <div class="std-item" onclick="sendToProblem('No Deformation')">No Deformation</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยขีดข่วน')">No Scratch</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยบุบ')">No Dent</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยแตก / ร้าว')">No Crack</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีสนิม')">No Rust</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีการเสียรูป / บิดงอ / ผิดรูป')">No Deformation</div>
+
+    <div class="std-item" onclick="sendToProblem('ไม่มีคราบสกปรก')">No Dirty</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีครีบ')">No Burr</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยบิ่น')">No Chip</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีความเสียหาย')">No Damage</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีชิ้นส่วนขาดหาย')">No Missing Part</div>
+
+    <div class="std-item" onclick="sendToProblem('ไม่มีคราบน้ำมัน')">No Oil Stain</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีคราบจาระบี')">No Grease Stain</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีสะเก็ดเชื่อม')">No Weld Spatter</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีสีผิดปกติ')">No Color Defect</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยไหม้')">No Burn Mark</div>
+
+    <div class="std-item" onclick="sendToProblem('ไม่มีสนิมขาว')">No White Rust</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยกดทับ')">No Press Mark</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีรอยข่วนจากการขนส่ง')">No Transportation Scratch</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีการปนเปื้อน')">No Contamination</div>
+    <div class="std-item" onclick="sendToProblem('ไม่มีสิ่งแปลกปลอม')">No Foreign Material</div>
+
+    <div class="std-item" onclick="sendToProblem('พื้นผิวสมบูรณ์')">Good Surface Condition</div>
+    <div class="std-item" onclick="sendToProblem('Mark ชัดเจน อ่านได้')">Marking Clear</div>
+    <div class="std-item" onclick="sendToProblem('ฉลากสมบูรณ์')">Label OK</div>
+    <div class="std-item" onclick="sendToProblem('สีถูกต้องตามมาตรฐาน')">Correct Color</div>
+    <div class="std-item" onclick="sendToProblem('ลักษณะภายนอกปกติ')">Appearance OK
         `;
     }
 
