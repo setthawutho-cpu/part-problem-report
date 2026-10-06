@@ -1,1 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📏 STANDARD MENU</title>
+
+<style>
+
+body{
+    font-family:Segoe UI,sans-serif;
+    background:#dfeaf3;
+    margin:0;
+    padding:10px;
+}
+
+h2{
+    text-align:center;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin:5px 0;
+    font-size:16px;
+    border:none;
+    background:#2196f3;
+    color:white;
+    cursor:pointer;
+}
+
+#stdArea{
+    margin-top:15px;
+}
+
+.std-item{
+    background:white;
+    border:1px solid #ccc;
+    padding:10px;
+    margin:5px 0;
+    border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>📏 STANDARD MENU</h2>
+
+<button onclick="showStd('length')">📏 Length</button>
+
+<button onclick="showStd('diameter')">⭕ Diameter</button>
+
+<button onclick="showStd('gap')">↔️ Gap</button>
+
+<button onclick="showStd('height')">📐 Height</button>
+
+<button onclick="showStd('torque')">🔩 Torque</button>
+
+<button onclick="showStd('appearance')">👀 Appearance</button>
+
+<hr>
+
+<div id="stdArea"></div>
+
+<script>
+
+function showStd(type){
+
+    const stdArea =
+    document.getElementById("stdArea");
+
+    if(type === "length"){
+
+        stdArea.innerHTML = `
+        <h3>📏 Length Tolerance</h3>
+
+        <div class="std-item">±0.1 mm.</div>
+        <div class="std-item">±0.2 mm.</div>
+        <div class="std-item">±0.3 mm.</div>
+        <div class="std-item">±0.4 mm.</div>
+        <div class="std-item">±0.5 mm.</div>
+        <div class="std-item">±1.0 mm.</div>
+        <div class="std-item">±2.0 mm.</div>
+        <div class="std-item">±5.0 mm.</div>
+        <div class="std-item">±10.0 mm.</div>
+        `;
+    }
+
+    if(type === "diameter"){
+
+        stdArea.innerHTML = `
+        <h3>⭕ Diameter Tolerance</h3>
+
+        <div class="std-item">Ø5 ±0.1 mm.</div>
+        <div class="std-item">Ø10 ±0.1 mm.</div>
+        <div class="std-item">Ø20 ±0.2 mm.</div>
+        <div class="std-item">Ø30 ±0.3 mm.</div>
+        `;
+    }
+
+    if(type === "gap"){
+
+        stdArea.innerHTML = `
+        <h3>↔️ Gap Standard</h3>
+
+        <div class="std-item">0.5 ±0.1 mm.</div>
+        <div class="std-item">1.0 ±0.2 mm.</div>
+        <div class="std-item">1.5 ±0.3 mm.</div>
+        <div class="std-item">2.0 ±0.5 mm.</div>
+        `;
+    }
+
+    if(type === "height"){
+
+        stdArea.innerHTML = `
+        <h3>📐 Height Tolerance</h3>
+
+        <div class="std-item">±0.1 mm.</div>
+        <div class="std-item">±0.2 mm.</div>
+        <div class="std-item">±0.3 mm.</div>
+        <div class="std-item">±0.5 mm.</div>
+        <div class="std-item">±1.0 mm.</div>
+        `;
+    }
+
+    if(type === "torque"){
+
+        stdArea.innerHTML = `
+        <h3>🔩 Torque Standard</h3>
+
+        <div class="std-item">5 ±1 Nm</div>
+        <div class="std-item">8 ±1 Nm</div>
+        <div class="std-item">10 ±1 Nm</div>
+        <div class="std-item">15 ±2 Nm</div>
+        <div class="std-item">20 ±2 Nm</div>
+        `;
+    }
+
+    if(type === "appearance"){
+
+        stdArea.innerHTML = `
+        <h3>👀 Appearance Standard</h3>
+
+        <div class="std-item">No Scratch</div>
+        <div class="std-item">No Dent</div>
+        <div class="std-item">No Crack</div>
+        <div class="std-item">No Rust</div>
+        <div class="std-item">No Deformation</div>
+        `;
+    }
+
+}
+
+</script>
+
+</body>
+</html>
