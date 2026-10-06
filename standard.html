@@ -98,18 +98,18 @@ function showStd(type){
         <h3>📏 Length Tolerance</h3>
 
         <div class="std-item" onclick="sendToProblem('±')">±</div>
-        <div class="std-item" onclick="sendToProblem('±0.1 mm.')">±0.1 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.2 mm.')">±0.2 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.3 mm.')">±0.3 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.4 mm.')">±0.4 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.5 mm.')">±0.5 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±1.0 mm.')">±1.0 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±1.5 mm.')">±1.5 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±2.0 mm.')">±2.0 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±2.5 mm.')">±2.5 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±3.0 mm.')">±3.0 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±5.0 mm.')">±5.0 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±10.0 mm.')">±10.0 mm. NG Act.</div>
+        <div class="std-item" onclick="sendToProblem('±0.1 mm. NG Act.')">±0.1 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.2 mm. NG Act.')">±0.2 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.3 mm. NG Act.')">±0.3 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.4 mm. NG Act.')">±0.4 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.5 mm. NG Act.')">±0.5 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±1.0 mm. NG Act.')">±1.0 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±1.5 mm. NG Act.')">±1.5 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±2.0 mm. NG Act.')">±2.0 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±2.5 mm. NG Act.')">±2.5 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±3.0 mm. NG Act.')">±3.0 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±5.0 mm. NG Act.')">±5.0 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±10.0 mm. NG Act.')">±10.0 mm.</div>
         `;
     }
 
@@ -118,6 +118,7 @@ function showStd(type){
         stdArea.innerHTML = `
         <h3>⭕ Diameter Tolerance</h3>
 
+        <div class="std-item" onclick="sendToProblem('±')">±</div>
         <div class="std-item" onclick="sendToProblem('Ø5 ±0.1 mm.')">Ø5 ±0.1 mm.</div>
         <div class="std-item" onclick="sendToProblem('Ø10 ±0.1 mm.')">Ø10 ±0.1 mm.</div>
         <div class="std-item" onclick="sendToProblem('Ø20 ±0.2 mm.')">Ø20 ±0.2 mm.</div>
@@ -130,6 +131,7 @@ function showStd(type){
         stdArea.innerHTML = `
         <h3>↔️ Gap Standard</h3>
 
+        <div class="std-item" onclick="sendToProblem('±')"±</div>
         <div class="std-item" onclick="sendToProblem('0.5 ±0.1 mm.')">0.5 ±0.1 mm.</div>
         <div class="std-item" onclick="sendToProblem('1.0 ±0.2 mm.')">1.0 ±0.2 mm.</div>
         <div class="std-item" onclick="sendToProblem('1.5 ±0.3 mm.')">1.5 ±0.3 mm.</div>
@@ -142,11 +144,12 @@ function showStd(type){
         stdArea.innerHTML = `
         <h3>📐 Height Tolerance</h3>
 
-        <div class="std-item" onclick="sendToProblem('±0.01 mm.')">±0.01 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.02 mm.')">±0.02 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.03 mm.')">±0.03 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.05 mm.')">±0.05 mm. NG Act.</div>
-        <div class="std-item" onclick="sendToProblem('±0.10 mm.')">±0.10 mm. NG Act.</div>
+        <div class="std-item" onclick="sendToProblem('±')"±</div>
+        <div class="std-item" onclick="sendToProblem('±0.01 mm. NG Act.')">±0.01 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.02 mm. NG Act.')">±0.02 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.03 mm. NG Act.')">±0.03 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.05 mm. NG Act.')">±0.05 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.10 mm. NG Act.')">±0.10 mm.</div>
         `;
     }
 
@@ -154,7 +157,8 @@ function showStd(type){
 
         stdArea.innerHTML = `
         <h3>🔩 Torque Standard</h3>
-
+        
+        <div class="std-item" onclick="sendToProblem('±')">±</div>
         <div class="std-item" onclick="sendToProblem('5 ±1 Nm')">5 ±1 Nm</div>
         <div class="std-item" onclick="sendToProblem('8 ±1 Nm')">8 ±1 Nm</div>
         <div class="std-item" onclick="sendToProblem('10 ±1 Nm')">10 ±1 Nm</div>
@@ -196,9 +200,10 @@ if(type === "appearance"){
     <div class="std-item" onclick="sendToProblem('Mark ชัดเจน อ่านได้')">Marking Clear</div>
     <div class="std-item" onclick="sendToProblem('ฉลากสมบูรณ์')">Label OK</div>
     <div class="std-item" onclick="sendToProblem('สีถูกต้องตามมาตรฐาน')">Correct Color</div>
-    <div class="std-item" onclick="sendToProblem('ลักษณะภายนอกปกติ')">Appearance OK
-        `;
-    }
+    <div class="std-item" onclick="sendToProblem('ลักษณะภายนอกปกติ')">Appearance OK</div>
+    `;
+
+}
 
 }
 
