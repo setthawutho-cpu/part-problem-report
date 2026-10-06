@@ -551,6 +551,35 @@ input[name="okmark"]:checked + .white{
     background:#ff9800;
     color:#ffffff !important;
 }
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    color:#ffffff !important;
+    text-align:center;
+}
+
+.report-btn{
+    background:#2196f3;
+}
+
+.newmodel-btn{
+    background:#4caf50;
+}
+
+.trial-btn{
+    background:#9c27b0;
+}
+
+.setting-btn{
+    background:#ff9800;
+}
     
 </style>
 
@@ -577,11 +606,23 @@ input[name="okmark"]:checked + .white{
         INSPECTION PART
     </div>
 
-    <button class="menu-btn report-btn" onclick="openReport()">
+    <button class="menu-btn report-btn"
+        onclick="openReport()">
         📋 PART PROBLEM REPORT
     </button>
 
-    <button class="menu-btn setting-btn">
+    <button class="menu-btn newmodel-btn"
+        onclick="location.href='index2.html'">
+        📦 PART NEW MODEL
+    </button>
+
+    <button class="menu-btn trial-btn"
+        onclick="location.href='index3.html'">
+        🧪 ASSEMBLY TRIAL
+    </button>
+
+    <button class="menu-btn setting-btn"
+        onclick="location.href='index4.html'">
         ⚙️ SETTINGS
     </button>
 
