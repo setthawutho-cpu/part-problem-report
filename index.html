@@ -1273,16 +1273,19 @@ let activeField = null;
 document.querySelectorAll("textarea,input")
 .forEach(el => {
 
-    el.addEventListener("focus", () => {
-
-        activeField = el;
+    function saveField(){
 
         localStorage.setItem(
             "activeFieldId",
             el.id
         );
 
-    });
+    }
+
+    el.addEventListener("focus", saveField);
+    el.addEventListener("click", saveField);
+    el.addEventListener("input", saveField);
+    el.addEventListener("touchstart", saveField);
 
 });
 
@@ -1416,10 +1419,17 @@ function openReport(){
 
 function openStandard(){
 
-    sessionStorage.setItem(
-        "returnPage",
-        "index.html"
-    );
+    const active =
+    document.activeElement;
+
+    if(active && active.id){
+
+        localStorage.setItem(
+            "activeFieldId",
+            active.id
+        );
+
+    }
 
     location.href = "standard.html";
 
