@@ -3,20 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#06C755">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="PART REPORT">
-
-<link rel="apple-touch-icon" href="icon-512.png">
-
 <title>PART PROBLEM REPORT</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
 
 .copy{
     background:#9c27b0;
@@ -305,7 +296,7 @@ label,
 
 .white{
     border-color:#ffffff;
-    background:transparent;
+    background:#d9d9d9;
 }
 
 input[name="okmark"]:checked + .green{
@@ -327,6 +318,8 @@ input[name="okmark"]:checked + .blue{
 input[name="okmark"]:checked + .white{
     background:#ffffff;
 }
+
+cursor:pointer;
 
 @media (max-width:500px){
 
@@ -414,39 +407,10 @@ input[name="okmark"]:checked + .white{
         inset 1px 1px 0 #888;
 }
 
-#splash{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#dfeaf3;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-}
-
-#splash img{
-    width:120px;
-    height:120px;
-    border-radius:28px;
-}
-
-#app{
-    display:none;
-}
-    
 </style>
 
 </head>
 <body>
-
-<div id="splash">
-    <img src="icon-512.png" alt="Logo">
-</div>
-
-<div id="app">
 
 <div class="container">
 
@@ -468,11 +432,7 @@ input[name="okmark"]:checked + .white{
 </div>
 
 <label>Part No.</label>
-<input type="text"
-       id="partno"
-       list="partList">
-
-<datalist id="partList"></datalist>
+<input type="text" id="partno">
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
     <label>Part Name</label>
@@ -660,7 +620,6 @@ document.getElementById("date").value =
 new Date().toISOString().split("T")[0];
 
 let partMaster = {};
-let allPartNo = [];
 
 async function loadExcel(){
 
@@ -680,17 +639,13 @@ async function loadExcel(){
 
     rows.forEach(row=>{
 
-const partNo = String(
+        const partNo = String(
     row.PartNo || ""
-).trim();
+).trim().substring(0,10);
 
         if(partNo){
 
-    if(!allPartNo.includes(partNo)){
-    allPartNo.push(partNo);
-}
-
-    partMaster[partNo] = {
+            partMaster[partNo] = {
 
                 partName:
                 row.PartName || "",
@@ -730,8 +685,7 @@ if(!partnameManual){
     partname.value = "";
 
     this.innerText = "Auto";
-    this.style.background = "#06C755";
-this.style.color = "#fff";
+    this.style.background = "#fff176";
 
 }else{
 
@@ -740,10 +694,10 @@ this.style.color = "#fff";
     partname.readOnly = true;
 
     this.innerText = "Manual";
-this.style.background = "#d9d9d9";
-this.style.color = "#000";
+    this.style.background = "#d9d9d9";
 
-    fillPartData(partno.value);
+    document.getElementById("partno")
+    .dispatchEvent(new Event("input"));
 }
 
         };
@@ -758,8 +712,7 @@ document.getElementById("modelBtn").onclick = function(){
                 model.value = "";
 
         this.innerText = "Auto";
-                this.style.background = "#06C755";
-this.style.color = "#fff";
+                this.style.background = "#fff176";
 
     }else{
 
@@ -768,10 +721,10 @@ this.style.color = "#fff";
         model.readOnly = true;
 
         this.innerText = "Manual";
-this.style.background = "#d9d9d9";
-this.style.color = "#000";
+                this.style.background = "#d9d9d9";
 
-        fillPartData(partno.value);
+        document.getElementById("partno")
+        .dispatchEvent(new Event("input"));
     }
 
 };
@@ -787,8 +740,8 @@ document.getElementById("supplierBtn").onclick = function(){
         supplier.value = "";
 
         this.innerText = "Auto";
-this.style.background = "#06C755";
-this.style.color = "#fff";    }else{
+this.style.background = "#fff176";
+    }else{
 
         supplierManual = false;
 
@@ -796,70 +749,46 @@ this.style.color = "#fff";    }else{
 
         this.innerText = "Manual";
 this.style.background = "#d9d9d9";
-this.style.color = "#000";
-fillPartData(partno.value);
 
+        document.getElementById("partno")
+        .dispatchEvent(new Event("input"));
     }
 
 };
 
-document.getElementById("partno")
-.addEventListener("input", function(){
+document
+.getElementById("partno")
+.addEventListener("input",function(){
 
-    const keyword = this.value.trim();
+    const partNo =
+    this.value.trim().substring(0,10);
 
-    if(keyword === ""){
+    if(partMaster[partNo]){
 
-        if(!partnameManual) partname.value = "";
-        if(!modelManual) model.value = "";
-        if(!supplierManual) supplier.value = "";
+if(!partnameManual){
+    document.getElementById("partname").value =
+    partMaster[partNo].partName;
+}
 
-        partList.innerHTML = "";
-        return;
+if(!supplierManual){
+    document.getElementById("supplier").value =
+    partMaster[partNo].supplier;
+}
+
+if(!modelManual){
+    document.getElementById("model").value =
+    partMaster[partNo].model;
+}
+
+    }else{
+
+        document.getElementById("partname").value="";
+        document.getElementById("supplier").value="";
+        document.getElementById("model").value="";
+
     }
-
-    if(partMaster[keyword]){
-        fillPartData(keyword);
-        return;
-    }
-
-    if(keyword.length < 4){
-        partList.innerHTML = "";
-        return;
-    }
-
-    const result = allPartNo
-        .filter(p =>
-            p.startsWith(keyword) ||
-            p.includes("-" + keyword)
-        )
-        .slice(0,10);
-
-    partList.innerHTML = result
-        .map(p => `<option value="${p}"></option>`)
-        .join("");
 
 });
-function fillPartData(partNo){
-
-    if(!partMaster[partNo]) return;
-
-    if(!partnameManual){
-        partname.value =
-        partMaster[partNo].partName;
-    }
-
-    if(!modelManual){
-        model.value =
-        partMaster[partNo].model;
-    }
-
-    if(!supplierManual){
-        supplier.value =
-        partMaster[partNo].supplier;
-    }
-
-}
 
 function calculateNG(){
 
@@ -1087,47 +1016,6 @@ encodeURIComponent(text);
 
 }
 
-let currentOkMark = null;
-
-document.querySelectorAll('input[name="okmark"]')
-.forEach(radio => {
-
-    radio.addEventListener("click", function(){
-
-        if(currentOkMark === this){
-
-            this.checked = false;
-            currentOkMark = null;
-
-        }else{
-
-            currentOkMark = this;
-
-        }
-
-    });
-
-});
-
-</script>
-    <script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
-}
-</script>
-</div>
-
-<script>
-window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("app").style.display = "block";
-
-    }, 1000);
-
-});
 </script>
 
 </body>
