@@ -1236,23 +1236,35 @@ function createPartFields(){
 
 function fillSubPart(index){
 
-    const partNo =
+    const keyword =
     document.getElementById(`partNo${index}`).value.trim();
 
     const partName =
     document.getElementById(`partName${index}`);
 
-    if(partMaster[partNo]){
+    let foundPartNo = keyword;
+
+    if(!partMaster[keyword]){
+
+        foundPartNo = allPartNo.find(p =>
+            p.endsWith("-" + keyword)
+        );
+
+    }
+
+    if(foundPartNo && partMaster[foundPartNo]){
+
+        document.getElementById(`partNo${index}`).value =
+        foundPartNo;
 
         partName.value =
-        partMaster[partNo].partName || "";
+        partMaster[foundPartNo].partName || "";
 
     }else{
 
         partName.value = "";
 
     }
-
 }
 
 function reviewReport(){
