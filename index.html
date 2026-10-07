@@ -1206,11 +1206,13 @@ function createPartFields(){
 
             <label>Part No.</label>
             <input
-                type="text"
-                id="partNo${i}"
-                list="partList"
-                oninput="fillSubPart(${i})"
-            >
+    type="text"
+    id="partNo${i}"
+    list="subPartList${i}"
+    oninput="fillSubPart(${i})"
+>
+
+<datalist id="subPartList${i}"></datalist>
 
             <label>Part Name</label>
             <input
