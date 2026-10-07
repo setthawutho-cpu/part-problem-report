@@ -1242,17 +1242,16 @@ function fillSubPart(index){
     const partName =
     document.getElementById(`partName${index}`);
 
-    let foundPartNo = keyword;
-
-    if(!partMaster[keyword]){
-
-        foundPartNo = allPartNo.find(p =>
-            p.endsWith("-" + keyword)
-        );
-
+    if(keyword.length < 4){
+        partName.value = "";
+        return;
     }
 
-    if(foundPartNo && partMaster[foundPartNo]){
+    let foundPartNo = allPartNo.find(p =>
+        p.endsWith("-" + keyword)
+    );
+
+    if(foundPartNo){
 
         document.getElementById(`partNo${index}`).value =
         foundPartNo;
