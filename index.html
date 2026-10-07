@@ -401,6 +401,14 @@ input[name="okmark"]:checked + .white{
 
 }
 
+.part-box{
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:5px;
+    padding:10px;
+    margin-top:10px;
+}
+
 @media (max-width:500px){
 
     .inspection-grid{
@@ -875,6 +883,20 @@ textarea{
 
     <label><input type="radio" name="okmark" value="White"> <span class="white"></span></label>
 
+<label style="width:100%;margin-top:10px;">
+    <b>Part เสียหายร่วม</b>
+</label>
+
+<input
+    type="number"
+    id="partCount"
+    min="0"
+    placeholder="จำนวน Part เสียหายร่วม"
+    oninput="createPartFields()"
+>
+
+<div id="partArea"></div>
+
 </div>
 
 </div>
@@ -1139,6 +1161,68 @@ if(partType === "Reject" || partType === "Defect"){
 }
 
 let reportVisible = false;
+
+function createPartFields(){
+
+    const count =
+    Number(document.getElementById("partCount").value || 0);
+
+    const area =
+    document.getElementById("partArea");
+
+    area.innerHTML = "";
+
+    for(let i=1;i<=count;i++){
+
+        const unit =
+        i === 1 ? "Pc." : "Pcs.";
+
+        area.innerHTML += `
+        <div class="part-box">
+
+<label>Part No. ${i}</label>
+<input
+    type="text"
+    id="partNo${i}"
+    list="partList"
+    oninput="fillSubPart(${i})"
+>
+
+<label>Part Name ${i}</label>
+<input
+    type="text"
+    id="partName${i}"
+    readonly
+>
+
+            <label>Qty. ${i} (${unit})</label>
+            <input type="number" id="partQty${i}">
+
+        </div>
+        `;
+    }
+}
+
+function fillSubPart(index){
+
+    const partNo =
+    document.getElementById(`partNo${index}`).value.trim();
+
+    const partName =
+    document.getElementById(`partName${index}`);
+
+    if(partMaster[partNo]){
+
+        partName.value =
+        partMaster[partNo].partName || "";
+
+    }else{
+
+        partName.value = "";
+
+    }
+
+}
 
 function reviewReport(){
 
