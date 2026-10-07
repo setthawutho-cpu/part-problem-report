@@ -221,7 +221,7 @@ if(type === "gap"){
         stdArea.innerHTML = `
         <h3>📐 Height Tolerance</h3>
 
-        <div class="std-item" onclick="sendToProblem('±')"±</div>
+        <div class="std-item" onclick="sendToProblem('±')">±</div>
         <div class="std-item" onclick="sendToProblem('±0.01 mm. NG Act.')">±0.01 mm.</div>
         <div class="std-item" onclick="sendToProblem('±0.02 mm. NG Act.')">±0.02 mm.</div>
         <div class="std-item" onclick="sendToProblem('±0.03 mm. NG Act.')">±0.03 mm.</div>
@@ -289,7 +289,9 @@ if(type === "gap"){
 }
 
 if(type === "appearance"){
-    ...
+    stdArea.innerHTML = `
+        ...
+    `;
 }
 } // ปิด function showStd
 
