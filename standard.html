@@ -50,6 +50,16 @@ button{
     background:#e3f2fd;
 }
 
+.std-input{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px;
+}
+
 </style>
 
 </head>
@@ -84,7 +94,51 @@ function sendToProblem(text){
     );
 
     history.back();
+}
 
+function sendLengthTolerance(tolerance){
+
+    const length =
+    document.getElementById("lengthValue").value;
+
+    if(!length){
+        alert("กรุณากรอก Length");
+        return;
+    }
+
+    sendToProblem(
+        `Length ${length} ${tolerance} NG Act.`
+    );
+}
+
+function sendDiameterTolerance(tolerance){
+
+    const diameter =
+    document.getElementById("diameterValue").value;
+
+    if(!diameter){
+        alert("กรุณากรอก Diameter");
+        return;
+    }
+
+    sendToProblem(
+        `Diameter Ø${diameter} ${tolerance} NG Act.`
+    );
+}
+
+function sendGapTolerance(tolerance){
+
+    const gap =
+    document.getElementById("gapValue").value;
+
+    if(!gap){
+        alert("กรุณากรอก Gap");
+        return;
+    }
+
+    sendToProblem(
+        `Gap ${gap} ${tolerance} NG Act.`
+    );
 }
 
 function showStd(type){
@@ -92,52 +146,75 @@ function showStd(type){
     const stdArea =
     document.getElementById("stdArea");
 
-    if(type === "length"){
+if(type === "length"){
 
-        stdArea.innerHTML = `
-        <h3>📏 Length Tolerance</h3>
+    stdArea.innerHTML = `
+    <h3>📏 Length Tolerance</h3>
 
-        <div class="std-item" onclick="sendToProblem('±')">±</div>
-        <div class="std-item" onclick="sendToProblem('±0.1 mm. NG Act.')">±0.1 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±0.2 mm. NG Act.')">±0.2 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±0.3 mm. NG Act.')">±0.3 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±0.4 mm. NG Act.')">±0.4 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±0.5 mm. NG Act.')">±0.5 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±1.0 mm. NG Act.')">±1.0 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±1.5 mm. NG Act.')">±1.5 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±2.0 mm. NG Act.')">±2.0 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±2.5 mm. NG Act.')">±2.5 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±3.0 mm. NG Act.')">±3.0 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±5.0 mm. NG Act.')">±5.0 mm.</div>
-        <div class="std-item" onclick="sendToProblem('±10.0 mm. NG Act.')">±10.0 mm.</div>
-        `;
-    }
+    <input
+        id="lengthValue"
+        class="std-input"
+        type="number"
+        placeholder="กรอก Length เช่น 100"
+    >
 
-    if(type === "diameter"){
+    <div class="std-item" onclick="sendLengthTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.4 mm.')">±0.4 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±1.0 mm.')">±1.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±1.5 mm.')">±1.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±2.0 mm.')">±2.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±2.5 mm.')">±2.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±3.0 mm.')">±3.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±5.0 mm.')">±5.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±10.0 mm.')">±10.0 mm.</div>
+    `;
+}
 
-        stdArea.innerHTML = `
-        <h3>⭕ Diameter Tolerance</h3>
+if(type === "diameter"){
 
-        <div class="std-item" onclick="sendToProblem('±')">±</div>
-        <div class="std-item" onclick="sendToProblem('Ø5 ±0.1 mm.')">Ø5 ±0.1 mm.</div>
-        <div class="std-item" onclick="sendToProblem('Ø10 ±0.1 mm.')">Ø10 ±0.1 mm.</div>
-        <div class="std-item" onclick="sendToProblem('Ø20 ±0.2 mm.')">Ø20 ±0.2 mm.</div>
-        <div class="std-item" onclick="sendToProblem('Ø30 ±0.3 mm.')">Ø30 ±0.3 mm.</div>
-        `;
-    }
+    stdArea.innerHTML = `
+    <h3>⭕ Diameter Tolerance</h3>
 
-    if(type === "gap"){
+    <input
+        id="diameterValue"
+        class="std-input"
+        type="number"
+        step="0.01"
+        placeholder="กรอก Diameter เช่น 10"
+    >
 
-        stdArea.innerHTML = `
-        <h3>↔️ Gap Standard</h3>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±1.0 mm.')">±1.0 mm.</div>
+    `;
+}
 
-        <div class="std-item" onclick="sendToProblem('±')"±</div>
-        <div class="std-item" onclick="sendToProblem('0.5 ±0.1 mm.')">0.5 ±0.1 mm.</div>
-        <div class="std-item" onclick="sendToProblem('1.0 ±0.2 mm.')">1.0 ±0.2 mm.</div>
-        <div class="std-item" onclick="sendToProblem('1.5 ±0.3 mm.')">1.5 ±0.3 mm.</div>
-        <div class="std-item" onclick="sendToProblem('2.0 ±0.5 mm.')">2.0 ±0.5 mm.</div>
-        `;
-    }
+
+if(type === "gap"){
+
+    stdArea.innerHTML = `
+    <h3>↔️ Gap Tolerance</h3>
+
+    <input
+        id="gapValue"
+        class="std-input"
+        type="number"
+        step="0.01"
+        placeholder="กรอก Gap เช่น 1.0"
+    >
+
+    <div class="std-item" onclick="sendGapTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±1.0 mm.')">±1.0 mm.</div>
+    `;
+}
 
     if(type === "height"){
 
@@ -211,6 +288,10 @@ function showStd(type){
     `;
 }
 
+if(type === "appearance"){
+    ...
+}
+} // ปิด function showStd
 
 </script>
 
