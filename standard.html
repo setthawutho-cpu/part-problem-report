@@ -63,15 +63,17 @@ button{
     font-size:16px;
 }
 
-.back-btn{
-    width:120px;
-    height:45px;
-    margin:0;
-    background:#757575;
-    color:white;
-    border:none;
-    border-radius:5px;
+.top-nav{
+    display:flex;
+    align-items:center;
+    padding:10px 0;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.top-nav span{
     cursor:pointer;
+    color:#1565c0;
 }
 
 </style>
@@ -80,7 +82,9 @@ button{
 
 <body>
 
-<button class="back-btn" onclick="goBack()">❮</button>
+<div class="top-nav">
+    <span onclick="goBack()">❮ กลับ</span>
+</div>
 
 <h2>📏 STANDARD MENU</h2>
 
@@ -101,6 +105,10 @@ button{
 <div id="stdArea"></div>
 
 <script>
+
+function goBack(){
+    history.back();
+}
 
 function sendToProblem(text){
 
