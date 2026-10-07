@@ -407,6 +407,8 @@ input[name="okmark"]:checked + .white{
     border-radius:5px;
     padding:10px;
     margin-top:10px;
+    width:100%;
+    box-sizing:border-box;
 }
 
 .part-box label{
@@ -1191,7 +1193,7 @@ function createPartFields(){
         i === 1 ? "Pc." : "Pcs.";
 
         area.innerHTML += `
-        <div class="part-box" style="width:100%;">
+        <div class="part-box">
 
             <div style="font-weight:bold;margin-bottom:10px;">
                 🔹 Part เสียหายร่วม ${i}
