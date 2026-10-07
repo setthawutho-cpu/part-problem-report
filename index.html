@@ -1193,23 +1193,34 @@ function createPartFields(){
         area.innerHTML += `
         <div class="part-box" style="width:100%;">
 
-<label>Part No. ${i}</label>
-<input
-    type="text"
-    id="partNo${i}"
-    list="partList"
-    oninput="fillSubPart(${i})"
->
+            <div style="font-weight:bold;margin-bottom:10px;">
+                🔹 Part เสียหายร่วม ${i}
+            </div>
 
-<label>Part Name ${i}</label>
-<input
-    type="text"
-    id="partName${i}"
-    readonly
->
+            <label>Part No.</label>
+            <input
+                type="text"
+                id="partNo${i}"
+                list="partList"
+                oninput="fillSubPart(${i})"
+            >
 
-            <label>Qty. ${i} (${unit})</label>
-            <input type="number" id="partQty${i}">
+            <label>Part Name</label>
+            <input
+                type="text"
+                id="partName${i}"
+                readonly
+            >
+
+            <label>Qty.</label>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <input
+                    type="number"
+                    id="partQty${i}"
+                    style="flex:1;"
+                >
+                <span>(${unit})</span>
+            </div>
 
         </div>
         `;
