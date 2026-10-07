@@ -409,6 +409,16 @@ input[name="okmark"]:checked + .white{
     margin-top:10px;
 }
 
+.part-box label{
+    display:block;
+    margin-top:8px;
+}
+
+.part-box input{
+    display:block;
+    width:100%;
+}
+
 @media (max-width:500px){
 
     .inspection-grid{
@@ -1181,7 +1191,7 @@ function createPartFields(){
         i === 1 ? "Pc." : "Pcs.";
 
         area.innerHTML += `
-        <div class="part-box">
+        <div class="part-box" style="width:100%;">
 
 <label>Part No. ${i}</label>
 <input
