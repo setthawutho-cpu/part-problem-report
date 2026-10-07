@@ -1244,28 +1244,45 @@ function fillSubPart(index){
     const partName =
     document.getElementById(`partName${index}`);
 
-    if(keyword.length < 4){
+    const list =
+    document.getElementById(`subPartList${index}`);
+
+    if(keyword === ""){
+
+        list.innerHTML = "";
         partName.value = "";
+        return;
+
+    }
+
+    if(partMaster[keyword]){
+
+        partName.value =
+        partMaster[keyword].partName || "";
+
         return;
     }
 
-    let foundPartNo = allPartNo.find(p =>
-        p.endsWith("-" + keyword)
-    );
+    if(keyword.length < 4){
 
-    if(foundPartNo){
-
-        document.getElementById(`partNo${index}`).value =
-        foundPartNo;
-
-        partName.value =
-        partMaster[foundPartNo].partName || "";
-
-    }else{
-
+        list.innerHTML = "";
         partName.value = "";
+        return;
 
     }
+
+    const result = allPartNo
+        .filter(p =>
+            p.startsWith(keyword) ||
+            p.includes("-" + keyword)
+        )
+        .slice(0,10);
+
+    list.innerHTML = result
+        .map(p => `<option value="${p}"></option>`)
+        .join("");
+
+    partName.value = "";
 }
 
 function reviewReport(){
@@ -1304,6 +1321,33 @@ const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
 const totalNgType =
 document.getElementById("partNgShow").value.trim();
 
+let subPartsText = "";
+
+const count =
+Number(document.getElementById("partCount").value || 0);
+
+for(let i=1;i<=count;i++){
+
+    const partNo =
+    document.getElementById(`partNo${i}`)?.value || "";
+
+    const partName =
+    document.getElementById(`partName${i}`)?.value || "";
+
+    const qty =
+    Number(document.getElementById(`partQty${i}`)?.value || 0);
+
+    const unit =
+    qty === 1 ? "Pc." : "Pcs.";
+
+    subPartsText += `
+Part No. : ${partNo}
+Part Name : ${partName}
+Qty. : ${qty} ${unit}
+
+`;
+}
+
     let text = `🚨 PARTS PROBLEM REPORT 🚨
 🗓️ Date : ${date.value.split("-").reverse().join("-")}
 🏷️ Type : ${type.value}
@@ -1336,6 +1380,9 @@ ${detail.value}
 • NG : ${ng} ${ngUnit}
 ➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
 🖍️ OK Mark : ${okMark}
+━━━━━━━━━━━━━━
+📦 Part เสียหายร่วม
+${subPartsText}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
