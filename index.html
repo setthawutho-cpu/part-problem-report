@@ -1354,11 +1354,27 @@ for(let i=1;i<=count;i++){
     const unit =
     qty === 1 ? "Pc." : "Pcs.";
 
-    subPartsText += `
-Part No. : ${partNo}
+subPartsText +=
+`Part No. : ${partNo}
 Part Name : ${partName}
-Qty. : ${qty} ${unit}
-`;
+Qty. : ${qty} ${unit}`;
+}
+
+let partDamageSection = "";
+
+const hasPartData =
+subPartsText
+.trim()
+.replace(/Part No\.\s*:\s*/g,"")
+.replace(/Part Name\s*:\s*/g,"")
+.replace(/Qty\.\s*:\s*0\s*Pcs?\./g,"")
+.trim();
+
+if(hasPartData){
+partDamageSection =
+`━━━━━━━━━━━━━━
+📦 Part เสียหายร่วม
+${subPartsText.trim()}`;
 }
 
     let text = `🚨 PARTS PROBLEM REPORT 🚨
@@ -1393,9 +1409,7 @@ ${detail.value}
 • NG : ${ng} ${ngUnit}
 ➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
 🖍️ OK Mark : ${okMark}
-━━━━━━━━━━━━━━
-📦 Part เสียหายร่วม
-${subPartsText}
+${partDamageSection}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
