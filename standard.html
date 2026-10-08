@@ -64,16 +64,26 @@ button{
 }
 
 .top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
     display:flex;
+    justify-content:space-between;
     align-items:center;
-    padding:10px 0;
-    font-size:18px;
-    font-weight:bold;
 }
 
 .top-nav span{
-    cursor:pointer;
     color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
 }
 
 </style>
