@@ -1,5 +1,737 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#06C755">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PART REPORT">
+
+<link rel="apple-touch-icon" href="icon-512.png">
+
+<title>PART PROBLEM REPORT</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+
+html,
+body{
+    background:#dfeaf3;
+    margin:0;
+    padding:0;
+}
+
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#dfeaf3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    visibility:visible;
+    opacity:1;
+}
+
+.splash-content{
+    text-align:center;
+}
+
+#splash img{
+    width:180px;
+    height:180px;
+    border-radius:40px;
+    animation:zoomIn .5s ease;
+}
+
+.splash-text{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+    letter-spacing:1px;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+body{
+    margin:0;
+    padding:10px;
+    background:#dfeaf3;
+    font-family:Segoe UI,sans-serif;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    background:#c7d9ea;
+    padding:10px;
+    padding-top:50px;
+    padding-bottom:90px;
+    border-radius:8px;
+}
+
+
+input,select,textarea{
+    width:100%;
+    padding:6px;
+    margin:3px 0;
+    box-sizing:border-box;
+}
+
+#date{
+    width:150px;
+}
+
+.top-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+}
+
+.top-row label{
+    margin:0;
+}
+
+#type{
+    width:120px;
+}
+
+.row-info{
+    display:flex;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.row-info > div{
+    flex:1;
+}
+
+.line-stop-box{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.line-stop-box input{
+    flex:1;
+}
+
+textarea{
+    min-height:80px;
+}
+
+.title{
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.section{
+    background:#f6c000;
+    padding:5px;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.inspection-box{
+    background:#b7c7d8;
+    border:1px solid #999;
+    margin-top:10px;
+}
+
+.result{
+    background:#95c11f;
+    padding:8px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.inspection-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+}
+
+.inspection-grid > div{
+    padding:0;
+}
+
+.inspection-grid label{
+    display:block;
+    padding:3px;
+    font-weight:normal;
+}
+
+.inspection-grid input,
+.inspection-grid select{
+    width:100%;
+    height:42px;
+    font-size:18px;
+    margin:0;
+}
+
+.total-ng-box{
+    padding:5px;
+}
+
+.total-ng-box input{
+    width:70px;
+    height:30px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.submit{
+    background:#e91e63;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.report{
+    margin-top:10px;
+    background:white;
+    padding:10px;
+    border:1px solid #ccc;
+    white-space:pre-wrap;
+    line-height:1.2;
+
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+#reworkResult{
+    width:100%;
+    height:30px;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+input,
+select,
+textarea,
+button{
+    border-radius:0 !important;
+}
+
+label,
+.inspection-grid label{
+    font-size:16px !important;
+    font-weight:400;
+}
+
+#date,
+#type,
+#document,
+#containmentResult,
+#reworkResult,
+#partNg{
+    background:#ffffff !important;
+    background-color:#ffffff !important;
+    color:#000000 !important;
+    opacity:1 !important;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    border:1px solid #999;
+}
+
+#skcaNg,
+#partNgQty,
+#stockNg,
+#okQty,
+#ngQty,
+#totalNg,
+#partNg{
+    font-size:16px !important;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+#containmentResult{
+    width:60%;
+    height:30px;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+.rework-label{
+    display:flex;
+    align-items:center;
+    height:42px;
+    padding-left:10px;
+}
+
+.rework-label label{
+    margin:0;
+    padding:0;
+}
+
+.total-ng-box{
+    padding:5px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+#partArea{
+    flex-basis:100%;
+    width:100%;
+}
+
+.total-ng-box input[type="radio"]{
+    display:none;
+}
+
+.green,
+.yellow,
+.pink,
+.blue,
+.white{
+    display:inline-block;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:3px solid;
+    cursor:pointer;
+}
+
+.green{
+    border-color:#22aa44;
+}
+
+.yellow{
+    border-color:#ffe600;
+}
+
+.pink{
+    border-color:#ff9db6;
+}
+
+.blue{
+    border-color:#0000FF;
+}
+
+.white{
+    border-color:#ffffff;
+    background:transparent;
+}
+
+input[name="okmark"]:checked + .green{
+    background:#22aa44;
+}
+
+input[name="okmark"]:checked + .yellow{
+    background:#ffe600;
+}
+
+input[name="okmark"]:checked + .pink{
+    background:#ff9db6;
+}
+
+input[name="okmark"]:checked + .blue{
+    background:#0000FF;
+}
+
+input[name="okmark"]:checked + .white{
+    background:#ffffff;
+}
+
+#partNgShow{
+    height:30px;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:65px;
+    background:#fff;
+    border-top:1px solid #ccc;
+    display:flex;
+    z-index:99999;
+}
+
+.bottom-nav button{
+    flex:1;
+    margin:0;
+    border:none;
+    background:#fff;
+    color:#333;
+    font-size:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+}
+
+.bottom-nav button span{
+    font-size:12px;
+    margin-top:2px;
+}
+
+.bottom-nav button:active{
+    background:#f1f1f1;
+}
+
+@media (max-width:500px){
+
+    .total-ng-box{
+        gap:4px;
+    }
+
+    .okmark-label{
+        font-size:14px;
+                margin-left:10px;
+    }
+
+    .green,
+    .yellow,
+    .pink,
+    .blue,
+    .white{
+        width:16px;
+        height:16px;
+        border-width:2px;
+    }
+
+}
+
+.part-box{
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:5px;
+    padding:10px;
+    margin-top:10px;
+    width:100%;
+    box-sizing:border-box;
+}
+
+.part-box label{
+    display:block;
+    margin-top:8px;
+}
+
+.part-box input{
+    display:block;
+    width:100%;
+}
+
+@media (max-width:500px){
+
+    .inspection-grid{
+        grid-template-columns:45% 30% 25%;
+    }
+
+}
+
+@media (max-width:500px){
+
+    label,
+    .inspection-grid label{
+        font-size:15px !important;
+    }
+
+}
+
+@media (max-width:500px){
+
+    .inspection-grid{
+        grid-template-columns:45% 30% 25%;
+    }
+
+    .inspection-grid label{
+        font-size:12px;
+    }
+
+    .inspection-grid input,
+    .inspection-grid select{
+        font-size:16px;
+    }
+
+}
+
+.manual-btn{
+    width:70px !important;
+    height:24px;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    background:#d9d9d9;
+    color:#000;
+
+    border:1px solid #666 !important;
+
+    box-shadow:
+        inset 1px 1px 0 #ffffff,
+        inset -1px -1px 0 #888,
+        2px 2px 3px rgba(0,0,0,0.25);
+
+    font-size:13px;
+    font-weight:normal;
+}
+
+.manual-btn:active{
+    transform:translateY(1px);
+
+    box-shadow:
+        inset -1px -1px 0 #ffffff,
+        inset 1px 1px 0 #888;
+}
+
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#dfeaf3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+#splash img{
+    width:180px;
+    height:180px;
+    border-radius:40px;
+    animation:zoomIn .5s ease;
+}
+
+@keyframes zoomIn{
+    from{
+        transform:scale(.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+#app{
+    display:none;
+}
+
+#menuPage{
+    display:none;
+    min-height:100vh;
+    background:#dfeaf3;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.menu-title{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    color:#ffffff !important;
+    text-align:center;
+}
+
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+}
+
+.report-btn{
+    background:#2196f3;
+    color:#ffffff !important;
+}
+
+.setting-btn{
+    background:#ff9800;
+    color:#ffffff !important;
+}
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    color:#ffffff !important;
+    text-align:center;
+}
+
+.report-btn{
+    background:#2196f3;
+}
+
+.newmodel-btn{
+    background:#4caf50;
+}
+
+.trial-btn{
+    background:#9c27b0;
+}
+
+.setting-btn{
+    background:#ff9800;
+}
+
+.borrow-btn{
+    background:#009688;
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
+}
+    
+</style>
+
+</head>
+<body>
+
+<div id="splash">
+
+    <div class="splash-content">
+
+        <img src="icon-512.png" alt="Logo">
+
+        <div class="splash-text">
+            INSPECTION PART
+        </div>
+
+    </div>
+
+</div>
+
+<div id="menuPage">
+
+    <div class="menu-title">
+        INSPECTION PART
+    </div>
+
+    <button class="menu-btn report-btn"
+        onclick="openReport()">
+        📋 PART PROBLEM REPORT
+    </button>
+
+    <button class="menu-btn newmodel-btn"
+        onclick="location.href='index2.html'">
+        📦 PART PROBLEM NEW MODEL
+    </button>
+
+    <button class="menu-btn borrow-btn"
+    onclick="location.href='index5.html'">
+    🔄 PART BORROWING FROM PL
+    </button>
+
+    <button class="menu-btn trial-btn"
+        onclick="location.href='index3.html'">
+        🧪 ASSEMBLY TRIAL
+    </button>
+
+    <button class="menu-btn setting-btn"
+        onclick="location.href='index4.html'">
+        ⚙️ SETTINGS
+    </button>
+
+</div>
+
+<div id="app" style="display:none;">
+
+<div class="container">
+
+<div class="top-nav">
+
+    <span onclick="backToMenu()">
+        ❮ กลับ
+    </span>
+
+    <span onclick="openStandard()">
+        📏 Standard
+    </span>
+
+</div>
+
 <div class="title">
-    🚨 PART PROBLEM REPORT 🚨
+🚨 PART PROBLEM REPORT 🚨
 </div>
 
 <div class="top-row">
@@ -58,34 +790,815 @@
 
 <input type="text" id="supplier" readonly>
 
-<div class="row-info">
+<div class="inspection-grid">
 
     <div>
-        <label>Serial Number</label>
-        <input type="text" id="unitno">
+        <label>Check Stock</label>
+        <input type="number" id="stockNg">
     </div>
 
     <div>
-        <label>Issue Doc</label>
-        <select id="document">
-            <option>-</option>
-            <option>UAR</option>
-            <option>PAR</option>
-        </select>
+        <label>OK Qty</label>
+        <input type="number" id="okQty">
     </div>
 
     <div>
-        <label>Line Stop</label>
-        <div class="line-stop-box">
-            <input type="number" id="linestop">
-            <span>sec</span>
-        </div>
+        <label>NG Qty</label>
+        <input type="number" id="ngQty" readonly>
     </div>
 
 </div>
 
-<label>Problem</label>
-<textarea id="problem"></textarea>
+<div class="total-ng-box">
 
-<label>Detail</label>
-<textarea id="detail"></textarea>
+<div style="width:100%;display:flex;align-items:center;gap:10px;">
+
+    <label style="width:80px;">
+        <b>Part NG</b>
+    </label>
+
+    <select id="partNgShow" style="flex:1;">
+        <option></option>
+        <option>Rework</option>
+        <option>Wait Rework</option>
+        <option>Reject</option>
+        <option>Defect</option>
+    </select>
+
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+
+    <label style="width:80px;">
+        <b>Total NG</b>
+    </label>
+
+    <input
+        type="number"
+        id="totalNg"
+        readonly
+        style="width:80px;"
+    >
+
+</div>
+
+</div>
+
+<button class="review" onclick="reviewReport()">
+🔍 Review Report
+</button>
+
+<button class="copy" onclick="copyReport()">
+📋 Copy Report
+</button>
+
+<button class="line" onclick="sendLine()">
+📤 Send LINE
+</button>
+
+<div id="report" class="report"></div>
+
+</div>
+
+<script>
+
+document.getElementById("date").value =
+new Date().toISOString().split("T")[0];
+
+let partMaster = {};
+let allPartNo = [];
+
+async function loadExcel(){
+
+    const response = await fetch("ข้อมูล Excel.xlsx");
+
+    const data = await response.arrayBuffer();
+
+    const workbook = XLSX.read(data,{
+        type:"array"
+    });
+
+    const sheet =
+    workbook.Sheets[workbook.SheetNames[0]];
+
+    const rows =
+    XLSX.utils.sheet_to_json(sheet);
+
+    rows.forEach(row=>{
+
+const partNo = String(
+    row.PartNo || ""
+).trim();
+
+        if(partNo){
+
+    if(!allPartNo.includes(partNo)){
+    allPartNo.push(partNo);
+}
+
+    partMaster[partNo] = {
+
+                partName:
+                row.PartName || "",
+
+                supplier:
+                row.Supplier || "",
+
+                model:
+                row.Model || ""
+
+            };
+
+        }
+
+    });
+
+    console.log(
+      "Excel Loaded : " +
+      Object.keys(partMaster).length
+    );
+
+}
+
+loadExcel();
+
+let partnameManual = false;
+let modelManual = false;
+let supplierManual = false;
+
+document.getElementById("partnameBtn").onclick = function(){
+
+if(!partnameManual){
+
+    partnameManual = true;
+
+    partname.readOnly = false;
+    partname.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+this.style.color = "#fff";
+
+}else{
+
+    partnameManual = false;
+
+    partname.readOnly = true;
+
+    this.innerText = "Manual";
+this.style.background = "#d9d9d9";
+this.style.color = "#000";
+
+    fillPartData(partno.value);
+}
+
+        };
+
+document.getElementById("modelBtn").onclick = function(){
+
+    if(!modelManual){
+
+        modelManual = true;
+
+        model.readOnly = false;
+                model.value = "";
+
+        this.innerText = "Auto";
+                this.style.background = "#06C755";
+this.style.color = "#fff";
+
+    }else{
+
+        modelManual = false;
+
+        model.readOnly = true;
+
+        this.innerText = "Manual";
+this.style.background = "#d9d9d9";
+this.style.color = "#000";
+
+        fillPartData(partno.value);
+    }
+
+};
+
+document.getElementById("supplierBtn").onclick = function(){
+
+    if(!supplierManual){
+
+        supplierManual = true;
+
+        supplier.readOnly = false;
+
+        supplier.value = "";
+
+        this.innerText = "Auto";
+this.style.background = "#06C755";
+this.style.color = "#fff";    }else{
+
+        supplierManual = false;
+
+        supplier.readOnly = true;
+
+        this.innerText = "Manual";
+this.style.background = "#d9d9d9";
+this.style.color = "#000";
+fillPartData(partno.value);
+
+    }
+
+};
+
+document.getElementById("partno")
+.addEventListener("input", function(){
+
+    const keyword = this.value.trim();
+
+    if(keyword === ""){
+
+        if(!partnameManual) partname.value = "";
+        if(!modelManual) model.value = "";
+        if(!supplierManual) supplier.value = "";
+
+        partList.innerHTML = "";
+        return;
+    }
+
+    if(partMaster[keyword]){
+        fillPartData(keyword);
+        return;
+    }
+
+    if(keyword.length < 4){
+        partList.innerHTML = "";
+        return;
+    }
+
+    const result = allPartNo
+        .filter(p =>
+            p.startsWith(keyword) ||
+            p.includes("-" + keyword)
+        )
+        .slice(0,10);
+
+    partList.innerHTML = result
+        .map(p => `<option value="${p}"></option>`)
+        .join("");
+
+});
+function fillPartData(partNo){
+
+    if(!partMaster[partNo]) return;
+
+    if(!partnameManual){
+        partname.value =
+        partMaster[partNo].partName;
+    }
+
+    if(!modelManual){
+        model.value =
+        partMaster[partNo].model;
+    }
+
+    if(!supplierManual){
+        supplier.value =
+        partMaster[partNo].supplier;
+    }
+
+}
+
+function calculateNG(){
+
+    let lineNg =
+    Number(document.getElementById("skcaNg").value || 0);
+document.getElementById("partNgQty").value =
+lineNg === 0 ? "" : lineNg;
+
+    let stock =
+    Number(document.getElementById("stockNg").value || 0);
+
+    let ok =
+    Number(document.getElementById("okQty").value || 0);
+
+    let partQty =
+    Number(document.getElementById("partNgQty").value || 0);
+
+    let partType =
+    document.getElementById("partNg").value;
+
+    let ngQty = stock - ok;
+
+    if(ngQty < 0) ngQty = 0;
+
+    document.getElementById("ngQty").value =
+ngQty === 0 ? "" : ngQty;
+
+    let total = ngQty;
+
+if(partType === "Reject" || partType === "Defect"){
+    total += partQty;
+}
+
+    document.getElementById("totalNg").value =
+(total === 0) ? "" : total;
+}
+
+let reportVisible = false;
+
+function createPartFields(){
+
+    const count =
+    Number(document.getElementById("partCount").value || 0);
+
+    const area =
+    document.getElementById("partArea");
+
+    area.innerHTML = "";
+
+    for(let i=1;i<=count;i++){
+
+        const unit =
+        i === 1 ? "Pc." : "Pcs.";
+
+        area.innerHTML += `
+        <div class="part-box">
+
+            <div style="font-weight:bold;margin-bottom:10px;">
+                🔹 Part เสียหายร่วม ${i}
+            </div>
+
+            <label>Part No.</label>
+<input
+    type="text"
+    id="partNo${i}"
+    list="subPartList${i}"
+    autocomplete="off"
+    oninput="fillSubPart(${i})"
+>
+
+<datalist id="subPartList${i}"></datalist>
+
+            <label>Part Name</label>
+            <input
+                type="text"
+                id="partName${i}"
+                readonly
+            >
+
+            <label>Qty.</label>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <input
+                    type="number"
+                    id="partQty${i}"
+                    style="flex:1;"
+                >
+                <span>(${unit})</span>
+            </div>
+
+        </div>
+        `;
+    }
+}
+
+function fillSubPart(index){
+
+    const keyword =
+    document.getElementById(`partNo${index}`)
+    .value.trim();
+
+    const partName =
+    document.getElementById(`partName${index}`);
+
+    const list =
+    document.getElementById(`subPartList${index}`);
+
+    partName.value = "";
+
+    if(keyword === ""){
+        list.innerHTML = "";
+        return;
+    }
+
+    // มีใน Excel ตรงตัว
+    if(partMaster[keyword]){
+        partName.value =
+        partMaster[keyword].partName || "";
+        return;
+    }
+
+    // หา Part แม่ เช่น
+    // 5T216-5151-30 -> 5T216-5151
+    const parts = keyword.split("-");
+
+    if(parts.length >= 3){
+
+        const basePart =
+        `${parts[0]}-${parts[1]}`;
+
+        if(partMaster[basePart]){
+
+            partName.value =
+            partMaster[basePart].partName || "";
+
+            return;
+        }
+    }
+
+    if(keyword.length < 4){
+        list.innerHTML = "";
+        return;
+    }
+
+const result = allPartNo
+    .filter(p =>
+        p.startsWith(keyword) ||
+        p.includes("-" + keyword)
+    )
+    .slice(0,10);;
+
+    list.innerHTML = result
+        .map(p => `<option value="${p}"></option>`)
+        .join("");
+}
+
+function reviewReport(){
+
+    if(reportVisible){
+        document.getElementById("report").style.display = "none";
+        reportVisible = false;
+        return;
+    }
+
+    reportVisible = true;
+
+    let skca =
+    Number(document.getElementById("skcaNg").value || 0);
+
+    let stock =
+    Number(document.getElementById("stockNg").value || 0);
+
+    let ng =
+    Number(document.getElementById("ngQty").value || 0);
+
+    let totalNg =
+    document.getElementById("totalNg").value;
+const okMark =
+document.querySelector(
+'input[name="okmark"]:checked'
+)?.value || "-";
+
+const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
+const stockUnit = stock == 1 ? "Pc." : "Pcs.";
+const okUnit = okQty.value == 1 ? "Pc." : "Pcs.";
+const ngUnit = ng == 1 ? "Pc." : "Pcs.";
+const partUnit = partNgQty.value == 1 ? "Pc." : "Pcs.";
+const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
+
+const totalNgType =
+document.getElementById("partNgShow").value.trim();
+
+let subPartsText = "";
+
+const count =
+Number(document.getElementById("partCount").value || 0);
+
+for(let i=1;i<=count;i++){
+
+    const partNo =
+    document.getElementById(`partNo${i}`)?.value || "";
+
+    const partName =
+    document.getElementById(`partName${i}`)?.value || "";
+
+    const qty =
+    Number(document.getElementById(`partQty${i}`)?.value || 0);
+
+    const unit =
+    qty === 1 ? "Pc." : "Pcs.";
+
+subPartsText +=
+`Part No. : ${partNo}
+Part Name : ${partName}
+Qty. : ${qty} ${unit}`;
+}
+
+let partDamageSection = "";
+
+const hasPartData =
+subPartsText
+.trim()
+.replace(/Part No\.\s*:\s*/g,"")
+.replace(/Part Name\s*:\s*/g,"")
+.replace(/Qty\.\s*:\s*0\s*Pcs?\./g,"")
+.trim();
+
+if(hasPartData){
+partDamageSection =
+`━━━━━━━━━━━━━━
+📦 Part เสียหายร่วม
+${subPartsText.trim()}`;
+}
+
+    let text = `🚨 PARTS PROBLEM REPORT 🚨
+🗓️ Date : ${date.value.split("-").reverse().join("-")}
+🏷️ Type : ${type.value}
+
+📦 Part No. : ${partno.value}
+📋 Part Name : ${partname.value}
+🚜 Model : ${model.value || "-"}
+🏭 Supplier : ${supplier.value}
+🔢 Serial Number : ${unitno.value}
+📄 Issue Doc : ${document.getElementById("document").value}
+⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec" : "-"}
+
+🔴 Problem
+${problem.value}
+
+🔍 Detail
+${detail.value}
+━━━━━━━━━━━━━━
+🟡 CONTAINMENT ACTION
+✅ Rework : ${rework.value}
+📋 Result : ${containmentResult.value}
+━━━━━━━━━━━━━━
+📊 INSPECTION RESULT
+• SKC-A MFG พบ NG : ${skca} ${skcaUnit}
+• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}
+• ผลการ Rework : ${reworkResult.value}
+
+• Check Stock SKC : ${stock} ${stockUnit}
+• OK : ${okQty.value} ${okUnit}
+• NG : ${ng} ${ngUnit}
+➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
+🖍️ OK Mark : ${okMark}${partDamageSection ? "\n" + partDamageSection : ""}
+━━━━━━━━━━━━━━
+🔵 ACTION REQUEST
+Supplier : ${supplier.value}
+✅ ตรวจสอบ Stock คงเหลือทั้งหมด
+✅ แจ้งจำนวน OK / NG
+✅ แนบรูป Mark Check
+✅ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+✅ ขยายผลไปยัง Spare Part (ถ้ามี)
+━━━━━━━━━━━━━━
+📷 Photo : Attached
+`;
+
+    document.getElementById("report").style.display = "block";
+document.getElementById("report").innerText = text.trim();
+}
+document
+.querySelectorAll("input,select,textarea")
+.forEach(el => {
+
+    el.addEventListener("input", () => {
+    calculateNG();
+});
+
+el.addEventListener("change", () => {
+    calculateNG();
+});
+
+});
+
+calculateNG();
+
+document.getElementById("report").style.display = "none";
+
+window.addEventListener("pageshow", () => {
+
+    const std =
+    localStorage.getItem("selectedStd");
+
+    if(!std) return;
+
+    const fieldId =
+    localStorage.getItem("activeFieldId");
+
+    if(fieldId){
+
+        const field =
+        document.getElementById(fieldId);
+
+        if(field){
+
+            field.value += " " + std;
+
+        }
+
+    }
+
+    localStorage.removeItem("selectedStd");
+
+});
+
+let activeField = null;
+
+document.querySelectorAll("textarea,input")
+.forEach(el => {
+
+    function saveField(){
+
+        localStorage.setItem(
+            "activeFieldId",
+            el.id
+        );
+
+    }
+
+    el.addEventListener("focus", saveField);
+    el.addEventListener("click", saveField);
+    el.addEventListener("input", saveField);
+    el.addEventListener("touchstart", saveField);
+
+});
+
+function copyReport(){
+
+    const text =
+    document.getElementById("report").innerText;
+
+    const temp =
+    document.createElement("textarea");
+
+    temp.value = text;
+
+    document.body.appendChild(temp);
+
+    temp.select();
+    temp.setSelectionRange(
+        0,
+        99999
+    );
+
+    document.execCommand("copy");
+
+    document.body.removeChild(temp);
+
+    const msg = document.createElement("div");
+
+msg.innerHTML = "📋 Copy Report สำเร็จ";
+
+msg.style.cssText = `
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#333;
+color:#fff;
+padding:15px 25px;
+border-radius:10px;
+z-index:9999;
+font-size:16px;
+text-align:center;
+white-space:nowrap;
+box-shadow:0 4px 12px rgba(0,0,0,0.3);
+`;
+
+document.body.appendChild(msg);
+
+setTimeout(()=>{
+    msg.remove();
+},2000);
+
+}
+
+function sendLine(){
+
+    const text =
+    document.getElementById("report").innerText.trim();
+
+    if(!text){
+
+        const msg = document.createElement("div");
+
+        msg.innerHTML = "⚠️ กรุณากด Review Report ก่อน";
+
+        msg.style.cssText = `
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#333;
+color:#fff;
+padding:15px 25px;
+border-radius:10px;
+z-index:9999;
+font-size:16px;
+text-align:center;
+white-space:nowrap;
+box-shadow:0 4px 12px rgba(0,0,0,0.3);
+`;
+
+        document.body.appendChild(msg);
+
+        setTimeout(()=>{
+            msg.remove();
+        },2000);
+
+        return;
+    }
+
+location.href =
+"https://line.me/R/share?text=" +
+encodeURIComponent(text);
+
+}
+
+let currentOkMark = null;
+
+document.querySelectorAll('input[name="okmark"]')
+.forEach(radio => {
+
+    radio.addEventListener("click", function(){
+
+        if(currentOkMark === this){
+
+            this.checked = false;
+            currentOkMark = null;
+
+        }else{
+
+            currentOkMark = this;
+
+        }
+
+    });
+
+});
+
+function backToMenu(){
+
+    document.getElementById("app").style.display = "none";
+    document.getElementById("menuPage").style.display = "block";
+    document.getElementById("bottomNav").style.display = "none";
+
+}
+
+function openReport(){
+
+    document.getElementById("menuPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("bottomNav").style.display = "flex";
+
+}
+
+function openStandard(){
+
+    const active =
+    document.activeElement;
+
+    if(active && active.id){
+
+        localStorage.setItem(
+            "activeFieldId",
+            active.id
+        );
+
+    }
+
+    location.href = "standard.html";
+
+}
+
+</script>
+    <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+}
+</script>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    setTimeout(() => {
+
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("menuPage").style.display = "block";
+
+    }, 1000);
+
+});
+</script>
+
+<div class="bottom-nav" id="bottomNav" style="display:none;">
+
+    <button onclick="backToMenu()">
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button onclick="location.href='shortcut.html'">
+        📝
+        <span>Document</span>
+    </button>
+
+    <button onclick="openStandard()">
+        📏
+        <span>STD</span>
+    </button>
+
+</div>
+
+</body>
+</html>
