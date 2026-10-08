@@ -116,26 +116,6 @@ input,select,textarea{
     width:120px;
 }
 
-.row-info{
-    display:flex;
-    gap:10px;
-    margin-bottom:8px;
-}
-
-.row-info > div{
-    flex:1;
-}
-
-.line-stop-box{
-    display:flex;
-    align-items:center;
-    gap:5px;
-}
-
-.line-stop-box input{
-    flex:1;
-}
-
 textarea{
     min-height:80px;
 }
@@ -239,13 +219,6 @@ button{
     overflow-x:hidden;
 }
 
-#reworkResult{
-    width:100%;
-    height:30px;
-    font-size:14px;
-    box-sizing:border-box;
-}
-
 input,
 select,
 textarea,
@@ -261,10 +234,7 @@ label,
 
 #date,
 #type,
-#document,
-#containmentResult,
-#reworkResult,
-#partNg{
+#partNgShow{
     background:#ffffff !important;
     background-color:#ffffff !important;
     color:#000000 !important;
@@ -276,13 +246,10 @@ label,
     border:1px solid #999;
 }
 
-#skcaNg,
-#partNgQty,
 #stockNg,
 #okQty,
 #ngQty,
-#totalNg,
-#partNg{
+#totalNg{
     font-size:16px !important;
 }
 
@@ -291,94 +258,12 @@ label,
     color:white;
 }
 
-#containmentResult{
-    width:60%;
-    height:30px;
-    font-size:14px;
-    box-sizing:border-box;
-}
-
-.rework-label{
-    display:flex;
-    align-items:center;
-    height:42px;
-    padding-left:10px;
-}
-
-.rework-label label{
-    margin:0;
-    padding:0;
-}
-
 .total-ng-box{
     padding:5px;
     display:flex;
     align-items:center;
     gap:10px;
     flex-wrap:wrap;
-}
-
-#partArea{
-    flex-basis:100%;
-    width:100%;
-}
-
-.total-ng-box input[type="radio"]{
-    display:none;
-}
-
-.green,
-.yellow,
-.pink,
-.blue,
-.white{
-    display:inline-block;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    border:3px solid;
-    cursor:pointer;
-}
-
-.green{
-    border-color:#22aa44;
-}
-
-.yellow{
-    border-color:#ffe600;
-}
-
-.pink{
-    border-color:#ff9db6;
-}
-
-.blue{
-    border-color:#0000FF;
-}
-
-.white{
-    border-color:#ffffff;
-    background:transparent;
-}
-
-input[name="okmark"]:checked + .green{
-    background:#22aa44;
-}
-
-input[name="okmark"]:checked + .yellow{
-    background:#ffe600;
-}
-
-input[name="okmark"]:checked + .pink{
-    background:#ff9db6;
-}
-
-input[name="okmark"]:checked + .blue{
-    background:#0000FF;
-}
-
-input[name="okmark"]:checked + .white{
-    background:#ffffff;
 }
 
 #partNgShow{
@@ -418,49 +303,6 @@ input[name="okmark"]:checked + .white{
 
 .bottom-nav button:active{
     background:#f1f1f1;
-}
-
-@media (max-width:500px){
-
-    .total-ng-box{
-        gap:4px;
-    }
-
-    .okmark-label{
-        font-size:14px;
-                margin-left:10px;
-    }
-
-    .green,
-    .yellow,
-    .pink,
-    .blue,
-    .white{
-        width:16px;
-        height:16px;
-        border-width:2px;
-    }
-
-}
-
-.part-box{
-    background:#fff;
-    border:1px solid #ccc;
-    border-radius:5px;
-    padding:10px;
-    margin-top:10px;
-    width:100%;
-    box-sizing:border-box;
-}
-
-.part-box label{
-    display:block;
-    margin-top:8px;
-}
-
-.part-box input{
-    display:block;
-    width:100%;
 }
 
 @media (max-width:500px){
