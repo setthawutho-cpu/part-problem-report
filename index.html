@@ -1408,8 +1408,7 @@ ${detail.value}
 • OK : ${okQty.value} ${okUnit}
 • NG : ${ng} ${ngUnit}
 ➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
-🖍️ OK Mark : ${okMark}
-${partDamageSection}
+🖍️ OK Mark : ${okMark}${partDamageSection ? "\n" + partDamageSection : ""}
 ━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
