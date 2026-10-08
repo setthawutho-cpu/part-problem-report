@@ -1,0 +1,91 @@
+<div class="title">
+    🚨 PART PROBLEM REPORT 🚨
+</div>
+
+<div class="top-row">
+
+    <label>Date</label>
+    <input type="date" id="date">
+
+    <label>Type</label>
+    <select id="type">
+        <option>New</option>
+        <option>Repeat</option>
+    </select>
+
+</div>
+
+<label>Part No.</label>
+<input type="text"
+       id="partno"
+       list="partList">
+
+<datalist id="partList"></datalist>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+    <label>Part Name</label>
+
+    <button type="button"
+            id="partnameBtn"
+            class="manual-btn">
+        Manual
+    </button>
+</div>
+
+<input type="text" id="partname" readonly>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+    <label>Model</label>
+
+    <button type="button"
+            id="modelBtn"
+            class="manual-btn">
+        Manual
+    </button>
+</div>
+
+<input type="text" id="model" readonly>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+    <label>Supplier</label>
+
+    <button type="button"
+            id="supplierBtn"
+            class="manual-btn">
+        Manual
+    </button>
+</div>
+
+<input type="text" id="supplier" readonly>
+
+<div class="row-info">
+
+    <div>
+        <label>Serial Number</label>
+        <input type="text" id="unitno">
+    </div>
+
+    <div>
+        <label>Issue Doc</label>
+        <select id="document">
+            <option>-</option>
+            <option>UAR</option>
+            <option>PAR</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Line Stop</label>
+        <div class="line-stop-box">
+            <input type="number" id="linestop">
+            <span>sec</span>
+        </div>
+    </div>
+
+</div>
+
+<label>Problem</label>
+<textarea id="problem"></textarea>
+
+<label>Detail</label>
+<textarea id="detail"></textarea>
