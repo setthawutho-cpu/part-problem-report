@@ -44,10 +44,7 @@ async function loadExcel(){
         }
     });
 
-    console.log(
-        "Excel Loaded : " +
-        Object.keys(partMaster).length
-    );
+    console.log("Excel Loaded : " + Object.keys(partMaster).length);
 }
 
 loadExcel();
@@ -204,11 +201,8 @@ function calculateNG(){
 
     if(ng < 0) ng = 0;
 
-    document.getElementById("ngQty").value =
-    ng === 0 ? "" : ng;
-
-    document.getElementById("totalNg").value =
-    ng === 0 ? "" : ng;
+    document.getElementById("ngQty").value = ng || "";
+    document.getElementById("totalNg").value = ng || "";
 }
 
 let reportVisible = false;
@@ -216,6 +210,7 @@ let reportVisible = false;
 function reviewReport(){
 
     if(reportVisible){
+
         document.getElementById("report").style.display = "none";
         reportVisible = false;
         return;
@@ -276,13 +271,11 @@ window.addEventListener("pageshow", () => {
 
     if(!std) return;
 
-    const fieldId =
-    localStorage.getItem("activeFieldId");
+    const fieldId = localStorage.getItem("activeFieldId");
 
     if(fieldId){
 
-        const field =
-        document.getElementById(fieldId);
+        const field = document.getElementById(fieldId);
 
         if(field){
             field.value += " " + std;
@@ -309,12 +302,12 @@ document.querySelectorAll("textarea,input")
     el.addEventListener("touchstart", saveField);
 });
 
-function copyReport(){
+async function copyReport(){
 
     const text =
     document.getElementById("report").innerText;
 
-    navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(text);
 
     const msg = document.createElement("div");
 
@@ -356,6 +349,7 @@ function sendLine(){
 }
 
 function backToMenu(){
+
     location.href = "index.html";
 }
 
@@ -364,6 +358,7 @@ function openStandard(){
     const active = document.activeElement;
 
     if(active && active.id){
+
         localStorage.setItem(
             "activeFieldId",
             active.id
@@ -374,6 +369,7 @@ function openStandard(){
 }
 
 if ("serviceWorker" in navigator) {
+
     navigator.serviceWorker.register("./sw.js");
 }
 
