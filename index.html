@@ -85,6 +85,7 @@ body{
     background:#c7d9ea;
     padding:10px;
     padding-top:50px;
+    padding-bottom:90px;
     border-radius:8px;
 }
 
@@ -382,6 +383,41 @@ input[name="okmark"]:checked + .white{
 
 #partNgShow{
     height:30px;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:65px;
+    background:#fff;
+    border-top:1px solid #ccc;
+    display:flex;
+    z-index:99999;
+}
+
+.bottom-nav button{
+    flex:1;
+    margin:0;
+    border:none;
+    background:#fff;
+    color:#333;
+    font-size:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+}
+
+.bottom-nav button span{
+    font-size:12px;
+    margin-top:2px;
+}
+
+.bottom-nav button:active{
+    background:#f1f1f1;
 }
 
 @media (max-width:500px){
@@ -1656,6 +1692,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+
+<div class="bottom-nav">
+
+    <button onclick="backToMenu()">
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button onclick="location.href='shortcut.html'">
+        ✏️
+        <span>Text</span>
+    </button>
+
+    <button onclick="openStandard()">
+        📏
+        <span>STD</span>
+    </button>
+
+</div>
 
 </body>
 </html>
