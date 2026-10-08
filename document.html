@@ -444,40 +444,7 @@ textarea{
 </head>
 <body>
 
-<div id="menuPage" style="display:block;">
-
-    <div class="menu-title">
-        INSPECTION PART
-    </div>
-
-    <button class="menu-btn report-btn"
-        onclick="openReport()">
-        📋 PART PROBLEM REPORT
-    </button>
-
-    <button class="menu-btn newmodel-btn"
-        onclick="location.href='index2.html'">
-        📦 PART PROBLEM NEW MODEL
-    </button>
-
-    <button class="menu-btn borrow-btn"
-    onclick="location.href='index5.html'">
-    🔄 PART BORROWING FROM PL
-    </button>
-
-    <button class="menu-btn trial-btn"
-        onclick="location.href='index3.html'">
-        🧪 ASSEMBLY TRIAL
-    </button>
-
-    <button class="menu-btn setting-btn"
-        onclick="location.href='index4.html'">
-        ⚙️ SETTINGS
-    </button>
-
-</div>
-
-<div id="app" style="display:none;">
+<div id="app" style="display:block;">
 
 <div class="container">
 
@@ -1058,9 +1025,7 @@ encodeURIComponent(text);
 
 function backToMenu(){
 
-    document.getElementById("app").style.display = "none";
-    document.getElementById("menuPage").style.display = "block";
-    document.getElementById("bottomNav").style.display = "none";
+    location.reload();
 
 }
 
@@ -1098,7 +1063,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </div>
 
-<div class="bottom-nav" id="bottomNav" style="display:none;">
+<div class="bottom-nav" id="bottomNav" style="display:flex;">
 
     <button onclick="backToMenu()">
         🏠
