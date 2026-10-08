@@ -21,828 +21,1652 @@
 
 <style>
 
+
+
 html,
+
 body{
-    background:#dfeaf3;
-    margin:0;
-    padding:0;
+
+\&#x20;   background:#dfeaf3;
+
+\&#x20;   margin:0;
+
+\&#x20;   padding:0;
+
 }
+
+
 
 .copy{
-    background:#9c27b0;
-    color:white;
+
+\&#x20;   background:#9c27b0;
+
+\&#x20;   color:white;
+
 }
+
+
 
 .line{
-    background:#06C755;
-    color:white;
+
+\&#x20;   background:#06C755;
+
+\&#x20;   color:white;
+
 }
+
+
 
 body{
-    margin:0;
-    padding:10px;
-    background:#dfeaf3;
-    font-family:Segoe UI,sans-serif;
+
+\&#x20;   margin:0;
+
+\&#x20;   padding:10px;
+
+\&#x20;   background:#dfeaf3;
+
+\&#x20;   font-family:Segoe UI,sans-serif;
+
 }
 
+
+
 .container{
-    max-width:500px;
-    margin:auto;
-    background:#c7d9ea;
-    padding:10px;
-    padding-top:50px;
-    padding-bottom:90px;
-    border-radius:8px;
+
+\&#x20;   max-width:500px;
+
+\&#x20;   margin:auto;
+
+\&#x20;   background:#c7d9ea;
+
+\&#x20;   padding:10px;
+
+\&#x20;   padding-top:50px;
+
+\&#x20;   padding-bottom:90px;
+
+\&#x20;   border-radius:8px;
+
 }
+
+
+
 
 
 input,select,textarea{
-    width:100%;
-    padding:6px;
-    margin:3px 0;
-    box-sizing:border-box;
+
+\&#x20;   width:100%;
+
+\&#x20;   padding:6px;
+
+\&#x20;   margin:3px 0;
+
+\&#x20;   box-sizing:border-box;
+
 }
 
-#date{
-    width:150px;
+
+
+\\#date{
+
+\&#x20;   width:150px;
+
 }
+
+
 
 .top-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:8px;
+
+\&#x20;   display:flex;
+
+\&#x20;   align-items:center;
+
+\&#x20;   gap:8px;
+
+\&#x20;   margin-bottom:8px;
+
 }
+
+
 
 .top-row label{
-    margin:0;
+
+\&#x20;   margin:0;
+
 }
 
-#type{
-    width:120px;
+
+
+\\#type{
+
+\&#x20;   width:120px;
+
 }
+
+
 
 textarea{
-    min-height:80px;
+
+\&#x20;   min-height:80px;
+
 }
+
+
 
 .title{
-    font-size:20px;
-    font-weight:bold;
-    text-align:center;
-    margin-bottom:10px;
+
+\&#x20;   font-size:20px;
+
+\&#x20;   font-weight:bold;
+
+\&#x20;   text-align:center;
+
+\&#x20;   margin-bottom:10px;
+
 }
+
+
 
 .section{
-    background:#f6c000;
-    padding:5px;
-    margin-top:10px;
-    font-weight:bold;
+
+\&#x20;   background:#f6c000;
+
+\&#x20;   padding:5px;
+
+\&#x20;   margin-top:10px;
+
+\&#x20;   font-weight:bold;
+
 }
+
+
 
 .inspection-box{
-    background:#b7c7d8;
-    border:1px solid #999;
-    margin-top:10px;
+
+\&#x20;   background:#b7c7d8;
+
+\&#x20;   border:1px solid #999;
+
+\&#x20;   margin-top:10px;
+
 }
+
+
 
 .result{
-    background:#95c11f;
-    padding:8px;
-    font-weight:bold;
-    font-size:18px;
+
+\&#x20;   background:#95c11f;
+
+\&#x20;   padding:8px;
+
+\&#x20;   font-weight:bold;
+
+\&#x20;   font-size:18px;
+
 }
+
+
 
 .inspection-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+
+\&#x20;   display:grid;
+
+\&#x20;   grid-template-columns:1fr 1fr 1fr;
+
 }
+
+
 
 .inspection-grid > div{
-    padding:0;
+
+\&#x20;   padding:0;
+
 }
 
+
+
 .inspection-grid label{
-    display:block;
-    padding:3px;
-    font-weight:normal;
+
+\&#x20;   display:block;
+
+\&#x20;   padding:3px;
+
+\&#x20;   font-weight:normal;
+
 }
+
+
 
 .inspection-grid input,
+
 .inspection-grid select{
-    width:100%;
-    height:42px;
-    font-size:18px;
-    margin:0;
+
+\&#x20;   width:100%;
+
+\&#x20;   height:42px;
+
+\&#x20;   font-size:18px;
+
+\&#x20;   margin:0;
+
 }
 
+
+
 .total-ng-box{
-    padding:5px;
+
+\&#x20;   padding:5px;
+
 }
+
+
 
 .total-ng-box input{
-    width:70px;
-    height:30px;
+
+\&#x20;   width:70px;
+
+\&#x20;   height:30px;
+
 }
 
+
+
 button{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
+
+\&#x20;   width:100%;
+
+\&#x20;   padding:10px;
+
+\&#x20;   margin-top:5px;
+
+\&#x20;   border:none;
+
+\&#x20;   cursor:pointer;
+
+\&#x20;   font-weight:bold;
+
 }
+
+
 
 .review{
-    background:#2196f3;
-    color:white;
+
+\&#x20;   background:#2196f3;
+
+\&#x20;   color:white;
+
 }
+
+
 
 .submit{
-    background:#e91e63;
-    color:white;
+
+\&#x20;   background:#e91e63;
+
+\&#x20;   color:white;
+
 }
+
+
 
 .copy{
-    background:#9c27b0;
-    color:white;
+
+\&#x20;   background:#9c27b0;
+
+\&#x20;   color:white;
+
 }
+
+
 
 .report{
-    margin-top:10px;
-    background:white;
-    padding:10px;
-    border:1px solid #ccc;
-    white-space:pre-wrap;
-    line-height:1.2;
 
-    overflow-wrap:break-word;
-    word-wrap:break-word;
-    word-break:break-word;
+\&#x20;   margin-top:10px;
 
-    max-width:100%;
-    overflow-x:hidden;
+\&#x20;   background:white;
+
+\&#x20;   padding:10px;
+
+\&#x20;   border:1px solid #ccc;
+
+\&#x20;   white-space:pre-wrap;
+
+\&#x20;   line-height:1.2;
+
+
+
+\&#x20;   overflow-wrap:break-word;
+
+\&#x20;   word-wrap:break-word;
+
+\&#x20;   word-break:break-word;
+
+
+
+\&#x20;   max-width:100%;
+
+\&#x20;   overflow-x:hidden;
+
 }
+
+
 
 input,
+
 select,
+
 textarea,
+
 button{
-    border-radius:0 !important;
+
+\&#x20;   border-radius:0 !important;
+
 }
+
+
 
 label,
+
 .inspection-grid label{
-    font-size:16px !important;
-    font-weight:400;
+
+\&#x20;   font-size:16px !important;
+
+\&#x20;   font-weight:400;
+
 }
 
-#date,
-#type,
-#partNgShow{
-    background:#ffffff !important;
-    background-color:#ffffff !important;
-    color:#000000 !important;
-    opacity:1 !important;
 
-    -webkit-appearance:none;
-    appearance:none;
 
-    border:1px solid #999;
+\\#date,
+
+\\#type,
+
+\\#partNgShow{
+
+\&#x20;   background:#ffffff !important;
+
+\&#x20;   background-color:#ffffff !important;
+
+\&#x20;   color:#000000 !important;
+
+\&#x20;   opacity:1 !important;
+
+
+
+\&#x20;   -webkit-appearance:none;
+
+\&#x20;   appearance:none;
+
+
+
+\&#x20;   border:1px solid #999;
+
 }
 
-#stockNg,
-#okQty,
-#ngQty,
-#totalNg{
-    font-size:16px !important;
+
+
+\\#stockNg,
+
+\\#okQty,
+
+\\#ngQty,
+
+\\#totalNg{
+
+\&#x20;   font-size:16px !important;
+
 }
+
+
 
 .line{
-    background:#06C755;
-    color:white;
+
+\&#x20;   background:#06C755;
+
+\&#x20;   color:white;
+
 }
+
+
 
 .total-ng-box{
-    padding:5px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
+
+\&#x20;   padding:5px;
+
+\&#x20;   display:flex;
+
+\&#x20;   align-items:center;
+
+\&#x20;   gap:10px;
+
+\&#x20;   flex-wrap:wrap;
+
 }
 
-#partNgShow{
-    height:30px;
+
+
+\\#partNgShow{
+
+\&#x20;   height:30px;
+
 }
+
+
 
 .bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:65px;
-    background:#fff;
-    border-top:1px solid #ccc;
-    display:flex;
-    z-index:99999;
+
+\&#x20;   position:fixed;
+
+\&#x20;   bottom:0;
+
+\&#x20;   left:0;
+
+\&#x20;   width:100%;
+
+\&#x20;   height:65px;
+
+\&#x20;   background:#fff;
+
+\&#x20;   border-top:1px solid #ccc;
+
+\&#x20;   display:flex;
+
+\&#x20;   z-index:99999;
+
 }
+
+
 
 .bottom-nav button{
-    flex:1;
-    margin:0;
-    border:none;
-    background:#fff;
-    color:#333;
-    font-size:22px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:0;
+
+\&#x20;   flex:1;
+
+\&#x20;   margin:0;
+
+\&#x20;   border:none;
+
+\&#x20;   background:#fff;
+
+\&#x20;   color:#333;
+
+\&#x20;   font-size:22px;
+
+\&#x20;   display:flex;
+
+\&#x20;   flex-direction:column;
+
+\&#x20;   justify-content:center;
+
+\&#x20;   align-items:center;
+
+\&#x20;   padding:0;
+
 }
+
+
 
 .bottom-nav button span{
-    font-size:12px;
-    margin-top:2px;
+
+\&#x20;   font-size:12px;
+
+\&#x20;   margin-top:2px;
+
 }
+
+
 
 .bottom-nav button:active{
-    background:#f1f1f1;
+
+\&#x20;   background:#f1f1f1;
+
 }
+
+
 
 @media (max-width:500px){
 
-    .inspection-grid{
-        grid-template-columns:45% 30% 25%;
-    }
+
+
+\&#x20;   .inspection-grid{
+
+\&#x20;       grid-template-columns:45% 30% 25%;
+
+\&#x20;   }
+
+
 
 }
+
+
 
 @media (max-width:500px){
 
-    label,
-    .inspection-grid label{
-        font-size:15px !important;
-    }
+
+
+\&#x20;   label,
+
+\&#x20;   .inspection-grid label{
+
+\&#x20;       font-size:15px !important;
+
+\&#x20;   }
+
+
 
 }
+
+
 
 @media (max-width:500px){
 
-    .inspection-grid{
-        grid-template-columns:45% 30% 25%;
-    }
 
-    .inspection-grid label{
-        font-size:12px;
-    }
 
-    .inspection-grid input,
-    .inspection-grid select{
-        font-size:16px;
-    }
+\&#x20;   .inspection-grid{
+
+\&#x20;       grid-template-columns:45% 30% 25%;
+
+\&#x20;   }
+
+
+
+\&#x20;   .inspection-grid label{
+
+\&#x20;       font-size:12px;
+
+\&#x20;   }
+
+
+
+\&#x20;   .inspection-grid input,
+
+\&#x20;   .inspection-grid select{
+
+\&#x20;       font-size:16px;
+
+\&#x20;   }
+
+
 
 }
+
+
 
 .manual-btn{
-    width:70px !important;
-    height:24px;
 
-    margin:0 !important;
-    padding:0 !important;
+\&#x20;   width:70px !important;
 
-    background:#d9d9d9;
-    color:#000;
+\&#x20;   height:24px;
 
-    border:1px solid #666 !important;
 
-    box-shadow:
-        inset 1px 1px 0 #ffffff,
-        inset -1px -1px 0 #888,
-        2px 2px 3px rgba(0,0,0,0.25);
 
-    font-size:13px;
-    font-weight:normal;
+\&#x20;   margin:0 !important;
+
+\&#x20;   padding:0 !important;
+
+
+
+\&#x20;   background:#d9d9d9;
+
+\&#x20;   color:#000;
+
+
+
+\&#x20;   border:1px solid #666 !important;
+
+
+
+\&#x20;   box-shadow:
+
+\&#x20;       inset 1px 1px 0 #ffffff,
+
+\&#x20;       inset -1px -1px 0 #888,
+
+\&#x20;       2px 2px 3px rgba(0,0,0,0.25);
+
+
+
+\&#x20;   font-size:13px;
+
+\&#x20;   font-weight:normal;
+
 }
+
+
 
 .manual-btn:active{
-    transform:translateY(1px);
 
-    box-shadow:
-        inset -1px -1px 0 #ffffff,
-        inset 1px 1px 0 #888;
+\&#x20;   transform:translateY(1px);
+
+
+
+\&#x20;   box-shadow:
+
+\&#x20;       inset -1px -1px 0 #ffffff,
+
+\&#x20;       inset 1px 1px 0 #888;
+
 }
 
-#app{
-    display:none;
+
+
+\\#app{
+
+\&#x20;   display:none;
+
 }
 
-#menuPage{
-    display:block;
+
+
+\\#menuPage{
+
+\&#x20;   display:block;
     min-height:100vh;
-    background:#dfeaf3;
-    padding:20px;
-    box-sizing:border-box;
+
+\&#x20;   background:#dfeaf3;
+
+\&#x20;   padding:20px;
+
+\&#x20;   box-sizing:border-box;
+
 }
+
+
 
 .menu-title{
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:50px;
-    margin-bottom:40px;
+
+\&#x20;   text-align:center;
+
+\&#x20;   font-size:28px;
+
+\&#x20;   font-weight:bold;
+
+\&#x20;   margin-top:50px;
+
+\&#x20;   margin-bottom:40px;
+
 }
 
+
+
 .menu-btn{
-    width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    color:#ffffff !important;
-    text-align:center;
+
+\&#x20;   width:100%;
+
+\&#x20;   max-width:400px;
+
+\&#x20;   display:block;
+
+\&#x20;   margin:15px auto;
+
+\&#x20;   padding:18px;
+
+\&#x20;   border:none;
+
+\&#x20;   font-size:18px;
+
+\&#x20;   font-weight:bold;
+
+\&#x20;   color:#ffffff !important;
+
+\&#x20;   text-align:center;
+
 }
+
+
 
 .top-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:9999;
-    background:#dfeaf3;
-    padding:8px 12px;
-    box-sizing:border-box;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+\&#x20;   position:fixed;
+
+\&#x20;   top:0;
+
+\&#x20;   left:0;
+
+\&#x20;   width:100%;
+
+\&#x20;   z-index:9999;
+
+\&#x20;   background:#dfeaf3;
+
+\&#x20;   padding:8px 12px;
+
+\&#x20;   box-sizing:border-box;
+
+
+
+\&#x20;   display:flex;
+
+\&#x20;   justify-content:space-between;
+
+\&#x20;   align-items:center;
+
 }
+
+
 
 .top-nav span{
-    color:#000;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    user-select:none;
+
+\&#x20;   color:#000;
+
+\&#x20;   font-size:16px;
+
+\&#x20;   font-weight:600;
+
+\&#x20;   cursor:pointer;
+
+\&#x20;   user-select:none;
+
 }
+
+
 
 .report-btn{
-    background:#2196f3;
-    color:#ffffff !important;
+
+\&#x20;   background:#2196f3;
+
+\&#x20;   color:#ffffff !important;
+
 }
 
+
+
 .setting-btn{
-    background:#ff9800;
-    color:#ffffff !important;
+
+\&#x20;   background:#ff9800;
+
+\&#x20;   color:#ffffff !important;
+
 }
+
+
 
 .menu-btn{
-    width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    color:#ffffff !important;
-    text-align:center;
+
+\&#x20;   width:100%;
+
+\&#x20;   max-width:400px;
+
+\&#x20;   display:block;
+
+\&#x20;   margin:15px auto;
+
+\&#x20;   padding:18px;
+
+\&#x20;   border:none;
+
+\&#x20;   font-size:18px;
+
+\&#x20;   font-weight:bold;
+
+\&#x20;   color:#ffffff !important;
+
+\&#x20;   text-align:center;
+
 }
+
+
 
 .report-btn{
-    background:#2196f3;
+
+\&#x20;   background:#2196f3;
+
 }
+
+
 
 .newmodel-btn{
-    background:#4caf50;
+
+\&#x20;   background:#4caf50;
+
 }
+
+
 
 .trial-btn{
-    background:#9c27b0;
+
+\&#x20;   background:#9c27b0;
+
 }
+
+
 
 .setting-btn{
-    background:#ff9800;
+
+\&#x20;   background:#ff9800;
+
 }
+
+
 
 .borrow-btn{
-    background:#009688;
+
+\&#x20;   background:#009688;
+
 }
+
+
 
 input,
+
 select,
+
 textarea{
-    font-size:16px !important;
+
+\&#x20;   font-size:16px !important;
+
 }
-    
-</style>
+
+\&#x20;   
+
+
+
 
 </head>
+
 <body>
+
+
 
 <div id="app" style="display:block;">
 
+
+
 <div class="container">
+
+
 
 <div class="top-nav">
 
-    <span onclick="backToMenu()">
-        ❮ กลับ
-    </span>
 
-    <span onclick="openStandard()">
-        📏 Standard
-    </span>
+
+&#x20;   <span onclick="backToMenu()">
+
+&#x20;       ❮ กลับ
+
+&#x20;   </span>
+
+
+
+&#x20;   <span onclick="openStandard()">
+
+&#x20;       📏 Standard
+
+&#x20;   </span>
+
+
 
 </div>
+
+
 
 <div class="title">
+
 🚨 PART PROBLEM REPORT 🚨
+
 </div>
+
+
 
 <div class="top-row">
 
-    <label>Date</label>
-    <input type="date" id="date">
 
-    <label>Type</label>
-    <select id="type">
-        <option>New</option>
-        <option>Repeat</option>
-    </select>
+
+&#x20;   <label>Date</label>
+
+&#x20;   <input type="date" id="date">
+
+
+
+&#x20;   <label>Type</label>
+
+&#x20;   <select id="type">
+
+&#x20;       <option>New</option>
+
+&#x20;       <option>Repeat</option>
+
+&#x20;   </select>
+
+
 
 </div>
 
+
+
 <label>Part No.</label>
+
 <input type="text"
-       id="partno"
-       list="partList">
+
+&#x20;      id="partno"
+
+&#x20;      list="partList">
+
+
 
 <datalist id="partList"></datalist>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Part Name</label>
 
-    <button type="button"
-            id="partnameBtn"
-            class="manual-btn">
-        Manual
-    </button>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+&#x20;   <label>Part Name</label>
+
+
+
+&#x20;   <button type="button"
+
+&#x20;           id="partnameBtn"
+
+&#x20;           class="manual-btn">
+
+&#x20;       Manual
+
+&#x20;   </button>
+
 </div>
+
+
 
 <input type="text" id="partname" readonly>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Model</label>
 
-    <button type="button"
-            id="modelBtn"
-            class="manual-btn">
-        Manual
-    </button>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+&#x20;   <label>Model</label>
+
+
+
+&#x20;   <button type="button"
+
+&#x20;           id="modelBtn"
+
+&#x20;           class="manual-btn">
+
+&#x20;       Manual
+
+&#x20;   </button>
+
 </div>
+
+
 
 <input type="text" id="model" readonly>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Supplier</label>
 
-    <button type="button"
-            id="supplierBtn"
-            class="manual-btn">
-        Manual
-    </button>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+&#x20;   <label>Supplier</label>
+
+
+
+&#x20;   <button type="button"
+
+&#x20;           id="supplierBtn"
+
+&#x20;           class="manual-btn">
+
+&#x20;       Manual
+
+&#x20;   </button>
+
 </div>
+
+
 
 <input type="text" id="supplier" readonly>
 
+
+
 <div class="inspection-grid">
 
-    <div>
-        <label>Check Stock</label>
-        <input type="number" id="stockNg">
-    </div>
 
-    <div>
-        <label>OK Qty</label>
-        <input type="number" id="okQty">
-    </div>
 
-    <div>
-        <label>NG Qty</label>
-        <input type="number" id="ngQty" readonly>
-    </div>
+&#x20;   <div>
+
+&#x20;       <label>Check Stock</label>
+
+&#x20;       <input type="number" id="stockNg">
+
+&#x20;   </div>
+
+
+
+&#x20;   <div>
+
+&#x20;       <label>OK Qty</label>
+
+&#x20;       <input type="number" id="okQty">
+
+&#x20;   </div>
+
+
+
+&#x20;   <div>
+
+&#x20;       <label>NG Qty</label>
+
+&#x20;       <input type="number" id="ngQty" readonly>
+
+&#x20;   </div>
+
+
 
 </div>
+
+
 
 <div class="total-ng-box">
 
+
+
 <div style="width:100%;display:flex;align-items:center;gap:10px;">
 
-    <label style="width:80px;">
-        <b>Part NG</b>
-    </label>
 
-    <select id="partNgShow" style="flex:1;">
-        <option></option>
-        <option>Rework</option>
-        <option>Wait Rework</option>
-        <option>Reject</option>
-        <option>Defect</option>
-    </select>
+
+&#x20;   <label style="width:80px;">
+
+&#x20;       **Part NG**
+
+&#x20;   </label>
+
+
+
+&#x20;   <select id="partNgShow" style="flex:1;">
+
+&#x20;       <option></option>
+
+&#x20;       <option>Rework</option>
+
+&#x20;       <option>Wait Rework</option>
+
+&#x20;       <option>Reject</option>
+
+&#x20;       <option>Defect</option>
+
+&#x20;   </select>
+
+
 
 </div>
+
+
 
 <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
 
-    <label style="width:80px;">
-        <b>Total NG</b>
-    </label>
 
-    <input
-        type="number"
-        id="totalNg"
-        readonly
-        style="width:80px;"
-    >
+
+&#x20;   <label style="width:80px;">
+
+&#x20;       **Total NG**
+
+&#x20;   </label>
+
+
+
+&#x20;   <input
+
+&#x20;       type="number"
+
+&#x20;       id="totalNg"
+
+&#x20;       readonly
+
+&#x20;       style="width:80px;"
+
+&#x20;   >
+
+
 
 </div>
 
+
+
 </div>
+
+
 
 <button class="review" onclick="reviewReport()">
+
 🔍 Review Report
+
 </button>
+
+
 
 <button class="copy" onclick="copyReport()">
+
 📋 Copy Report
+
 </button>
 
+
+
 <button class="line" onclick="sendLine()">
+
 📤 Send LINE
+
 </button>
+
+
 
 <div id="report" class="report"></div>
 
+
+
 </div>
+
+
 
 <script>
 
-document.getElementById("date").value =
+
+
+dateInput.value =
 new Date().toISOString().split("T")[0];
 
+
 let partMaster = {};
-let allPartNo = [];
+
+let allPartNo = \\\[];
+const dateInput = document.getElementById("date");
+const typeInput = document.getElementById("type");
+
+const partno = document.getElementById("partno");
+const partname = document.getElementById("partname");
+const model = document.getElementById("model");
+const supplier = document.getElementById("supplier");
+
+const partList = document.getElementById("partList");
+const partNgShow = document.getElementById("partNgShow");
+const okQty = document.getElementById("okQty");
+
+
 
 async function loadExcel(){
 
-    const response = await fetch("ข้อมูล Excel.xlsx");
 
-    const data = await response.arrayBuffer();
 
-    const workbook = XLSX.read(data,{
-        type:"array"
-    });
+\&#x20;   const response = await fetch("ข้อมูล Excel.xlsx");
 
-    const sheet =
-    workbook.Sheets[workbook.SheetNames[0]];
 
-    const rows =
-    XLSX.utils.sheet_to_json(sheet);
 
-    rows.forEach(row=>{
+\&#x20;   const data = await response.arrayBuffer();
+
+
+
+\&#x20;   const workbook = XLSX.read(data,{
+
+\&#x20;       type:"array"
+
+\&#x20;   });
+
+
+
+\&#x20;   const sheet =
+
+\&#x20;   workbook.Sheets\\\[workbook.SheetNames\\\[0]];
+
+
+
+\&#x20;   const rows =
+
+\&#x20;   XLSX.utils.sheet\\\_to\\\_json(sheet);
+
+
+
+\&#x20;   rows.forEach(row=>{
+
+
 
 const partNo = String(
-    row.PartNo || ""
+
+\&#x20;   row.PartNo || ""
+
 ).trim();
 
-        if(partNo){
 
-    if(!allPartNo.includes(partNo)){
-    allPartNo.push(partNo);
-}
 
-    partMaster[partNo] = {
+\&#x20;       if(partNo){
 
-                partName:
-                row.PartName || "",
 
-                supplier:
-                row.Supplier || "",
 
-                model:
-                row.Model || ""
+\&#x20;   if(!allPartNo.includes(partNo)){
 
-            };
-
-        }
-
-    });
-
-    console.log(
-      "Excel Loaded : " +
-      Object.keys(partMaster).length
-    );
+\&#x20;   allPartNo.push(partNo);
 
 }
+
+
+
+\&#x20;   partMaster\\\[partNo] = {
+
+
+
+\&#x20;               partName:
+
+\&#x20;               row.PartName || "",
+
+
+
+\&#x20;               supplier:
+
+\&#x20;               row.Supplier || "",
+
+
+
+\&#x20;               model:
+
+\&#x20;               row.Model || ""
+
+
+
+\&#x20;           };
+
+
+
+\&#x20;       }
+
+
+
+\&#x20;   });
+
+
+
+\&#x20;   console.log(
+
+\&#x20;     "Excel Loaded : " +
+
+\&#x20;     Object.keys(partMaster).length
+
+\&#x20;   );
+
+
+
+}
+
+
 
 loadExcel();
 
+
+
 let partnameManual = false;
+
 let modelManual = false;
+
 let supplierManual = false;
+
+
 
 document.getElementById("partnameBtn").onclick = function(){
 
+
+
 if(!partnameManual){
 
-    partnameManual = true;
 
-    partname.readOnly = false;
-    partname.value = "";
 
-    this.innerText = "Auto";
-    this.style.background = "#06C755";
+\&#x20;   partnameManual = true;
+
+
+
+\&#x20;   partname.readOnly = false;
+
+\&#x20;   partname.value = "";
+
+
+
+\&#x20;   this.innerText = "Auto";
+
+\&#x20;   this.style.background = "#06C755";
+
 this.style.color = "#fff";
+
+
 
 }else{
 
-    partnameManual = false;
 
-    partname.readOnly = true;
 
-    this.innerText = "Manual";
+\&#x20;   partnameManual = false;
+
+
+
+\&#x20;   partname.readOnly = true;
+
+
+
+\&#x20;   this.innerText = "Manual";
+
 this.style.background = "#d9d9d9";
+
 this.style.color = "#000";
 
-    fillPartData(partno.value);
+
+
+\&#x20;   fillPartData(partno.value);
+
 }
 
-        };
+
+
+\&#x20;       };
+
+
 
 document.getElementById("modelBtn").onclick = function(){
 
-    if(!modelManual){
 
-        modelManual = true;
 
-        model.readOnly = false;
-                model.value = "";
+\&#x20;   if(!modelManual){
 
-        this.innerText = "Auto";
-                this.style.background = "#06C755";
+
+
+\&#x20;       modelManual = true;
+
+
+
+\&#x20;       model.readOnly = false;
+
+\&#x20;               model.value = "";
+
+
+
+\&#x20;       this.innerText = "Auto";
+
+\&#x20;               this.style.background = "#06C755";
+
 this.style.color = "#fff";
 
-    }else{
 
-        modelManual = false;
 
-        model.readOnly = true;
+\&#x20;   }else{
 
-        this.innerText = "Manual";
+
+
+\&#x20;       modelManual = false;
+
+
+
+\&#x20;       model.readOnly = true;
+
+
+
+\&#x20;       this.innerText = "Manual";
+
 this.style.background = "#d9d9d9";
+
 this.style.color = "#000";
 
-        fillPartData(partno.value);
-    }
+
+
+\&#x20;       fillPartData(partno.value);
+
+\&#x20;   }
+
+
 
 };
+
+
 
 document.getElementById("supplierBtn").onclick = function(){
 
-    if(!supplierManual){
 
-        supplierManual = true;
 
-        supplier.readOnly = false;
+\&#x20;   if(!supplierManual){
 
-        supplier.value = "";
 
-        this.innerText = "Auto";
+
+\&#x20;       supplierManual = true;
+
+
+
+\&#x20;       supplier.readOnly = false;
+
+
+
+\&#x20;       supplier.value = "";
+
+
+
+\&#x20;       this.innerText = "Auto";
+
 this.style.background = "#06C755";
+
 this.style.color = "#fff";    }else{
 
-        supplierManual = false;
 
-        supplier.readOnly = true;
 
-        this.innerText = "Manual";
+\&#x20;       supplierManual = false;
+
+
+
+\&#x20;       supplier.readOnly = true;
+
+
+
+\&#x20;       this.innerText = "Manual";
+
 this.style.background = "#d9d9d9";
+
 this.style.color = "#000";
+
 fillPartData(partno.value);
 
-    }
+
+
+\&#x20;   }
+
+
 
 };
 
+
+
 document.getElementById("partno")
+
 .addEventListener("input", function(){
 
-    const keyword = this.value.trim();
 
-    if(keyword === ""){
 
-        if(!partnameManual) partname.value = "";
-        if(!modelManual) model.value = "";
-        if(!supplierManual) supplier.value = "";
+\&#x20;   const keyword = this.value.trim();
 
-        partList.innerHTML = "";
-        return;
-    }
 
-    if(partMaster[keyword]){
-        fillPartData(keyword);
-        return;
-    }
 
-    if(keyword.length < 4){
-        partList.innerHTML = "";
-        return;
-    }
+\&#x20;   if(keyword === ""){
 
-    const result = allPartNo
-        .filter(p =>
-            p.startsWith(keyword) ||
-            p.includes("-" + keyword)
-        )
-        .slice(0,10);
 
-    partList.innerHTML = result
-        .map(p => `<option value="${p}"></option>`)
-        .join("");
+
+\&#x20;       if(!partnameManual) partname.value = "";
+
+\&#x20;       if(!modelManual) model.value = "";
+
+\&#x20;       if(!supplierManual) supplier.value = "";
+
+
+
+\&#x20;       partList.innerHTML = "";
+
+\&#x20;       return;
+
+\&#x20;   }
+
+
+
+\&#x20;   if(partMaster\\\[keyword]){
+
+\&#x20;       fillPartData(keyword);
+
+\&#x20;       return;
+
+\&#x20;   }
+
+
+
+\&#x20;   if(keyword.length < 4){
+
+\&#x20;       partList.innerHTML = "";
+
+\&#x20;       return;
+
+\&#x20;   }
+
+
+
+\&#x20;   const result = allPartNo
+
+\&#x20;       .filter(p =>
+
+\&#x20;           p.startsWith(keyword) ||
+
+\&#x20;           p.includes("-" + keyword)
+
+\&#x20;       )
+
+\&#x20;       .slice(0,10);
+
+
+
+\&#x20;   partList.innerHTML = result
+
+\&#x20;       .map(p => `<option value="${p}"></option>`)
+
+\&#x20;       .join("");
+
+
 
 });
+
 function fillPartData(partNo){
 
-    if(!partMaster[partNo]) return;
 
-    if(!partnameManual){
-        partname.value =
-        partMaster[partNo].partName;
-    }
 
-    if(!modelManual){
-        model.value =
-        partMaster[partNo].model;
-    }
+\&#x20;   if(!partMaster\\\[partNo]) return;
 
-    if(!supplierManual){
-        supplier.value =
-        partMaster[partNo].supplier;
-    }
+
+
+\&#x20;   if(!partnameManual){
+
+\&#x20;       partname.value =
+
+\&#x20;       partMaster\\\[partNo].partName;
+
+\&#x20;   }
+
+
+
+\&#x20;   if(!modelManual){
+
+\&#x20;       model.value =
+
+\&#x20;       partMaster\\\[partNo].model;
+
+\&#x20;   }
+
+
+
+\&#x20;   if(!supplierManual){
+
+\&#x20;       supplier.value =
+
+\&#x20;       partMaster\\\[partNo].supplier;
+
+\&#x20;   }
+
 
 }
 
 function calculateNG(){
 
-    const stock =
-    Number(document.getElementById("stockNg").value || 0);
 
-    const ok =
-    Number(document.getElementById("okQty").value || 0);
 
-    let ng = stock - ok;
+\&#x20;   const stock =
 
-    if(ng < 0) ng = 0;
+\&#x20;   Number(document.getElementById("stockNg").value || 0);
 
-    document.getElementById("ngQty").value =
-    ng === 0 ? "" : ng;
 
-    document.getElementById("totalNg").value =
-    ng === 0 ? "" : ng;
+
+\&#x20;   const ok =
+
+\&#x20;   Number(document.getElementById("okQty").value || 0);
+
+
+
+\&#x20;   let ng = stock - ok;
+
+
+
+\&#x20;   if(ng < 0) ng = 0;
+
+
+
+\&#x20;   document.getElementById("ngQty").value =
+
+\&#x20;   ng === 0 ? "" : ng;
+
+
+
+\&#x20;   document.getElementById("totalNg").value =
+
+\&#x20;   ng === 0 ? "" : ng;
+
+
 
 }
 
+
+
 let reportVisible = false;
+
+
 
 function reviewReport(){
 
-    if(reportVisible){
-        document.getElementById("report").style.display = "none";
-        reportVisible = false;
-        return;
-    }
 
-    reportVisible = true;
+
+\&#x20;   if(reportVisible){
+
+\&#x20;       document.getElementById("report").style.display = "none";
+
+\&#x20;       reportVisible = false;
+
+\&#x20;       return;
+
+\&#x20;   }
+
+
+
+\&#x20;   reportVisible = true;
 
 const stock =
+
 Number(document.getElementById("stockNg").value || 0);
 
+
+
 const ng =
+
 Number(document.getElementById("ngQty").value || 0);
 
+
+
 const totalNg =
+
 Number(document.getElementById("totalNg").value || 0);
 
- 
+
+
+\&#x20;
+
 let text = `🚨 PART PROBLEM REPORT 🚨
 
-🗓️ Date : ${date.value.split("-").reverse().join("-")}
-🏷️ Type : ${type.value}
+
+
+🗓️ Date : ${dateInput.value.split("-").reverse().join("-")}
+🏷️ Type : ${typeInput.value}
 
 📦 Part No. : ${partno.value}
 📋 Part Name : ${partname.value}
@@ -851,216 +1675,423 @@ let text = `🚨 PART PROBLEM REPORT 🚨
 
 📊 INSPECTION RESULT
 
+
 • Check Stock : ${stock} Pcs.
+
 • OK Qty : ${okQty.value || 0} Pcs.
+
 • NG Qty : ${ng} Pcs.
+
 • Part NG : ${partNgShow.value || "-"}
+
 • Total NG : ${totalNg || 0} Pcs.
 
+
+
 ━━━━━━━━━━━━━━
+
 📷 Photo : Attached
+
 `;
-    document.getElementById("report").style.display = "block";
+
+\&#x20;   document.getElementById("report").style.display = "block";
+
 document.getElementById("report").innerText = text.trim();
+
 }
+
 document
+
 .querySelectorAll("input,select,textarea")
+
 .forEach(el => {
 
-    el.addEventListener("input", () => {
-    calculateNG();
+
+
+\&#x20;   el.addEventListener("input", () => {
+
+\&#x20;   calculateNG();
+
 });
+
+
 
 el.addEventListener("change", () => {
-    calculateNG();
-});
+
+\&#x20;   calculateNG();
 
 });
+
+
+
+});
+
+
 
 calculateNG();
 
+
+
 document.getElementById("report").style.display = "none";
+
+
 
 window.addEventListener("pageshow", () => {
 
-    const std =
-    localStorage.getItem("selectedStd");
 
-    if(!std) return;
 
-    const fieldId =
-    localStorage.getItem("activeFieldId");
+\&#x20;   const std =
 
-    if(fieldId){
+\&#x20;   localStorage.getItem("selectedStd");
 
-        const field =
-        document.getElementById(fieldId);
 
-        if(field){
 
-            field.value += " " + std;
+\&#x20;   if(!std) return;
 
-        }
 
-    }
 
-    localStorage.removeItem("selectedStd");
+\&#x20;   const fieldId =
+
+\&#x20;   localStorage.getItem("activeFieldId");
+
+
+
+\&#x20;   if(fieldId){
+
+
+
+\&#x20;       const field =
+
+\&#x20;       document.getElementById(fieldId);
+
+
+
+\&#x20;       if(field){
+
+
+
+\&#x20;           field.value += " " + std;
+
+
+
+\&#x20;       }
+
+
+
+\&#x20;   }
+
+
+
+\&#x20;   localStorage.removeItem("selectedStd");
+
+
 
 });
+
+
 
 let activeField = null;
 
+
+
 document.querySelectorAll("textarea,input")
+
 .forEach(el => {
 
-    function saveField(){
 
-        localStorage.setItem(
-            "activeFieldId",
-            el.id
-        );
 
-    }
+\&#x20;   function saveField(){
 
-    el.addEventListener("focus", saveField);
-    el.addEventListener("click", saveField);
-    el.addEventListener("input", saveField);
-    el.addEventListener("touchstart", saveField);
+
+
+\&#x20;       localStorage.setItem(
+
+\&#x20;           "activeFieldId",
+
+\&#x20;           el.id
+
+\&#x20;       );
+
+
+
+\&#x20;   }
+
+
+
+\&#x20;   el.addEventListener("focus", saveField);
+
+\&#x20;   el.addEventListener("click", saveField);
+
+\&#x20;   el.addEventListener("input", saveField);
+
+\&#x20;   el.addEventListener("touchstart", saveField);
+
+
 
 });
+
+
 
 function copyReport(){
 
-    const text =
-    document.getElementById("report").innerText;
 
-    const temp =
-    document.createElement("textarea");
 
-    temp.value = text;
+\&#x20;   const text =
 
-    document.body.appendChild(temp);
+\&#x20;   document.getElementById("report").innerText;
 
-    temp.select();
-    temp.setSelectionRange(
-        0,
-        99999
-    );
 
-    document.execCommand("copy");
 
-    document.body.removeChild(temp);
+\&#x20;   const temp =
 
-    const msg = document.createElement("div");
+\&#x20;   document.createElement("textarea");
+
+
+
+\&#x20;   temp.value = text;
+
+
+
+\&#x20;   document.body.appendChild(temp);
+
+
+
+\&#x20;   temp.select();
+
+\&#x20;   temp.setSelectionRange(
+
+\&#x20;       0,
+
+\&#x20;       99999
+
+\&#x20;   );
+
+
+
+\&#x20;   document.execCommand("copy");
+
+
+
+\&#x20;   document.body.removeChild(temp);
+
+
+
+\&#x20;   const msg = document.createElement("div");
+
+
 
 msg.innerHTML = "📋 Copy Report สำเร็จ";
 
+
+
 msg.style.cssText = `
+
 position:fixed;
+
 top:50%;
+
 left:50%;
+
 transform:translate(-50%,-50%);
+
 background:#333;
+
 color:#fff;
+
 padding:15px 25px;
+
 border-radius:10px;
+
 z-index:9999;
+
 font-size:16px;
+
 text-align:center;
+
 white-space:nowrap;
+
 box-shadow:0 4px 12px rgba(0,0,0,0.3);
+
 `;
+
+
 
 document.body.appendChild(msg);
 
+
+
 setTimeout(()=>{
-    msg.remove();
+
+\&#x20;   msg.remove();
+
 },2000);
 
+
+
 }
+
+
 
 function sendLine(){
 
-    const text =
-    document.getElementById("report").innerText.trim();
 
-    if(!text){
 
-        const msg = document.createElement("div");
+\&#x20;   const text =
 
-        msg.innerHTML = "⚠️ กรุณากด Review Report ก่อน";
+\&#x20;   document.getElementById("report").innerText.trim();
 
-        msg.style.cssText = `
+
+
+\&#x20;   if(!text){
+
+
+
+\&#x20;       const msg = document.createElement("div");
+
+
+
+\&#x20;       msg.innerHTML = "⚠️ กรุณากด Review Report ก่อน";
+
+
+
+\&#x20;       msg.style.cssText = `
+
 position:fixed;
+
 top:50%;
+
 left:50%;
+
 transform:translate(-50%,-50%);
+
 background:#333;
+
 color:#fff;
+
 padding:15px 25px;
+
 border-radius:10px;
+
 z-index:9999;
+
 font-size:16px;
+
 text-align:center;
+
 white-space:nowrap;
+
 box-shadow:0 4px 12px rgba(0,0,0,0.3);
+
 `;
 
-        document.body.appendChild(msg);
 
-        setTimeout(()=>{
-            msg.remove();
-        },2000);
 
-        return;
-    }
+\&#x20;       document.body.appendChild(msg);
+
+
+
+\&#x20;       setTimeout(()=>{
+
+\&#x20;           msg.remove();
+
+\&#x20;       },2000);
+
+
+
+\&#x20;       return;
+
+\&#x20;   }
+
+
 
 location.href =
+
 "https://line.me/R/share?text=" +
+
 encodeURIComponent(text);
+
+
 
 }
 
-});
+
+
+\*\*});\*\*
+
+
 
 function backToMenu(){
 
-    location.reload();
+
+
+\&#x20;   location.reload();
+
+
 
 }
+
 
 function openReport(){
 
-    document.getElementById("menuPage").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    document.getElementById("bottomNav").style.display = "flex";
+
+
+\&#x20;   document.getElementById("menuPage").style.display = "none";
+
+\&#x20;   document.getElementById("app").style.display = "block";
+
+\&#x20;   document.getElementById("bottomNav").style.display = "flex";
+
+
 
 }
+
+
 
 function openStandard(){
 
-    const active =
-    document.activeElement;
 
-    if(active && active.id){
 
-        localStorage.setItem(
-            "activeFieldId",
-            active.id
-        );
+\&#x20;   const active =
 
-    }
+\&#x20;   document.activeElement;
 
-    location.href = "standard.html";
+
+
+\&#x20;   if(active \\\&\\\& active.id){
+
+
+
+\&#x20;       localStorage.setItem(
+
+\&#x20;           "activeFieldId",
+
+\&#x20;           active.id
+
+\&#x20;       );
+
+
+
+\&#x20;   }
+
+
+
+\&#x20;   location.href = "standard.html";
+
+
 
 }
 
-</script>
-    <script>
+
+
+
+&#x20;   <script>
+
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
+
+&#x20;   navigator.serviceWorker.register("./sw.js");
+
 }
-</script>
+
 </div>
 
 <div class="bottom-nav" id="bottomNav" style="display:flex;">
