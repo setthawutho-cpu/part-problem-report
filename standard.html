@@ -3,7 +3,9 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>📏 STANDARD MENU</title>
 
@@ -19,6 +21,12 @@ body{
 h2{
     text-align:center;
     margin:30px 0;
+}
+
+input,
+textarea,
+select{
+    font-size:16px !important;
 }
 
 button{
@@ -60,8 +68,9 @@ button{
     margin:10px 0;
     border:1px solid #ccc;
     border-radius:5px;
-    font-size:16px;
-}
+    font-size:16px !important;
+
+    -webkit-text-size-
 
 .top-nav{
     position:fixed;
@@ -221,7 +230,7 @@ if(type === "length"){
     id="lengthAct"
     class="std-input"
     type="text"
-    placeholder="NG Act. เช่น +1.0"
+    placeholder="Act. เช่น +1.0"
 >
 
     <div class="std-item" onclick="sendLengthTolerance('±0.1 mm.')">±0.1 mm.</div>
@@ -256,7 +265,7 @@ if(type === "diameter"){
     id="diameterAct"
     class="std-input"
     type="text"
-    placeholder="NG Act. เช่น +0.3"
+    placeholder="Act. เช่น +0.3"
 >
 
     <div class="std-item" onclick="sendDiameterTolerance('±0.1 mm.')">±0.1 mm.</div>
@@ -285,7 +294,7 @@ if(type === "gap"){
     id="gapAct"
     class="std-input"
     type="text"
-    placeholder="NG Act. เช่น -0.2"
+    placeholder="Act. เช่น -0.2"
 >
 
     <div class="std-item" onclick="sendGapTolerance('±0.1 mm.')">±0.1 mm.</div>
