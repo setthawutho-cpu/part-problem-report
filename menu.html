@@ -13,6 +13,15 @@ body{
     background:#dfeaf3;
 }
 
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:10px;
+    padding-bottom:90px;
+    box-sizing:border-box;
+}
+
 .menu-title{
     text-align:center;
     font-size:28px;
@@ -22,8 +31,8 @@ body{
 }
 
 .menu-btn{
-    width:90%;
-    max-width:400px;
+    width:100%;
+    max-width:100%;
     display:block;
     margin:15px auto;
     padding:18px;
@@ -32,6 +41,8 @@ body{
     font-size:18px;
     font-weight:bold;
     cursor:pointer;
+    border-radius:8px;
+    box-sizing:border-box;
 }
 
 .report-btn{background:#2196f3;}
@@ -74,34 +85,38 @@ body{
 </head>
 <body>
 
-<div class="menu-title">
-    INSPECTION PART
+<div class="container">
+
+    <div class="menu-title">
+        INSPECTION PART
+    </div>
+
+    <button class="menu-btn report-btn"
+    onclick="location.href='part-problem-report.html'">
+        📋 PART PROBLEM REPORT
+    </button>
+
+    <button class="menu-btn newmodel-btn"
+    onclick="location.href='part-problem-newmodel.html'">
+        📦 PART PROBLEM NEW MODEL
+    </button>
+
+    <button class="menu-btn borrow-btn"
+    onclick="location.href='part-borrowing-pl.html'">
+        🔄 PART BORROWING FROM PL
+    </button>
+
+    <button class="menu-btn trial-btn"
+    onclick="location.href='assembly-trial.html'">
+        🧪 ASSEMBLY TRIAL
+    </button>
+
+    <button class="menu-btn setting-btn"
+    onclick="location.href='settings.html'">
+        ⚙️ SETTINGS
+    </button>
+
 </div>
-
-<button class="menu-btn report-btn"
-onclick="location.href='part-problem-report.html'">
-📋 PART PROBLEM REPORT
-</button>
-
-<button class="menu-btn newmodel-btn"
-onclick="location.href='part-problem-newmodel.html'">
-📦 PART PROBLEM NEW MODEL
-</button>
-
-<button class="menu-btn borrow-btn"
-onclick="location.href='part-borrowing-pl.html'">
-🔄 PART BORROWING FROM PL
-</button>
-
-<button class="menu-btn trial-btn"
-onclick="location.href='assembly-trial.html'">
-🧪 ASSEMBLY TRIAL
-</button>
-
-<button class="menu-btn setting-btn"
-onclick="location.href='settings.html'">
-⚙️ SETTINGS
-</button>
 
 <div class="bottom-nav">
 
