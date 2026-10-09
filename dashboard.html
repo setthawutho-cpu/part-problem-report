@@ -14,12 +14,49 @@ body{
     background:#dfeaf3;
 }
 
+.top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:50px;
+    background:#fff;
+    border-bottom:1px solid #ccc;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:10px;
+    padding:0 15px;
+    box-sizing:border-box;
+    z-index:9999;
+}
+
+.icon-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    background:#f1f1f1;
+    border-radius:8px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+#dateFilter{
+    position:absolute;
+    right:15px;
+    top:55px;
+    width:140px;
+    display:none;
+    padding:5px;
+    font-size:14px;
+}
+
 .container{
     width:100%;
     max-width:500px;
     margin:auto;
     padding:10px;
-    padding-top:50px;
+    padding-top:70px;
     padding-bottom:90px;
     box-sizing:border-box;
 }
@@ -53,23 +90,42 @@ body{
 
 .bottom-nav button{
     flex:1;
+    margin:0;
+    padding:0;
     border:none;
     background:#fff;
     color:#333;
     font-size:18px;
+    font-weight:normal;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 }
 
-.bottom-nav span{
+.bottom-nav button span{
     font-size:10px;
+    margin-top:2px;
+    line-height:1;
 }
 
 </style>
 </head>
 <body>
+
+<div class="top-bar">
+
+    <button class="icon-btn" onclick="searchData()">
+        🔍
+    </button>
+
+    <button class="icon-btn" onclick="openCalendar()">
+        📅
+    </button>
+
+    <input type="date" id="dateFilter">
+
+</div>
 
 <div class="container">
 
@@ -111,6 +167,29 @@ body{
     </button>
 
 </div>
+
+<script>
+
+function searchData(){
+    alert("ฟังก์ชันค้นหายังไม่ได้กำหนด");
+}
+
+function openCalendar(){
+
+    const dateInput =
+    document.getElementById("dateFilter");
+
+    dateInput.style.display = "block";
+
+    if(dateInput.showPicker){
+        dateInput.showPicker();
+    }else{
+        dateInput.focus();
+    }
+
+}
+
+</script>
 
 </body>
 </html>
