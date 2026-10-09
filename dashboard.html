@@ -53,12 +53,20 @@ textarea{
     cursor:pointer;
 }
 
-#dateFilter{
+.calendar-wrap{
+    position:relative;
+    width:45px;
+    height:45px;
+}
+
+.calendar-wrap input{
     position:absolute;
-    width:1px;
-    height:1px;
+    top:0;
+    left:0;
+    width:45px;
+    height:45px;
     opacity:0;
-    overflow:hidden;
+    cursor:pointer;
 }
 
 .container{
@@ -134,15 +142,19 @@ textarea{
         🔍
     </button>
 
-    <button class="icon-btn" onclick="openCalendar()">
-        📅
-    </button>
+    <div class="calendar-wrap">
 
-    <input
-        type="date"
-        id="dateFilter"
-        onchange="showDate(this.value)"
-    >
+        <button class="icon-btn" type="button">
+            📅
+        </button>
+
+        <input
+            type="date"
+            id="dateFilter"
+            onchange="showDate(this.value)"
+        >
+
+    </div>
 
 </div>
 
@@ -191,29 +203,6 @@ textarea{
 
 function searchData(){
     alert("ฟังก์ชันค้นหายังไม่ได้กำหนด");
-}
-
-function openCalendar(){
-
-    const picker =
-    document.getElementById("dateFilter");
-
-    try{
-
-        if(picker.showPicker){
-            picker.showPicker();
-        }else{
-            picker.focus();
-            picker.click();
-        }
-
-    }catch(e){
-
-        picker.focus();
-        picker.click();
-
-    }
-
 }
 
 function showDate(value){
