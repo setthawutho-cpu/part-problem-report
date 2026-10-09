@@ -41,6 +41,15 @@ body{
     cursor:pointer;
 }
 
+#dateFilter{
+    position:absolute;
+    width:1px;
+    height:1px;
+    opacity:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
 .container{
     width:100%;
     max-width:500px;
@@ -114,102 +123,4 @@ body{
         🔍
     </button>
 
-    <button class="icon-btn" onclick="openCalendar()">
-        📅
-    </button>
-
-    <input
-        type="date"
-        id="dateFilter"
-        onchange="showDate(this.value)"
-        style="
-            width:160px;
-            height:40px;
-            border-radius:20px;
-            border:1px solid #ccc;
-            font-size:14px;
-        "
-    >
-
-</div>
-
-<div class="container">
-
-    <div class="title">
-        📊 DASHBOARD
-    </div>
-
-    <div class="card">
-        ยังไม่มีข้อมูล Dashboard
-    </div>
-
-</div>
-
-<div class="bottom-nav">
-
-    <button onclick="location.href='menu.html'">
-        🏠
-        <span>Home</span>
-    </button>
-
-    <button onclick="location.href='dashboard.html'">
-        📊
-        <span>Dashboard</span>
-    </button>
-
-    <button onclick="location.href='document.html'">
-        📝
-        <span>Document</span>
-    </button>
-
-    <button onclick="location.href='standard.html'">
-        📏
-        <span>STD</span>
-    </button>
-
-    <button onclick="location.href='settings.html'">
-        ⚙️
-        <span>Setting</span>
-    </button>
-
-</div>
-
-<script>
-
-function searchData(){
-    alert("ฟังก์ชันค้นหายังไม่ได้กำหนด");
-}
-
-function openCalendar(){
-
-    const picker =
-    document.getElementById("dateFilter");
-
-    if(picker.showPicker){
-        picker.showPicker();
-    }else{
-        picker.focus();
-        picker.click();
-    }
-
-}
-
-function showDate(value){
-
-    if(!value) return;
-
-    const d = new Date(value);
-
-    const result =
-        d.getDate() + "/" +
-        (d.getMonth() + 1) + "/" +
-        d.getFullYear();
-
-    alert("เลือกวันที่ : " + result);
-
-}
-
-</script>
-
-</body>
-</html>
+    <button class="icon-btn" onclick="
