@@ -14,6 +14,23 @@ body{
     background:#dfeaf3;
 }
 
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+    z-index:9999;
+}
+
+.top-nav span{
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
 .header{
     background:#ff9800;
     color:white;
@@ -86,6 +103,12 @@ body{
 </style>
 </head>
 <body>
+
+<div class="top-nav">
+    <span onclick="location.href='menu.html'">
+        ❮ กลับ
+    </span>
+</div>
 
 <div class="header">
 ⚙️ SETTINGS
