@@ -49,18 +49,26 @@ body{
     background:#fff;
     border-top:1px solid #ccc;
     display:flex;
+    z-index:99999;
 }
 
 .bottom-nav button{
     flex:1;
+    margin:0;
     border:none;
     background:#fff;
-    font-size:22px;
+    color:#333;
+    font-size:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:0;
 }
 
-.bottom-nav span{
-    display:block;
-    font-size:12px;
+.bottom-nav button span{
+    font-size:10px;
+    margin-top:2px;
 }
 </style>
 </head>
@@ -97,20 +105,30 @@ onclick="location.href='index4.html'">
 
 <div class="bottom-nav">
 
-<button onclick="location.href='menu.html'">
-🏠
-<span>Home</span>
-</button>
+    <button onclick="location.href='menu.html'">
+        🏠
+        <span>Home</span>
+    </button>
 
-<button onclick="location.href='document.html'">
-📝
-<span>Document</span>
-</button>
+    <button onclick="location.href='index.html'">
+        📋
+        <span>Report</span>
+    </button>
 
-<button onclick="location.href='standard.html'">
-📏
-<span>STD</span>
-</button>
+    <button onclick="location.href='document.html'">
+        📝
+        <span>Document</span>
+    </button>
+
+    <button onclick="location.href='standard.html'">
+        📏
+        <span>STD</span>
+    </button>
+
+    <button onclick="location.href='settings.html'">
+        ⚙️
+        <span>Setting</span>
+    </button>
 
 </div>
 
