@@ -561,35 +561,6 @@ input[name="okmark"]:checked + .white{
     display:none;
 }
 
-#menuPage{
-    display:none;
-    min-height:100vh;
-    background:#dfeaf3;
-    padding:20px;
-    box-sizing:border-box;
-}
-
-.menu-title{
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:50px;
-    margin-bottom:40px;
-}
-
-.menu-btn{
-    width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    color:#ffffff !important;
-    text-align:center;
-}
-
 .top-nav{
     position:fixed;
     top:0;
@@ -613,11 +584,6 @@ input[name="okmark"]:checked + .white{
     user-select:none;
 }
 
-.report-btn{
-    background:#2196f3;
-    color:#ffffff !important;
-}
-
 .setting-btn{
     background:#ff9800;
     color:#ffffff !important;
@@ -634,22 +600,6 @@ input[name="okmark"]:checked + .white{
     font-weight:bold;
     color:#ffffff !important;
     text-align:center;
-}
-
-.report-btn{
-    background:#2196f3;
-}
-
-.newmodel-btn{
-    background:#4caf50;
-}
-
-.trial-btn{
-    background:#9c27b0;
-}
-
-.setting-btn{
-    background:#ff9800;
 }
 
 .borrow-btn{
@@ -681,48 +631,15 @@ textarea{
 
 </div>
 
-<div id="menuPage">
-
-    <div class="menu-title">
-        INSPECTION PART
-    </div>
-
-    <button class="menu-btn report-btn"
-        onclick="openReport()">
-        📋 PART PROBLEM REPORT
-    </button>
-
-    <button class="menu-btn newmodel-btn"
-        onclick="location.href='index2.html'">
-        📦 PART PROBLEM NEW MODEL
-    </button>
-
-    <button class="menu-btn borrow-btn"
-    onclick="location.href='index5.html'">
-    🔄 PART BORROWING FROM PL
-    </button>
-
-    <button class="menu-btn trial-btn"
-        onclick="location.href='index3.html'">
-        🧪 ASSEMBLY TRIAL
-    </button>
-
-    <button class="menu-btn setting-btn"
-        onclick="location.href='index4.html'">
-        ⚙️ SETTINGS
-    </button>
-
-</div>
-
-<div id="app" style="display:none;">
+<div id="app">
 
 <div class="container">
 
 <div class="top-nav">
 
-    <span onclick="backToMenu()">
-        ❮ กลับ
-    </span>
+<span onclick="location.href='menu.html'">
+❮ กลับ
+</span>
 
     <span onclick="openStandard()">
         📏 Standard
@@ -1641,22 +1558,6 @@ document.querySelectorAll('input[name="okmark"]')
 
 });
 
-function backToMenu(){
-
-    document.getElementById("app").style.display = "none";
-    document.getElementById("menuPage").style.display = "block";
-    document.getElementById("bottomNav").style.display = "flex";
-
-}
-
-function openReport(){
-
-    document.getElementById("menuPage").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    document.getElementById("bottomNav").style.display = "flex";
-
-}
-
 function openStandard(){
 
     const active =
@@ -1688,9 +1589,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
 
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("menuPage").style.display = "block";
-        document.getElementById("bottomNav").style.display = "flex";
+document.getElementById("splash").style.display = "none";
+document.getElementById("app").style.display = "block";
+document.getElementById("bottomNav").style.display = "flex";
 
     }, 1000);
 
@@ -1699,7 +1600,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <div class="bottom-nav" id="bottomNav" style="display:none;">
 
-    <button onclick="backToMenu()">
+<button onclick="location.href='menu.html'">
         🏠
         <span>Home</span>
     </button>
