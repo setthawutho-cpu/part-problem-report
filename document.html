@@ -403,7 +403,7 @@ input[name="okmark"]:checked + .white{
     border:none;
     background:#fff;
     color:#333;
-    font-size:22px;
+    font-size:18px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -412,7 +412,7 @@ input[name="okmark"]:checked + .white{
 }
 
 .bottom-nav button span{
-    font-size:12px;
+    font-size:10px;
     margin-top:2px;
 }
 
@@ -1631,29 +1631,31 @@ if ("serviceWorker" in navigator) {
 </script>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+<div class="bottom-nav" id="bottomNav">
 
-    setTimeout(() => {
-
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("menuPage").style.display = "block";
-
-    }, 1000);
-
-});
-</script>
-
-<div class="bottom-nav" id="bottomNav" style="display:none;">
-
-    <button onclick="backToMenu()">
+    <button onclick="location.href='index.html'">
         🏠
         <span>Home</span>
     </button>
 
-    <button onclick="openStandard()">
+    <button onclick="location.href='part-problem-report.html'">
+        📋
+        <span>Report</span>
+    </button>
+
+    <button onclick="location.href='document.html'">
+        📝
+        <span>Document</span>
+    </button>
+
+    <button onclick="location.href='standard.html'">
         📏
         <span>STD</span>
+    </button>
+
+    <button onclick="location.href='settings.html'">
+        ⚙️
+        <span>Setting</span>
     </button>
 
 </div>
