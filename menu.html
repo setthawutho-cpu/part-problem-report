@@ -2,57 +2,43 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>INSPECTION PART</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Segoe UI,sans-serif;
     background:#dfeaf3;
 }
 
-.header{
-    background:#2196f3;
-    color:#fff;
+.menu-title{
     text-align:center;
-    padding:20px;
-    font-size:24px;
+    font-size:28px;
     font-weight:bold;
-}
-
-.container{
-    padding:20px;
+    margin-top:60px;
+    margin-bottom:40px;
 }
 
 .menu-btn{
-    width:100%;
+    width:90%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
     padding:18px;
-    margin-bottom:15px;
     border:none;
+    color:#fff;
     font-size:18px;
     font-weight:bold;
-    color:#fff;
     cursor:pointer;
 }
 
-.report{
-    background:#2196f3;
-}
-
-.shortcut{
-    background:#9c27b0;
-}
-
-.std{
-    background:#4caf50;
-}
-
-.setting{
-    background:#ff9800;
-}
+.report-btn{background:#2196f3;}
+.newmodel-btn{background:#4caf50;}
+.borrow-btn{background:#009688;}
+.trial-btn{background:#9c27b0;}
+.setting-btn{background:#ff9800;}
 
 .bottom-nav{
     position:fixed;
@@ -69,50 +55,45 @@ body{
     flex:1;
     border:none;
     background:#fff;
-    margin:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
     font-size:22px;
 }
 
 .bottom-nav span{
+    display:block;
     font-size:12px;
 }
-
 </style>
 </head>
-
 <body>
 
-<div class="header">
-INSPECTION PART
+<div class="menu-title">
+    INSPECTION PART
 </div>
 
-<div class="container">
-
-<button class="menu-btn report"
+<button class="menu-btn report-btn"
 onclick="location.href='index.html'">
 📋 PART PROBLEM REPORT
 </button>
 
-<button class="menu-btn shortcut"
-onclick="location.href='shortcut.html'">
-✏️ QUICK TEXT
+<button class="menu-btn newmodel-btn"
+onclick="location.href='index2.html'">
+📦 PART PROBLEM NEW MODEL
 </button>
 
-<button class="menu-btn std"
-onclick="location.href='standard.html'">
-📏 STANDARD
+<button class="menu-btn borrow-btn"
+onclick="location.href='index5.html'">
+🔄 PART BORROWING FROM PL
 </button>
 
-<button class="menu-btn setting"
+<button class="menu-btn trial-btn"
+onclick="location.href='index3.html'">
+🧪 ASSEMBLY TRIAL
+</button>
+
+<button class="menu-btn setting-btn"
 onclick="location.href='index4.html'">
 ⚙️ SETTINGS
 </button>
-
-</div>
 
 <div class="bottom-nav">
 
@@ -121,9 +102,9 @@ onclick="location.href='index4.html'">
 <span>Home</span>
 </button>
 
-<button onclick="location.href='shortcut.html'">
-✏️
-<span>Text</span>
+<button onclick="location.href='document.html'">
+📝
+<span>Document</span>
 </button>
 
 <button onclick="location.href='standard.html'">
