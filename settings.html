@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SETTINGS</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Segoe UI,sans-serif;
+    background:#dfeaf3;
+}
+
+.header{
+    background:#ff9800;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:26px;
+    font-weight:bold;
+}
+
+.container{
+    padding:15px;
+    padding-bottom:90px;
+}
+
+.setting-btn{
+    width:100%;
+    max-width:450px;
+    display:block;
+    margin:12px auto;
+    padding:18px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
+    color:white;
+    cursor:pointer;
+}
+
+.partmaster{background:#2196f3;}
+.stdmaster{background:#4caf50;}
+.dashboard{background:#673ab7;}
+.backup{background:#009688;}
+.theme{background:#795548;}
+.version{background:#607d8b;}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:65px;
+    background:#fff;
+    border-top:1px solid #ccc;
+    display:flex;
+    z-index:99999;
+}
+
+.bottom-nav button{
+    flex:1;
+    border:none;
+    background:#fff;
+    color:#333;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+}
+
+.bottom-nav span{
+    font-size:10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+⚙️ SETTINGS
+</div>
+
+<div class="container">
+
+<button class="setting-btn partmaster"
+onclick="location.href='part-master.html'">
+📦 PART MASTER
+</button>
+
+<button class="setting-btn stdmaster"
+onclick="location.href='standard-master.html'">
+📝 STANDARD MASTER
+</button>
+
+<button class="setting-btn dashboard"
+onclick="location.href='dashboard.html'">
+📊 DASHBOARD
+</button>
+
+<button class="setting-btn backup"
+onclick="alert('Backup Data')">
+📁 BACKUP DATA
+</button>
+
+<button class="setting-btn theme"
+onclick="alert('Theme Setting')">
+🎨 THEME
+</button>
+
+<button class="setting-btn version">
+ℹ️ VERSION 1.0
+</button>
+
+</div>
+
+<div class="bottom-nav">
+
+<button onclick="location.href='menu.html'">
+🏠
+<span>Home</span>
+</button>
+
+<button onclick="location.href='dashboard.html'">
+📊
+<span>Dashboard</span>
+</button>
+
+<button onclick="location.href='document.html'">
+📝
+<span>Document</span>
+</button>
+
+<button onclick="location.href='standard.html'">
+📏
+<span>STD</span>
+</button>
+
+<button onclick="location.href='settings.html'">
+⚙️
+<span>Setting</span>
+</button>
+
+</div>
+
+</body>
+</html>
