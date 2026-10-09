@@ -367,7 +367,7 @@ input[name="okmark"]:checked + .white{
     border:none;
     background:#fff;
     color:#333;
-    font-size:22px;
+    font-size:18px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -376,7 +376,7 @@ input[name="okmark"]:checked + .white{
 }
 
 .bottom-nav button span{
-    font-size:12px;
+    font-size:10px;
     margin-top:2px;
 }
 
@@ -1483,9 +1483,14 @@ if ("serviceWorker" in navigator) {
 
 <div class="bottom-nav" id="bottomNav">
 
-<button onclick="location.href='index.html'">
+    <button onclick="location.href='index.html'">
         🏠
         <span>Home</span>
+    </button>
+
+    <button onclick="location.href='part-problem-report.html'">
+        📋
+        <span>Report</span>
     </button>
 
     <button onclick="location.href='document.html'">
@@ -1493,9 +1498,14 @@ if ("serviceWorker" in navigator) {
         <span>Document</span>
     </button>
 
-    <button onclick="openStandard()">
+    <button onclick="location.href='standard.html'">
         📏
         <span>STD</span>
+    </button>
+
+    <button onclick="location.href='settings.html'">
+        ⚙️
+        <span>Setting</span>
     </button>
 
 </div>
