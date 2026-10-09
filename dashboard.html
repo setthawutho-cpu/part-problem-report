@@ -19,7 +19,7 @@ body{
     top:0;
     left:0;
     width:100%;
-    height:50px;
+    height:60px;
     background:#fff;
     border-bottom:1px solid #ccc;
     display:flex;
@@ -32,23 +32,19 @@ body{
 }
 
 .icon-btn{
-    width:38px;
-    height:38px;
+    width:45px;
+    height:45px;
     border:none;
     background:#f1f1f1;
-    border-radius:8px;
-    font-size:20px;
+    border-radius:12px;
+    font-size:24px;
     cursor:pointer;
 }
 
 #dateFilter{
     position:absolute;
-    right:15px;
-    top:55px;
-    width:140px;
-    display:none;
-    padding:5px;
-    font-size:14px;
+    opacity:0;
+    pointer-events:none;
 }
 
 .container{
@@ -56,7 +52,7 @@ body{
     max-width:500px;
     margin:auto;
     padding:10px;
-    padding-top:70px;
+    padding-top:80px;
     padding-bottom:90px;
     box-sizing:border-box;
 }
@@ -97,6 +93,7 @@ body{
     color:#333;
     font-size:18px;
     font-weight:normal;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -109,8 +106,13 @@ body{
     line-height:1;
 }
 
+.bottom-nav button:active{
+    background:#f1f1f1;
+}
+
 </style>
 </head>
+
 <body>
 
 <div class="top-bar">
@@ -176,15 +178,14 @@ function searchData(){
 
 function openCalendar(){
 
-    const dateInput =
+    const picker =
     document.getElementById("dateFilter");
 
-    dateInput.style.display = "block";
-
-    if(dateInput.showPicker){
-        dateInput.showPicker();
+    if(picker.showPicker){
+        picker.showPicker();
     }else{
-        dateInput.focus();
+        picker.focus();
+        picker.click();
     }
 
 }
