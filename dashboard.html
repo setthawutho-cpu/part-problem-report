@@ -41,12 +41,6 @@ body{
     cursor:pointer;
 }
 
-#dateFilter{
-    position:absolute;
-    opacity:0;
-    pointer-events:none;
-}
-
 .container{
     width:100%;
     max-width:500px;
@@ -93,7 +87,6 @@ body{
     color:#333;
     font-size:18px;
     font-weight:normal;
-
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -125,7 +118,18 @@ body{
         📅
     </button>
 
-    <input type="date" id="dateFilter">
+    <input
+        type="date"
+        id="dateFilter"
+        onchange="showDate(this.value)"
+        style="
+            width:160px;
+            height:40px;
+            border-radius:20px;
+            border:1px solid #ccc;
+            font-size:14px;
+        "
+    >
 
 </div>
 
@@ -187,6 +191,21 @@ function openCalendar(){
         picker.focus();
         picker.click();
     }
+
+}
+
+function showDate(value){
+
+    if(!value) return;
+
+    const d = new Date(value);
+
+    const result =
+        d.getDate() + "/" +
+        (d.getMonth() + 1) + "/" +
+        d.getFullYear();
+
+    alert("เลือกวันที่ : " + result);
 
 }
 
