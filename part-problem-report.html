@@ -1492,10 +1492,10 @@ text += `• ผลการ Rework : ${reworkResult.value}\n`;
 if(stock)
 text += `• Check Stock SKC : ${stock} ${stockUnit}\n`;
 
-if(okQty.value)
+if(okQty.value !== "")
 text += `• OK : ${okQty.value} ${okUnit}\n`;
 
-if(ng)
+if(document.getElementById("ngQty").value !== "")
 text += `• NG : ${ng} ${ngUnit}\n`;
 
 if(totalNg)
