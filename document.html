@@ -1414,50 +1414,114 @@ partDamageSection =
 ${subPartsText.trim()}`;
 }
 
-    let text = `🚨 PARTS PROBLEM REPORT 🚨
-🗓️ Date : ${date.value.split("-").reverse().join("-")}
-🏷️ Type : ${type.value}
+let text = `🚨 PARTS PROBLEM REPORT 🚨\n`;
 
-📦 Part No. : ${partno.value}
-📋 Part Name : ${partname.value}
-🚜 Model : ${model.value || "-"}
-🏭 Supplier : ${supplier.value}
-🔢 Serial Number : ${unitno.value}
-📄 Issue Doc : ${document.getElementById("document").value}
-⏱️ Line Stop : ${linestop.value ? linestop.value + " Sec" : "-"}
+if(date.value)
+text += `🗓️ Date : ${date.value.split("-").reverse().join("-")}\n`;
 
-🔴 Problem
-${problem.value}
+if(type.value)
+text += `🏷️ Type : ${type.value}\n`;
 
-🔍 Detail
-${detail.value}
-━━━━━━━━━━━━━━
-🟡 CONTAINMENT ACTION
-✅ Rework : ${rework.value}
-📋 Result : ${containmentResult.value}
-━━━━━━━━━━━━━━
-📊 INSPECTION RESULT
-• SKC-A MFG พบ NG : ${skca} ${skcaUnit}
-• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}
-• ผลการ Rework : ${reworkResult.value}
+if(product.value)
+text += `🏭 Product : ${product.value}\n`;
 
-• Check Stock SKC : ${stock} ${stockUnit}
-• OK : ${okQty.value} ${okUnit}
-• NG : ${ng} ${ngUnit}
-➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}
-🖍️ OK Mark : ${okMark}${partDamageSection ? "\n" + partDamageSection : ""}
-━━━━━━━━━━━━━━
+if(partno.value)
+text += `📦 Part No. : ${partno.value}\n`;
+
+if(partname.value)
+text += `📋 Part Name : ${partname.value}\n`;
+
+if(model.value)
+text += `🚜 Model : ${model.value}\n`;
+
+if(supplier.value)
+text += `🏭 Supplier : ${supplier.value}\n`;
+
+if(unitno.value)
+text += `🔢 Serial Number : ${unitno.value}\n`;
+
+if(document.value && document.value !== "-")
+text += `📄 Issue Doc : ${document.value}\n`;
+
+if(linestop.value)
+text += `⏱️ Line Stop : ${linestop.value} Sec\n`;
+
+if(problem.value)
+text += `\n🔴 Problem\n${problem.value}\n`;
+
+if(detail.value)
+text += `\n🔍 Detail\n${detail.value}\n`;
+
+if(
+rework.value ||
+containmentResult.value !== "-"
+){
+text += `\n━━━━━━━━━━━━━━
+🟡 CONTAINMENT ACTION\n`;
+
+if(rework.value)
+text += `✅ Rework : ${rework.value}\n`;
+
+if(containmentResult.value !== "-")
+text += `📋 Result : ${containmentResult.value}\n`;
+}
+
+if(
+skca ||
+partNgQty.value ||
+stock ||
+okQty.value ||
+ng ||
+totalNg
+){
+text += `\n━━━━━━━━━━━━━━
+📊 INSPECTION RESULT\n`;
+
+if(skca)
+text += `• SKC-A MFG พบ NG : ${skca} ${skcaUnit}\n`;
+
+if(partNgQty.value)
+text += `• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}\n`;
+
+if(reworkResult.value && reworkResult.value !== "-")
+text += `• ผลการ Rework : ${reworkResult.value}\n`;
+
+if(stock)
+text += `• Check Stock SKC : ${stock} ${stockUnit}\n`;
+
+if(okQty.value)
+text += `• OK : ${okQty.value} ${okUnit}\n`;
+
+if(ng)
+text += `• NG : ${ng} ${ngUnit}\n`;
+
+if(totalNg)
+text += `➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
+
+if(okMark !== "-")
+text += `🖍️ OK Mark : ${okMark}\n`;
+}
+
+if(partDamageSection){
+text += `\n${partDamageSection}\n`;
+}
+
+if(supplier.value){
+text += `\n━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
+
 ✅ ตรวจสอบ Stock คงเหลือทั้งหมด
 ✅ แจ้งจำนวน OK / NG
 ✅ แนบรูป Mark Check
 ✅ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
 ✅ ขยายผลไปยัง Spare Part (ถ้ามี)
-━━━━━━━━━━━━━━
-📷 Photo : Attached
 `;
+}
 
+text += `\n━━━━━━━━━━━━━━
+📷 Photo : Attached`;
+      
     document.getElementById("report").style.display = "block";
 document.getElementById("report").innerText = text.trim();
 }
