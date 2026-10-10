@@ -167,12 +167,14 @@ textarea{
 @media (min-width:769px){
 
     .container{
-        max-width:1200px;
+        max-width:none;
+        width:100%;
+        padding:20px;
     }
 
     .card{
         display:grid;
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:repeat(4,1fr);
         gap:20px;
         text-align:left;
     }
@@ -249,7 +251,7 @@ textarea{
 </div>
 
 <div class="graph-box">
-    <<div class="graph-title">Control Part List</div>
+    <div class="graph-title">Control Part List</div>
     <div class="graph-area" id="controlListChart"></div>
 </div>
 
@@ -261,8 +263,6 @@ textarea{
 <div class="graph-box">
     <div class="graph-title">Washing</div>
     <div class="graph-area" id="washingChart"></div>
-</div>
-
 </div>
 
 </div>
