@@ -1194,12 +1194,18 @@ lineNg === 0 ? "" : lineNg;
     let partType =
     document.getElementById("partNg").value;
 
-    let ngQty = stock - ok;
+let ngQty = stock - ok;
 
-    if(ngQty < 0) ngQty = 0;
+if(ngQty < 0) ngQty = 0;
 
-    document.getElementById("ngQty").value =
-ngQty === 0 ? "" : ngQty;
+if(
+document.getElementById("stockNg").value === "" &&
+document.getElementById("okQty").value === ""
+){
+    document.getElementById("ngQty").value = "";
+}else{
+    document.getElementById("ngQty").value = ngQty;
+}
 
     let total = ngQty;
 
