@@ -54,6 +54,27 @@ body{
     animation:zoomIn .5s ease;
 }
 
+.top-row{
+    display:flex;
+    gap:15px;
+    margin-bottom:8px;
+}
+
+.top-row > div{
+    flex:1;
+}
+
+.top-row label{
+    display:block;
+    margin-bottom:3px;
+}
+
+#date,
+#type,
+#product{
+    width:100%;
+}
+
 .splash-text{
     margin-top:15px;
     font-size:20px;
@@ -695,14 +716,34 @@ textarea{
 
 <div class="top-row">
 
-    <label>Date</label>
-    <input type="date" id="date">
+    <div>
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
 
-    <label>Type</label>
-    <select id="type">
-        <option>New</option>
-        <option>Repeat</option>
-    </select>
+    <div>
+        <label>Product</label>
+        <select id="product">
+            <option value=""></option>
+            <option>Combine</option>
+            <option>Combine Welding</option>
+            <option>SH</option>
+            <option>SH Welding</option>
+            <option>ดอกดาว</option>
+        </select>
+    </div>
+
+</div>
+
+<div class="top-row">
+
+    <div>
+        <label>Type</label>
+        <select id="type">
+            <option>New</option>
+            <option>Repeat</option>
+        </select>
+    </div>
 
 </div>
 
