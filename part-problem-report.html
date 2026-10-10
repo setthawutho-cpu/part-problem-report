@@ -1348,8 +1348,12 @@ function reviewReport(){
     let ng =
     Number(document.getElementById("ngQty").value || 0);
 
-    let totalNg =
-    document.getElementById("totalNg").value;
+let totalNg =
+document.getElementById("totalNg").value;
+
+const issueDoc =
+document.getElementById("document").value;
+
 const okMark =
 document.querySelector(
 'input[name="okmark"]:checked'
