@@ -1450,13 +1450,13 @@ if(problem.value)
 text += `\n🔴 Problem\n${problem.value}\n`;
 
 if(detail.value)
-text += `\n🔍 Detail\n${detail.value}\n`;
+text += `🔍 Detail\n${detail.value}\n`;
 
 if(
 rework.value ||
 containmentResult.value !== "-"
 ){
-text += `\n━━━━━━━━━━━━━━
+text += `━━━━━━━━━━━━━━
 🟡 CONTAINMENT ACTION\n`;
 
 if(rework.value)
@@ -1474,7 +1474,7 @@ okQty.value ||
 ng ||
 totalNg
 ){
-text += `\n━━━━━━━━━━━━━━
+text += `━━━━━━━━━━━━━━
 📊 INSPECTION RESULT\n`;
 
 if(skca)
@@ -1503,14 +1503,13 @@ text += `🖍️ OK Mark : ${okMark}\n`;
 }
 
 if(partDamageSection){
-text += `\n${partDamageSection}\n`;
+text += `${partDamageSection}\n`;
 }
 
 if(supplier.value){
-text += `\n━━━━━━━━━━━━━━
+text += `━━━━━━━━━━━━━━
 🔵 ACTION REQUEST
 Supplier : ${supplier.value}
-
 ✅ ตรวจสอบ Stock คงเหลือทั้งหมด
 ✅ แจ้งจำนวน OK / NG
 ✅ แนบรูป Mark Check
@@ -1519,8 +1518,10 @@ Supplier : ${supplier.value}
 `;
 }
 
-text += `\n━━━━━━━━━━━━━━
+if(reportVisible){
+text += `━━━━━━━━━━━━━━
 📷 Photo : Attached`;
+}
       
     document.getElementById("report").style.display = "block";
 document.getElementById("report").innerText = text.trim();
