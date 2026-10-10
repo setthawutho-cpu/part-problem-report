@@ -13,6 +13,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PART REPORT">
 
+<link rel="apple-touch-icon" href="icon-512.png">
+
 <title>PART PROBLEM REPORT</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -24,6 +26,61 @@ body{
     background:#dfeaf3;
     margin:0;
     padding:0;
+}
+
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#dfeaf3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    visibility:visible;
+    opacity:1;
+}
+
+.splash-content{
+    text-align:center;
+}
+
+#splash img{
+    width:180px;
+    height:180px;
+    border-radius:40px;
+    animation:zoomIn .5s ease;
+}
+
+.top-row{
+    display:flex;
+    gap:15px;
+    margin-bottom:8px;
+}
+
+.top-row > div{
+    flex:1;
+}
+
+.top-row label{
+    display:block;
+    margin-bottom:3px;
+}
+
+#date,
+#type,
+#product{
+    width:100%;
+}
+
+.splash-text{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+    letter-spacing:1px;
 }
 
 .copy{
@@ -55,6 +112,7 @@ body{
     box-sizing:border-box;
 }
 
+
 input,select,textarea{
     width:100%;
     padding:6px;
@@ -63,22 +121,15 @@ input,select,textarea{
 }
 
 #date{
-    width:150px;
-}
-
-.top-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:8px;
-}
-
-.top-row label{
-    margin:0;
+    width:110px;
 }
 
 #type{
-    width:120px;
+    width:90px;
+}
+
+#product{
+    width:140px;
 }
 
 .row-info{
@@ -497,8 +548,68 @@ input[name="okmark"]:checked + .white{
         inset 1px 1px 0 #888;
 }
 
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#dfeaf3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+#splash img{
+    width:180px;
+    height:180px;
+    border-radius:40px;
+    animation:zoomIn .5s ease;
+}
+
+@keyframes zoomIn{
+    from{
+        transform:scale(.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
 #app{
     display:block;
+}
+
+#menuPage{
+    display:none;
+    min-height:100vh;
+    background:#dfeaf3;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.menu-title{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    color:#ffffff !important;
+    text-align:center;
 }
 
 .top-nav{
@@ -524,6 +635,49 @@ input[name="okmark"]:checked + .white{
     user-select:none;
 }
 
+.report-btn{
+    background:#2196f3;
+    color:#ffffff !important;
+}
+
+.setting-btn{
+    background:#ff9800;
+    color:#ffffff !important;
+}
+
+.menu-btn{
+    width:100%;
+    max-width:400px;
+    display:block;
+    margin:15px auto;
+    padding:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    color:#ffffff !important;
+    text-align:center;
+}
+
+.report-btn{
+    background:#2196f3;
+}
+
+.newmodel-btn{
+    background:#4caf50;
+}
+
+.trial-btn{
+    background:#9c27b0;
+}
+
+.setting-btn{
+    background:#ff9800;
+}
+
+.borrow-btn{
+    background:#009688;
+}
+
 input,
 select,
 textarea{
@@ -535,15 +689,15 @@ textarea{
 </head>
 <body>
 
-<div id="app">
+<div id="app" style="display:block;">
 
 <div class="container">
 
 <div class="top-nav">
 
-<span onclick="location.href='menu.html'">
-❮ กลับ
-</span>
+    <span onclick="backToMenu()">
+        ❮ กลับ
+    </span>
 
     <span onclick="openStandard()">
         📏 Standard
@@ -557,14 +711,33 @@ textarea{
 
 <div class="top-row">
 
-    <label>Date</label>
-    <input type="date" id="date">
+    <div>
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
 
-    <label>Type</label>
-    <select id="type">
-        <option>New</option>
-        <option>Repeat</option>
-    </select>
+    <div>
+        <label>Product</label>
+        <select id="product">
+            <option value=""></option>
+            <option>Combine</option>
+            <option>Combine Welding</option>
+            <option>SH</option>
+            <option>SH Welding</option>
+        </select>
+    </div>
+
+</div>
+
+<div class="top-row">
+
+    <div>
+        <label>Type</label>
+        <select id="type">
+            <option>New</option>
+            <option>Repeat</option>
+        </select>
+    </div>
 
 </div>
 
@@ -653,7 +826,6 @@ textarea{
 <label>Result</label>
 <select id="containmentResult">
 <option>-</option>
-<option>OK</option>
 <option>Rework OK</option>
 <option>Wait Rework</option>
 <option>เปลี่ยนชิ้นงานใน Stock</option>
@@ -1339,11 +1511,9 @@ Supplier : ${supplier.value}
 `;
 }
 
-if(reportVisible){
 text += `━━━━━━━━━━━━━━
 📷 Photo : Attached`;
-}
-
+      
     document.getElementById("report").style.display = "block";
 document.getElementById("report").innerText = text.trim();
 }
@@ -1526,6 +1696,18 @@ document.querySelectorAll('input[name="okmark"]')
     });
 
 });
+
+function backToMenu(){
+    location.href = "menu.html";
+}
+
+function openReport(){
+
+    document.getElementById("menuPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("bottomNav").style.display = "flex";
+
+}
 
 function openStandard(){
 
