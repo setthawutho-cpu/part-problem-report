@@ -102,7 +102,7 @@ textarea{
 
 .container{
     width:100%;
-    max-width:500px;
+    max-width:1600px;
     margin:auto;
     padding:10px;
     padding-top:80px;
@@ -110,15 +110,17 @@ textarea{
     box-sizing:border-box;
 }
 
-.*itle{
+.title{
     text-align:center;
-    f*nt-size:42px;
-    font-weight:700;*    color:#1f2937;
-    margin:30px*0;
+    font-size:22px;
+    font-weight:700;
+    color:#1f2937;
+    margin:30px 0;
 }
 
 .card{
-    padding:20px;*    color:#666;
+    padding:20px;
+    color:#666;
 }
 
 .bottom-nav{
@@ -174,39 +176,40 @@ textarea{
 /* Tablet + iPad + Desktop */
 @media (min-width:769px){
 
-    .*ontainer{
-        max-width:1600px*
+    .container{
+        max-width:1600px;
         width:100%;
-        paddi*g:80px 20px 90px;
-        margin:a*to;
+        padding:80px 20px 90px;
+        margin:auto;
     }
 
     .card{
-        disp*ay:grid;
-        grid-template-col*mns:repeat(4,1fr);
-        gap:20p*;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:20px;
         padding:0;
     }
 
-    .g*aph-box{
+    .graph-box{
         margin-bottom:0;
-*   }
+    }
 
     .graph-title{
-        fo*t-size:14px;
-        font-weight:7*0;
+        font-size:14px;
+        font-weight:700;
         line-height:1.3;
-      * min-height:40px;
-        display:*lex;
-        align-items:flex-end;*    }
+        min-height:40px;
+        display:flex;
+        align-items:flex-end;
+    }
 
     .graph-area{
-        he*ght:260px;
+        height:260px;
     }
 
     .title{
-    *   font-size:22px;
-        margin-*ottom:30px;
+        font-size:22px;
+        margin-bottom:30px;
     }
 
 }
