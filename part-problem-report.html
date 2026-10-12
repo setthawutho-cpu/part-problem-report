@@ -1413,60 +1413,60 @@ subPartsText
 if(hasPartData){
 partDamageSection =
 `━━━━━━━━━━━━━━
-📦 Part เสียหายร่วม
+Part เสียหายร่วม
 ${subPartsText.trim()}`;
 }
 
-let text = `🚨 PARTS PROBLEM REPORT 🚨\n`;
+let text = `PARTS PROBLEM REPORT\n`;
 
 if(date.value)
-text += `🗓️ Date : ${date.value.split("-").reverse().join("-")}\n`;
+text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
 
 if(type.value)
-text += `🏷️ Type : ${type.value}\n`;
+text += `Type : ${type.value}\n`;
 
 if(product.value)
-text += `🏭 Product : ${product.value}\n`;
+text += `Product : ${product.value}\n`;
 
 if(partno.value)
-text += `📦 Part No. : ${partno.value}\n`;
+text += `Part No. : ${partno.value}\n`;
 
 if(partname.value)
-text += `📋 Part Name : ${partname.value}\n`;
+text += `Part Name : ${partname.value}\n`;
 
 if(model.value)
-text += `🚜 Model : ${model.value}\n`;
+text += `Model : ${model.value}\n`;
 
 if(supplier.value)
-text += `🏭 Supplier : ${supplier.value}\n`;
+text += `Supplier : ${supplier.value}\n`;
 
 if(unitno.value)
-text += `🔢 Serial Number : ${unitno.value}\n`;
+text += `Serial Number : ${unitno.value}\n`;
 
 if(issueDoc && issueDoc !== "-")
-text += `📄 Issue Doc : ${issueDoc}\n`;
+text += `Issue Doc : ${issueDoc}\n`;
 
 if(linestop.value)
-text += `⏱️ Line Stop : ${linestop.value} Sec\n`;
+text += `Line Stop : ${linestop.value} Sec\n`;
 
 if(problem.value)
-text += `\n🔴 Problem\n${problem.value}\n`;
+text += `\nProblem\n${problem.value}\n`;
 
 if(detail.value)
-text += `🔍 Detail\n${detail.value}\n`;
+text += `Detail\n${detail.value}\n`;
 
 if(
 rework.value ||
 containmentResult.value !== "-"
 ){
 text += `━━━━━━━━━━━━━━
-🟡 CONTAINMENT ACTION\n`;
+CONTAINMENT ACTION\n`;
 
 if(rework.value)
-text += `✅ Rework : ${rework.value}\n`;
+text += `Rework : ${rework.value}\n`;
 
 if(containmentResult.value !== "-")
-text += `📋 Result : ${containmentResult.value}\n`;
+text += `Result : ${containmentResult.value}\n`;
 }
 
 if(
@@ -1478,31 +1478,31 @@ ng ||
 totalNg
 ){
 text += `━━━━━━━━━━━━━━
-📊 INSPECTION RESULT\n`;
+INSPECTION RESULT\n`;
 
 if(skca)
-text += `• SKC-A MFG พบ NG : ${skca} ${skcaUnit}\n`;
+text += `SKC-A MFG พบ NG : ${skca} ${skcaUnit}\n`;
 
 if(partNgQty.value)
-text += `• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}\n`;
+text += `Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}\n`;
 
 if(reworkResult.value && reworkResult.value !== "-")
-text += `• ผลการ Rework : ${reworkResult.value}\n`;
+text += `ผลการ Rework : ${reworkResult.value}\n`;
 
 if(stock != null && stock !== "")
-text += `• Check Stock SKC : ${stock} ${stockUnit}\n`;
+text += `Check Stock SKC : ${stock} ${stockUnit}\n`;
 
 if(okQty.value !== "")
-text += `• OK : ${okQty.value} ${okUnit}\n`;
+text += `OK : ${okQty.value} ${okUnit}\n`;
 
 if(document.getElementById("ngQty").value !== "")
-text += `• NG : ${ng} ${ngUnit}\n`;
+text += `NG : ${ng} ${ngUnit}\n`;
 
 if(totalNg)
-text += `➡️ Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
+text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
 
 if(okMark !== "-")
-text += `🖍️ OK Mark : ${okMark}\n`;
+text += `OK Mark : ${okMark}\n`;
 }
 
 if(partDamageSection){
@@ -1511,18 +1511,18 @@ text += `${partDamageSection}\n`;
 
 if(supplier.value){
 text += `━━━━━━━━━━━━━━
-🔵 ACTION REQUEST
+ACTION REQUEST
 Supplier : ${supplier.value}
-✅ ตรวจสอบ Stock คงเหลือทั้งหมด
-✅ แจ้งจำนวน OK / NG
-✅ แนบรูป Mark Check
-✅ ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
-✅ ขยายผลไปยัง Spare Part (ถ้ามี)
+ตรวจสอบ Stock คงเหลือทั้งหมด
+แจ้งจำนวน OK / NG
+แนบรูป Mark Check
+ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+ขยายผลไปยัง Spare Part (ถ้ามี)
 `;
 }
 
 text += `━━━━━━━━━━━━━━
-📷 Photo : Attached`;
+Photo : Attached`;
       
     document.getElementById("report").style.display = "block";
 document.getElementById("report").innerText = text.trim();
