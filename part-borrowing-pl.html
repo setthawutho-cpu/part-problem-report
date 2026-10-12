@@ -686,34 +686,28 @@ function saveData(){
 
     alert("บันทึกสำเร็จ");
 
+    localStorage.removeItem("borrowPLData");
+
 }
 
 function backToMenu(){
     location.href = "menu.html";
 }
 
-window.onload=()=>{
+window.onload = ()=>{
 
-const saved=
-localStorage.getItem("borrowPLData");
+    localStorage.removeItem("borrowPLData");
 
-if(!saved) return;
+    date.value =
+    new Date().toISOString().split("T")[0];
 
-const data=
-JSON.parse(saved);
-
-date.value=data.date || "";
-detail.value=data.detail || "";
-location.value=data.location || "";
-partno.value=data.partNo || "";
-partname.value=data.partName || "";
-model.value=data.model || "";
-supplier.value=data.supplier || "";
-qty.value=data.qty || "";
-
-if(partno.value){
-    fillPartData(partno.value);
-}
+    detail.value = "";
+    location.value = "";
+    partno.value = "";
+    partname.value = "";
+    model.value = "";
+    supplier.value = "";
+    qty.value = "";
 
 };
 
