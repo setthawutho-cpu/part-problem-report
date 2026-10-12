@@ -480,26 +480,44 @@ supplierBtn.onclick = function(){
     }
 
 };
+
 partno.addEventListener("input",function(){
 
-const keyword =
-this.value.trim();
+const keyword = this.value.trim();
 
-if(partMaster[keyword]){
+/* ล้างข้อมูลเมื่อ Part No. ว่าง */
+if(keyword === ""){
 
-fillPartData(keyword);
+    if(!p*rtnameManual) partname.value = "";*    if(!modelManual) model.value =*"";
+    if(!supplierManual) suppli*r.value = "";
 
-return;
-
+    partList.innerH*ML = "";
+    return;
 }
 
-if(keyword.length<3){
+if(partMas*er[keyword]){
 
-partList.innerHTML="";
-return;
-
+    fillPartData(ke*word);
+    return;
 }
 
+if(keyword.l*ngth < 3){
+
+    partList.innerHTML*= "";
+    return;
+}
+
+const result *
+allPartNo
+.filter(x => x.includes*keyword))
+.slice(0,10);
+
+partList.*nnerHTML =
+result
+.map(x => `<opti*n value="${x}"></option>`)
+.join("*);
+
+});
 const result =
 allPartNo
 .filter(x=>x.includes(keyword))
