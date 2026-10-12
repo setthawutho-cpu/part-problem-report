@@ -28,7 +28,7 @@ body{
 
 .title{
     text-align:center;
-    font-size:18px;
+    font-size:clamp(16px,4vw,20px);
     font-weight:bold;
     margin-bottom:20px;
 }
@@ -42,12 +42,17 @@ body{
     flex:1;
 }
 
-#date{
-    width:120px;
+.top-row{
+    display:flex;
+    gap:10px;
 }
 
-#detail{
-    width:150px;
+.top-row > div:first-child{
+    flex:0 0 170px;
+}
+
+.top-row > div:last-child{
+    flex:1;
 }
 
 .label-row{
