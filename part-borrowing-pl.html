@@ -56,6 +56,21 @@ body{
     align-items:center;
 }
 
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
 input,
 select{
     width:100%;
@@ -133,6 +148,35 @@ select{
     box-shadow:
         inset -1px -1px 0 #ffffff,
         inset 1px 1px 0 #888;
+}
+
+button:not(.manual-btn){
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
 }
 
 .report{
@@ -481,52 +525,41 @@ supplierBtn.onclick = function(){
 
 };
 
-partno.addEventListener("input",function(){
+partno.addEventListener("input", function(){
 
-const keyword = this.value.trim();
+    const keyword = this.value.trim();
 
-/* ล้างข้อมูลเมื่อ Part No. ว่าง */
-if(keyword === ""){
+    if(keyword === ""){
 
-    if(!p*rtnameManual) partname.value = "";*    if(!modelManual) model.value =*"";
-    if(!supplierManual) suppli*r.value = "";
+        if(!partnameManual) partname.value = "";
+        if(!modelManual) model.value = "";
+        if(!supplierManual) supplier.value = "";
 
-    partList.innerH*ML = "";
-    return;
-}
+        partList.innerHTML = "";
+        return;
+    }
 
-if(partMas*er[keyword]){
+    if(partMaster[keyword]){
 
-    fillPartData(ke*word);
-    return;
-}
+        fillPartData(keyword);
+        return;
+    }
 
-if(keyword.l*ngth < 3){
+    if(keyword.length < 3){
 
-    partList.innerHTML*= "";
-    return;
-}
+        partList.innerHTML = "";
+        return;
+    }
 
-const result *
-allPartNo
-.filter(x => x.includes*keyword))
-.slice(0,10);
+    const result =
+    allPartNo
+    .filter(x => x.includes(keyword))
+    .slice(0,10);
 
-partList.*nnerHTML =
-result
-.map(x => `<opti*n value="${x}"></option>`)
-.join("*);
-
-});
-const result =
-allPartNo
-.filter(x=>x.includes(keyword))
-.slice(0,10);
-
-partList.innerHTML =
-result
-.map(x=>`<option value="${x}"></option>`)
-.join("");
+    partList.innerHTML =
+    result
+    .map(x => `<option value="${x}"></option>`)
+    .join("");
 
 });
 
@@ -563,7 +596,7 @@ photos.addEventListener("change",()=>{
 function reviewReport(){
 
 let text =
-"🚨 PART BORROWING FROM PL 🚨\n\n";
+"🚨 แจ้งยืมชิ้นส่วนจาก PL 🚨\n\n";
 
 if(date.value)
 text += `Date : ${date.value}\n`;
