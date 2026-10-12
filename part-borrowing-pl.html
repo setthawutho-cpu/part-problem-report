@@ -442,13 +442,15 @@ String(row.PartNo || "").trim();
 
 if(partNo){
 
-allPartNo.push(partNo);
+    if(!allPartNo.includes(partNo)){
+        allPartNo.push(partNo);
+    }
 
-partMaster[partNo]={
-partName:row.PartName || "",
-model:row.Model || "",
-supplier:row.Supplier || ""
-};
+    partMaster[partNo]={
+        partName:row.PartName || "",
+        model:row.Model || "",
+        supplier:row.Supplier || ""
+    };
 
 }
 
@@ -471,25 +473,26 @@ partnameBtn.onclick = function(){
 
     partnameManual = !partnameManual;
 
-    if(partnameManual){
+if(partnameManual){
 
-        partname.readOnly = false;
+    partname.readOnly = false;
+    partname.value = "";
 
-        this.innerText = "Auto";
-        this.style.background = "#06C755";
-        this.style.color = "#fff";
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
 
-    }else{
+}else{
 
-        partname.readOnly = true;
+    partname.readOnly = true;
 
-        this.innerText = "Manual";
-        this.style.background = "#d9d9d9";
-        this.style.color = "#000";
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
 
-        fillPartData(partno.value);
+    fillPartData(partno.value);
 
-    }
+}
 
 };
 
@@ -498,25 +501,26 @@ modelBtn.onclick = function(){
 
     modelManual = !modelManual;
 
-    if(modelManual){
+if(modelManual){
 
-        model.readOnly = false;
+    model.readOnly = false;
+    model.value = "";
 
-        this.innerText = "Auto";
-        this.style.background = "#06C755";
-        this.style.color = "#fff";
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
 
-    }else{
+}else{
 
-        model.readOnly = true;
+    model.readOnly = true;
 
-        this.innerText = "Manual";
-        this.style.background = "#d9d9d9";
-        this.style.color = "#000";
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
 
-        fillPartData(partno.value);
+    fillPartData(partno.value);
 
-    }
+}
 
 };
 
@@ -525,25 +529,26 @@ supplierBtn.onclick = function(){
 
     supplierManual = !supplierManual;
 
-    if(supplierManual){
+if(supplierManual){
 
-        supplier.readOnly = false;
+    supplier.readOnly = false;
+    supplier.value = "";
 
-        this.innerText = "Auto";
-        this.style.background = "#06C755";
-        this.style.color = "#fff";
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
 
-    }else{
+}else{
 
-        supplier.readOnly = true;
+    supplier.readOnly = true;
 
-        this.innerText = "Manual";
-        this.style.background = "#d9d9d9";
-        this.style.color = "#000";
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
 
-        fillPartData(partno.value);
+    fillPartData(partno.value);
 
-    }
+}
 
 };
 
