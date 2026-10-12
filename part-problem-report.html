@@ -1489,7 +1489,7 @@ text += `• Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.va
 if(reworkResult.value && reworkResult.value !== "-")
 text += `• ผลการ Rework : ${reworkResult.value}\n`;
 
-if(stock)
+if(stock != null && stock !== "")
 text += `• Check Stock SKC : ${stock} ${stockUnit}\n`;
 
 if(okQty.value !== "")
