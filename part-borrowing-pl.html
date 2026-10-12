@@ -23,14 +23,15 @@ body{
     background:#c7d9ea;
     padding:15px;
     border-radius:8px;
-    padding-bottom:90px;
+    padding-bottom:140px;
 }
 
 .title{
     text-align:center;
     font-size:22px;
     font-weight:bold;
-    margin-bottom:15px;
+    margin-bottom:20px;
+    line-height:1.2;
 }
 
 .top-row{
@@ -63,11 +64,10 @@ select{
 }
 
 .manual-btn{
-    width:70px;
-    height:28px;
-    margin:0;
-    border:1px solid #666;
-    background:#d9d9d9;
+    width:90px;
+    height:36px;
+    font-size:16px;
+    font-weight:bold;
 }
 
 button{
@@ -91,6 +91,12 @@ button{
     border:1px solid #ccc;
     white-space:pre-wrap;
     display:none;
+}
+
+#qty{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
 }
 
 #photoCount{
@@ -122,9 +128,31 @@ button{
     font-size:10px;
 }
 
+.top-nav{
+    position:sticky;
+    top:0;
+    z-index:999;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.top-nav span{
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
 </style>
 </head>
 <body>
+
+<div class="top-nav">
+
+    <span onclick="location.href='menu.html'">
+        ❮ กลับ
+    </span>
+
+</div>
 
 <div class="container">
 
@@ -155,7 +183,7 @@ button{
 <option value=""></option>
 <option>Box</option>
 <option>Rack</option>
-<option>Srt Packing</option>
+<option>SRT Packing</option>
 </select>
 
 <label>Part No.</label>
@@ -416,8 +444,10 @@ function fillPartData(partNo){
 
 photos.addEventListener("change",()=>{
 
-photoCount.innerText =
-`เลือกแล้ว ${photos.files.length} รูป`;
+    photoCount.innerText =
+    `📷 เลือกแล้ว ${photos.files.length} รูป`;
+
+    reviewReport();
 
 });
 
@@ -454,11 +484,10 @@ text += `Qty : ${qty.value} Pcs.\n`;
 
 text += "\n━━━━━━━━━━━━━━\n";
 
-text +=
-`Photo : ${photos.files.length} Attached`;
+text += `Photo : ${photos.files.length} รูป`;
 
-report.style.display="block";
-report.innerText=text;
+report.style.display = "block";
+report.innerText = text;
 
 }
 
