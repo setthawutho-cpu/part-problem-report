@@ -964,10 +964,6 @@ textarea{
 📤 Send LINE
 </button>
 
-<button class="submit" onclick="saveToExcel()">
-💾 Save Data
-</button>
-
 <div id="report" class="report"></div>
 
 </div>
@@ -1401,8 +1397,8 @@ for(let i=1;i<=count;i++){
 subPartsText +=
 `Part No. : ${partNo}
 Part Name : ${partName}
-Qty. : ${qty} ${unit}
-`;
+Qty. : ${qty} ${unit}`;
+}
 
 let partDamageSection = "";
 
@@ -1738,12 +1734,6 @@ function openStandard(){
     }
 
     location.href = "standard.html";
-
-}
-
-function saveToExcel(){
-
-    alert("Save Data");
 
 }
 
