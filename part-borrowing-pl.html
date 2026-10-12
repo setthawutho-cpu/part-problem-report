@@ -622,14 +622,22 @@ photos.addEventListener("change",()=>{
 
 function reviewReport(){
 
-let text =
-"🚨 แจ้งยืมชิ้นส่วนจาก PL 🚨\n\n";
+let text = "";
+
+if(detail.value === "ยืมชิ้นส่วน"){
+
+    text =
+    "🚨 แจ้ง Ins. ยืมชิ้นส่วนจาก PL ไปตรวจสอบ 🚨\n\n";
+
+}else if(detail.value === "คืนชิ้นส่วน"){
+
+    text =
+    "🚨 แจ้ง Ins. นำชิ้นส่วนมาคืน PL 🚨\n\n";
+
+}
 
 if(date.value)
 text += `Date : ${date.value}\n`;
-
-if(detail.value)
-text += `Detail : ${detail.value}\n`;
 
 if(location.value)
 text += `Location : ${location.value}\n`;
