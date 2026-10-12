@@ -64,33 +64,91 @@ select{
 }
 
 .manual-btn{
-    width:90px;
-    height:36px;
-    font-size:16px;
-    font-weight:bold;
+    width:70px !important;
+    height:24px;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    background:#d9d9d9;
+    color:#000;
+
+    border:1px solid #666 !important;
+
+    box-shadow:
+        inset 1px 1px 0 #ffffff,
+        inset -1px -1px 0 #888,
+        2px 2px 3px rgba(0,0,0,0.25);
+
+    font-size:13px;
+    font-weight:normal;
 }
 
 button{
     width:100%;
     padding:10px;
-    border:none;
     margin-top:5px;
-    color:#fff;
+    border:none;
+    cursor:pointer;
     font-weight:bold;
 }
 
-.review{background:#2196f3;}
-.copy{background:#9c27b0;}
-.line{background:#06C755;}
-.save{background:#ff9800;}
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+input,
+select,
+textarea,
+button{
+    border-radius:0 !important;
+}
+
+input,
+select{
+    font-size:16px !important;
+    border:1px solid #999;
+    background:#fff;
+}
+
+.manual-btn:active{
+    transform:translateY(1px);
+
+    box-shadow:
+        inset -1px -1px 0 #ffffff,
+        inset 1px 1px 0 #888;
+}
 
 .report{
     margin-top:10px;
-    background:#fff;
+    background:white;
     padding:10px;
     border:1px solid #ccc;
     white-space:pre-wrap;
-    display:none;
+    line-height:1.2;
+
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    overflow-x:hidden;
 }
 
 #qty{
@@ -129,11 +187,29 @@ button{
 }
 
 .top-nav{
-    position:sticky;
+    position:fixed;
     top:0;
-    z-index:999;
-    padding:10px;
-    margin-bottom:10px;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
+    display:flex;
+    align-items:center;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+}
+
+.container{
+    padding-top:50px;
 }
 
 .top-nav span{
@@ -148,7 +224,7 @@ button{
 
 <div class="top-nav">
 
-    <span onclick="location.href='menu.html'">
+    <span onclick="backToMenu()">
         ❮ กลับ
     </span>
 
@@ -521,26 +597,28 @@ function sendLine(){
 
 function saveData(){
 
-const data={
+    const data={
+        date:date.value,
+        detail:detail.value,
+        location:location.value,
+        partNo:partno.value,
+        partName:partname.value,
+        model:model.value,
+        supplier:supplier.value,
+        qty:qty.value
+    };
 
-date:date.value,
-detail:detail.value,
-location:location.value,
-partNo:partno.value,
-partName:partname.value,
-model:model.value,
-supplier:supplier.value,
-qty:qty.value
+    localStorage.setItem(
+        "borrowPLData",
+        JSON.stringify(data)
+    );
 
-};
+    alert("บันทึกสำเร็จ");
 
-localStorage.setItem(
-"borrowPLData",
-JSON.stringify(data)
-);
+}
 
-alert("บันทึกสำเร็จ");
-
+function backToMenu(){
+    location.href = "menu.html";
 }
 
 window.onload=()=>{
