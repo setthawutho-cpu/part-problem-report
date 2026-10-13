@@ -120,16 +120,26 @@ input,select,textarea{
     box-sizing:border-box;
 }
 
-#date{
-    width:110px;
+.top-row{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px;
 }
 
-#type{
-    width:90px;
+.top-row > div{
+    flex:1;
 }
 
+.top-row label{
+    display:block;
+    margin-bottom:5px;
+}
+
+#date,
+#type,
 #product{
-    width:140px;
+    width:100%;
+    height:40px;
 }
 
 .row-info{
@@ -683,6 +693,34 @@ select,
 textarea{
     font-size:16px !important;
 }
+
+@media (max-width:500px){
+
+    #date{
+        font-size:12px !important;
+    }
+
+    #type{
+        font-size:13px !important;
+    }
+
+    #product{
+        font-size:13px !important;
+    }
+
+    .top-row > div:nth-child(1){
+        flex:1.2;
+    }
+
+    .top-row > div:nth-child(2){
+        flex:1;
+    }
+
+    .top-row > div:nth-child(3){
+        flex:1.5;
+    }
+
+}
     
 </style>
 
@@ -717,6 +755,14 @@ textarea{
     </div>
 
     <div>
+        <label>Type</label>
+        <select id="type">
+            <option>New</option>
+            <option>Repeat</option>
+        </select>
+    </div>
+
+    <div>
         <label>Product</label>
         <select id="product">
             <option value=""></option>
@@ -724,18 +770,6 @@ textarea{
             <option>Combine Welding</option>
             <option>SH</option>
             <option>SH Welding</option>
-        </select>
-    </div>
-
-</div>
-
-<div class="top-row">
-
-    <div>
-        <label>Type</label>
-        <select id="type">
-            <option>New</option>
-            <option>Repeat</option>
         </select>
     </div>
 
