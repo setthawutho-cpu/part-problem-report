@@ -363,7 +363,7 @@ button:not(.manual-btn){
             <option value=""></option>
             <option>Box</option>
             <option>Rack</option>
-            <option>SRT Packing</option>
+            <option>Set Packing</option>
         </select>
     </div>
 
@@ -653,20 +653,22 @@ let text = "";
 if(detail.value === "ยืมชิ้นส่วน"){
 
     text =
-    "🚨 แจ้ง Ins. ยืมชิ้นส่วนจาก PL ไปตรวจสอบ 🚨\n\n";
+    `🚨 แจ้ง PL 🚨
+Ins. ยืมชิ้นส่วนจาก ${location.value} ไปตรวจสอบ
+
+`;
 
 }else if(detail.value === "คืนชิ้นส่วน"){
 
     text =
-    "🚨 แจ้ง Ins. นำชิ้นส่วนมาคืน PL 🚨\n\n";
+    `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน
+
+`;
 
 }
-
 if(date.value)
 text += `Date : ${date.value}\n`;
-
-if(location.value)
-text += `Location : ${location.value}\n`;
 
 text += "\n";
 
