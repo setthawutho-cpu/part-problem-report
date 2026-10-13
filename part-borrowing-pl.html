@@ -48,12 +48,22 @@ body{
     gap:20px;
 }
 
-.top-row > div:first-child{
-    flex:0 0 42%;
+.top-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
 }
 
-.top-row > div:last-child{
-    flex:1;
+.top-row > div:nth-child(1){
+    flex:1.2;   /* Date */
+}
+
+.top-row > div:nth-child(2){
+    flex:1.3;   /* Detail */
+}
+
+.top-row > div:nth-child(3){
+    flex:1.5;   /* Location */
 }
 
 .label-row{
@@ -299,6 +309,20 @@ button:not(.manual-btn){
     cursor:pointer;
 }
 
+@media (max-width:500px){
+
+    #date,
+    #detail,
+    #location{
+        font-size:13px !important;
+    }
+
+    .top-row{
+        gap:6px;
+    }
+
+}
+
 </style>
 </head>
 <body>
@@ -319,29 +343,31 @@ button:not(.manual-btn){
 
 <div class="top-row">
 
-<div>
-<label>Date</label>
-<input type="date" id="date">
-</div>
+    <div>
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
 
-<div>
-<label>Detail</label>
-<select id="detail">
-<option value=""></option>
-<option>ยืมชิ้นส่วน</option>
-<option>คืนชิ้นส่วน</option>
-</select>
-</div>
+    <div>
+        <label>Detail</label>
+        <select id="detail">
+            <option value=""></option>
+            <option>ยืมชิ้นส่วน</option>
+            <option>คืนชิ้นส่วน</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Location</label>
+        <select id="location">
+            <option value=""></option>
+            <option>Box</option>
+            <option>Rack</option>
+            <option>SRT Packing</option>
+        </select>
+    </div>
 
 </div>
-
-<label>Location</label>
-<select id="location">
-<option value=""></option>
-<option>Box</option>
-<option>Rack</option>
-<option>SRT Packing</option>
-</select>
 
 <label>Part No.</label>
 <input type="text" id="partno" list="partList" autocomplete="off">
