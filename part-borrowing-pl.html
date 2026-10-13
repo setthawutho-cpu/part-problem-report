@@ -754,7 +754,7 @@ Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? ` ${b
 }
 
 if(date.value)
-text += `Date : ${date.value}\n`;
+text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
 
 if(partno.value)
 text += `Part No. : ${partno.value}\n`;
