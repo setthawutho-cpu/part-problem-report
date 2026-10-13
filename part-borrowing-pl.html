@@ -313,7 +313,7 @@ button:not(.manual-btn){
 
     #date,
     #detail,
-    #location{
+    #borrowLocation{
         font-size:13px !important;
     }
 
@@ -359,7 +359,7 @@ button:not(.manual-btn){
 
     <div>
         <label>Location</label>
-        <select id="location">
+        <select id="borrowLocation">
             <option value=""></option>
             <option>Box</option>
             <option>Rack</option>
@@ -438,6 +438,9 @@ Manual
 
 date.value =
 new Date().toISOString().split("T")[0];
+
+const borrowLocation =
+document.getElementById("borrowLocation");
 
 let partMaster = {};
 let allPartNo = [];
@@ -653,16 +656,17 @@ let text = "";
 if(detail.value === "ยืมชิ้นส่วน"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. ยืมชิ้นส่วน${location.value ? `จาก ${location.value}` : ""} ไปตรวจสอบ
+Ins. ยืมชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
 
 `;
 }else if(detail.value === "คืนชิ้นส่วน"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนมาคืน${location.value ? ` ${location.value}` : ""}
+Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? ` ${borrowLocation.value}` : ""}
 
 `;
 }
+
 if(date.value)
 text += `Date : ${date.value}\n`;
 
@@ -748,7 +752,7 @@ function saveData(){
     const data={
         date:date.value,
         detail:detail.value,
-        location:location.value,
+        location:borrowLocation.value,
         partNo:partno.value,
         partName:partname.value,
         model:model.value,
@@ -779,7 +783,7 @@ window.onload = ()=>{
     new Date().toISOString().split("T")[0];
 
     detail.value = "";
-    location.value = "";
+    borrowLocation.value = "";
     partno.value = "";
     partname.value = "";
     model.value = "";
