@@ -654,10 +654,11 @@ if(detail.value === "ยืมชิ้นส่วน"){
 
     text =
     `🚨 แจ้ง PL 🚨
-Ins. ยืมชิ้นส่วนจาก ${location.value} ไปตรวจสอบ
+Ins. ยืมชิ้นส่วน${location.value ? `จาก ${location.value}` : ""} ไปตรวจสอบ
 
 `;
 
+}
 }else if(detail.value === "คืนชิ้นส่วน"){
 
     text =
@@ -669,8 +670,6 @@ Ins. นำชิ้นส่วนมาคืน
 }
 if(date.value)
 text += `Date : ${date.value}\n`;
-
-text += "\n";
 
 if(partno.value)
 text += `Part No. : ${partno.value}\n`;
@@ -684,10 +683,16 @@ text += `Model : ${model.value}\n`;
 if(supplier.value)
 text += `Supplier : ${supplier.value}\n`;
 
-if(qty.value)
-text += `Qty : ${qty.value} Pcs.\n`;
+if(qty.value){
 
-text += "\n━━━━━━━━━━━━━━\n";
+    const qtyUnit =
+    Number(qty.value) === 1 ? "Pc." : "Pcs.";
+
+    text += `Qty : ${qty.value} ${qtyUnit}\n`;
+
+}
+
+text += "━━━━━━━━━━━━━━\n";
 
 text += `Photo : ${photos.files.length} รูป`;
 
