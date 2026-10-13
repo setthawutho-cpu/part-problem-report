@@ -186,9 +186,6 @@ button:not(.manual-btn){
     width:100%;
     padding:10px;
     margin-top:5px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
 }
 
 .review{
@@ -231,11 +228,6 @@ button:not(.manual-btn){
     text-align:center;
     font-size:22px;
     font-weight:bold;
-}
-
-#photoCount{
-    color:#0066cc;
-    margin-bottom:10px;
 }
 
 .bottom-nav{
@@ -334,6 +326,41 @@ button:not(.manual-btn){
     height:40px;
     padding:4px;
     font-size:14px;
+}
+
+.photo-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:4px;
+}
+
+#photoCount{
+    color:#0066cc;
+    font-weight:bold;
+    margin:0;
+    flex:1;
+}
+
+.photo-head label{
+    margin:0;
+}
+
+#clearPhoto{
+    width:32px !important;
+    min-width:32px !important;
+    height:32px !important;
+
+    padding:0 !important;
+    margin:0 !important;
+
+    background:#fff;
+    border:1px solid #999 !important;
+
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+    flex:none;
 }
 
 @media (max-width:500px){
@@ -435,18 +462,29 @@ Manual
         <input type="number" id="qty">
     </div>
 
-    <div>
+<div>
+
+    <div class="photo-head">
         <label>Photo</label>
-        <input type="file"
-               id="photos"
-               multiple
-               accept="image/*">
+
+        <span id="photoCount">
+            เลือกแล้ว 0 รูป
+        </span>
+
+        <button type="button"
+                id="clearPhoto"
+                onclick="clearPhotos()">
+            🗑️
+        </button>
     </div>
+
+    <input type="file"
+           id="photos"
+           multiple
+           accept="image/*">
 
 </div>
 
-<div id="photoCount">
-เลือกแล้ว 0 รูป
 </div>
 
 <button class="review" onclick="reviewReport()">
@@ -678,11 +716,24 @@ function fillPartData(partNo){
 photos.addEventListener("change",()=>{
 
     photoCount.innerText =
-    `📷 เลือกแล้ว ${photos.files.length} รูป`;
+    `เลือกแล้ว ${photos.files.length} รูป`;
 
     reviewReport();
 
 });
+
+function clearPhotos(){
+
+    if(!confirm("ลบรูปทั้งหมด ?")) return;
+
+    photos.value = "";
+
+    photoCount.innerText =
+    "เลือกแล้ว 0 รูป";
+
+    reviewReport();
+
+}
 
 function reviewReport(){
 
