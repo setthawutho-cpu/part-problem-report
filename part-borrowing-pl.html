@@ -651,23 +651,18 @@ function reviewReport(){
 let text = "";
 
 if(detail.value === "ยืมชิ้นส่วน"){
-
     text =
-    `🚨 แจ้ง PL 🚨
+`🚨 แจ้ง PL 🚨
 Ins. ยืมชิ้นส่วน${location.value ? `จาก ${location.value}` : ""} ไปตรวจสอบ
 
 `;
-
 }else if(detail.value === "คืนชิ้นส่วน"){
-
     text =
-    `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนมาคืน
+`🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน${location.value ? ` ${location.value}` : ""}
 
 `;
-
 }
-
 if(date.value)
 text += `Date : ${date.value}\n`;
 
