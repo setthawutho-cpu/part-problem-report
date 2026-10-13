@@ -342,14 +342,20 @@ button:not(.manual-btn){
     flex:1;
 }
 
-.photo-head label{
-    margin:0;
+.photo-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.photo-input-row #photos{
+    flex:1;
 }
 
 #clearPhoto{
-    width:26px !important;
-    min-width:26px !important;
-    height:26px !important;
+    width:40px !important;
+    min-width:40px !important;
+    height:40px !important;
 
     padding:0 !important;
     margin:0 !important;
@@ -357,7 +363,7 @@ button:not(.manual-btn){
     background:#fff;
     border:1px solid #999 !important;
 
-    font-size:14px;
+    font-size:18px;
     line-height:1;
     cursor:pointer;
     flex:none;
@@ -470,20 +476,22 @@ Manual
         <span id="photoCount">
             เลือกแล้ว 0 รูป
         </span>
+    </div>
+
+    <div class="photo-input-row">
+
+        <input type="file"
+               id="photos"
+               multiple
+               accept="image/*">
 
         <button type="button"
                 id="clearPhoto"
                 onclick="clearPhotos()">
             🗑️
         </button>
+
     </div>
-
-    <input type="file"
-           id="photos"
-           multiple
-           accept="image/*">
-
-</div>
 
 </div>
 
