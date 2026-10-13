@@ -717,15 +717,34 @@ alert("Copy สำเร็จ");
 
 }
 
-function sendLine(){
+async function sendLine(){
 
     if(!report.innerText){
         reviewReport();
     }
 
-    location.href =
-    "https://line.me/R/share?text=" +
-    encodeURIComponent(report.innerText);
+    try{
+
+        const files = [...photos.files];
+
+        if(files.length > 0 && navigator.canShare){
+
+            await navigator.share({
+                text: report.innerText,
+                files: files
+            });
+
+        }else{
+
+            location.href =
+            "https://line.me/R/share?text=" +
+            encodeURIComponent(report.innerText);
+
+        }
+
+    }catch(err){
+        console.log(err);
+    }
 
 }
 
