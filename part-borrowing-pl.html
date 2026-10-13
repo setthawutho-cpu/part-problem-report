@@ -309,6 +309,29 @@ button:not(.manual-btn){
     cursor:pointer;
 }
 
+.qty-photo-row{
+    display:flex;
+    gap:10px;
+    margin-top:5px;
+}
+
+.qty-photo-row > div{
+    flex:1;
+}
+
+#qty{
+    height:40px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+#photos{
+    height:40px;
+    padding:4px;
+    font-size:14px;
+}
+
 @media (max-width:500px){
 
     #date,
@@ -401,14 +424,22 @@ Manual
 
 <input type="text" id="supplier" readonly>
 
-<label>Qty</label>
-<input type="number" id="qty">
+<div class="qty-photo-row">
 
-<label>Photo</label>
-<input type="file"
-       id="photos"
-       multiple
-       accept="image/*">
+    <div>
+        <label>Qty</label>
+        <input type="number" id="qty">
+    </div>
+
+    <div>
+        <label>Photo</label>
+        <input type="file"
+               id="photos"
+               multiple
+               accept="image/*">
+    </div>
+
+</div>
 
 <div id="photoCount">
 เลือกแล้ว 0 รูป
