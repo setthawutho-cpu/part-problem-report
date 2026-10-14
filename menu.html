@@ -2,27 +2,47 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
 <title>INSPECTION PART</title>
 
 <style>
 
+html, body{
+    touch-action: manipulation;
+    overscroll-behavior: none;
+}
+
+*{
+    -webkit-tap-highlight-color: transparent;
+}
+
 .lang-btn{
     position:fixed;
     top:10px;
     right:10px;
+
     width:42px;
     height:42px;
-    padding:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     border:none;
     border-radius:50%;
+
     background:#607d8b;
     color:#fff;
-    font-size:18px;
-    z-index:99999;
 
+    font-size:13px;
+    font-weight:bold;
+
+    cursor:pointer;
     box-shadow:0 2px 8px rgba(0,0,0,.25);
+
+    z-index:99999;
 }
 
 body{
@@ -115,9 +135,9 @@ body{
 
 <div class="container">
 
-    <div class="menu-title">
-        INSPECTION PART
-    </div>
+<div class="menu-title" id="titleText">
+    INSPECTION PART
+</div>
 
     <button class="menu-btn report-btn"
     onclick="location.href='part-problem-report.html'">
@@ -181,8 +201,118 @@ body{
 </div>
 
 <button id="langBtn" class="lang-btn">
-    🌐 English
+    EN
 </button>
+
+<script>
+
+let langIndex = 0;
+
+const textData = [
+
+{
+lang:"EN",
+title:"INSPECTION PART",
+report:"📋 PART PROBLEM REPORT",
+newmodel:"📦 PART PROBLEM NEW MODEL",
+borrow:"🔄 PART BORROWING FROM PL",
+trial:"🧪 ASSEMBLY TRIAL",
+washing:"🧼 WASHING ROOM",
+setting:"⚙️ SETTINGS"
+},
+
+{
+lang:"TH",
+title:"ตรวจสอบชิ้นส่วน",
+report:"📋 รายงานปัญหาชิ้นส่วน",
+newmodel:"📦 ปัญหาชิ้นส่วนรุ่นใหม่",
+borrow:"🔄 ยืมชิ้นส่วนจาก PL",
+trial:"🧪 ทดลองประกอบ",
+washing:"🧼 ห้องล้างชิ้นส่วน",
+setting:"⚙️ ตั้งค่า"
+},
+
+{
+lang:"JP",
+title:"部品検査",
+report:"📋 部品不良レポート",
+newmodel:"📦 新機種部品不良",
+borrow:"🔄 PLから部品借用",
+trial:"🧪 組立トライ",
+washing:"🧼 洗浄室",
+setting:"⚙️ 設定"
+}
+
+];
+
+document.querySelector(".report-btn").id="reportBtn";
+document.querySelector(".newmodel-btn").id="newModelBtn";
+document.querySelector(".borrow-btn").id="borrowBtn";
+document.querySelector(".trial-btn").id="trialBtn";
+document.querySelector(".washing-btn").id="washingBtn";
+document.querySelector(".setting-btn").id="settingBtn";
+
+const savedLang = localStorage.getItem("language");
+
+if(savedLang !== null){
+
+    langIndex = Number(savedLang);
+
+    const t = textData[langIndex];
+
+    langBtn.innerText = t.lang;
+    titleText.innerText = t.title;
+    reportBtn.innerText = t.report;
+    newModelBtn.innerText = t.newmodel;
+    borrowBtn.innerText = t.borrow;
+    trialBtn.innerText = t.trial;
+    washingBtn.innerText = t.washing;
+    settingBtn.innerText = t.setting;
+
+}
+
+langBtn.onclick = function(){
+
+    langIndex++;
+
+    if(langIndex >= textData.length){
+        langIndex = 0;
+    }
+
+    localStorage.setItem("language", langIndex);
+
+    const t = textData[langIndex];
+
+    langBtn.innerText = t.lang;
+    titleText.innerText = t.title;
+    reportBtn.innerText = t.report;
+    newModelBtn.innerText = t.newmodel;
+    borrowBtn.innerText = t.borrow;
+    trialBtn.innerText = t.trial;
+    washingBtn.innerText = t.washing;
+    settingBtn.innerText = t.setting;
+
+};
+
+</script>
+
+<script>
+document.addEventListener('gesturestart', function(e){
+    e.preventDefault();
+});
+
+let lastTouchEnd = 0;
+
+document.addEventListener('touchend', function(e){
+    const now = Date.now();
+
+    if(now - lastTouchEnd <= 300){
+        e.preventDefault();
+    }
+
+    lastTouchEnd = now;
+}, {passive:false});
+</script>
     
 </body>
 </html>
