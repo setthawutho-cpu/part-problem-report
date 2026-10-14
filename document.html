@@ -166,6 +166,11 @@ textarea{
     min-height:80px;
 }
 
+#remarkArea textarea{
+    background:#fff;
+    border:1px solid #999;
+}
+
 .title{
     font-size:20px;
     font-weight:bold;
@@ -1287,12 +1292,6 @@ function addRemark(){
             <textarea
                 id="remark${remarkCount}"
                 placeholder="Remark ${remarkCount}"
-                style="
-                    height:80px;
-                    background:#fff;
-                    border:1px solid #999;
-                    box-sizing:border-box;
-                "
             ></textarea>
         </div>
         `
