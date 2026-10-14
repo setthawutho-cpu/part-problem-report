@@ -583,6 +583,16 @@ input[name="okmark"]:checked + .white{
     animation:zoomIn .5s ease;
 }
 
+#remarkArea textarea{
+    width:100%;
+    height:100px;
+    margin-top:5px;
+    box-sizing:border-box;
+    resize:none;
+    background:#fff;
+    border:1px solid #999;
+}
+
 @keyframes zoomIn{
     from{
         transform:scale(.8);
@@ -1297,12 +1307,10 @@ function addRemark(){
     }else{
 
         area.innerHTML = `
-            <div style="margin-top:5px;">
-                <textarea
-                    id="remark1"
-                    placeholder="Remark"
-                ></textarea>
-            </div>
+            <textarea
+                id="remark1"
+                placeholder="Remark"
+            ></textarea>
         `;
     }
 
