@@ -23,11 +23,11 @@ textarea{
 }
 
 *{
-    -webkit-tap-highlight-color:*ransparent;
+    -webkit-tap-highlight-color:transparent;
 }
 
 body{
-    touch-act*on:manipulation;
+    touch-action:manipulation;
 }
 
 .header{
@@ -64,11 +64,22 @@ body{
     cursor:pointer;
 }
 
+/* Master */
 .partmaster{background:#2196f3;}
 .stdmaster{background:#4caf50;}
 .dashboard{background:#673ab7;}
-.backup{background:#009688;}
+
+/* Setting */
+.language{background:#3f51b5;}
 .theme{background:#795548;}
+
+/* Data */
+.backup{background:#009688;}
+.restore{background:#00acc1;}
+
+/* Support */
+.instruction{background:#ff9800;}
+.contact{background:#e91e63;}
 .version{background:#607d8b;}
 
 .bottom-nav{
@@ -135,14 +146,34 @@ onclick="location.href='dashboard.html'">
 📊 DASHBOARD
 </button>
 
-<button class="setting-btn backup"
-onclick="alert('Backup Data')">
-📁 BACKUP DATA
+<button class="setting-btn language"
+onclick="alert('Language Setting')">
+🌐 LANGUAGE
 </button>
 
 <button class="setting-btn theme"
 onclick="alert('Theme Setting')">
 🎨 THEME
+</button>
+
+<button class="setting-btn backup"
+onclick="alert('Backup Data')">
+📁 BACKUP DATA
+</button>
+
+<button class="setting-btn restore"
+onclick="alert('Restore Data')">
+📥 RESTORE DATA
+</button>
+
+<button class="setting-btn instruction"
+onclick="location.href='instruction.html'">
+📖 WORK INSTRUCTION
+</button>
+
+<button class="setting-btn contact"
+onclick="location.href='contact.html'">
+📞 CONTACT ADMIN
 </button>
 
 <button class="setting-btn version">
