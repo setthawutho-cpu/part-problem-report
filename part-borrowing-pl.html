@@ -768,50 +768,42 @@ function reviewReport(){
 let text = "";
 
 if(detail.value === "ยืมชิ้นส่วน"){
-    text =
-`🚨 แจ้ง PL 🚨
+    text = `🚨 แจ้ง PL 🚨
 Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
-
 `;
 }else if(detail.value === "คืนชิ้นส่วน"){
-    text =
-`🚨 แจ้ง PL 🚨
+    text = `🚨 แจ้ง PL 🚨
 Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""}
-
 `;
 }else if(detail.value === "Defect"){
-    text =
-`🚨 แจ้ง PL 🚨
-text = `🚨 แจ้ง PL 🚨 Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value} ` : ""}ไป Defect`;
-
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value} ` : ""}ไป Defect
 `;
 }
 
 if(date.value)
-text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
+    text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
 
 if(partno.value)
-text += `Part No. : ${partno.value}\n`;
+    text += `Part No. : ${partno.value}\n`;
 
 if(partname.value)
-text += `Part Name : ${partname.value}\n`;
+    text += `Part Name : ${partname.value}\n`;
 
 if(model.value)
-text += `Model : ${model.value}\n`;
+    text += `Model : ${model.value}\n`;
 
 if(supplier.value)
-text += `Supplier : ${supplier.value}\n`;
+    text += `Supplier : ${supplier.value}\n`;
 
 if(qty.value){
-
-    const qtyUnit =
-    Number(qty.value) === 1 ? "Pc." : "Pcs.";
-
+    const qtyUnit = Number(qty.value) === 1 ? "Pc." : "Pcs.";
     text += `Qty : ${qty.value} ${qtyUnit}\n`;
 }
 
 text += "━━━━━━━━━━━━━━\n";
-text += `📷 Photo : Attached\n`;
+text += "📷 Photo : Attached\n";
+
 
 report.style.display = "block";
 report.innerText = text;
