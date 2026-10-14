@@ -1284,11 +1284,11 @@ function addRemark(){
         "beforeend",
         `
         <div style="margin-top:5px;">
-            <input
-                type="text"
+            <textarea
                 id="remark${remarkCount}"
                 placeholder="Remark ${remarkCount}"
-            >
+                style="min-height:80px;"
+            ></textarea>
         </div>
         `
     );
