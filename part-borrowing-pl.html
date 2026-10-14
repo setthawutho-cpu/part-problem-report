@@ -782,7 +782,7 @@ Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ใ�
 }else if(detail.value === "Defect"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนใน ${borrowLocation.value || ""} ไป Defect
+text = `🚨 แจ้ง PL 🚨 Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value} ` : ""}ไป Defect`;
 
 `;
 }
