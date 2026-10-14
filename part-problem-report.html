@@ -1561,16 +1561,18 @@ if(detail.value)
 text += `Detail\n${detail.value}\n`;
 
 if(
-rework.value ||
-containmentResult.value !== "-"
+rework.value.trim() ||
+(containmentResult.value &&
+containmentResult.value !== "-")
 ){
 text += `━━━━━━━━━━━━━━
 CONTAINMENT ACTION\n`;
 
-if(rework.value)
+if(rework.value.trim())
 text += `Rework : ${rework.value}\n`;
 
-if(containmentResult.value !== "-")
+if(containmentResult.value &&
+containmentResult.value !== "-")
 text += `Result : ${containmentResult.value}\n`;
 }
 
