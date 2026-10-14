@@ -770,19 +770,19 @@ let text = "";
 if(detail.value === "ยืมชิ้นส่วน"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. ยืมชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
+Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
 
 `;
 }else if(detail.value === "คืนชิ้นส่วน"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? ` ${borrowLocation.value}` : ""}
+Ins. นำชิ้นส่วนมาคืนใน${borrowLocation.value ? ` ${borrowLocation.value}` : ""}
 
 `;
 }else if(detail.value === "Defect"){
     text =
 `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนจาก ${borrowLocation.value || "Box,Rack"} ไป Defect
+Ins. นำชิ้นส่วนใน ${borrowLocation.value || ""} ไป Defect
 
 `;
 }
