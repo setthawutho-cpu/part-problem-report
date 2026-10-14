@@ -1286,24 +1286,25 @@ if(partType === "Reject" || partType === "Defect"){
 
 let reportVisible = false;
 
-let remarkCount = 0;
-
 function addRemark(){
 
-    remarkCount++;
+    const area = document.getElementById("remarkArea");
 
-    document.getElementById("remarkArea")
-    .insertAdjacentHTML(
-        "beforeend",
-        `
-        <div style="margin-top:5px;">
-            <textarea
-                id="remark${remarkCount}"
-                placeholder="Remark ${remarkCount}"
-            ></textarea>
-        </div>
-        `
-    );
+    if(area.innerHTML.trim() !== ""){
+
+        area.innerHTML = "";
+
+    }else{
+
+        area.innerHTML = `
+            <div style="margin-top:5px;">
+                <textarea
+                    id="remark1"
+                    placeholder="Remark"
+                ></textarea>
+            </div>
+        `;
+    }
 
 }
       
@@ -1496,15 +1497,11 @@ let partDamageSection = "";
 
 let remarkText = "";
 
-for(let i=1;i<=remarkCount;i++){
+const value =
+document.getElementById("remark1")?.value.trim();
 
-    const value =
-    document.getElementById(`remark${i}`)?.value.trim();
-
-    if(value){
-        remarkText += `Remark : ${value}\n`;
-    }
-
+if(value){
+    remarkText += `Remark : ${value}\n`;
 }
 
 const hasPartData =
