@@ -970,6 +970,13 @@ textarea{
 
     <label><input type="radio" name="okmark" value="White"> <span class="white"></span></label>
 
+<div id="okMarkDetailArea" style="width:100%;display:none;">
+    <textarea
+        id="okMarkDetail"
+        placeholder="รายละเอียด OK Mark"
+    ></textarea>
+</div>
+
 <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
 
     <label style="margin:0;">
@@ -1445,6 +1452,9 @@ document.querySelector(
 'input[name="okmark"]:checked'
 )?.value || "-";
 
+const okMarkDetail =
+document.getElementById("okMarkDetail")?.value || "";
+
 const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
 const stockUnit = stock == 1 ? "Pc." : "Pcs.";
 const okUnit = okQty.value == 1 ? "Pc." : "Pcs.";
@@ -1597,7 +1607,9 @@ text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalU
 
 if(okMark !== "-")
 text += `OK Mark : ${okMark}\n`;
-}
+
+if(okMarkDetail.trim())
+text += `OK Mark Detail : ${okMarkDetail}\n`;
 
 if(remarkText){
 text += `━━━━━━━━━━━━━━
@@ -1791,15 +1803,23 @@ document.querySelectorAll('input[name="okmark"]')
 
     radio.addEventListener("click", function(){
 
+        const area =
+        document.getElementById("okMarkDetailArea");
+
         if(currentOkMark === this){
 
             this.checked = false;
             currentOkMark = null;
 
+            area.style.display = "none";
+
+            document.getElementById("okMarkDetail").value = "";
+
         }else{
 
             currentOkMark = this;
 
+            area.style.display = "block";
         }
 
     });
