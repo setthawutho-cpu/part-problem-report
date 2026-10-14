@@ -415,6 +415,7 @@ button:not(.manual-btn){
             <option value=""></option>
             <option>ยืมชิ้นส่วน</option>
             <option>คืนชิ้นส่วน</option>
+            <option>Defect</option>
         </select>
     </div>
 
@@ -768,7 +769,12 @@ Ins. ยืมชิ้นส่วน${borrowLocation.value ? `จาก ${borr
 Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? ` ${borrowLocation.value}` : ""}
 
 `;
-}
+}else if(detail.value === "Defect"){
+    text =
+`🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนจาก ${borrowLocation.value || "Box,Rack"} ไป Defect
+
+`;
 
 if(date.value)
 text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
@@ -792,11 +798,9 @@ if(qty.value){
 
     text += `Qty : ${qty.value} ${qtyUnit}\n`;
 
-}
-
 text += "━━━━━━━━━━━━━━\n";
 
-text += `Photo : ${photos.files.length} รูป`;
+text += `📷 Photo : Attached\n`;
 
 report.style.display = "block";
 report.innerText = text;
