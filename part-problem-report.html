@@ -166,6 +166,11 @@ textarea{
     min-height:80px;
 }
 
+#remarkArea textarea{
+    background:#fff;
+    border:1px solid #999;
+}
+
 .title{
     font-size:20px;
     font-weight:bold;
@@ -965,7 +970,33 @@ textarea{
 
     <label><input type="radio" name="okmark" value="White"> <span class="white"></span></label>
 
+<div id="okMarkDetailArea" style="width:100%;display:none;">
+    <textarea
+        id="okMarkDetail"
+        placeholder="รายละเอียด เช่น Serial No.&#10;(กรณีไม่มีรายละเอียดไม่ต้องกรอก)">
+    ></textarea>
+</div>
+
 <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+
+    <label style="margin:0;">
+        <b>Remark</b>
+    </label>
+
+    <button type="button"
+            onclick="addRemark()"
+            style="width:40px;height:30px;padding:0;margin:0;">
+        +
+    </button>
+
+</div>
+
+<div id="remarkArea"></div>
+
+<br>
+
+<div style="display:flex;align-items:center;gap:10px;">
+
     <label style="margin:0;">
         <b>Part เสียหายร่วม</b>
     </label>
@@ -978,6 +1009,7 @@ textarea{
         oninput="createPartFields()"
         style="width:80px;height:30px;"
     >
+
 </div>
 
 <div id="partArea"></div>
@@ -1253,6 +1285,27 @@ if(partType === "Reject" || partType === "Defect"){
 
 let reportVisible = false;
 
+let remarkCount = 0;
+
+function addRemark(){
+
+    remarkCount++;
+
+    document.getElementById("remarkArea")
+    .insertAdjacentHTML(
+        "beforeend",
+        `
+        <div style="margin-top:5px;">
+            <textarea
+                id="remark${remarkCount}"
+                placeholder="Remark ${remarkCount}"
+            ></textarea>
+        </div>
+        `
+    );
+
+}
+      
 function createPartFields(){
 
     const count =
@@ -1399,6 +1452,9 @@ document.querySelector(
 'input[name="okmark"]:checked'
 )?.value || "-";
 
+const okMarkDetail =
+document.getElementById("okMarkDetail")?.value || "";
+
 const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
 const stockUnit = stock == 1 ? "Pc." : "Pcs.";
 const okUnit = okQty.value == 1 ? "Pc." : "Pcs.";
@@ -1436,6 +1492,19 @@ Qty. : ${qty} ${unit}
 }
 
 let partDamageSection = "";
+
+let remarkText = "";
+
+for(let i=1;i<=remarkCount;i++){
+
+    const value =
+    document.getElementById(`remark${i}`)?.value.trim();
+
+    if(value){
+        remarkText += `Remark : ${value}\n`;
+    }
+
+}
 
 const hasPartData =
 subPartsText
@@ -1536,8 +1605,19 @@ text += `NG : ${ng} ${ngUnit}\n`;
 if(totalNg)
 text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
 
-if(okMark !== "-")
-text += `OK Mark : ${okMark}\n`;
+if(okMark !== "-"){
+    text += `OK Mark : ${okMark}\n`;
+
+    if(okMarkDetail.trim()){
+        text += `${okMarkDetail}\n`;
+    }
+}
+
+}
+
+if(remarkText){
+text += `━━━━━━━━━━━━━━
+${remarkText}`;
 }
 
 if(partDamageSection){
@@ -1727,15 +1807,23 @@ document.querySelectorAll('input[name="okmark"]')
 
     radio.addEventListener("click", function(){
 
+        const area =
+        document.getElementById("okMarkDetailArea");
+
         if(currentOkMark === this){
 
             this.checked = false;
             currentOkMark = null;
 
+            area.style.display = "none";
+
+            document.getElementById("okMarkDetail").value = "";
+
         }else{
 
             currentOkMark = this;
 
+            area.style.display = "block";
         }
 
     });
