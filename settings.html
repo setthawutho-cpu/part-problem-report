@@ -147,8 +147,8 @@ onclick="location.href='dashboard.html'">
 </button>
 
 <button class="setting-btn language"
-onclick="alert('Language Setting')">
-🌐 LANGUAGE
+onclick="changeLanguage()">
+🌐 LANGUAGE : <span id="langText">EN</span>
 </button>
 
 <button class="setting-btn theme"
@@ -210,6 +210,83 @@ onclick="location.href='contact.html'">
 </button>
 
 </div>
+
+<script>
+
+const languages = ["EN","TH","JP"];
+let langIndex = Number(localStorage.getItem("language")) || 0;
+
+function changeLanguage(){
+
+    langIndex++;
+
+    if(langIndex >= languages.length){
+        langIndex = 0;
+    }
+
+    localStorage.setItem("language", langIndex);
+
+    applyLanguage();
+}
+
+function applyLanguage(){
+
+    const btn = document.querySelectorAll(".setting-btn");
+    const lang = languages[langIndex];
+
+    if(lang === "TH"){
+
+        document.querySelector(".header").innerHTML = "⚙️ ตั้งค่า";
+
+        btn[0].innerHTML = "📦 ข้อมูลชิ้นส่วน";
+        btn[1].innerHTML = "📝 มาตรฐาน";
+        btn[2].innerHTML = "📊 แดชบอร์ด";
+        btn[3].innerHTML = "🌐 ภาษา : <span id='langText'>TH</span>";
+        btn[4].innerHTML = "🎨 ธีม";
+        btn[5].innerHTML = "📁 สำรองข้อมูล";
+        btn[6].innerHTML = "📥 กู้คืนข้อมูล";
+        btn[7].innerHTML = "📖 คู่มือการใช้งาน";
+        btn[8].innerHTML = "📞 ติดต่อผู้ดูแล";
+        btn[9].innerHTML = "ℹ️ เวอร์ชัน 1.0";
+
+    }
+    else if(lang === "JP"){
+
+        document.querySelector(".header").innerHTML = "⚙️ 設定";
+
+        btn[0].innerHTML = "📦 部品マスター";
+        btn[1].innerHTML = "📝 標準マスター";
+        btn[2].innerHTML = "📊 ダッシュボード";
+        btn[3].innerHTML = "🌐 言語 : <span id='langText'>JP</span>";
+        btn[4].innerHTML = "🎨 テーマ";
+        btn[5].innerHTML = "📁 バックアップ";
+        btn[6].innerHTML = "📥 復元";
+        btn[7].innerHTML = "📖 作業手順書";
+        btn[8].innerHTML = "📞 管理者連絡";
+        btn[9].innerHTML = "ℹ️ バージョン 1.0";
+
+    }
+    else{
+
+        document.querySelector(".header").innerHTML = "⚙️ SETTINGS";
+
+        btn[0].innerHTML = "📦 PART MASTER";
+        btn[1].innerHTML = "📝 STANDARD MASTER";
+        btn[2].innerHTML = "📊 DASHBOARD";
+        btn[3].innerHTML = "🌐 LANGUAGE : <span id='langText'>EN</span>";
+        btn[4].innerHTML = "🎨 THEME";
+        btn[5].innerHTML = "📁 BACKUP DATA";
+        btn[6].innerHTML = "📥 RESTORE DATA";
+        btn[7].innerHTML = "📖 WORK INSTRUCTION";
+        btn[8].innerHTML = "📞 CONTACT ADMIN";
+        btn[9].innerHTML = "ℹ️ VERSION 1.0";
+
+    }
+}
+
+applyLanguage();
+
+</script>
 
 </body>
 </html>
