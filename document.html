@@ -973,7 +973,7 @@ textarea{
 <div id="okMarkDetailArea" style="width:100%;display:none;">
     <textarea
         id="okMarkDetail"
-        placeholder="รายละเอียด OK Mark"
+        placeholder="รายละเอียด เช่น Serial No. (กรณีไม่มีรายละเอียดไม่ต้องกรอก)"
     ></textarea>
 </div>
 
@@ -1605,12 +1605,12 @@ text += `NG : ${ng} ${ngUnit}\n`;
 if(totalNg)
 text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
 
-if(okMark !== "-")
-text += `OK Mark : ${okMark}\n`;
+if(okMark !== "-"){
+    text += `OK Mark : ${okMark}\n`;
 
-if(okMarkDetail.trim())
-text += `OK Mark Detail : ${okMarkDetail}\n`;
-
+    if(okMarkDetail.trim()){
+        text += `${okMarkDetail}\n`;
+    }
 }
 
 if(remarkText){
