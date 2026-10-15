@@ -3,92 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>INSPECTION PART</title>
+<title>HOME</title>
 
 <style>
 
-html, body{
-    touch-action: manipulation;
-    overscroll-behavior: none;
-}
-
-*{
-    -webkit-tap-highlight-color: transparent;
-}
-
-.lang-btn{
-    position:fixed;
-    top:10px;
-    right:10px;
-
-    width:42px;
-    height:42px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:none;
-    border-radius:50%;
-
-    background:#607d8b;
-    color:#fff;
-
-    font-size:13px;
-    font-weight:bold;
-
-    cursor:pointer;
-    box-shadow:0 2px 8px rgba(0,0,0,.25);
-
-    z-index:99999;
-}
-
 body{
     margin:0;
-    font-family:Segoe UI,sans-serif;
+    padding:0;
     background:#dfeaf3;
+    font-family:Segoe UI,sans-serif;
 }
 
 .container{
-    width:100%;
-    max-width:500px;
+    max-width:1200px;
     margin:auto;
-    padding:10px;
+    padding:15px;
+    padding-top:60px;
     padding-bottom:90px;
-    box-sizing:border-box;
 }
 
-.menu-title{
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:60px;
-    margin-bottom:40px;
-}
-
-.menu-btn{
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
     width:100%;
-    max-width:100%;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    color:#fff;
+    background:#dfeaf3;
+    padding:10px 15px;
+    box-sizing:border-box;
+    z-index:9999;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top-nav .title{
     font-size:18px;
     font-weight:bold;
-    cursor:pointer;
-    border-radius:8px;
-    box-sizing:border-box;
 }
 
-.report-btn{background:#2196f3;}
-.newmodel-btn{background:#4caf50;}
-.borrow-btn{background:#009688;}
-.trial-btn{background:#9c27b0;}
-.washing-btn{background:#00bcd4;}
-.setting-btn{background:#ff9800;}
+.header-card{
+    background:#ffffff;
+    border:1px solid #bbb;
+    padding:15px;
+    text-align:center;
+}
+
+.system-title{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.info-row{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:10px;
+}
+
+.status{
+    margin-top:8px;
+    color:#0a8d00;
+    font-weight:bold;
+}
+
+.section{
+    margin-top:15px;
+}
+
+.section-title{
+    background:#95c11f;
+    color:#000;
+    padding:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:10px;
+}
+
+.menu-card{
+    height:120px;
+    background:#fff;
+    border:1px solid #aaa;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-decoration:none;
+    color:#000;
+
+    font-size:42px;
+    cursor:pointer;
+}
+
+.menu-card span{
+    font-size:14px;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:10px;
+    margin-top:10px;
+}
+
+.summary-card{
+    background:#fff;
+    border:1px solid #aaa;
+    text-align:center;
+    padding:15px;
+}
+
+.summary-card .number{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.summary-card .text{
+    margin-top:5px;
+}
+
+.activity-card{
+    background:#fff;
+    border:1px solid #aaa;
+    padding:12px;
+    margin-top:8px;
+}
+
+.shortcut-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:10px;
+    margin-top:10px;
+}
+
+.shortcut-card{
+    background:#fff;
+    border:1px solid #aaa;
+    padding:15px;
+    text-align:center;
+    font-size:30px;
+}
+
+.shortcut-card div{
+    margin-top:5px;
+    font-size:13px;
+    font-weight:bold;
+}
 
 .bottom-nav{
     position:fixed;
@@ -116,64 +188,203 @@ body{
     align-items:center;
 
     font-size:18px;
-    font-weight:normal;
 }
 
 .bottom-nav button span{
     font-size:10px;
     margin-top:2px;
-    line-height:1;
 }
 
 .bottom-nav button:active{
     background:#f1f1f1;
 }
 
+@media(max-width:600px){
+
+    .system-title{
+        font-size:22px;
+    }
+
+    .menu-card{
+        height:100px;
+        font-size:32px;
+    }
+
+    .summary-card .number{
+        font-size:24px;
+    }
+
+}
+
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="top-nav">
 
-<div class="menu-title" id="titleText">
-    INSPECTION PART
+    <div class="title">
+        🏠 HOME
+    </div>
+
+    <div>
+        👤 USER
+    </div>
+
 </div>
 
-    <button class="menu-btn report-btn"
-    onclick="location.href='part-problem-report.html'">
-        📋 PART PROBLEM REPORT
-    </button>
+<div class="container">
 
-    <button class="menu-btn newmodel-btn"
-    onclick="location.href='part-problem-newmodel.html'">
-        📦 PART PROBLEM NEW MODEL
-    </button>
+    <div class="header-card">
 
-    <button class="menu-btn borrow-btn"
-    onclick="location.href='part-borrowing-pl.html'">
-        🔄 PART BORROWING FROM PL
-    </button>
+        <div class="system-title">
+            🏭 INSPECTION SYSTEM
+        </div>
 
-    <button class="menu-btn trial-btn"
-    onclick="location.href='assembly-trial.html'">
-        🧪 ASSEMBLY TRIAL
-    </button>
+        <div class="info-row">
+            <div>📅 <span id="todayDate"></span></div>
+            <div>🕒 <span id="currentTime"></span></div>
+        </div>
 
-    <button class="menu-btn washing-btn"
-    onclick="location.href='washing-room.html'">
-        🧼 WASHING ROOM
-    </button>
+        <div class="status">
+            ✅ READY TO WORK
+        </div>
 
-    <button class="menu-btn setting-btn"
-    onclick="location.href='settings.html'">
-        ⚙️ SETTINGS
-    </button>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            🚀 QUICK MENU
+        </div>
+
+        <div class="menu-grid">
+
+            <a class="menu-card" href="partproblem.html">
+                🚨
+                <span>PART PROBLEM</span>
+            </a>
+
+            <a class="menu-card" href="newmodel.html">
+                🆕
+                <span>NEW MODEL</span>
+            </a>
+
+            <a class="menu-card" href="borrowpl.html">
+                📦
+                <span>BORROW FROM PL</span>
+            </a>
+
+            <a class="menu-card" href="document.html">
+                📑
+                <span>DOCUMENT</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            📊 TODAY SUMMARY
+        </div>
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <div class="number">3</div>
+                <div class="text">Problem</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="number">2</div>
+                <div class="text">New Model</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="number">5</div>
+                <div class="text">Borrow PL</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="number">1</div>
+                <div class="text">Defect</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            📋 RECENT ACTIVITY
+        </div>
+
+        <div class="activity-card">
+            08:10 🚨 PART PROBLEM<br>
+            Part No. : 123456
+        </div>
+
+        <div class="activity-card">
+            09:25 📦 BORROW FROM PL<br>
+            Part No. : 654321
+        </div>
+
+        <div class="activity-card">
+            10:40 🆕 NEW MODEL<br>
+            Part No. : 987654
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            ⚡ SHORTCUT
+        </div>
+
+        <div class="shortcut-grid">
+
+            <div class="shortcut-card">
+                📷
+                <div>CAMERA</div>
+            </div>
+
+            <div class="shortcut-card">
+                📏
+                <div>STANDARD</div>
+            </div>
+
+            <div class="shortcut-card">
+                📦
+                <div>PART MASTER</div>
+            </div>
+
+            <div class="shortcut-card">
+                📊
+                <div>DASHBOARD</div>
+            </div>
+
+            <div class="shortcut-card">
+                📖
+                <div>WORK WI</div>
+            </div>
+
+            <div class="shortcut-card">
+                ⚙️
+                <div>SETTING</div>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <div class="bottom-nav">
 
-<button onclick="location.href='menu.html'">
+<button onclick="location.href='home.html'">
 🏠
 <span>Home</span>
 </button>
@@ -200,119 +411,27 @@ body{
 
 </div>
 
-<button id="langBtn" class="lang-btn">
-    EN
-</button>
-
 <script>
 
-let langIndex = 0;
+function updateDateTime(){
 
-const textData = [
+    const now = new Date();
 
-{
-lang:"EN",
-title:"INSPECTION PART",
-report:"📋 PART PROBLEM REPORT",
-newmodel:"📦 PART PROBLEM NEW MODEL",
-borrow:"🔄 PART BORROWING FROM PL",
-trial:"🧪 ASSEMBLY TRIAL",
-washing:"🧼 WASHING ROOM",
-setting:"⚙️ SETTINGS"
-},
+    todayDate.innerText =
+    now.toLocaleDateString("en-GB");
 
-{
-lang:"TH",
-title:"ตรวจสอบชิ้นส่วน",
-report:"📋 รายงานปัญหาชิ้นส่วน",
-newmodel:"📦 ปัญหาชิ้นส่วนรุ่นใหม่",
-borrow:"🔄 ยืมชิ้นส่วนจาก PL",
-trial:"🧪 ทดลองประกอบ",
-washing:"🧼 ห้องล้างชิ้นส่วน",
-setting:"⚙️ ตั้งค่า"
-},
-
-{
-lang:"JP",
-title:"部品検査",
-report:"📋 部品不良レポート",
-newmodel:"📦 新機種部品不良",
-borrow:"🔄 PLから部品借用",
-trial:"🧪 組立トライ",
-washing:"🧼 洗浄室",
-setting:"⚙️ 設定"
-}
-
-];
-
-document.querySelector(".report-btn").id="reportBtn";
-document.querySelector(".newmodel-btn").id="newModelBtn";
-document.querySelector(".borrow-btn").id="borrowBtn";
-document.querySelector(".trial-btn").id="trialBtn";
-document.querySelector(".washing-btn").id="washingBtn";
-document.querySelector(".setting-btn").id="settingBtn";
-
-const savedLang = localStorage.getItem("language");
-
-if(savedLang !== null){
-
-    langIndex = Number(savedLang);
-
-    const t = textData[langIndex];
-
-    langBtn.innerText = t.lang;
-    titleText.innerText = t.title;
-    reportBtn.innerText = t.report;
-    newModelBtn.innerText = t.newmodel;
-    borrowBtn.innerText = t.borrow;
-    trialBtn.innerText = t.trial;
-    washingBtn.innerText = t.washing;
-    settingBtn.innerText = t.setting;
+    currentTime.innerText =
+    now.toLocaleTimeString("en-GB",{
+        hour:"2-digit",
+        minute:"2-digit"
+    });
 
 }
 
-langBtn.onclick = function(){
-
-    langIndex++;
-
-    if(langIndex >= textData.length){
-        langIndex = 0;
-    }
-
-    localStorage.setItem("language", langIndex);
-
-    const t = textData[langIndex];
-
-    langBtn.innerText = t.lang;
-    titleText.innerText = t.title;
-    reportBtn.innerText = t.report;
-    newModelBtn.innerText = t.newmodel;
-    borrowBtn.innerText = t.borrow;
-    trialBtn.innerText = t.trial;
-    washingBtn.innerText = t.washing;
-    settingBtn.innerText = t.setting;
-
-};
+updateDateTime();
+setInterval(updateDateTime,1000);
 
 </script>
 
-<script>
-document.addEventListener('gesturestart', function(e){
-    e.preventDefault();
-});
-
-let lastTouchEnd = 0;
-
-document.addEventListener('touchend', function(e){
-    const now = Date.now();
-
-    if(now - lastTouchEnd <= 300){
-        e.preventDefault();
-    }
-
-    lastTouchEnd = now;
-}, {passive:false});
-</script>
-    
 </body>
 </html>
