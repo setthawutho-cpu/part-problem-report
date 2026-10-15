@@ -255,7 +255,11 @@ textarea{
 <input type="date" id="date">
 
 <label id="lblPartNo">Part No.</label>
-<input type="text" id="partno">
+<input type="text"
+       id="partno"
+       list="partList">
+
+<datalist id="partList"></datalist>
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
 <label id="lblPartName">Part Name</label>
@@ -369,6 +373,7 @@ textarea{
 date.value=new Date().toISOString().split("T")[0];
 
 let partMaster = {};
+let allPartNo = [];
 
 async function loadExcel(){
 
@@ -392,22 +397,26 @@ async function loadExcel(){
         const partNo =
         String(row.PartNo || "").trim();
 
-        if(partNo){
+if(partNo){
 
-            partMaster[partNo] = {
+    if(!allPartNo.includes(partNo)){
+        allPartNo.push(partNo);
+    }
 
-                partName:
-                row.PartName || "",
+    partMaster[partNo] = {
 
-                model:
-                row.Model || "",
+        partName:
+        row.PartName || "",
 
-                supplier:
-                row.Supplier || ""
+        model:
+        row.Model || "",
 
-            };
+        supplier:
+        row.Supplier || ""
 
-        }
+    };
+
+}
 
     });
 
@@ -462,10 +471,61 @@ supplier,
 "supplierManual"
 );
 
-partno.addEventListener("input",()=>{
+partno.addEventListener("input", function(){
+
+    const keyword =
+    this.value.trim();
+
+    if(keyword === ""){
+
+        if(!partnameManual)
+            partname.value = "";
+
+        if(!modelManual)
+            model.value = "";
+
+        if(!supplierManual)
+            supplier.value = "";
+
+        partList.innerHTML = "";
+        return;
+    }
+
+    if(partMaster[keyword]){
+        fillPartData(keyword);
+
+        partList.innerHTML = "";
+
+        return;
+    }
+
+    if(keyword.length < 4){
+
+        partList.innerHTML = "";
+        return;
+    }
+
+    const result = allPartNo
+        .filter(p =>
+            p.toUpperCase()
+            .includes(
+                keyword.toUpperCase()
+            )
+        )
+        .slice(0,10);
+
+    partList.innerHTML = result
+        .map(p =>
+            `<option value="${p}"></option>`
+        )
+        .join("");
+
+});
+
+partno.addEventListener("change",function(){
 
     fillPartData(
-        partno.value.trim()
+        this.value.trim()
     );
 
 });
