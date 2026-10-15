@@ -498,10 +498,10 @@ Manual
 
     <div class="photo-input-row">
 
-        <input type="file"
-               id="photos"
-               multiple
-               accept="image/*">
+<input type="file"
+       id="photos"
+       multiple
+       accept="image/*">
 
         <button type="button"
                 id="clearPhoto"
@@ -741,10 +741,16 @@ function fillPartData(partNo){
 
 }
 
+let selectedPhotos = [];
+
 photos.addEventListener("change",()=>{
 
+    selectedPhotos.push(...photos.files);
+
     photoCount.innerText =
-    `เลือกแล้ว ${photos.files.length} รูป`;
+    `เลือกแล้ว ${selectedPhotos.length} รูป`;
+
+    photos.value = "";
 
     reviewReport();
 
@@ -753,6 +759,8 @@ photos.addEventListener("change",()=>{
 function clearPhotos(){
 
     if(!confirm("ลบรูปทั้งหมด ?")) return;
+
+    selectedPhotos = [];
 
     photos.value = "";
 
@@ -834,7 +842,12 @@ async function sendLine(){
 
     try{
 
-        const files = [...photos.files];
+console.log(
+    "Photo Count =",
+    selectedPhotos.length
+);
+
+        const files = selectedPhotos;
 
         if(files.length > 0 && navigator.canShare){
 
