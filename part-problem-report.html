@@ -765,12 +765,12 @@ textarea{
 <div class="top-row">
 
     <div>
-        <label>Date</label>
+        <label id="lblDate">Date</label>
         <input type="date" id="date">
     </div>
 
     <div>
-        <label>Type</label>
+        <label id="lblType">Type</label>
         <select id="type">
             <option>New</option>
             <option>Repeat</option>
@@ -778,7 +778,7 @@ textarea{
     </div>
 
     <div>
-        <label>Product</label>
+        <label id="lblProduct">Product</label>
         <select id="product">
             <option value=""></option>
             <option>Combine</option>
@@ -790,7 +790,7 @@ textarea{
 
 </div>
 
-<label>Part No.</label>
+<label id="lblPartNo">Part No.</label>
 <input type="text"
        id="partno"
        list="partList">
@@ -798,7 +798,7 @@ textarea{
 <datalist id="partList"></datalist>
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Part Name</label>
+    <label id="lblPartName">Part Name</label>
 
     <button type="button"
             id="partnameBtn"
@@ -810,7 +810,7 @@ textarea{
 <input type="text" id="partname" readonly>
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Model</label>
+    <label id="lblModel">Model</label>
 
     <button type="button"
             id="modelBtn"
@@ -822,7 +822,7 @@ textarea{
 <input type="text" id="model" readonly>
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
-    <label>Supplier</label>
+    <label id="lblSupplier">Supplier</label>
 
     <button type="button"
             id="supplierBtn"
@@ -836,12 +836,12 @@ textarea{
 <div class="row-info">
 
     <div>
-        <label>Serial Number</label>
+        <label id="lblSerial">Serial Number</label>
         <input type="text" id="unitno">
     </div>
 
     <div>
-        <label>Issue Doc</label>
+        <label id="lblIssue">Issue Doc</label>
         <select id="document">
             <option>-</option>
             <option>UAR</option>
@@ -850,7 +850,7 @@ textarea{
     </div>
 
     <div>
-        <label>Line Stop</label>
+        <label id="lblLineStop">Line Stop</label>
         <div class="line-stop-box">
             <input type="number" id="linestop">
             <span>sec</span>
@@ -859,20 +859,20 @@ textarea{
 
 </div>
 
-<label>Problem</label>
+<label id="lblProblem">Problem</label>
 <textarea id="problem"></textarea>
 
-<label>Detail</label>
+<label id="lblDetail">Detail</label>
 <textarea id="detail"></textarea>
 
-<div class="section">
+<div class="section" id="lblContainment">
 🟡 CONTAINMENT ACTION
 </div>
 
-<label>Rework</label>
+<label id="lblRework">Rework</label>
 <textarea id="rework"></textarea>
 
-<label>Result</label>
+<label id="lblResult">Result</label>
 <select id="containmentResult">
 <option></option>
 <option>-</option>
@@ -885,19 +885,19 @@ textarea{
 
 <div class="inspection-box">
 
-    <div class="result">
+    <div class="result" id="lblInspection">
         📊 INSPECTION RESULT
     </div>
 
     <div class="inspection-grid">
 
         <div>
-            <label>SKC-A MFG พบ NG</label>
+            <label id="lblSkca">SKC-A MFG พบ NG</label>
             <input type="number" id="skcaNg">
         </div>
 
         <div>
-            <label>Part NG</label>
+            <label id="lblPartNg">Part NG</label>
             <select id="partNg">
                 <option> </option>
                 <option>Rework</option>
@@ -910,12 +910,14 @@ textarea{
         </div>
 
         <div>
-            <label>Qty</label>
+            <label id="lblQty">Qty</label>
             <input type="number" id="partNgQty">
         </div>
 
 <div style="grid-column:1 / span 3; display:flex; align-items:center; gap:10px;">
-    <label style="margin:0; width:120px;">ผลการ Rework</label>
+    <label id="lblReworkResult" style="margin:0;width:120px;">
+ผลการ Rework
+</label>
 
     <select id="reworkResult" style="flex:1;">
         <option> </option>
@@ -929,17 +931,18 @@ textarea{
 </div>
 
         <div>
-            <label>Check Stock</label>
+            <label id="lblStock">Check Stock</label>
             <input type="number" id="stockNg">
         </div>
 
         <div>
-            <label>OK Qty</label>
+            <label id="lblOk">OK Qty</label>
+
             <input type="number" id="okQty">
         </div>
 
         <div>
-            <label>NG Qty</label>
+            <label id="lblNg">NG Qty</label>
             <input type="number" id="ngQty" readonly>
         </div>
 
@@ -949,7 +952,7 @@ textarea{
 
 <div style="width:100%; display:flex; align-items:center; gap:10px; margin-top:5px;">
 
-    <label style="width:70px; margin:0;">
+    <label id="lblPartNgShow" style="width:70px;margin:0;">
         <b>Part NG</b>
     </label>
 
@@ -967,13 +970,15 @@ textarea{
 </div>
 
 <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
-    <label style="width:70px; margin:0;">
+    <label id="lblTotalNg" style="width:70px;margin:0;">
         <b>Total NG</b>
     </label>
     <input type="number" id="totalNg" readonly style="width:65px;">
 </div>
 
-    <span class="okmark-label"><b>OK Mark</b></span>
+    <span class="okmark-label">
+<b id="lblOkMark">OK Mark</b>
+</span>
 
     <label><input type="radio" name="okmark" value="Green"> <span class="green"></span></label>
 
@@ -994,11 +999,13 @@ textarea{
 
 <div style="margin-top:10px;">
 
-    <button type="button"
-            class="manual-btn"
-            onclick="addRemark()">
-        Remark
-    </button>
+<button
+type="button"
+id="btnRemark"
+class="manual-btn"
+onclick="addRemark()">
+Remark
+</button>
 
 </div>
 
@@ -1008,7 +1015,7 @@ textarea{
 
 <div style="display:flex;align-items:center;gap:10px;">
 
-    <label style="margin:0;">
+    <label id="lblDamage" style="margin:0;">
         <b>Part เสียหายร่วม</b>
     </label>
 
@@ -1867,6 +1874,142 @@ function openStandard(){
     location.href = "standard.html";
 
 }
+
+function changeLanguage(){
+
+    const lang =
+    Number(localStorage.getItem("language")) || 0;
+
+    const texts = {
+
+        EN:{
+            date:"Date",
+            type:"Type",
+            product:"Product",
+            partno:"Part No.",
+            partname:"Part Name",
+            model:"Model",
+            supplier:"Supplier",
+            serial:"Serial Number",
+            issue:"Issue Doc",
+            linestop:"Line Stop",
+            problem:"Problem",
+            detail:"Detail",
+            containment:"🟡 CONTAINMENT ACTION",
+            rework:"Rework",
+            result:"Result",
+            inspection:"📊 INSPECTION RESULT",
+            skca:"SKC-A MFG NG",
+            partng:"Part NG",
+            qty:"Qty",
+            reworkResult:"Rework Result",
+            stock:"Check Stock",
+            ok:"OK Qty",
+            ng:"NG Qty",
+            totalng:"Total NG",
+            okmark:"OK Mark",
+            remark:"Remark",
+            damage:"Part Damage"
+        },
+
+        TH:{
+            date:"วันที่",
+            type:"ประเภท",
+            product:"ผลิตภัณฑ์",
+            partno:"Part No.",
+            partname:"ชื่อชิ้นส่วน",
+            model:"Model",
+            supplier:"Supplier",
+            serial:"Serial Number",
+            issue:"Issue Doc",
+            linestop:"Line Stop",
+            problem:"ปัญหา",
+            detail:"รายละเอียด",
+            containment:"🟡 การแก้ไขเบื้องต้น",
+            rework:"Rework",
+            result:"ผลลัพธ์",
+            inspection:"📊 ผลการตรวจสอบ",
+            skca:"SKC-A MFG พบ NG",
+            partng:"Part NG",
+            qty:"จำนวน",
+            reworkResult:"ผลการ Rework",
+            stock:"ตรวจ Stock",
+            ok:"OK Qty",
+            ng:"NG Qty",
+            totalng:"Total NG",
+            okmark:"OK Mark",
+            remark:"หมายเหตุ",
+            damage:"Part เสียหายร่วม"
+        },
+
+        JP:{
+            date:"日付",
+            type:"種類",
+            product:"製品",
+            partno:"Part No.",
+            partname:"部品名",
+            model:"モデル",
+            supplier:"サプライヤー",
+            serial:"シリアル番号",
+            issue:"帳票",
+            linestop:"ライン停止",
+            problem:"不具合",
+            detail:"詳細",
+            containment:"🟡 暫定対策",
+            rework:"手直し",
+            result:"結果",
+            inspection:"📊 検査結果",
+            skca:"SKC-A MFG NG",
+            partng:"Part NG",
+            qty:"数量",
+            reworkResult:"手直し結果",
+            stock:"在庫確認",
+            ok:"OK 数量",
+            ng:"NG 数量",
+            totalng:"Total NG",
+            okmark:"OK Mark",
+            remark:"備考",
+            damage:"関連不良部品"
+        }
+    };
+
+    const t =
+        lang === 1 ? texts.TH :
+        lang === 2 ? texts.JP :
+        texts.EN;
+
+    lblDate.innerText = t.date;
+    lblType.innerText = t.type;
+    lblProduct.innerText = t.product;
+    lblPartNo.innerText = t.partno;
+    lblPartName.innerText = t.partname;
+    lblModel.innerText = t.model;
+    lblSupplier.innerText = t.supplier;
+    lblSerial.innerText = t.serial;
+    lblIssue.innerText = t.issue;
+    lblLineStop.innerText = t.linestop;
+    lblProblem.innerText = t.problem;
+    lblDetail.innerText = t.detail;
+    lblContainment.innerText = t.containment;
+    lblRework.innerText = t.rework;
+    lblResult.innerText = t.result;
+    lblInspection.innerText = t.inspection;
+    lblSkca.innerText = t.skca;
+    lblPartNg.innerText = t.partng;
+    lblQty.innerText = t.qty;
+    lblReworkResult.innerText = t.reworkResult;
+    lblStock.innerText = t.stock;
+    lblOk.innerText = t.ok;
+    lblNg.innerText = t.ng;
+    lblPartNgShow.innerText = t.partng;
+    lblTotalNg.innerText = t.totalng;
+    lblOkMark.innerText = t.okmark;
+    btnRemark.innerText = t.remark;
+    lblDamage.innerText = t.damage;
+
+}
+
+changeLanguage();
 
 </script>
     <script>
