@@ -260,6 +260,23 @@ textarea{
     height:40px;
 }
 
+#partNg{
+    width:240px;
+    height:40px;
+}
+
+.partng-row{
+    padding:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.partng-row label{
+    width:120px;
+    margin:0;
+}
+
 </style>
 </head>
 <body>
@@ -334,15 +351,21 @@ textarea{
 
 </div>
 
-<div style="padding:10px;">
-<label id="lblPartNg">Part NG</label>
+<div style="padding:10px;display:flex;align-items:center;gap:10px;">
 
-<select id="partNg">
-<option></option>
-<option>Rework</option>
-<option>Reject</option>
-<option>Defect</option>
-</select>
+    <label id="lblPartNg"
+           style="margin:0;width:120px;">
+        Part NG
+    </label>
+
+    <select id="partNg"
+            style="width:240px;">
+        <option></option>
+        <option>Rework</option>
+        <option>Reject</option>
+        <option>Defect</option>
+    </select>
+
 </div>
 
 </div>
@@ -455,25 +478,30 @@ let supplierManual=false;
 
 function toggleManual(btn,input,flag){
 
-window[flag]=!window[flag];
+    window[flag]=!window[flag];
 
-if(window[flag]){
+    if(window[flag]){
 
-input.readOnly=false;
+        input.readOnly=false;
+        input.value="";
 
-btn.innerText="Auto";
-btn.style.background="#06C755";
-btn.style.color="#fff";
+        btn.innerText="Auto";
+        btn.style.background="#06C755";
+        btn.style.color="#fff";
 
-}else{
+    }else{
 
-input.readOnly=true;
+        input.readOnly=true;
 
-btn.innerText="Manual";
-btn.style.background="#d9d9d9";
-btn.style.color="#000";
+        fillPartData(
+            partno.value.trim()
+        );
 
-}
+        btn.innerText="Manual";
+        btn.style.background="#d9d9d9";
+        btn.style.color="#000";
+
+    }
 
 }
 
