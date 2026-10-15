@@ -7,6 +7,8 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 <title>PART PROBLEM NEW MODEL</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <style>
 
 html,body{
@@ -366,6 +368,54 @@ textarea{
 
 date.value=new Date().toISOString().split("T")[0];
 
+let partMaster = {};
+
+async function loadExcel(){
+
+    const response =
+    await fetch("ข้อมูล Excel.xlsx");
+
+    const data =
+    await response.arrayBuffer();
+
+    const workbook =
+    XLSX.read(data,{type:"array"});
+
+    const sheet =
+    workbook.Sheets[workbook.SheetNames[0]];
+
+    const rows =
+    XLSX.utils.sheet_to_json(sheet);
+
+    rows.forEach(row=>{
+
+        const partNo =
+        String(row.PartNo || "").trim();
+
+        if(partNo){
+
+            partMaster[partNo] = {
+
+                partName:
+                row.PartName || "",
+
+                model:
+                row.Model || "",
+
+                supplier:
+                row.Supplier || ""
+
+            };
+
+        }
+
+    });
+
+}
+
+loadExcel();
+
+
 let partnameManual=false;
 let modelManual=false;
 let supplierManual=false;
@@ -412,6 +462,35 @@ supplier,
 "supplierManual"
 );
 
+partno.addEventListener("input",()=>{
+
+    fillPartData(
+        partno.value.trim()
+    );
+
+});
+
+function fillPartData(partNo){
+
+    if(!partMaster[partNo]) return;
+
+    if(!partnameManual){
+        partname.value =
+        partMaster[partNo].partName || "";
+    }
+
+    if(!modelManual){
+        model.value =
+        partMaster[partNo].model || "";
+    }
+
+    if(!supplierManual){
+        supplier.value =
+        partMaster[partNo].supplier || "";
+    }
+
+}
+    
 function calculateNG(){
 
 let check=
