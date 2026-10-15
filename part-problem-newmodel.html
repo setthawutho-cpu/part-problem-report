@@ -222,6 +222,7 @@ textarea{
 }
 
 #date{
+    width:140px;
     height:32px;
     font-size:16px !important;
 }
@@ -620,12 +621,12 @@ if(detail.value)
     text += `รายละเอียด : ${detail.value}\n`;
 
 if(checkQty.value)
-    text += `Check ${checkQty.value} ${checkUnit}\n`;
+text+=`Check ${checkQty.value} ${checkUnit}\n`;
 
-text += `OK ${okQty.value || 0} ${okUnit}\n`;
+text+=`OK ${okQty.value || 0} ${okUnit}\n`;
 
 if(ngQty.value)
-    text += `NG ${ngQty.value} ${ngUnit}\n`;
+text+=`NG ${ngQty.value} ${ngUnit}\n`;
 
 if(partNg.value)
     text += `Part NG ${partNg.value}\n`;
