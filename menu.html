@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>HOME</title>
 
@@ -20,35 +20,15 @@ body{
     max-width:1200px;
     margin:auto;
     padding:15px;
-    padding-top:60px;
     padding-bottom:90px;
 }
 
-.top-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    background:#dfeaf3;
-    padding:10px 15px;
-    box-sizing:border-box;
-    z-index:9999;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.top-nav .title{
-    font-size:18px;
-    font-weight:bold;
-}
-
-.header-card{
-    background:#ffffff;
-    border:1px solid #bbb;
-    padding:15px;
+.header{
+    background:#fff;
+    border:1px solid #999;
+    padding:20px;
     text-align:center;
+    margin-bottom:15px;
 }
 
 .system-title{
@@ -56,26 +36,36 @@ body{
     font-weight:bold;
 }
 
-.info-row{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin-top:10px;
-}
-
 .status{
-    margin-top:8px;
-    color:#0a8d00;
+    margin-top:10px;
+    color:#008000;
     font-weight:bold;
 }
 
-.section{
+.datetime{
+    margin-top:10px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.language-box{
     margin-top:15px;
+}
+
+.language-box button{
+    width:70px;
+    height:36px;
+    margin:2px;
+    border:none;
+    background:#2196f3;
+    color:#fff;
+    cursor:pointer;
 }
 
 .section-title{
     background:#95c11f;
-    color:#000;
     padding:10px;
     font-size:18px;
     font-weight:bold;
@@ -89,77 +79,50 @@ body{
 }
 
 .menu-card{
-    height:120px;
+    height:100px;
+    border:none;
     background:#fff;
-    border:1px solid #aaa;
+    border:1px solid #999;
+    cursor:pointer;
 
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 
-    text-decoration:none;
-    color:#000;
-
-    font-size:42px;
-    cursor:pointer;
+    font-size:36px;
+    font-weight:bold;
 }
 
 .menu-card span{
     font-size:14px;
-    margin-top:8px;
-    font-weight:bold;
+    margin-top:5px;
 }
 
 .summary-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    gap:10px;
     margin-top:10px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
 }
 
 .summary-card{
     background:#fff;
-    border:1px solid #aaa;
-    text-align:center;
-    padding:15px;
-}
-
-.summary-card .number{
-    font-size:32px;
-    font-weight:bold;
-}
-
-.summary-card .text{
-    margin-top:5px;
-}
-
-.activity-card{
-    background:#fff;
-    border:1px solid #aaa;
-    padding:12px;
-    margin-top:8px;
-}
-
-.shortcut-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-    gap:10px;
-    margin-top:10px;
-}
-
-.shortcut-card{
-    background:#fff;
-    border:1px solid #aaa;
+    border:1px solid #999;
     padding:15px;
     text-align:center;
+}
+
+.summary-number{
     font-size:30px;
+    font-weight:bold;
 }
 
-.shortcut-card div{
-    margin-top:5px;
-    font-size:13px;
-    font-weight:bold;
+.activity{
+    background:#fff;
+    border:1px solid #999;
+    padding:10px;
+    margin-top:8px;
 }
 
 .bottom-nav{
@@ -171,7 +134,7 @@ body{
     background:#fff;
     border-top:1px solid #ccc;
     display:flex;
-    z-index:99999;
+    z-index:9999;
 }
 
 .bottom-nav button{
@@ -180,7 +143,6 @@ body{
     padding:0;
     border:none;
     background:#fff;
-    color:#333;
 
     display:flex;
     flex-direction:column;
@@ -195,10 +157,6 @@ body{
     margin-top:2px;
 }
 
-.bottom-nav button:active{
-    background:#f1f1f1;
-}
-
 @media(max-width:600px){
 
     .system-title{
@@ -206,12 +164,8 @@ body{
     }
 
     .menu-card{
-        height:100px;
-        font-size:32px;
-    }
-
-    .summary-card .number{
-        font-size:24px;
+        font-size:28px;
+        height:90px;
     }
 
 }
@@ -220,164 +174,137 @@ body{
 </head>
 <body>
 
-<div class="top-nav">
-
-    <div class="title">
-        🏠 HOME
-    </div>
-
-    <div>
-        👤 USER
-    </div>
-
-</div>
-
 <div class="container">
 
-    <div class="header-card">
+    <div class="header">
 
-        <div class="system-title">
+        <div class="system-title" id="title">
             🏭 INSPECTION SYSTEM
         </div>
 
-        <div class="info-row">
+        <div class="status" id="status">
+            ✅ READY TO WORK
+        </div>
+
+        <div class="datetime">
             <div>📅 <span id="todayDate"></span></div>
             <div>🕒 <span id="currentTime"></span></div>
         </div>
 
-        <div class="status">
-            ✅ READY TO WORK
-        </div>
+        <div class="language-box">
 
-    </div>
+            <button onclick="setLanguage(0)">
+                EN
+            </button>
 
-    <div class="section">
+            <button onclick="setLanguage(1)">
+                TH
+            </button>
 
-        <div class="section-title">
-            🚀 QUICK MENU
-        </div>
-
-        <div class="menu-grid">
-
-            <a class="menu-card" href="partproblem.html">
-                🚨
-                <span>PART PROBLEM</span>
-            </a>
-
-            <a class="menu-card" href="newmodel.html">
-                🆕
-                <span>NEW MODEL</span>
-            </a>
-
-            <a class="menu-card" href="borrowpl.html">
-                📦
-                <span>BORROW FROM PL</span>
-            </a>
-
-            <a class="menu-card" href="document.html">
-                📑
-                <span>DOCUMENT</span>
-            </a>
+            <button onclick="setLanguage(2)">
+                JP
+            </button>
 
         </div>
 
     </div>
 
-    <div class="section">
+    <div class="section-title">
+        🚀 QUICK MENU
+    </div>
 
-        <div class="section-title">
-            📊 TODAY SUMMARY
+    <div class="menu-grid">
+
+        <button class="menu-card"
+        onclick="location.href='partproblem.html'">
+            🚨
+            <span id="m1">PART PROBLEM</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='newmodel.html'">
+            🆕
+            <span id="m2">NEW MODEL</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='borrowpl.html'">
+            📦
+            <span id="m3">BORROW FROM PL</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='document.html'">
+            📑
+            <span id="m4">DOCUMENT</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='dashboard.html'">
+            📊
+            <span id="m5">DASHBOARD</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='standard.html'">
+            📏
+            <span id="m6">STANDARD</span>
+        </button>
+
+        <button class="menu-card"
+        onclick="location.href='settings.html'">
+            ⚙️
+            <span id="m7">SETTINGS</span>
+        </button>
+
+    </div>
+
+    <br>
+
+    <div class="section-title" id="summaryTitle">
+        📊 TODAY SUMMARY
+    </div>
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <div class="summary-number">3</div>
+            <div id="s1">Problem</div>
         </div>
 
-        <div class="summary-grid">
+        <div class="summary-card">
+            <div class="summary-number">2</div>
+            <div id="s2">New Model</div>
+        </div>
 
-            <div class="summary-card">
-                <div class="number">3</div>
-                <div class="text">Problem</div>
-            </div>
+        <div class="summary-card">
+            <div class="summary-number">5</div>
+            <div id="s3">Borrow PL</div>
+        </div>
 
-            <div class="summary-card">
-                <div class="number">2</div>
-                <div class="text">New Model</div>
-            </div>
-
-            <div class="summary-card">
-                <div class="number">5</div>
-                <div class="text">Borrow PL</div>
-            </div>
-
-            <div class="summary-card">
-                <div class="number">1</div>
-                <div class="text">Defect</div>
-            </div>
-
+        <div class="summary-card">
+            <div class="summary-number">1</div>
+            <div id="s4">Defect</div>
         </div>
 
     </div>
 
-    <div class="section">
+    <br>
 
-        <div class="section-title">
-            📋 RECENT ACTIVITY
-        </div>
-
-        <div class="activity-card">
-            08:10 🚨 PART PROBLEM<br>
-            Part No. : 123456
-        </div>
-
-        <div class="activity-card">
-            09:25 📦 BORROW FROM PL<br>
-            Part No. : 654321
-        </div>
-
-        <div class="activity-card">
-            10:40 🆕 NEW MODEL<br>
-            Part No. : 987654
-        </div>
-
+    <div class="section-title" id="activityTitle">
+        📋 RECENT ACTIVITY
     </div>
 
-    <div class="section">
+    <div class="activity">
+        08:10 🚨 PART PROBLEM
+    </div>
 
-        <div class="section-title">
-            ⚡ SHORTCUT
-        </div>
+    <div class="activity">
+        09:20 📦 BORROW FROM PL
+    </div>
 
-        <div class="shortcut-grid">
-
-            <div class="shortcut-card">
-                📷
-                <div>CAMERA</div>
-            </div>
-
-            <div class="shortcut-card">
-                📏
-                <div>STANDARD</div>
-            </div>
-
-            <div class="shortcut-card">
-                📦
-                <div>PART MASTER</div>
-            </div>
-
-            <div class="shortcut-card">
-                📊
-                <div>DASHBOARD</div>
-            </div>
-
-            <div class="shortcut-card">
-                📖
-                <div>WORK WI</div>
-            </div>
-
-            <div class="shortcut-card">
-                ⚙️
-                <div>SETTING</div>
-            </div>
-
-        </div>
-
+    <div class="activity">
+        10:35 🆕 NEW MODEL
     </div>
 
 </div>
@@ -428,8 +355,93 @@ function updateDateTime(){
 
 }
 
-updateDateTime();
 setInterval(updateDateTime,1000);
+updateDateTime();
+
+function setLanguage(lang){
+
+    localStorage.setItem(
+        "language",
+        lang
+    );
+
+    changeLanguage();
+
+}
+
+function changeLanguage(){
+
+    const lang =
+    Number(localStorage.getItem("language")) || 0;
+
+    const text={
+
+        EN:{
+            title:"🏭 INSPECTION SYSTEM",
+            status:"✅ READY TO WORK",
+            summary:"📊 TODAY SUMMARY",
+            activity:"📋 RECENT ACTIVITY",
+            m1:"PART PROBLEM",
+            m2:"NEW MODEL",
+            m3:"BORROW FROM PL",
+            m4:"DOCUMENT",
+            m5:"DASHBOARD",
+            m6:"STANDARD",
+            m7:"SETTINGS"
+        },
+
+        TH:{
+            title:"🏭 ระบบตรวจสอบคุณภาพ",
+            status:"✅ พร้อมทำงาน",
+            summary:"📊 สรุปประจำวัน",
+            activity:"📋 รายการล่าสุด",
+            m1:"แจ้งปัญหา",
+            m2:"NEW MODEL",
+            m3:"ยืมชิ้นส่วน",
+            m4:"เอกสาร",
+            m5:"แดชบอร์ด",
+            m6:"มาตรฐาน",
+            m7:"ตั้งค่า"
+        },
+
+        JP:{
+            title:"🏭 検査システム",
+            status:"✅ 作業準備完了",
+            summary:"📊 本日のサマリー",
+            activity:"📋 最近の履歴",
+            m1:"不具合連絡",
+            m2:"新機種",
+            m3:"部品借用",
+            m4:"ドキュメント",
+            m5:"ダッシュボード",
+            m6:"標準",
+            m7:"設定"
+        }
+
+    };
+
+    const t =
+    lang===1 ? text.TH :
+    lang===2 ? text.JP :
+    text.EN;
+
+    title.innerText = t.title;
+    status.innerText = t.status;
+
+    summaryTitle.innerText = t.summary;
+    activityTitle.innerText = t.activity;
+
+    m1.innerText = t.m1;
+    m2.innerText = t.m2;
+    m3.innerText = t.m3;
+    m4.innerText = t.m4;
+    m5.innerText = t.m5;
+    m6.innerText = t.m6;
+    m7.innerText = t.m7;
+
+}
+
+changeLanguage();
 
 </script>
 
