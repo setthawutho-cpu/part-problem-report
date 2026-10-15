@@ -579,49 +579,59 @@ el.addEventListener("change",calculateNG);
 
 function reviewReport(){
 
-const unit=
-(Number(checkQty.value||0)===1)
-?"Pc."
-:"Pcs.";
+const checkUnit =
+Number(checkQty.value || 0) === 1
+? "Pc."
+: "Pcs.";
 
-let text="แจ้งปัญหาครับ\n\n";
+const okUnit =
+Number(okQty.value || 0) === 1
+? "Pc."
+: "Pcs.";
+
+const ngUnit =
+Number(ngQty.value || 0) === 1
+? "Pc."
+: "Pcs.";
+
+let text = "";
+
+text += "แจ้งปัญหาครับ\n";
 
 if(date.value)
-text+=`Date: ${date.value.split("-").reverse().join("/")}\n`;
+    text += `Date: ${date.value.split("-").reverse().join("/")}\n`;
 
 if(partname.value)
-text+=`Part Name : ${partname.value}\n`;
+    text += `Part Name : ${partname.value}\n`;
 
 if(partno.value)
-text+=`Part No : ${partno.value}\n`;
+    text += `Part No : ${partno.value}\n`;
 
 if(model.value)
-text+=`Model : ${model.value}\n`;
+    text += `Model : ${model.value}\n`;
 
 if(supplier.value)
-text+=`Supplier : ${supplier.value}\n`;
+    text += `Supplier : ${supplier.value}\n`;
 
-text+="\n";
+if(problem.value)
+    text += `ปัญหา : ${problem.value}\n`;
 
-text+=`ปัญหา : ${problem.value || "-"}\n`;
-
-text+=`รายละเอียด : ${detail.value || "-"}\n`;
-
-text+="\n";
+if(detail.value)
+    text += `รายละเอียด : ${detail.value}\n`;
 
 if(checkQty.value)
-text+=`Check ${checkQty.value} ${unit}\n`;
+    text += `Check ${checkQty.value} ${checkUnit}\n`;
 
-text+=`OK ${okQty.value || 0} ${unit}\n`;
+text += `OK ${okQty.value || 0} ${okUnit}\n`;
 
 if(ngQty.value)
-text+=`NG ${ngQty.value} ${unit}\n`;
+    text += `NG ${ngQty.value} ${ngUnit}\n`;
 
 if(partNg.value)
-text+=`Part NG ${partNg.value}\n`;
+    text += `Part NG ${partNg.value}\n`;
 
-report.innerText=text;
-report.style.display="block";
+report.innerText = text.trim();
+report.style.display = "block";
 
 }
 
