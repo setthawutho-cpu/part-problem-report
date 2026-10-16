@@ -1,129 +1,130 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+minimum-scale=1.0,
+user-scalable=no">
 
-<title>HOME</title>
+<title>Inspection Part</title>
 
 <style>
 
-body{
+html, body{
+    touch-action: manipulation;
+    overscroll-behavior: none;
+}
+
+*{
+    -webkit-tap-highlight-color: transparent;
+}
+
+*{
     margin:0;
     padding:0;
-    background:#dfeaf3;
-    font-family:Segoe UI,sans-serif;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:15px;
-    padding-bottom:90px;
+body{
+    background:#f5f7fa;
+    min-height:100vh;
+    padding-bottom:80px;
 }
+
+/* HEADER */
 
 .header{
-    background:#fff;
-    border:1px solid #999;
-    padding:20px;
-    text-align:center;
-    margin-bottom:15px;
-}
-
-.system-title{
-    font-size:28px;
-    font-weight:bold;
-}
-
-.status{
-    margin-top:10px;
-    color:#008000;
-    font-weight:bold;
-}
-
-.datetime{
-    margin-top:10px;
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.language-box{
-    margin-top:15px;
-}
-
-.language-box button{
-    width:70px;
-    height:36px;
-    margin:2px;
-    border:none;
-    background:#2196f3;
+    background:#009688;
     color:#fff;
+    padding:12px 15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+}
+
+#appTitle{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.lang-btn{
+    border:none;
+    background:#fff;
+    color:#009688;
+    padding:8px 14px;
+    border-radius:8px;
+    font-weight:bold;
     cursor:pointer;
 }
 
-.section-title{
-    background:#95c11f;
-    padding:10px;
-    font-size:18px;
-    font-weight:bold;
-}
+/* MENU */
 
 .menu-grid{
+
+    padding:15px;
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:10px;
-    margin-top:10px;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
 }
 
 .menu-card{
     height:100px;
-    border:none;
+    min-height:100px;
     background:#fff;
     border:1px solid #999;
-    cursor:pointer;
+    border-radius:8px;
 
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 
-    font-size:36px;
-    font-weight:bold;
+    gap:5px;
+    cursor:pointer;
+
+    box-shadow:none;
+    transition:.2s;
+}
+
+.menu-card:hover{
+    transform:translateY(-3px);
+}
+
+.icon{
+    font-size:28px;
 }
 
 .menu-card span{
-    font-size:14px;
-    margin-top:5px;
-}
-
-.summary-grid{
-    margin-top:10px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px;
-}
-
-.summary-card{
-    background:#fff;
-    border:1px solid #999;
-    padding:15px;
     text-align:center;
+    font-size:14px;
+    padding:0 8px;
 }
 
-.summary-number{
-    font-size:30px;
-    font-weight:bold;
-}
-
-.activity{
-    background:#fff;
-    border:1px solid #999;
-    padding:10px;
-    margin-top:8px;
-}
+/* BOTTOM NAV */
 
 .bottom-nav{
     position:fixed;
@@ -150,299 +151,252 @@ body{
     align-items:center;
 
     font-size:18px;
+    font-weight:normal;
 }
 
 .bottom-nav button span{
     font-size:10px;
     margin-top:2px;
+    line-height:1;
 }
 
-@media(max-width:600px){
+.bottom-nav button:active{
+    background:#f1f1f1;
+}
 
-    .system-title{
-        font-size:22px;
+.nav-icon{
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .menu-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .menu-card{
-        font-size:28px;
-        height:90px;
+    #appTitle{
+        font-size:16px;
     }
 
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
 }
 
 </style>
 </head>
+
 <body>
 
-<div class="container">
+<div class="header">
 
-    <div class="header">
+    <div class="logo-area">
 
-        <div class="system-title" id="title">
-            🏭 INSPECTION SYSTEM
-        </div>
+        <img src="icon-192.png" class="logo">
 
-        <div class="status" id="status">
-            ✅ READY TO WORK
-        </div>
-
-        <div class="datetime">
-            <div>📅 <span id="todayDate"></span></div>
-            <div>🕒 <span id="currentTime"></span></div>
-        </div>
-
-        <div class="language-box">
-
-            <button onclick="setLanguage(0)">
-                EN
-            </button>
-
-            <button onclick="setLanguage(1)">
-                TH
-            </button>
-
-            <button onclick="setLanguage(2)">
-                JP
-            </button>
-
-        </div>
+        <span id="appTitle">
+            INSPECTION PART
+        </span>
 
     </div>
 
-    <div class="section-title">
-        🚀 QUICK MENU
-    </div>
+    <button class="lang-btn"
+        onclick="changeLanguage()">
+        🌐 TH | EN
+    </button>
 
-    <div class="menu-grid">
+</div>
 
-        <button class="menu-card"
-        onclick="location.href='partproblem.html'">
-            🚨
-            <span id="m1">PART PROBLEM</span>
-        </button>
+<div class="menu-grid">
 
-        <button class="menu-card"
-        onclick="location.href='newmodel.html'">
-            🆕
-            <span id="m2">NEW MODEL</span>
-        </button>
+    <button class="menu-card"
+        onclick="location.href='part-problem-report.html'">
 
-        <button class="menu-card"
-        onclick="location.href='borrowpl.html'">
-            📦
-            <span id="m3">BORROW FROM PL</span>
-        </button>
+        <div class="icon">📋</div>
 
-        <button class="menu-card"
-        onclick="location.href='document.html'">
-            📑
-            <span id="m4">DOCUMENT</span>
-        </button>
+        <span id="reportText">
+            PART PROBLEM REPORT
+        </span>
 
-        <button class="menu-card"
-        onclick="location.href='dashboard.html'">
-            📊
-            <span id="m5">DASHBOARD</span>
-        </button>
+    </button>
 
-        <button class="menu-card"
-        onclick="location.href='standard.html'">
-            📏
-            <span id="m6">STANDARD</span>
-        </button>
+    <button class="menu-card"
+        onclick="location.href='part-problem-newmodel.html'">
 
-        <button class="menu-card"
-        onclick="location.href='settings.html'">
-            ⚙️
-            <span id="m7">SETTINGS</span>
-        </button>
+        <div class="icon">📦</div>
 
-    </div>
+        <span id="newModelText">
+            PART PROBLEM NEW MODEL
+        </span>
 
-    <br>
+    </button>
 
-    <div class="section-title" id="summaryTitle">
-        📊 TODAY SUMMARY
-    </div>
+    <button class="menu-card"
+        onclick="location.href='part-borrowing-pl.html'">
 
-    <div class="summary-grid">
+        <div class="icon">📨</div>
 
-        <div class="summary-card">
-            <div class="summary-number">3</div>
-            <div id="s1">Problem</div>
-        </div>
+        <span id="borrowText">
+            PART BORROWING FROM PL
+        </span>
 
-        <div class="summary-card">
-            <div class="summary-number">2</div>
-            <div id="s2">New Model</div>
-        </div>
+    </button>
 
-        <div class="summary-card">
-            <div class="summary-number">5</div>
-            <div id="s3">Borrow PL</div>
-        </div>
+    <button class="menu-card"
+        onclick="location.href='assembly-trial.html'">
 
-        <div class="summary-card">
-            <div class="summary-number">1</div>
-            <div id="s4">Defect</div>
-        </div>
+        <div class="icon">🧪</div>
 
-    </div>
+        <span id="trialText">
+            ASSEMBLY TRIAL
+        </span>
 
-    <br>
+    </button>
 
-    <div class="section-title" id="activityTitle">
-        📋 RECENT ACTIVITY
-    </div>
+    <button class="menu-card"
+        onclick="location.href='washing-room.html'">
 
-    <div class="activity">
-        08:10 🚨 PART PROBLEM
-    </div>
+        <div class="icon">🧼</div>
 
-    <div class="activity">
-        09:20 📦 BORROW FROM PL
-    </div>
+        <span id="washText">
+            WASHING ROOM
+        </span>
 
-    <div class="activity">
-        10:35 🆕 NEW MODEL
-    </div>
+    </button>
+
+    <button class="menu-card"
+onclick="location.href='dashboard.html'">
+
+    <div class="icon">📊</div>
+
+    <span id="dashboardText">
+        DASHBOARD
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='document.html'">
+
+    <div class="icon">📄</div>
+
+    <span id="documentText">
+        DOCUMENT
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='standard.html'">
+
+    <div class="icon">📏</div>
+
+    <span id="standardText">
+        STANDARD
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='settings.html'">
+
+    <div class="icon">⚙️</div>
+
+    <span id="settingText">
+        SETTINGS
+    </span>
+
+</button>
 
 </div>
 
 <div class="bottom-nav">
 
-<button onclick="location.href='home.html'">
-🏠
-<span>Home</span>
-</button>
+    <button onclick="location.href='menu.html'">
+        🏠
+        <span>Home</span>
+    </button>
 
-<button onclick="location.href='dashboard.html'">
-📊
-<span>Dashboard</span>
-</button>
+    <button onclick="location.href='dashboard.html'">
+        📊
+        <span>Dashboard</span>
+    </button>
 
-<button onclick="location.href='document.html'">
-📝
-<span>Document</span>
-</button>
+    <button onclick="location.href='document.html'">
+        📝
+        <span>Document</span>
+    </button>
 
-<button onclick="location.href='standard.html'">
-📏
-<span>STD</span>
-</button>
+    <button onclick="location.href='standard.html'">
+        📏
+        <span>STD</span>
+    </button>
 
-<button onclick="location.href='settings.html'">
-⚙️
-<span>Setting</span>
-</button>
+    <button onclick="location.href='settings.html'">
+        ⚙️
+        <span>Setting</span>
+    </button>
 
 </div>
 
 <script>
 
-function updateDateTime(){
-
-    const now = new Date();
-
-    todayDate.innerText =
-    now.toLocaleDateString("en-GB");
-
-    currentTime.innerText =
-    now.toLocaleTimeString("en-GB",{
-        hour:"2-digit",
-        minute:"2-digit"
-    });
-
-}
-
-setInterval(updateDateTime,1000);
-updateDateTime();
-
-function setLanguage(lang){
-
-    localStorage.setItem(
-        "language",
-        lang
-    );
-
-    changeLanguage();
-
-}
+let currentLang="en";
 
 function changeLanguage(){
 
-    const lang =
-    Number(localStorage.getItem("language")) || 0;
+    currentLang=
+    currentLang==="en"?"th":"en";
 
-    const text={
+    if(currentLang==="th"){
 
-        EN:{
-            title:"🏭 INSPECTION SYSTEM",
-            status:"✅ READY TO WORK",
-            summary:"📊 TODAY SUMMARY",
-            activity:"📋 RECENT ACTIVITY",
-            m1:"PART PROBLEM",
-            m2:"NEW MODEL",
-            m3:"BORROW FROM PL",
-            m4:"DOCUMENT",
-            m5:"DASHBOARD",
-            m6:"STANDARD",
-            m7:"SETTINGS"
-        },
+        appTitle.innerText="ระบบ Inspection Part";
 
-        TH:{
-            title:"🏭 ระบบตรวจสอบคุณภาพ",
-            status:"✅ พร้อมทำงาน",
-            summary:"📊 สรุปประจำวัน",
-            activity:"📋 รายการล่าสุด",
-            m1:"แจ้งปัญหา",
-            m2:"NEW MODEL",
-            m3:"ยืมชิ้นส่วน",
-            m4:"เอกสาร",
-            m5:"แดชบอร์ด",
-            m6:"มาตรฐาน",
-            m7:"ตั้งค่า"
-        },
+        reportText.innerText="แจ้งปัญหา";
+        newModelText.innerText="ปัญหา New Model";
+        borrowText.innerText="ยืมชิ้นส่วนจาก PL";
+        trialText.innerText="ประกอบทดลอง";
+        washText.innerText="ห้องล้าง";
 
-        JP:{
-            title:"🏭 検査システム",
-            status:"✅ 作業準備完了",
-            summary:"📊 本日のサマリー",
-            activity:"📋 最近の履歴",
-            m1:"不具合連絡",
-            m2:"新機種",
-            m3:"部品借用",
-            m4:"ドキュメント",
-            m5:"ダッシュボード",
-            m6:"標準",
-            m7:"設定"
-        }
+    }else{
 
-    };
+        appTitle.innerText="INSPECTION PART";
 
-    const t =
-    lang===1 ? text.TH :
-    lang===2 ? text.JP :
-    text.EN;
+        reportText.innerText="PART PROBLEM REPORT";
+        newModelText.innerText="PART PROBLEM NEW MODEL";
+        borrowText.innerText="PART BORROWING FROM PL";
+        trialText.innerText="ASSEMBLY TRIAL";
+        washText.innerText="WASHING ROOM";
 
-    title.innerText = t.title;
-    status.innerText = t.status;
-
-    summaryTitle.innerText = t.summary;
-    activityTitle.innerText = t.activity;
-
-    m1.innerText = t.m1;
-    m2.innerText = t.m2;
-    m3.innerText = t.m3;
-    m4.innerText = t.m4;
-    m5.innerText = t.m5;
-    m6.innerText = t.m6;
-    m7.innerText = t.m7;
+    }
 
 }
 
-changeLanguage();
+</script>
 
+<script>
+document.addEventListener('gesturestart', function(e){
+    e.preventDefault();
+});
+
+let lastTouchEnd = 0;
+
+document.addEventListener('touchend', function(e){
+
+    const now = Date.now();
+
+    if(now - lastTouchEnd <= 300){
+        e.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+},{passive:false});
 </script>
 
 </body>
