@@ -88,7 +88,6 @@ body{
 .borrow-btn{background:#009688;}
 .trial-btn{background:#9c27b0;}
 .washing-btn{background:#00bcd4;}
-.setting-btn{background:#ff9800;}
 
 .bottom-nav{
     position:fixed;
@@ -164,11 +163,6 @@ body{
         🧼 WASHING ROOM
     </button>
 
-    <button class="menu-btn setting-btn"
-    onclick="location.href='settings.html'">
-        ⚙️ SETTINGS
-    </button>
-
 </div>
 
 <div class="bottom-nav">
@@ -218,7 +212,6 @@ newmodel:"📦 PART PROBLEM NEW MODEL",
 borrow:"🔄 PART BORROWING FROM PL",
 trial:"🧪 ASSEMBLY TRIAL",
 washing:"🧼 WASHING ROOM",
-setting:"⚙️ SETTINGS"
 },
 
 {
@@ -229,7 +222,6 @@ newmodel:"📦 ปัญหาชิ้นส่วนรุ่นใหม่",
 borrow:"🔄 ยืมชิ้นส่วนจาก PL",
 trial:"🧪 ทดลองประกอบ",
 washing:"🧼 ห้องล้างชิ้นส่วน",
-setting:"⚙️ ตั้งค่า"
 },
 
 {
@@ -240,7 +232,6 @@ newmodel:"📦 新機種部品不良",
 borrow:"🔄 PLから部品借用",
 trial:"🧪 組立トライ",
 washing:"🧼 洗浄室",
-setting:"⚙️ 設定"
 }
 
 ];
@@ -250,7 +241,6 @@ document.querySelector(".newmodel-btn").id="newModelBtn";
 document.querySelector(".borrow-btn").id="borrowBtn";
 document.querySelector(".trial-btn").id="trialBtn";
 document.querySelector(".washing-btn").id="washingBtn";
-document.querySelector(".setting-btn").id="settingBtn";
 
 const savedLang = localStorage.getItem("language");
 
@@ -267,7 +257,6 @@ if(savedLang !== null){
     borrowBtn.innerText = t.borrow;
     trialBtn.innerText = t.trial;
     washingBtn.innerText = t.washing;
-    settingBtn.innerText = t.setting;
 
 }
 
@@ -290,7 +279,6 @@ langBtn.onclick = function(){
     borrowBtn.innerText = t.borrow;
     trialBtn.innerText = t.trial;
     washingBtn.innerText = t.washing;
-    settingBtn.innerText = t.setting;
 
 };
 
