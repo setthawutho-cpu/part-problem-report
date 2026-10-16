@@ -609,7 +609,8 @@ if(detail.value)
 if(checkQty.value)
 text+=`Check ${checkQty.value} ${checkUnit}\n`;
 
-text+=`OK ${okQty.value || 0} ${okUnit}\n`;
+if(okQty.value)
+    text += `OK ${okQty.value} ${okUnit}\n`;
 
 if(ngQty.value)
 text+=`NG ${ngQty.value} ${ngUnit}\n`;
