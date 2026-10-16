@@ -781,8 +781,8 @@ if(qty.value){
 }
 
 text += "━━━━━━━━━━━━━━\n";
-text += "📷 Photo : Attached\n";
-
+text += "📷 Photo : Attached\n\n";
+report.innerText = text.trimEnd() + "\n\n";
 
 report.style.display = "block";
 report.innerText = text;
