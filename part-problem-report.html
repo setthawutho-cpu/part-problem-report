@@ -432,19 +432,24 @@ input[name="okmark"]:checked + .white{
 
 .bottom-nav button{
     flex:1;
-    margin:0;
-    padding:0;
     border:none;
     background:#fff;
     color:#333;
-
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-
     font-size:18px;
-    font-weight:normal;
+    cursor:pointer;
+}
+
+.bottom-nav button span{
+    font-size:10px;
+    margin-top:2px;
+}
+
+.bottom-nav button:active{
+    background:#f1f1f1;
 }
 
 .bottom-nav button span{
