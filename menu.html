@@ -11,6 +11,8 @@ user-scalable=no">
 
 <title>Inspection Part</title>
 
+<link rel="stylesheet" href="bottom-nav.css">
+
 <style>
 
 html, body{
@@ -122,56 +124,6 @@ body{
     text-align:center;
     font-size:14px;
     padding:0 8px;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:65px;
-    background:#fff;
-    border-top:1px solid #ccc;
-    display:flex;
-    z-index:99999;
-}
-
-.bottom-nav button{
-    flex:1;
-    border:none;
-    background:#fff;
-    color:#333;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    font-size:18px;
-    cursor:pointer;
-}
-
-.bottom-nav button span{
-    font-size:10px;
-    margin-top:2px;
-}
-
-.bottom-nav button:active{
-    background:#f1f1f1;
-}
-
-.bottom-nav button span{
-    font-size:10px;
-    margin-top:2px;
-    line-height:1;
-}
-
-.bottom-nav button:active{
-    background:#f1f1f1;
-}
-
-.nav-icon{
-    font-size:14px;
 }
 
 /* MOBILE */
@@ -445,35 +397,6 @@ onclick="location.href='settings.html'">
     10:35 🆕 NEW MODEL
 </div>
 
-<div class="bottom-nav">
-
-    <button onclick="location.href='menu.html'">
-        🏠
-        <span>Home</span>
-    </button>
-
-    <button onclick="location.href='dashboard.html'">
-        📊
-        <span>Dashboard</span>
-    </button>
-
-    <button onclick="location.href='document.html'">
-        📝
-        <span>Document</span>
-    </button>
-
-    <button onclick="location.href='standard.html'">
-        📏
-        <span>STD</span>
-    </button>
-
-    <button onclick="location.href='settings.html'">
-        ⚙️
-        <span>Setting</span>
-    </button>
-
-</div>
-
 <script>
 
 let currentLang="en";
@@ -529,5 +452,7 @@ document.addEventListener('touchend', function(e){
 },{passive:false});
 </script>
 
+<script src="bottom-nav.js"></script>
+    
 </body>
 </html>
