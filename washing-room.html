@@ -78,25 +78,21 @@ body{
 }
 
 .menu-card{
-
+    height:100px;
+    min-height:100px;
     background:#fff;
-    border:none;
-    border-radius:15px;
-
-    min-height:140px;
+    border:1px solid #999;
+    border-radius:8px;
 
     display:flex;
     flex-direction:column;
-
     justify-content:center;
     align-items:center;
 
-    gap:10px;
-
+    gap:5px;
     cursor:pointer;
 
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-
+    box-shadow:none;
     transition:.2s;
 }
 
@@ -105,7 +101,7 @@ body{
 }
 
 .icon{
-    font-size:42px;
+    font-size:32px;
 }
 
 .menu-card span{
@@ -252,6 +248,50 @@ body{
         </span>
 
     </button>
+
+    <button class="menu-card"
+onclick="location.href='dashboard.html'">
+
+    <div class="icon">📊</div>
+
+    <span id="dashboardText">
+        DASHBOARD
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='document.html'">
+
+    <div class="icon">📄</div>
+
+    <span id="documentText">
+        DOCUMENT
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='standard.html'">
+
+    <div class="icon">📏</div>
+
+    <span id="standardText">
+        STANDARD
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='settings.html'">
+
+    <div class="icon">⚙️</div>
+
+    <span id="settingText">
+        SETTINGS
+    </span>
+
+</button>
 
 </div>
 
