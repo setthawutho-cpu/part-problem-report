@@ -1588,8 +1588,21 @@ text += `OK : ${okQty.value} ${okUnit}\n`;
 if(document.getElementById("ngQty").value !== "")
 text += `NG : ${ng} ${ngUnit}\n`;
 
-if(totalNg)
-text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
+// %Defect
+let defectPercent = "";
+if(totalNg){
+    const totalCheck = Number(okQty.value || 0) + Number(totalNg);
+    if(totalCheck > 0){
+        defectPercent = ((Number(totalNg) / totalCheck) * 100).toFixed(2);
+    }
+}
+
+if(totalNg){
+    text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
+
+    if(defectPercent)
+        text += `%Defect : ${defectPercent}%\n`;
+}
 
 if(okMark !== "-"){
     text += `OK Mark : ${okMark}\n`;
