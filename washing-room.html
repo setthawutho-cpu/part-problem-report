@@ -1,403 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-minimum-scale=1.0,
-user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Inspection Part</title>
+<title>Washing Room</title>
+
+<link rel="stylesheet" href="bottom-nav.css">
 
 <style>
-
-html, body{
-    touch-action: manipulation;
-    overscroll-behavior: none;
-}
-
-*{
-    -webkit-tap-highlight-color: transparent;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
 body{
+    margin:0;
+    font-family:Segoe UI,sans-serif;
     background:#f5f7fa;
-    min-height:100vh;
     padding-bottom:80px;
 }
 
-/* HEADER */
+*{
+    box-sizing:border-box;
+}
 
-.header{
+.top-bar{
+    position:sticky;
+    top:0;
     background:#009688;
     color:#fff;
-    padding:12px 15px;
+    height:60px;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
-    position:sticky;
-    top:0;
+    padding:0 15px;
     z-index:999;
 }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.logo{
-    width:40px;
-    height:40px;
-    object-fit:contain;
-}
-
-#appTitle{
+.page-title{
     font-size:20px;
     font-weight:bold;
 }
 
-.lang-btn{
+.icon-btn{
+    width:42px;
+    height:42px;
     border:none;
+    border-radius:10px;
     background:#fff;
-    color:#009688;
-    padding:8px 14px;
-    border-radius:8px;
-    font-weight:bold;
+    font-size:20px;
     cursor:pointer;
 }
 
-/* MENU */
+.calendar-wrap{
+    position:relative;
+}
+
+.calendar-wrap input{
+    position:absolute;
+    top:0;
+    left:0;
+    width:42px;
+    height:42px;
+    opacity:0;
+    cursor:pointer;
+}
 
 .menu-grid{
-
-    padding:15px;
-
     display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
-
-    gap:15px;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    padding:15px;
 }
 
 .menu-card{
-    height:100px;
-    min-height:100px;
     background:#fff;
     border:1px solid #999;
-    border-radius:8px;
+    border-radius:10px;
+    height:110px;
 
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 
-    gap:5px;
+    gap:8px;
     cursor:pointer;
-
-    box-shadow:none;
-    transition:.2s;
 }
 
-.menu-card:hover{
-    transform:translateY(-3px);
-}
-
-.icon{
-    font-size:28px;
+.menu-card .icon{
+    font-size:36px;
 }
 
 .menu-card span{
-    text-align:center;
-    font-size:14px;
-    padding:0 8px;
+    font-size:15px;
+    font-weight:bold;
 }
 
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:65px;
-    background:#fff;
-    border-top:1px solid #ccc;
-    display:flex;
-    z-index:9999;
-}
-
-.bottom-nav button{
-    flex:1;
-    margin:0;
-    padding:0;
-    border:none;
-    background:#fff;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
+.section-title{
+    background:#009688;
+    color:#fff;
+    padding:12px;
+    margin:15px;
     font-size:18px;
-    font-weight:normal;
+    font-weight:bold;
 }
 
-.bottom-nav button span{
-    font-size:10px;
-    margin-top:2px;
-    line-height:1;
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin:15px;
 }
 
-.bottom-nav button:active{
-    background:#f1f1f1;
+.summary-card{
+    background:#fff;
+    border:1px solid #999;
+    border-radius:8px;
+    padding:15px;
+    text-align:center;
 }
 
-.nav-icon{
-    font-size:14px;
+.summary-number{
+    font-size:30px;
+    font-weight:bold;
+    color:#009688;
+    margin-bottom:5px;
 }
 
-/* MOBILE */
+.activity{
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:12px;
+    margin:10px 15px;
+}
 
-@media(max-width:768px){
+@media(min-width:769px){
 
     .menu-grid{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(2,250px);
+        justify-content:center;
     }
 
-    #appTitle{
-        font-size:16px;
+    .summary-grid{
+        grid-template-columns:repeat(4,1fr);
     }
 
 }
-
-input,
-select,
-textarea{
-    font-size:16px !important;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="header">
+<div class="top-bar">
 
-    <div class="logo-area">
+    <button class="icon-btn"
+        onclick="history.back()">
+        ←
+    </button>
 
-        <img src="icon-192.png" class="logo">
-
-        <span id="appTitle">
-            INSPECTION PART
-        </span>
-
+    <div class="page-title">
+        🧼 WASHING ROOM
     </div>
 
-    <button class="lang-btn"
-        onclick="changeLanguage()">
-        🌐 TH | EN
-    </button>
+    <div class="calendar-wrap">
+        <button class="icon-btn">📅</button>
+        <input type="date" id="dateFilter">
+    </div>
 
 </div>
 
 <div class="menu-grid">
 
     <button class="menu-card"
-        onclick="location.href='part-problem-report.html'">
-
-        <div class="icon">📋</div>
-
-        <span id="reportText">
-            PART PROBLEM REPORT
-        </span>
-
+        onclick="alert('ส่งงานตรวจสอบ')">
+        <div class="icon">📤</div>
+        <span>ส่งงานตรวจสอบ</span>
     </button>
 
     <button class="menu-card"
-        onclick="location.href='part-problem-newmodel.html'">
-
-        <div class="icon">📦</div>
-
-        <span id="newModelText">
-            PART PROBLEM NEW MODEL
-        </span>
-
-    </button>
-
-    <button class="menu-card"
-        onclick="location.href='part-borrowing-pl.html'">
-
-        <div class="icon">📨</div>
-
-        <span id="borrowText">
-            PART BORROWING FROM PL
-        </span>
-
-    </button>
-
-    <button class="menu-card"
-        onclick="location.href='assembly-trial.html'">
-
-        <div class="icon">🧪</div>
-
-        <span id="trialText">
-            ASSEMBLY TRIAL
-        </span>
-
-    </button>
-
-    <button class="menu-card"
-        onclick="location.href='washing-room.html'">
-
-        <div class="icon">🧼</div>
-
-        <span id="washText">
-            WASHING ROOM
-        </span>
-
-    </button>
-
-    <button class="menu-card"
-onclick="location.href='dashboard.html'">
-
-    <div class="icon">📊</div>
-
-    <span id="dashboardText">
-        DASHBOARD
-    </span>
-
-</button>
-
-<button class="menu-card"
-onclick="location.href='document.html'">
-
-    <div class="icon">📄</div>
-
-    <span id="documentText">
-        DOCUMENT
-    </span>
-
-</button>
-
-<button class="menu-card"
-onclick="location.href='standard.html'">
-
-    <div class="icon">📏</div>
-
-    <span id="standardText">
-        STANDARD
-    </span>
-
-</button>
-
-<button class="menu-card"
-onclick="location.href='settings.html'">
-
-    <div class="icon">⚙️</div>
-
-    <span id="settingText">
-        SETTINGS
-    </span>
-
-</button>
-
-</div>
-
-<div class="bottom-nav">
-
-    <button onclick="location.href='menu.html'">
-        🏠
-        <span>Home</span>
-    </button>
-
-    <button onclick="location.href='dashboard.html'">
-        📊
-        <span>Dashboard</span>
-    </button>
-
-    <button onclick="location.href='document.html'">
-        📝
-        <span>Document</span>
-    </button>
-
-    <button onclick="location.href='standard.html'">
-        📏
-        <span>STD</span>
-    </button>
-
-    <button onclick="location.href='settings.html'">
-        ⚙️
-        <span>Setting</span>
+        onclick="alert('ตรวจสอบงาน')">
+        <div class="icon">🔍</div>
+        <span>ตรวจสอบงาน</span>
     </button>
 
 </div>
 
+<div class="section-title">
+📊 DASHBOARD
+</div>
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+        <div class="summary-number">15</div>
+        <div>จำนวนรอตรวจทั้งหมด</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">10</div>
+        <div>จำนวนรอตรวจรายวัน</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">0</div>
+        <div>อยู่ระหว่างตรวจสอบ</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">0</div>
+        <div>ครบกำหนดตรวจวันนี้</div>
+    </div>
+
+</div>
+
+<div class="section-title">
+📋 ข้อมูลรายการรอตรวจรายวัน : 10 รายการ
+</div>
+
+<div class="activity">08:00 | WR240001 | รอตรวจสอบ</div>
+<div class="activity">08:15 | WR240002 | รอตรวจสอบ</div>
+<div class="activity">08:30 | WR240003 | รอตรวจสอบ</div>
+<div class="activity">09:00 | WR240004 | รอตรวจสอบ</div>
+<div class="activity">09:15 | WR240005 | รอตรวจสอบ</div>
+<div class="activity">09:30 | WR240006 | รอตรวจสอบ</div>
+<div class="activity">10:00 | WR240007 | รอตรวจสอบ</div>
+<div class="activity">10:15 | WR240008 | รอตรวจสอบ</div>
+<div class="activity">10:30 | WR240009 | รอตรวจสอบ</div>
+<div class="activity">11:00 | WR240010 | รอตรวจสอบ</div>
+
 <script>
+document.getElementById("dateFilter")
+.addEventListener("change",function(){
 
-let currentLang="en";
+    if(!this.value) return;
 
-function changeLanguage(){
+    const d = new Date(this.value);
 
-    currentLang=
-    currentLang==="en"?"th":"en";
+    alert(
+        d.getDate() + "/" +
+        (d.getMonth()+1) + "/" +
+        d.getFullYear()
+    );
 
-    if(currentLang==="th"){
-
-        appTitle.innerText="ระบบ Inspection Part";
-
-        reportText.innerText="แจ้งปัญหา";
-        newModelText.innerText="ปัญหา New Model";
-        borrowText.innerText="ยืมชิ้นส่วนจาก PL";
-        trialText.innerText="ประกอบทดลอง";
-        washText.innerText="ห้องล้าง";
-
-    }else{
-
-        appTitle.innerText="INSPECTION PART";
-
-        reportText.innerText="PART PROBLEM REPORT";
-        newModelText.innerText="PART PROBLEM NEW MODEL";
-        borrowText.innerText="PART BORROWING FROM PL";
-        trialText.innerText="ASSEMBLY TRIAL";
-        washText.innerText="WASHING ROOM";
-
-    }
-
-}
-
-</script>
-
-<script>
-document.addEventListener('gesturestart', function(e){
-    e.preventDefault();
 });
-
-let lastTouchEnd = 0;
-
-document.addEventListener('touchend', function(e){
-
-    const now = Date.now();
-
-    if(now - lastTouchEnd <= 300){
-        e.preventDefault();
-    }
-
-    lastTouchEnd = now;
-
-},{passive:false});
 </script>
+
+<script src="bottom-nav.js"></script>
 
 </body>
 </html>
