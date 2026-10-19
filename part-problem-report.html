@@ -1586,10 +1586,13 @@ text += `NG : ${ng} ${ngUnit}\n`;
 
 // %Defect
 let defectPercent = "";
-if(totalNg){
+
+if(document.getElementById("partNgShow").value === "Defect"){
     const totalCheck = Number(okQty.value || 0) + Number(totalNg);
+
     if(totalCheck > 0){
-        defectPercent = ((Number(totalNg) / totalCheck) * 100).toFixed(2);
+        defectPercent =
+        ((Number(totalNg) / totalCheck) * 100).toFixed(2);
     }
 }
 
