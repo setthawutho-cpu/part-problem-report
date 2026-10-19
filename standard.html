@@ -95,6 +95,77 @@ button{
     user-select:none;
 }
 
+.std-title{
+    text-align:center;
+    margin-top:60px;
+    margin-bottom:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.std-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.std-card{
+    background:#fff;
+    border:2px solid #a9a9a9;
+    border-radius:16px;
+
+    min-height:95px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    cursor:pointer;
+
+    color:#1976d2;
+    font-weight:600;
+
+    box-shadow:0 2px 4px rgba(0,0,0,.15);
+}
+
+.std-card:active{
+    transform:scale(.96);
+}
+
+.std-icon{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.std-text{
+    font-size:13px;
+    line-height:1.2;
+}
+
+@media(max-width:500px){
+
+    .std-grid{
+        grid-template-columns:repeat(4,1fr);
+        gap:8px;
+    }
+
+    .std-card{
+        min-height:85px;
+    }
+
+    .std-icon{
+        font-size:24px;
+    }
+
+    .std-text{
+        font-size:11px;
+    }
+
+}
+    
 </style>
 
 </head>
@@ -105,19 +176,43 @@ button{
     <span onclick="goBack()">❮ กลับ</span>
 </div>
 
-<h2>📏 STANDARD MENU</h2>
+<div class="std-title">
+📏 STANDARD MENU
+</div>
 
-<button onclick="showStd('length')">📏 Length</button>
+<div class="std-grid">
 
-<button onclick="showStd('diameter')">⭕ Diameter</button>
+    <div class="std-card" onclick="showStd('length')">
+        <div class="std-icon">📏</div>
+        <div class="std-text">Length</div>
+    </div>
 
-<button onclick="showStd('gap')">↔️ Gap</button>
+    <div class="std-card" onclick="showStd('diameter')">
+        <div class="std-icon">⭕</div>
+        <div class="std-text">Diameter</div>
+    </div>
 
-<button onclick="showStd('height')">📐 Height</button>
+    <div class="std-card" onclick="showStd('gap')">
+        <div class="std-icon">↔️</div>
+        <div class="std-text">Gap</div>
+    </div>
 
-<button onclick="showStd('torque')">🔩 Torque</button>
+    <div class="std-card" onclick="showStd('height')">
+        <div class="std-icon">📐</div>
+        <div class="std-text">Height</div>
+    </div>
 
-<button onclick="showStd('appearance')">👀 Appearance</button>
+    <div class="std-card" onclick="showStd('torque')">
+        <div class="std-icon">🔩</div>
+        <div class="std-text">Torque</div>
+    </div>
+
+    <div class="std-card" onclick="showStd('appearance')">
+        <div class="std-icon">👀</div>
+        <div class="std-text">Appearance</div>
+    </div>
+
+</div>
 
 <hr>
 
