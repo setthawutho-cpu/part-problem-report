@@ -103,31 +103,32 @@ button{
 }
 
 .std-grid{
+    padding:15px;
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    margin-bottom:20px;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
 }
 
 .std-card{
-    background:#fff;
-    border:2px solid #a9a9a9;
-    border-radius:16px;
+    height:120px;
+    min-height:120px;
 
-    min-height:95px;
+    background:#fff;
+    border:1px solid #999;
+    border-radius:8px;
 
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 
-    text-align:center;
+    gap:5px;
     cursor:pointer;
 
-    color:#1976d2;
-    font-weight:600;
-
-    box-shadow:0 2px 4px rgba(0,0,0,.15);
+    transition:.2s;
 }
 
 .std-card:active{
@@ -135,23 +136,26 @@ button{
 }
 
 .std-icon{
-    font-size:28px;
-    margin-bottom:6px;
+    font-size:30px;
+    margin-bottom:5px;
 }
 
 .std-text{
-    font-size:13px;
+    font-size:14px;
     line-height:1.2;
+    padding:0 8px;
 }
 
-@media(max-width:500px){
+@media(max-width:768px){
 
     .std-grid{
         grid-template-columns:repeat(4,1fr);
-        gap:8px;
+        gap:6px;
+        padding:10px;
     }
 
     .std-card{
+        height:85px;
         min-height:85px;
     }
 
@@ -160,7 +164,9 @@ button{
     }
 
     .std-text{
-        font-size:11px;
+        font-size:9px;
+        line-height:1.1;
+        padding:0 2px;
     }
 
 }
