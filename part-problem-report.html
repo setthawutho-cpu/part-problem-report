@@ -1262,11 +1262,7 @@ document.getElementById("okQty").value === ""
     document.getElementById("ngQty").value = ngQty;
 }
 
-    let total = ngQty;
-
-if(partType === "Reject" || partType === "Defect"){
-    total += partQty;
-}
+let total = ngQty + partQty;
 
     document.getElementById("totalNg").value =
 (total === 0) ? "" : total;
