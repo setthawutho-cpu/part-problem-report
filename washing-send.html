@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#dfeaf3">
+
+<title>📤 SEND INSPECTION</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Segoe UI,sans-serif;
+    background:#dfeaf3;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:10px;
+    padding-bottom:80px;
+}
+
+.header{
+    background:#00bcd4;
+    color:#fff;
+    text-align:center;
+    padding:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    margin-bottom:4px;
+    font-weight:600;
+}
+
+input,
+select{
+    width:100%;
+    height:40px;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.manual-btn{
+    width:70px;
+    height:26px;
+    border:none;
+    background:#d9d9d9;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.row-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.lang-btn{
+    position:fixed;
+    top:10px;
+    right:10px;
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#607d8b;
+    color:#fff;
+    font-weight:bold;
+}
+
+.review{
+    width:100%;
+    margin-top:15px;
+    border:none;
+    padding:12px;
+    background:#2196f3;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.report{
+    margin-top:10px;
+    background:#fff;
+    border:1px solid #ccc;
+    padding:10px;
+    white-space:pre-wrap;
+    display:none;
+}
+
+</style>
+</head>
+<body>
+
+<button id="langBtn" class="lang-btn">EN</button>
+
+<div class="header" id="titleText">
+📤 SEND INSPECTION
+</div>
+
+<div class="container">
+
+<label id="lblDate">Date</label>
+<input type="date" id="date">
+
+<label id="lblType">Type</label>
+<select id="type">
+<option></option>
+<option>Welding</option>
+<option>Heat Treatment</option>
+<option>Carburizing</option>
+<option>Induction</option>
+<option>Mat</option>
+</select>
+
+<label id="lblOTS">Type of OTS</label>
+<select id="ots">
+<option></option>
+<option>-</option>
+<option>New Model</option>
+<option>ECN</option>
+<option>SRPC</option>
+<option>SCR</option>
+<option>IRPC</option>
+<option>TOKUSAI</option>
+<option>ECR</option>
+<option>Other</option>
+<option>Localization</option>
+<option>ECN/ECR</option>
+<option>SCR/ECR</option>
+<option>Proto Type</option>
+</select>
+
+<label id="lblSender">Sender</label>
+<input type="text" id="sender">
+
+<label id="lblPartNo">Part No.</label>
+<input type="text" id="partno" list="partList">
+<datalist id="partList"></datalist>
+
+<div class="row-title">
+<label id="lblPartName">Part Name</label>
+<button type="button" id="partnameBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="partname" readonly>
+
+<div class="row-title">
+<label id="lblModel">Model</label>
+<button type="button" id="modelBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="model" readonly>
+
+<div class="row-title">
+<label id="lblSupplier">Supplier</label>
+<button type="button" id="supplierBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="supplier" readonly>
+
+<button class="review" onclick="reviewData()">
+🔍 Review
+</button>
+
+<div id="report" class="report"></div>
+
+</div>
+
+<script>
+
+document.getElementById("date").value =
+new Date().toISOString().split("T")[0];
+
+let partMaster={};
+let allPartNo=[];
+
+async function loadExcel(){
+
+const response =
+await fetch("ข้อมูล Excel.xlsx");
+
+const data =
+await response.arrayBuffer();
+
+const workbook =
+XLSX.read(data,{type:"array"});
+
+const sheet=
+workbook.Sheets[workbook.SheetNames[0]];
+
+const rows=
+XLSX.utils.sheet_to_json(sheet);
+
+rows.forEach(row=>{
+
+const partNo=
+String(row.PartNo||"").trim();
+
+if(partNo){
+
+allPartNo.push(partNo);
+
+partMaster[partNo]={
+partName:row.PartName||"",
+model:row.Model||"",
+supplier:row.Supplier||""
+};
+
+}
+
+});
+
+}
+
+loadExcel();
+
+let partnameManual=false;
+let modelManual=false;
+let supplierManual=false;
+
+function fillPartData(partNo){
+
+if(!partMaster[partNo]) return;
+
+if(!partnameManual)
+partname.value=partMaster[partNo].partName;
+
+if(!modelManual)
+model.value=partMaster[partNo].model;
+
+if(!supplierManual)
+supplier.value=partMaster[partNo].supplier;
+
+}
+
+partno.addEventListener("input",function(){
+
+const keyword=this.value.trim();
+
+if(partMaster[keyword]){
+
+fillPartData(keyword);
+return;
+
+}
+
+const result =
+allPartNo
+.filter(x=>x.includes(keyword))
+.slice(0,10);
+
+partList.innerHTML=
+result.map(p =>
+`<option value="${p}"></option>`
+).join("");
+
+});
+
+partnameBtn.onclick=function(){
+
+partnameManual=!partnameManual;
+
+partname.readOnly=!partnameManual;
+
+this.innerText=
+partnameManual ? "Auto" : "Manual";
+
+};
+
+modelBtn.onclick=function(){
+
+modelManual=!modelManual;
+
+model.readOnly=!modelManual;
+
+this.innerText=
+modelManual ? "Auto" : "Manual";
+
+};
+
+supplierBtn.onclick=function(){
+
+supplierManual=!supplierManual;
+
+supplier.readOnly=!supplierManual;
+
+this.innerText=
+supplierManual ? "Auto" : "Manual";
+
+};
+
+function reviewData(){
+
+let text="📤 SEND INSPECTION\n\n";
+
+if(date.value)
+text+=`Date : ${date.value}\n`;
+
+if(type.value)
+text+=`Type : ${type.value}\n`;
+
+if(ots.value)
+text+=`Type of OTS : ${ots.value}\n`;
+
+if(sender.value)
+text+=`Sender : ${sender.value}\n`;
+
+if(partno.value)
+text+=`Part No. : ${partno.value}\n`;
+
+if(partname.value)
+text+=`Part Name : ${partname.value}\n`;
+
+if(model.value)
+text+=`Model : ${model.value}\n`;
+
+if(supplier.value)
+text+=`Supplier : ${supplier.value}\n`;
+
+report.style.display="block";
+report.innerText=text;
+
+}
+
+let lang=0;
+
+langBtn.onclick=function(){
+
+lang++;
+
+if(lang>2) lang=0;
+
+if(lang===0){
+
+langBtn.innerText="EN";
+
+titleText.innerText="📤 SEND INSPECTION";
+
+lblDate.innerText="Date";
+lblType.innerText="Type";
+lblOTS.innerText="Type of OTS";
+lblSender.innerText="Sender";
+
+}
+
+if(lang===1){
+
+langBtn.innerText="TH";
+
+titleText.innerText="📤 ส่งงานตรวจสอบ";
+
+lblDate.innerText="วันที่ส่ง";
+lblType.innerText="ประเภท";
+lblOTS.innerText="ประเภท OTS";
+lblSender.innerText="ชื่อผู้ส่ง";
+
+}
+
+if(lang===2){
+
+langBtn.innerText="JP";
+
+titleText.innerText="📤 検査依頼";
+
+lblDate.innerText="送付日";
+lblType.innerText="種類";
+lblOTS.innerText="OTS区分";
+lblSender.innerText="送付者";
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
