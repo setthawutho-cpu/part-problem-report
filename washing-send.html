@@ -102,11 +102,19 @@ select{
 </head>
 <body>
 
-<button id="langBtn" class="lang-btn">EN</button>
+<div class="top-nav">
 
-<div class="header" id="titleText">
-📤 SEND INSPECTION
+    <span onclick="history.back()">
+        ❮ กลับ
+    </span>
+
+    <span>
+        📤 Send Inspection
+    </span>
+
 </div>
+
+<button id="langBtn" class="lang-btn">EN</button>
 
 <div class="container">
 
@@ -389,6 +397,12 @@ lblSender.innerText="送付者";
 };
 
 </script>
+
+<script>
+window.currentPage = "washing";
+</script>
+
+<script src="bottom-nav.js"></script>
 
 </body>
 </html>
