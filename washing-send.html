@@ -12,7 +12,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-html,
+<link rel="stylesheet" href="bottom-nav.css">
 
 <style>
 
@@ -73,7 +73,8 @@ body{
     max-width:500px;
     margin:auto;
     padding:10px;
-    padding-bottom:80px;
+    padding-top:60px;
+    padding-bottom:90px;
 }
 
 .header{
@@ -146,6 +147,15 @@ select{
     padding:10px;
     white-space:pre-wrap;
     display:none;
+}
+
+.bottom-nav{
+    z-index:99999 !important;
+}
+
+.bottom-nav button,
+.bottom-nav button span{
+    font-weight:400 !important;
 }
 
 </style>
