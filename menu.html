@@ -11,8 +11,6 @@ user-scalable=no">
 
 <title>Inspection Part</title>
 
-<title>Inspection Part</title>
-
 <link rel="manifest" href="manifest.json">
 
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
@@ -23,17 +21,19 @@ user-scalable=no">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Inspection">
-<meta name="theme-color" content="#06C755">
-
-<link rel="stylesheet" href="bottom-nav.css">
+<meta name="theme-color" content="#009688">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <link rel="stylesheet" href="bottom-nav.css">
 
 <style>
 
-html, body{
-    touch-action: manipulation;
-    overscroll-behavior: none;
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    touch-action:manipulation;
+    overscroll-behavior:none;
 }
 
 *{
@@ -58,7 +58,7 @@ body{
 .header{
     background:#009688;
     color:#fff;
-    padding:12px 15px;
+    padding:calc(env(safe-area-inset-top) + 12px) 15px 12px;
 
     display:flex;
     justify-content:space-between;
@@ -147,8 +147,9 @@ body{
 @media(max-width:768px){
 
     .menu-grid{
-        grid-template-columns:repeat(4,1fr);
+        grid-template-columns:repeat(4,minmax(0,1fr));
         gap:6px;
+        padding:8px;
     }
 
     .menu-card{
@@ -242,6 +243,23 @@ textarea{
     margin:0 15px 10px;
 }
 
+.menu-card{
+    min-width:0;
+}
+
+.summary-card{
+    min-width:0;
+}
+
+.bottom-nav button{
+    min-width:0 !important;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+    
 </style>
 </head>
 
