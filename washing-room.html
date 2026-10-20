@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#009688">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <title>Washing Room</title>
 
@@ -14,6 +17,7 @@ body{
     font-family:Segoe UI,sans-serif;
     background:#f5f7fa;
     padding-bottom:80px;
+    overflow-x:hidden;
 }
 
 *{
@@ -25,7 +29,16 @@ body{
     top:0;
     background:#009688;
     color:#fff;
-    height:60px;
+    min-height:60px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:calc(env(safe-area-inset-top) + 10px) 15px 10px;
+
+    z-index:999;
+}
 
     display:flex;
     justify-content:space-between;
