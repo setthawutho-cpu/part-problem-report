@@ -21,37 +21,41 @@ html,
     top:0;
     left:0;
     width:100%;
-    z-index:9999;
+    height:50px;
     background:#dfeaf3;
-    padding:8px 12px;
-    box-sizing:border-box;
+    z-index:9999;
 
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
     align-items:center;
 }
 
-.top-nav span{
+.top-nav span:first-child{
+    position:absolute;
+    left:12px;
     color:#000;
     font-size:16px;
     font-weight:600;
     cursor:pointer;
-    user-select:none;
 }
 
-.container{
-    max-width:500px;
-    margin:auto;
-    padding:10px;
-    padding-top:60px;
-    padding-bottom:90px;
+.top-nav span:last-child{
+    color:#000;
+    font-size:18px;
+    font-weight:700;
 }
 
+html,
 body{
     width:100%;
     overflow-x:hidden;
     touch-action:manipulation;
     overscroll-behavior:none;
+    scrollbar-width:none;
+}
+
+::-webkit-scrollbar{
+    display:none;
 }
 
 *{
