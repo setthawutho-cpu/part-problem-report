@@ -17,6 +17,36 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale
 
 <style>
 
+#guideArea{
+    margin-bottom:15px;
+}
+
+.guide-card{
+    background:#fffde7;
+    border:1px solid #ffd54f;
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.guide-img{
+    width:100%;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.guide-title{
+    margin-top:8px;
+    font-size:16px;
+    font-weight:700;
+}
+
+.guide-text{
+    margin-top:5px;
+    font-size:14px;
+    line-height:1.5;
+}
+
 .bottom-nav button,
 .bottom-nav button span{
     font-weight:400 !important;
@@ -60,14 +90,6 @@ select{
 
 html,
 body{
-
-scrollbar-width:none;
-}
-
-::-webkit-scrollbar{
-    display:none;
-}
-
     width:100%;
     margin:0;
     overflow-x:hidden;
@@ -75,6 +97,11 @@ scrollbar-width:none;
     overscroll-behavior:none;
     font-family:Segoe UI,sans-serif;
     background:#dfeaf3;
+    scrollbar-width:none;
+}
+
+::-webkit-scrollbar{
+    display:none;
 }
 
 *{
@@ -197,6 +224,8 @@ Calculator Type
 
 </select>
 
+<div id="guideArea"></div>
+
 <div id="formArea"></div>
 
 <button class="calc-btn" onclick="calculateGDT()">
@@ -279,7 +308,32 @@ function showForm(){
 
     const type=calcType.value;
 
-    if(type==="tp"){
+    const guideArea =
+    document.getElementById("guideArea");
+
+if(type==="tp"){
+
+guideArea.innerHTML=`
+
+<div class="guide-card">
+
+<img
+class="guide-img"
+src="images/true-position.png">
+
+<div class="guide-title">
+📍 True Position
+</div>
+
+<div class="guide-text">
+วัดตำแหน่ง Actual X และ Actual Y
+เทียบกับ Basic Dimension
+แล้วคำนวณค่า Position
+</div>
+
+</div>
+
+`;
 
         formArea.innerHTML=`
         <input id="a" type="number" step="0.001" placeholder="True X">
