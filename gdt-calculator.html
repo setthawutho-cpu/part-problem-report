@@ -358,6 +358,52 @@ src="images/true-position.png">
 
     else if(type==="concentricity"){
 
+else if(type==="circularity"){
+
+guideArea.innerHTML=`
+
+<div class="guide-card">
+
+<img
+class="guide-img"
+src="images/circularity.png">
+
+<div class="guide-title">
+⭕ Circularity
+</div>
+
+<div class="guide-text">
+
+วัด Diameter หลายตำแหน่งรอบชิ้นงาน
+
+Max Value = ค่าสูงสุด
+
+Min Value = ค่าต่ำสุด
+
+Circularity = Max - Min
+
+</div>
+
+</div>
+
+`;
+
+formArea.innerHTML=`
+
+<input id="a"
+type="number"
+step="0.001"
+placeholder="Max / High">
+
+<input id="b"
+type="number"
+step="0.001"
+placeholder="Min / Low">
+
+`;
+
+}
+
         formArea.innerHTML=`
         <input id="a" type="number" step="0.001" placeholder="Center X1">
         <input id="b" type="number" step="0.001" placeholder="Center Y1">
