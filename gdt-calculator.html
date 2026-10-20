@@ -171,20 +171,26 @@ EN
 
 <div id="formArea"></div>
 
-<button class="calc-btn" onclick="calculateGDT()">
+<button
+id="calcBtn"
+class="calc-btn"
+onclick="calculateGDT()">
 🧮 Calculate
 </button>
 
 <div id="result"></div>
 
 <button
+id="clearBtn"
 class="calc-btn"
 style="margin-top:10px;background:#e53935"
 onclick="clearHistory()">
 🗑️ Clear History
 </button>
 
-<h3>📋 History</h3>
+<h3 id="historyTitle">
+📋 History
+</h3>
 
 <div id="historyArea"></div>
 
@@ -258,8 +264,47 @@ showForm();
 
 function applyLanguage(){
 
-pageTitle.innerText=
-textLang[langs[lang]].title;
+const t=textLang[langs[lang]];
+
+pageTitle.innerText=t.title;
+
+backBtn.innerText=t.back;
+
+calcBtn.innerText=t.calculate;
+
+clearBtn.innerText=t.clear;
+
+historyTitle.innerText=t.history;
+
+calcType.options[0].text=
+"📍 "+t.tp;
+
+calcType.options[1].text=
+"🎯 "+(
+langs[lang]==="TH"
+? "Position ผ่าน/ไม่ผ่าน"
+: langs[lang]==="JP"
+? "位置 OK/NG"
+: "Position PASS / NG"
+);
+
+calcType.options[2].text=
+"⭕ "+t.circularity;
+
+calcType.options[3].text=
+"🔄 "+t.concentricity;
+
+calcType.options[4].text=
+"📐 "+t.parallelism;
+
+calcType.options[5].text=
+"📏 "+t.perpendicularity;
+
+calcType.options[6].text=
+"🛞 "+t.runout;
+
+calcType.options[7].text=
+"🔵 "+t.flatness;
 
 }
 
