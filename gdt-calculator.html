@@ -123,9 +123,23 @@ margin-top:8px;
 ❮ กลับ
 </span>
 
-<span>
+<span id="pageTitle">
 📐 GD&T Calculator
 </span>
+
+<button id="langBtn"
+style="
+position:absolute;
+right:10px;
+width:50px;
+height:35px;
+border:none;
+border-radius:5px;
+background:#607d8b;
+color:#fff;
+">
+EN
+</button>
 
 </div>
 
@@ -184,6 +198,71 @@ const calcType=document.getElementById("calcType");
 const formArea=document.getElementById("formArea");
 const guideArea=document.getElementById("guideArea");
 
+const langs=["EN","TH","JP"];
+let lang=0;
+
+const textLang={
+
+EN:{
+title:"📐 GD&T Calculator",
+history:"📋 History",
+tp:"True Position",
+concentricity:"Concentricity",
+parallelism:"Parallelism",
+perpendicularity:"Perpendicularity",
+runout:"Runout",
+flatness:"Flatness",
+circularity:"Circularity"
+},
+
+TH:{
+title:"📐 เครื่องคำนวณ GD&T",
+history:"📋 ประวัติ",
+tp:"ตำแหน่งจริง",
+concentricity:"ร่วมศูนย์",
+parallelism:"ความขนาน",
+perpendicularity:"ความตั้งฉาก",
+runout:"รันเอาท์",
+flatness:"ความเรียบ",
+circularity:"ความกลม"
+},
+
+JP:{
+title:"📐 GD&T 計算機",
+history:"📋 履歴",
+tp:"真位置",
+concentricity:"同心度",
+parallelism:"平行度",
+perpendicularity:"直角度",
+runout:"振れ",
+flatness:"平面度",
+circularity:"真円度"
+}
+
+};
+
+langBtn.onclick=function(){
+
+lang++;
+
+if(lang>=langs.length){
+lang=0;
+}
+
+langBtn.innerText=langs[lang];
+
+applyLanguage();
+showForm();
+
+};
+
+function applyLanguage(){
+
+pageTitle.innerText=
+textLang[langs[lang]].title;
+
+}
+
 calcType.addEventListener("change",showForm);
 
 function showForm(){
@@ -195,7 +274,9 @@ if(type==="tp" || type==="positionpass"){
 guideArea.innerHTML=`
 <div class="guide-card">
 <img class="guide-img" src="images/true-position.png">
-<div class="guide-title">📍 True Position</div>
+<div class="guide-title">
+📍 ${textLang[langs[lang]].tp}
+</div>
 <div class="guide-text">
 TP = 2 × √(ΔX² + ΔY²)
 </div>
@@ -219,7 +300,9 @@ else if(type==="concentricity"){
 guideArea.innerHTML=`
 <div class="guide-card">
 <img class="guide-img" src="images/concentricity.png">
-<div class="guide-title">🔄 Concentricity</div>
+<div class="guide-title">
+🔄 ${textLang[langs[lang]].concentricity}
+</div>
 </div>
 `;
 
@@ -237,7 +320,9 @@ else{
 guideArea.innerHTML=`
 <div class="guide-card">
 <img class="guide-img" src="images/${type}.png">
-<div class="guide-title">${type}</div>
+<div class="guide-title">
+${textLang[langs[lang]][type] || type}
+</div>
 <div class="guide-text">
 Result = Max - Min
 </div>
