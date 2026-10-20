@@ -20,6 +20,17 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 html,
 body{
     width:100%;
+    max-width:100%;
+    overflow-x:hidden !important;
+}
+
+*{
+    box-sizing:border-box;
+}
+    
+html,
+body{
+    width:100%;
     overflow-x:hidden;
 }
 
@@ -161,10 +172,10 @@ button{
 @media(max-width:768px){
 
     .std-grid{
-        grid-template-columns:repeat(4,1fr);
-        gap:6px;
-        padding:10px;
-    }
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    padding:10px;
+}
 
     .std-card{
         height:85px;
