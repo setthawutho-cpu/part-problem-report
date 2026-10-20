@@ -1,110 +1,397 @@
-else if(type==="parallelism"){
+<!DOCTYPE html>
+<html lang="th">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<title>GD&T Calculator</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="bottom-nav.css">
+
+<meta name="theme-color" content="#dfeaf3">
+
+<style>
+
+html,body{
+margin:0;
+padding:0;
+font-family:Segoe UI,sans-serif;
+background:#dfeaf3;
+}
+
+.top-nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:50px;
+background:#dfeaf3;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.back{
+position:absolute;
+left:12px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+padding:60px 10px 90px;
+}
+
+.card{
+background:#fff;
+border-radius:10px;
+padding:15px;
+}
+
+select,input{
+width:100%;
+height:45px;
+margin-bottom:10px;
+box-sizing:border-box;
+}
+
+.calc-btn{
+width:100%;
+height:50px;
+border:none;
+border-radius:8px;
+background:#2196f3;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+}
+
+.guide-card{
+background:#fffde7;
+border:1px solid #ffd54f;
+border-radius:10px;
+padding:10px;
+margin-bottom:10px;
+}
+
+.guide-img{
+width:100%;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.guide-title{
+font-weight:bold;
+margin-top:8px;
+}
+
+.guide-text{
+margin-top:5px;
+line-height:1.5;
+}
+
+#result{
+margin-top:10px;
+padding:10px;
+background:#f5f5f5;
+border-radius:8px;
+}
+
+.history-item{
+background:#fff;
+border:1px solid #ccc;
+border-radius:8px;
+padding:10px;
+margin-top:8px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="top-nav">
+
+<span class="back" onclick="history.back()">
+❮ กลับ
+</span>
+
+<span>
+📐 GD&T Calculator
+</span>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<select id="calcType">
+
+<option value="tp">📍 True Position</option>
+
+<option value="positionpass">🎯 Position PASS / NG</option>
+
+<option value="circularity">⭕ Circularity</option>
+
+<option value="concentricity">🔄 Concentricity</option>
+
+<option value="parallelism">📐 Parallelism</option>
+
+<option value="perpendicularity">📏 Perpendicularity</option>
+
+<option value="runout">🛞 Runout</option>
+
+<option value="flatness">🔵 Flatness</option>
+
+</select>
+
+<div id="guideArea"></div>
+
+<div id="formArea"></div>
+
+<button class="calc-btn" onclick="calculateGDT()">
+🧮 Calculate
+</button>
+
+<div id="result"></div>
+
+<button
+class="calc-btn"
+style="margin-top:10px;background:#e53935"
+onclick="clearHistory()">
+🗑️ Clear History
+</button>
+
+<h3>📋 History</h3>
+
+<div id="historyArea"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const calcType=document.getElementById("calcType");
+const formArea=document.getElementById("formArea");
+const guideArea=document.getElementById("guideArea");
+
+calcType.addEventListener("change",showForm);
+
+function showForm(){
+
+const type=calcType.value;
+
+if(type==="tp" || type==="positionpass"){
 
 guideArea.innerHTML=`
-
 <div class="guide-card">
-<img class="guide-img" src="images/parallelism.png">
-<div class="guide-title">📐 Parallelism</div>
+<img class="guide-img" src="images/true-position.png">
+<div class="guide-title">📍 True Position</div>
 <div class="guide-text">
-วัดพื้นผิวหลายตำแหน่ง<br>
-Max Value = ค่าสูงสุด<br>
-Min Value = ค่าต่ำสุด<br>
-Parallelism = Max - Min
+TP = 2 × √(ΔX² + ΔY²)
 </div>
 </div>
-
 `;
 
 formArea.innerHTML=`
-
-<input id="a" type="number" step="0.001" placeholder="Max / High">
-<input id="b" type="number" step="0.001" placeholder="Min / Low">
-
+<input id="a" type="number" step="0.001" placeholder="True X">
+<input id="b" type="number" step="0.001" placeholder="True Y">
+<input id="c" type="number" step="0.001" placeholder="Actual X">
+<input id="d" type="number" step="0.001" placeholder="Actual Y">
+${type==="positionpass"
+?'<input id="e" type="number" step="0.001" placeholder="Tolerance">'
+:''}
 `;
 
 }
 
-else if(type==="perpendicularity"){
+else if(type==="concentricity"){
 
 guideArea.innerHTML=`
-
 <div class="guide-card">
-<img class="guide-img" src="images/perpendicularity.png">
-<div class="guide-title">📏 Perpendicularity</div>
-<div class="guide-text">
-เปรียบเทียบมุมจริงกับมุมอ้างอิง<br>
-Error = มุมจริง - มุมอ้างอิง
+<img class="guide-img" src="images/concentricity.png">
+<div class="guide-title">🔄 Concentricity</div>
 </div>
-</div>
-
 `;
 
 formArea.innerHTML=`
-
-<input id="a" type="number" step="0.001" placeholder="Reference Angle">
-<input id="b" type="number" step="0.001" placeholder="Actual Angle">
-
-`;
-
-}
-
-else if(type==="runout"){
-
-guideArea.innerHTML=`
-
-<div class="guide-card">
-<img class="guide-img" src="images/runout.png">
-<div class="guide-title">🛞 Runout</div>
-<div class="guide-text">
-หมุนชิ้นงานและอ่าน Dial Gauge<br>
-Runout = Max - Min
-</div>
-</div>
-
-`;
-
-formArea.innerHTML=`
-
-<input id="a" type="number" step="0.001" placeholder="Max / High">
-<input id="b" type="number" step="0.001" placeholder="Min / Low">
-
-`;
-
-}
-
-else if(type==="flatness"){
-
-guideArea.innerHTML=`
-
-<div class="guide-card">
-<img class="guide-img" src="images/flatness.png">
-<div class="guide-title">🔵 Flatness</div>
-<div class="guide-text">
-วัดจุดสูงสุดและต่ำสุดบนพื้นผิว<br>
-Flatness = Max - Min
-</div>
-</div>
-
-`;
-
-formArea.innerHTML=`
-
-<input id="a" type="number" step="0.001" placeholder="Max / High">
-<input id="b" type="number" step="0.001" placeholder="Min / Low">
-
+<input id="a" type="number" placeholder="Center X1">
+<input id="b" type="number" placeholder="Center Y1">
+<input id="c" type="number" placeholder="Center X2">
+<input id="d" type="number" placeholder="Center Y2">
 `;
 
 }
 
 else{
 
-guideArea.innerHTML="";
+guideArea.innerHTML=`
+<div class="guide-card">
+<img class="guide-img" src="images/${type}.png">
+<div class="guide-title">${type}</div>
+<div class="guide-text">
+Result = Max - Min
+</div>
+</div>
+`;
 
 formArea.innerHTML=`
-
-<input id="a" type="number" step="0.001" placeholder="Max / High">
-<input id="b" type="number" step="0.001" placeholder="Min / Low">
-
+<input id="a" type="number" placeholder="Max / High">
+<input id="b" type="number" placeholder="Min / Low">
 `;
 
 }
+
+}
+
+function calculateGDT(){
+
+const type=calcType.value;
+
+let text="";
+
+if(type==="tp"){
+
+const dx=Number(c.value)-Number(a.value);
+const dy=Number(d.value)-Number(b.value);
+
+const tp=2*Math.sqrt(dx*dx+dy*dy);
+
+text=`🎯 True Position = ⌀${tp.toFixed(3)} mm`;
+
+}
+
+else if(type==="positionpass"){
+
+const dx=Number(c.value)-Number(a.value);
+const dy=Number(d.value)-Number(b.value);
+
+const tp=2*Math.sqrt(dx*dx+dy*dy);
+
+text=`
+🎯 True Position = ⌀${tp.toFixed(3)} mm<br>
+Tolerance = ⌀${Number(e.value).toFixed(3)} mm<br><br>
+${tp<=Number(e.value)?"✅ PASS":"❌ NG"}
+`;
+
+}
+
+else if(type==="concentricity"){
+
+const res=Math.sqrt(
+Math.pow(Number(c.value)-Number(a.value),2)+
+Math.pow(Number(d.value)-Number(b.value),2)
+);
+
+text=`🔄 Concentricity = ${res.toFixed(3)} mm`;
+
+}
+
+else if(type==="parallelism"){
+
+text=`📐 Parallelism = ${(Number(a.value)-Number(b.value)).toFixed(3)} mm`;
+
+}
+
+else if(type==="perpendicularity"){
+
+text=`📏 Perpendicularity Error = ${Math.abs(Number(a.value)-Number(b.value)).toFixed(3)}°`;
+
+}
+
+else if(type==="runout"){
+
+text=`🛞 Runout = ${(Number(a.value)-Number(b.value)).toFixed(3)} mm`;
+
+}
+
+else if(type==="flatness"){
+
+text=`🔵 Flatness = ${(Number(a.value)-Number(b.value)).toFixed(3)} mm`;
+
+}
+
+else if(type==="circularity"){
+
+text=`⭕ Circularity = ${(Number(a.value)-Number(b.value)).toFixed(3)} mm`;
+
+}
+
+result.innerHTML=text;
+
+saveHistory(text);
+
+}
+
+function saveHistory(text){
+
+let history=JSON.parse(
+localStorage.getItem("gdtHistory")||"[]"
+);
+
+history.unshift({
+date:new Date().toLocaleString(),
+result:text
+});
+
+history=history.slice(0,100);
+
+localStorage.setItem(
+"gdtHistory",
+JSON.stringify(history)
+);
+
+loadHistory();
+
+}
+
+function loadHistory(){
+
+const history=JSON.parse(
+localStorage.getItem("gdtHistory")||"[]"
+);
+
+historyArea.innerHTML=history.map(item=>`
+
+<div class="history-item">
+
+<b>${item.date}</b>
+
+<div style="margin-top:5px">
+${item.result}
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+function clearHistory(){
+
+localStorage.removeItem("gdtHistory");
+
+loadHistory();
+
+}
+
+showForm();
+loadHistory();
+
+</script>
+
+<script>
+window.currentPage="standard";
+</script>
+
+<script src="bottom-nav.js"></script>
+
+</body>
+</html>
