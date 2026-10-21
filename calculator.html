@@ -98,33 +98,6 @@ body{
     font-size:18px;
 }
 
-.symbols{
-    display:flex;
-    gap:12px;
-    overflow-x:auto;
-    padding-bottom:8px;
-}
-
-.sym{
-    min-width:160px;
-    flex-shrink:0;
-}
-
-.sym{
-    padding:14px;
-    border-radius:18px;
-    background:#213150;
-    border:2px solid #344a72;
-    text-align:center;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.sym.active{
-    border-color:#ffaf1a;
-    color:#ffaf1a;
-}
-
 .result{
     background:#020c24;
     border-radius:20px;
@@ -327,16 +300,9 @@ onclick="viewHistory()">
 🕘
 </button>
 
-<select id="mode" class="sel">
-    <option>Position</option>
-    <option>Circularity</option>
-    <option>Flatness</option>
-    <option>Parallelism</option>
-    <option>Perpendicularity</option>
-    <option>Concentricity</option>
-    <option>Circular Runout</option>
-    <option>Total Runout</option>
-</select>
+<div id="modeDisplay" class="sel">
+⌖ Position
+</div>
 
 <button
 class="icon-btn"
@@ -344,9 +310,6 @@ onclick="openGdtMenu()">
 🧮
 </button>
 
-</div>
-
-<div class="symbols" id="symbols">
 </div>
 
 <div id="gdtMenu" class="gdt-menu">
@@ -513,40 +476,7 @@ const names = [
 'Total Runout'
 ];
 
-const symbolArea =
-document.getElementById('symbols');
-
-names.forEach((name,index)=>{
-
-    const div =
-    document.createElement('div');
-
-    div.className =
-    'sym' +
-    (index===0 ? ' active' : '');
-
-    div.innerHTML =
-    syms[index] +
-    '<br>' +
-    name;
-
-    div.onclick = ()=>{
-
-        document
-        .querySelectorAll('.sym')
-        .forEach(x=>
-            x.classList.remove('active')
-        );
-
-        div.classList.add('active');
-
-        mode.value = name;
-
-        calc();
-    };
-
-    symbolArea.appendChild(div);
-});
+let currentMode = 0;
 
 let vals = {
 xn:'0',
@@ -669,7 +599,7 @@ function press(key){
 
         hist.push({
 
-            mode:mode.value,
+            mode:names[currentMode],
 
             xn:vals.xn,
             xa:vals.xa,
@@ -744,8 +674,7 @@ function calc(){
     let resultValue=0;
 
     const modeValue =
-    document.getElementById('mode')
-    .value;
+names[currentMode];
 
     if(
         modeValue==='Position'
@@ -934,21 +863,12 @@ function closeGdtMenu(){
 
 function selectMode(index){
 
-    const mode =
-    document.getElementById('mode');
-
-    mode.value =
-    names[index];
+    currentMode = index;
 
     document
-    .querySelectorAll('.sym')
-    .forEach(x=>
-        x.classList.remove('active')
-    );
-
-    document
-    .querySelectorAll('.sym')[index]
-    .classList.add('active');
+    .getElementById('modeDisplay')
+    .innerHTML =
+    syms[index] + ' ' + names[index];
 
     closeGdtMenu();
 
@@ -957,14 +877,10 @@ function selectMode(index){
 }
 
 document
+document
 .addEventListener(
 'click',
 function(e){
-
-    const menu =
-    document.getElementById(
-        'gdtMenu'
-    );
 
     if(
         e.target.id==='gdtMenu'
@@ -975,8 +891,9 @@ function(e){
 });
 
 document
-.getElementById('mode')
-.onchange = calc;
+.getElementById('modeDisplay')
+.innerHTML =
+syms[0] + ' ' + names[0];
 
 calc();
 
