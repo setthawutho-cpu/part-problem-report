@@ -511,18 +511,6 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         };
 
         // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-
-    if(window.lucide){
-        lucide.createIcons();
-    }
-
-    initGdtDefaults();
-    renderGdtForm();
-    initUnitConverterUI();
-    updateSciDisplay();
-    renderHistoryList();
-});
 
         // Mode Switching
         function toggleModeDropdown() {
@@ -770,10 +758,16 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         }
 
         function clearSci(type) {
-            sciDisplay = '0';
-            if (type === 'all') sciExpression = '';
-            updateSciDisplay();
-        }
+
+    if(type === 'all'){
+        sciDisplay = '0';
+        sciExpression = '';
+    }else{
+        sciDisplay = '0';
+    }
+
+    updateSciDisplay();
+}
 
         function factorial(n) {
             if (n < 0) return NaN;
@@ -803,6 +797,7 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                 parsed = parsed.replace(/ln\(([^)]+)\)/g, "Math.log($1)");
                 parsed = parsed.replace(/log\(([^)]+)\)/g, "Math.log10($1)");
                 parsed = parsed.replace(/fact\(([^)]+)\)/g, (_, v) => factorial(parseInt(eval(v))));
+parsed = parsed.replace(/(\d+)%/g, '($1/100)');
 
                 const numResult = eval(parsed);
                 if (!isFinite(numResult)) {
@@ -900,7 +895,12 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                     </div>
                 `;
                 container.innerHTML = html;
-                setActiveSlot('p-xact', 'X วัดจริง');
+
+if(window.lucide){
+    lucide.createIcons();
+}
+
+setActiveSlot('p-xact', 'X วัดจริง');
 
             } else if (activeGdtTool === 'concentricity') {
                 header.innerHTML = `<span>◎ ค่าความร่วมศูนย์ (Concentricity)</span>`;
@@ -927,7 +927,12 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                     </div>
                 `;
                 container.innerHTML = html;
-                setActiveSlot('c-x2', 'ชิ้นงาน X2');
+
+if(window.lucide){
+    lucide.createIcons();
+}
+
+setActiveSlot('c-x2', 'ชิ้นงาน X2');
 
             } else {
                 const names = {
@@ -966,7 +971,12 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                     </div>
                 `;
                 container.innerHTML = html;
-                setActiveSlot('pt-1', 'จุดวัดที่ 1');
+
+if(window.lucide){
+    lucide.createIcons();
+}
+
+setActiveSlot('pt-1', 'จุดวัดที่ 1');
             }
 
             calculateGdtLive();
@@ -1006,7 +1016,15 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
             } else if (btn === '.') {
                 if (!curVal.includes('.')) curVal += '.';
             } else {
-                if (curVal === '0') curVal = btn;
+                if (
+    if (
+    curVal === '0' ||
+    curVal === '0.000'
+){
+    curVal = btn;
+}else{
+    curVal += btn;
+}
                 else curVal += btn;
             }
 
@@ -1085,11 +1103,23 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                     minVal = Math.min(...pts);
                     rangeVal = maxVal - minVal;
 
-                    if (activeGdtTool === 'circularity') {
-                        totalError = rangeVal / 2;
-                    } else {
-                        totalError = rangeVal;
-                    }
+                    switch(activeGdtTool){
+
+    case 'circularity':
+        totalError = rangeVal / 2;
+        break;
+
+    case 'flatness':
+    case 'parallelism':
+    case 'perpendicularity':
+    case 'runout':
+    case 'total_runout':
+        totalError = rangeVal;
+        break;
+
+    default:
+        totalError = rangeVal;
+}
 
                     meanVal = pts.reduce((a, b) => a + b, 0) / pts.length;
                 }
@@ -1160,7 +1190,12 @@ function setActiveUnitSlot() {
             } else if (btn === '.') {
                 if (!cur.includes('.')) cur += '.';
             } else {
-                if (cur === '0') cur = btn;
+                if (
+    cur === '0' ||
+    cur === '100'
+){
+    cur = btn;
+}
                 else cur += btn;
             }
 
@@ -1262,12 +1297,6 @@ function setActiveUnitSlot() {
     updateSciDisplay();
 }
 
-window.addEventListener('load', () => {
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-});
-
 document.addEventListener('click', (e) => {
 
     const menu =
@@ -1280,6 +1309,7 @@ document.addEventListener('click', (e) => {
         document.getElementById('btn-history-toggle');
 
     if (
+        menu &&
         !menu.contains(e.target) &&
         !toggleBtn.contains(e.target) &&
         !historyBtn.contains(e.target)
@@ -1288,6 +1318,27 @@ document.addEventListener('click', (e) => {
     }
 
 });
+
+window.onload = function(){
+
+    try{
+
+        if(window.lucide){
+            lucide.createIcons();
+        }
+
+        initGdtDefaults();
+        renderGdtForm();
+        initUnitConverterUI();
+        updateSciDisplay();
+        renderHistoryList();
+        switchMode('sci');
+
+    }catch(err){
+        console.error(err);
+    }
+
+};
         
     </script>
 </body>
