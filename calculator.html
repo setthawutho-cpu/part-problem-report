@@ -54,7 +54,27 @@ body{
 }
 
 .top{
+    display:flex;
+    align-items:center;
+    gap:10px;
     margin-bottom:12px;
+}
+
+.sel{
+    flex:1;
+    margin-top:0;
+}
+
+.icon-btn{
+    width:52px;
+    height:52px;
+    border:none;
+    border-radius:14px;
+    background:#081a40;
+    color:#4be0ff;
+    border:2px solid #20345d;
+    font-size:26px;
+    cursor:pointer;
 }
 
 .history-btn{
@@ -256,23 +276,27 @@ body{
 <div class="top">
 
 <button
-class="history-btn"
+class="icon-btn"
 onclick="viewHistory()">
-🕘 ประวัติ
+🕘
 </button>
 
 <select id="mode" class="sel">
-
-<option>Position</option>
-<option>Circularity</option>
-<option>Flatness</option>
-<option>Parallelism</option>
-<option>Perpendicularity</option>
-<option>Concentricity</option>
-<option>Circular Runout</option>
-<option>Total Runout</option>
-
+    <option>Position</option>
+    <option>Circularity</option>
+    <option>Flatness</option>
+    <option>Parallelism</option>
+    <option>Perpendicularity</option>
+    <option>Concentricity</option>
+    <option>Circular Runout</option>
+    <option>Total Runout</option>
 </select>
+
+<button
+class="icon-btn"
+onclick="document.getElementById('mode').focus();document.getElementById('mode').click();">
+🧮
+</button>
 
 </div>
 
