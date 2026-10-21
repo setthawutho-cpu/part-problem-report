@@ -460,7 +460,8 @@
     <script>
         // Global App State
         let currentMode = 'sci'; 
-        let historyList = [];
+        let historyList =
+JSON.parse(localStorage.getItem('calcHistory') || '[]');
         let isEditHistoryMode = false;
 
         // Scientific Calculator State
@@ -511,12 +512,17 @@
 
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initGdtDefaults();
-            renderGdtForm();
-            initUnitConverterUI();
-            updateSciDisplay();
-        });
+
+    if(window.lucide){
+        lucide.createIcons();
+    }
+
+    initGdtDefaults();
+    renderGdtForm();
+    initUnitConverterUI();
+    updateSciDisplay();
+    renderHistoryList();
+});
 
         // Mode Switching
         function toggleModeDropdown() {
@@ -553,10 +559,23 @@
         }
 
         function addHistoryRecord(expr, result) {
-            historyList.unshift({ id: Date.now(), expr, result });
-            if (historyList.length > 50) historyList.pop();
-            renderHistoryList();
-        }
+    historyList.unshift({
+        id: Date.now(),
+        expr,
+        result
+    });
+
+    if(historyList.length > 50){
+        historyList.pop();
+    }
+
+    localStorage.setItem(
+        'calcHistory',
+        JSON.stringify(historyList)
+    );
+
+    renderHistoryList();
+}
 
         function toggleEditHistoryMode() {
             isEditHistoryMode = !isEditHistoryMode;
@@ -595,9 +614,10 @@
                     `}
                 </div>
             `).join('');
-            lucide.createIcons();
-        }
-
+            if(window.lucide){
+    lucide.createIcons();
+}
+}
         function useHistoryItem(val) {
             if (isEditHistoryMode) return;
             
@@ -620,14 +640,24 @@
         }
 
         function deleteHistoryItem(id) {
-            historyList = historyList.filter(item => item.id !== id);
-            renderHistoryList();
-        }
+    historyList =
+        historyList.filter(item => item.id !== id);
+
+    localStorage.setItem(
+        'calcHistory',
+        JSON.stringify(historyList)
+    );
+
+    renderHistoryList();
+}
 
         function clearAllHistory() {
-            historyList = [];
-            renderHistoryList();
-        }
+    historyList = [];
+
+    localStorage.removeItem('calcHistory');
+
+    renderHistoryList();
+}
 
         // Scientific Calculator Engine
         function setAngleUnit(unit) {
@@ -662,18 +692,64 @@
         }
 
         function inputSci(func) {
-            if (func === 'pi') { inputSciChar(Math.PI.toFixed(6)); return; }
-            if (func === 'e') { inputSciChar(Math.E.toFixed(6)); return; }
-            if (func === 'sqr') { sciDisplay = `(${sciDisplay})^2`; updateSciDisplay(); return; }
-            if (func === 'cube') { sciDisplay = `(${sciDisplay})^3`; updateSciDisplay(); return; }
-            if (func === 'pow') { sciDisplay += '^'; updateSciDisplay(); return; }
-            if (func === 'recip') { sciDisplay = `1/(${sciDisplay})`; updateSciDisplay(); return; }
-            if (func === 'fact') { sciDisplay = `fact(${sciDisplay})`; updateSciDisplay(); return; }
 
-            sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay}`;
-            isSciResultShown = false;
-            updateSciDisplay();
-        }
+    if (func === 'pi') {
+        inputSciChar(Math.PI.toFixed(6));
+        return;
+    }
+
+    if (func === 'e') {
+        inputSciChar(Math.E.toFixed(6));
+        return;
+    }
+
+    if (func === 'sqr') {
+        sciDisplay = `(${sciDisplay})^2`;
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'cube') {
+        sciDisplay = `(${sciDisplay})^3`;
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'pow') {
+        sciDisplay += '^';
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'sqrt') {
+        sciDisplay = `sqrt(${sciDisplay})`;
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'cbrt') {
+        sciDisplay = `cbrt(${sciDisplay})`;
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'recip') {
+        sciDisplay = `1/(${sciDisplay})`;
+        updateSciDisplay();
+        return;
+    }
+
+    if (func === 'fact') {
+        sciDisplay = `fact(${sciDisplay})`;
+        updateSciDisplay();
+        return;
+    }
+
+    sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay})`;
+
+    isSciResultShown = false;
+    updateSciDisplay();
+}
 
         function toggleSciSign() {
             if (sciDisplay.startsWith('-')) {
@@ -729,6 +805,9 @@
                 parsed = parsed.replace(/fact\(([^)]+)\)/g, (_, v) => factorial(parseInt(eval(v))));
 
                 const numResult = eval(parsed);
+                if (!isFinite(numResult)) {
+    throw new Error();
+}
                 const formattedResult = Number.isInteger(numResult) ? numResult.toString() : parseFloat(numResult.toFixed(8)).toString();
 
                 sciExpression = `${sciDisplay} =`;
@@ -939,7 +1018,9 @@
         }
 
         function navigateNextSlot() {
-            const keys = Object.keys(gdtInputsState);
+            const keys =
+[...document.querySelectorAll('.gdt-slot-box')]
+.map(el => el.id.replace('slot-box-',''));
             let idx = keys.indexOf(activeGdtSlotId);
             if (idx !== -1 && idx < keys.length - 1) {
                 const nextKey = keys[idx + 1];
@@ -1056,6 +1137,16 @@
             calculateUnitConversion();
         }
 
+function setActiveUnitSlot() {
+    const slot = document.getElementById('unit-input-slot');
+
+    document
+        .querySelectorAll('.active-slot-emerald')
+        .forEach(el => el.classList.remove('active-slot-emerald'));
+
+    slot.classList.add('active-slot-emerald');
+}
+        
         function pressUnitNumpad(btn) {
             let cur = unitInputValue;
 
@@ -1160,12 +1251,44 @@
         }
 
         function sendConvertedToSci() {
-            const val = document.getElementById('unit-output-val-text').innerText;
-            switchMode('sci');
-            sciDisplay = val;
-            isSciResultShown = false;
-            updateSciDisplay();
-        }
+    const val =
+        document.getElementById('unit-output-val-text').innerText;
+
+    switchMode('sci');
+
+    sciDisplay = val;
+    isSciResultShown = true;
+
+    updateSciDisplay();
+}
+
+window.addEventListener('load', () => {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
+
+document.addEventListener('click', (e) => {
+
+    const menu =
+        document.getElementById('mode-dropdown');
+
+    const toggleBtn =
+        document.getElementById('btn-mode-quick');
+
+    const historyBtn =
+        document.getElementById('btn-history-toggle');
+
+    if (
+        !menu.contains(e.target) &&
+        !toggleBtn.contains(e.target) &&
+        !historyBtn.contains(e.target)
+    ) {
+        menu.classList.add('hidden');
+    }
+
+});
+        
     </script>
 </body>
 </html>
