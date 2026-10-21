@@ -111,10 +111,21 @@ body{
 }
 
 .value{
-    font-size:42px;
+    font-size:clamp(20px,8vw,42px);
     color:#ffbf2f;
     text-align:right;
     font-weight:bold;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
+    width:100%;
+
+    scrollbar-width:none;
+}
+
+.value::-webkit-scrollbar{
+    display:none;
 }
 
 .stats{
@@ -157,6 +168,9 @@ body{
     font-size:18px;
     margin-top:4px;
     font-weight:bold;
+
+    word-break:break-all;
+    line-height:1.2;
 }
 
 .selected{
@@ -695,7 +709,9 @@ function press(key){
             vals[field]='';
         }
 
-        vals[field]+=key;
+        if(vals[field].length < 12){
+    vals[field] += key;
+}
     }
 
     document
