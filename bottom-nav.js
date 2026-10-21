@@ -15,9 +15,9 @@ document.write(`
         <span>Document</span>
     </button>
 
-    <button onclick="location.href='standard.html'">
-        📏
-        <span>STD</span>
+    <button onclick="location.href='calculator.html'">
+        🧮
+        <span>CALC</span>
     </button>
 
     <button onclick="location.href='settings.html'">
