@@ -1,1171 +1,839 @@
 <!DOCTYPE html>
-<html lang="th" class="dark">
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>เครื่องคิดเลขวิศวกรรมภาษาไทย GD&T & Converter</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Sarabun', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+<meta charset="utf-8">
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+minimum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
 
-        .font-mono-num {
-            font-family: 'JetBrains Mono', monospace;
-        }
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#04112d">
 
-        /* Custom Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.2);
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(148, 163, 184, 0.4);
-        }
+<title>GD&T Calculator</title>
 
-        /* Interactive Button Press Effect */
-        .btn-press {
-            transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-press:active {
-            transform: scale(0.93);
-            filter: brightness(1.25);
-        }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        /* Active Focus Highlight for Input Slots */
-        .active-slot {
-            border-color: #f59e0b !important;
-            background-color: rgba(245, 158, 11, 0.12) !important;
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3) !important;
-        }
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    touch-action:manipulation;
+    overscroll-behavior:none;
+}
 
-        .active-slot-emerald {
-            border-color: #10b981 !important;
-            background-color: rgba(16, 185, 129, 0.12) !important;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
-        }
+body{
+    background:#04112d;
+    color:#ffffff;
+    font-family:system-ui,sans-serif;
+    -webkit-text-size-adjust:100%;
+}
 
-        /* Modern Glass Effect */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            cyan: '#06b6d4',
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            rose: '#f43f5e',
-                            indigo: '#6366f1',
-                            dark: '#090d16'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+.wrap{
+    max-width:480px;
+    margin:auto;
+    padding:12px;
+}
+
+.card{
+    background:#081a40;
+    border-radius:24px;
+    padding:14px;
+    box-shadow:0 0 20px rgba(0,0,0,.4);
+}
+
+.top{
+    margin-bottom:12px;
+}
+
+.history-btn{
+    background:#ffaf1a;
+    color:#000;
+    border:none;
+    padding:10px 15px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.sel{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:14px;
+    background:#213150;
+    color:#4be0ff;
+    font-size:18px;
+}
+
+.symbols{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:8px;
+}
+
+.sym{
+    min-width:160px;
+    flex-shrink:0;
+}
+
+.sym{
+    padding:14px;
+    border-radius:18px;
+    background:#213150;
+    border:2px solid #344a72;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.sym.active{
+    border-color:#ffaf1a;
+    color:#ffaf1a;
+}
+
+.result{
+    background:#020c24;
+    border-radius:20px;
+    padding:14px;
+    margin-top:12px;
+}
+
+.result-title{
+    margin-bottom:8px;
+}
+
+.value{
+    font-size:42px;
+    color:#ffbf2f;
+    text-align:right;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:12px;
+}
+
+.stats div{
+    background:#132547;
+    padding:10px;
+    border-radius:12px;
+    text-align:center;
+    font-size:12px;
+}
+
+.inputs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+
+.inp{
+    background:#102043;
+    border:2px solid #29406b;
+    border-radius:16px;
+    padding:10px;
+    min-height:150px;
+    cursor:pointer;
+}
+
+.inp.active{
+    border-color:#ffaf1a;
+}
+
+.num{
+    color:#ffbf2f;
+    font-size:22px;
+    margin-top:6px;
+    font-weight:bold;
+}
+
+.selected{
+    margin-bottom:10px;
+    color:#ffbf2f;
+    font-weight:bold;
+}
+
+.pad{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.k{
+    background:#233452;
+    border:none;
+    color:#fff;
+    border-radius:16px;
+    min-height:90px;
+    font-size:24px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.red{
+    background:#641b36;
+    color:#ffb0bf;
+}
+
+.blue{
+    background:#005981;
+    color:#70dfff;
+}
+
+.yellow{
+    background:#ffb000;
+    color:#111;
+}
+
+.k:active{
+    transform:scale(.96);
+}
+
+.history-list{
+    display:none;
+    margin-top:12px;
+    background:#132547;
+    border-radius:12px;
+    padding:10px;
+    max-height:200px;
+    overflow:auto;
+}
+
+.history-item{
+    padding:8px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    font-size:13px;
+}
+
+.history-item:last-child{
+    border-bottom:none;
+}
+
+.pad{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:10px;
+}
+
+.result:last-child{
+    padding-bottom:20px;
+}
+
+*{
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+</style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-2 sm:p-4 selection:bg-cyan-500 selection:text-white">
 
-    <!-- MAIN APPLICATION CONTAINER -->
-    <div id="app" class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[96vh] max-h-[890px] relative">
-        
-        <!-- ================= 1. HEADER BAR ================= -->
-        <header class="flex items-center justify-between px-4 py-2.5 bg-slate-950/90 border-b border-slate-800/80 z-20 shrink-0">
-            <!-- ปุ่มมุมซ้ายบน 🕘 ไอคอนนาฬิกา: ประวัติการคำนวณ -->
-            <button id="btn-history-toggle" onclick="toggleHistoryDrawer()" class="p-2.5 rounded-2xl hover:bg-slate-800/80 text-amber-400 hover:text-amber-300 transition flex items-center justify-center relative btn-press" title="ประวัติการคำนวณ">
-                <i data-lucide="clock" class="w-5 h-5"></i>
-                <span id="history-indicator" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping"></span>
-            </button>
+<body>
 
-            <!-- ตัวบอกชื่อโหมดปัจจุบัน / ปุ่มเปลี่ยนโหมด -->
-            <div class="relative">
-                <button onclick="toggleModeDropdown()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-200 hover:border-cyan-500/50 transition btn-press">
-                    <span id="current-mode-label" class="text-cyan-400 font-bold">1. เครื่องคิดเลขวิทยาศาสตร์</span>
-                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
-                </button>
-            </div>
+<div class="wrap">
 
-            <!-- ปุ่มมุมขวาบน 🧮 ไอคอนเครื่องคิดเลข: สลับโหมด -->
-            <button id="btn-mode-quick" onclick="toggleModeDropdown()" class="p-2.5 rounded-2xl hover:bg-slate-800/80 text-cyan-400 hover:text-cyan-300 transition flex items-center justify-center btn-press" title="สลับโหมดการทำงาน">
-                <i data-lucide="calculator" class="w-5 h-5"></i>
-            </button>
-        </header>
+<div class="card">
 
-        <!-- DROPDOWN MODE SELECTOR -->
-        <div id="mode-dropdown" class="hidden absolute top-14 left-1/2 -translate-x-1/2 z-50 w-72 glass-card bg-slate-900/95 rounded-2xl shadow-2xl border border-slate-700/80 p-2 transition-all">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5">เลือกโหมดการคำนวณ</div>
-            
-            <button onclick="switchMode('sci')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-800/80 text-slate-200 transition">
-                <div class="p-2 bg-cyan-500/10 text-cyan-400 rounded-lg"><i data-lucide="binary" class="w-4 h-4"></i></div>
-                <div>
-                    <div class="text-sm font-semibold">1. เครื่องคิดเลขวิทยาศาสตร์</div>
-                    <div class="text-[10px] text-slate-400">sin, cos, tan, log, ln, %, ยกกำลัง, ราก</div>
-                </div>
-            </button>
-            
-            <button onclick="switchMode('gdt')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-800/80 text-slate-200 transition">
-                <div class="p-2 bg-amber-500/10 text-amber-400 rounded-lg"><i data-lucide="compass" class="w-4 h-4"></i></div>
-                <div>
-                    <div class="text-sm font-semibold">2. โหมดวิศวกรรม GD&T</div>
-                    <div class="text-[10px] text-slate-400">⌖ ตำแหน่ง, ○ ความกลม, ▱ ความแบน + Numpad</div>
-                </div>
-            </button>
-            
-            <button onclick="switchMode('unit')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-800/80 text-slate-200 transition">
-                <div class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg"><i data-lucide="arrow-right-left" class="w-4 h-4"></i></div>
-                <div>
-                    <div class="text-sm font-semibold">3. ตัวแปลงหน่วยทันที</div>
-                    <div class="text-[10px] text-slate-400">ความยาว, น้ำหนัก, อุณหภูมิ + Numpad</div>
-                </div>
-            </button>
-        </div>
+<div class="top">
 
-        <!-- ================= 2. CALCULATION HISTORY DRAWER ================= -->
-        <div id="history-drawer" class="absolute inset-x-0 top-14 bottom-0 bg-slate-950/95 backdrop-blur-md z-40 transform translate-y-full transition-transform duration-300 flex flex-col p-4">
-            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="history" class="w-5 h-5 text-amber-400"></i>
-                    <h3 class="font-bold text-slate-200 text-sm">ประวัติการคำนวณย้อนหลัง</h3>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button id="btn-edit-history" onclick="toggleEditHistoryMode()" class="text-xs text-amber-400 hover:text-amber-300 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition">
-                        แก้ไข
-                    </button>
-                    <button onclick="clearAllHistory()" class="text-xs text-rose-400 hover:text-rose-300 px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition">
-                        ลบทั้งหมด
-                    </button>
-                    <button onclick="toggleHistoryDrawer()" class="p-1 rounded-lg text-slate-400 hover:text-white">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
+<button
+class="history-btn"
+onclick="viewHistory()">
+🕘 ประวัติ
+</button>
 
-            <!-- List container -->
-            <div id="history-list" class="flex-1 overflow-y-auto my-3 space-y-2 pr-1">
-                <!-- History items appended dynamically -->
-            </div>
+<select id="mode" class="sel">
 
-            <div class="text-[11px] text-center text-slate-500 pt-2 border-t border-slate-800/80">
-                💡 แตะที่รายการเก่าเพื่อดึงสูตรหรือผลลัพธ์กลับมาใส่ในช่องป้อนค่า
-            </div>
-        </div>
+<option>Position</option>
+<option>Circularity</option>
+<option>Flatness</option>
+<option>Parallelism</option>
+<option>Perpendicularity</option>
+<option>Concentricity</option>
+<option>Circular Runout</option>
+<option>Total Runout</option>
 
-        <!-- ================= 3. MAIN DISPLAY VIEWS ================= -->
-        <main class="flex-1 flex flex-col overflow-hidden relative">
+</select>
 
-            <!-- MODE 1: SCIENTIFIC CALCULATOR -->
-            <div id="view-sci" class="flex-1 flex flex-col justify-between p-3">
-                <div class="bg-slate-950/90 rounded-2xl p-3.5 mb-2 border border-slate-800/90 flex flex-col justify-end min-h-[110px] shadow-inner">
-                    <div id="sci-expression" class="text-right text-slate-400 font-mono-num text-xs sm:text-sm min-h-[20px] overflow-x-auto whitespace-nowrap scrollbar-none"></div>
-                    <div id="sci-display" class="text-right text-white font-mono-num text-3xl sm:text-4xl font-bold overflow-x-auto whitespace-nowrap scrollbar-none tracking-tight">0</div>
-                </div>
+</div>
 
-                <div class="flex items-center justify-between px-1 mb-2 text-xs">
-                    <div class="flex gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                        <button id="btn-deg" onclick="setAngleUnit('DEG')" class="px-2.5 py-1 rounded-lg font-bold text-xs text-cyan-400 bg-slate-800">DEG</button>
-                        <button id="btn-rad" onclick="setAngleUnit('RAD')" class="px-2.5 py-1 rounded-lg font-bold text-xs text-slate-400 hover:text-white">RAD</button>
-                    </div>
-                    <div class="text-[10px] text-slate-400">ปุ่มคณิตศาสตร์ครบถ้วน</div>
-                </div>
+<div class="symbols" id="symbols">
+</div>
 
-                <!-- Sci Keypad Grid -->
-                <div class="grid grid-cols-5 gap-1.5 flex-1 text-xs font-semibold">
-                    <button onclick="inputSci('sin')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">sin</button>
-                    <button onclick="inputSci('cos')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">cos</button>
-                    <button onclick="inputSci('tan')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">tan</button>
-                    <button onclick="inputSci('log')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">log</button>
-                    <button onclick="inputSci('ln')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">ln</button>
+<div class="result">
 
-                    <button onclick="inputSci('asin')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">sin⁻¹</button>
-                    <button onclick="inputSci('acos')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">cos⁻¹</button>
-                    <button onclick="inputSci('atan')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">tan⁻¹</button>
-                    <button onclick="inputSci('pow')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">xʸ</button>
-                    <button onclick="inputSci('sqr')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">x²</button>
+<div class="result-title">
+ผลลัพธ์ GD&T
+</div>
 
-                    <button onclick="inputSci('sqrt')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">√x</button>
-                    <button onclick="inputSci('cbrt')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">∛x</button>
-                    <button onclick="inputSci('cube')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">x³</button>
-                    <button onclick="inputSci('recip')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">1/x</button>
-                    <button onclick="inputSci('fact')" class="bg-slate-800/60 hover:bg-slate-700/80 text-cyan-400 rounded-xl py-2 btn-press">n!</button>
+<div class="value" id="result">
+0.0000
+</div>
 
-                    <button onclick="inputSci('pi')" class="bg-slate-800/80 hover:bg-slate-700 text-amber-400 rounded-xl py-2.5 btn-press">π</button>
-                    <button onclick="inputSci('e')" class="bg-slate-800/80 hover:bg-slate-700 text-amber-400 rounded-xl py-2.5 btn-press">e</button>
-                    <button onclick="clearSci('all')" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500/30 border border-rose-500/30 rounded-xl py-2.5 font-bold btn-press">AC</button>
-                    <button onclick="clearSci('entry')" class="bg-slate-700/80 hover:bg-slate-600 text-slate-200 rounded-xl py-2.5 btn-press">CE</button>
-                    <button onclick="inputSciChar('/')" class="bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-xl py-2.5 text-base font-bold btn-press">÷</button>
+<div class="stats">
 
-                    <button onclick="inputSciChar('7')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">7</button>
-                    <button onclick="inputSciChar('8')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">8</button>
-                    <button onclick="inputSciChar('9')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">9</button>
-                    <button onclick="backspaceSci()" class="bg-slate-700/60 hover:bg-slate-600 text-slate-200 rounded-xl py-2.5 flex items-center justify-center btn-press">
-                        <i data-lucide="backspace" class="w-4 h-4"></i>
-                    </button>
-                    <button onclick="inputSciChar('*')" class="bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-xl py-2.5 text-base font-bold btn-press">×</button>
+<div>
+MAX<br>
+<span id="max">0</span>
+</div>
 
-                    <button onclick="inputSciChar('4')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">4</button>
-                    <button onclick="inputSciChar('5')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">5</button>
-                    <button onclick="inputSciChar('6')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">6</button>
-                    <button onclick="inputSciChar('(')" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">(</button>
-                    <button onclick="inputSciChar('-')" class="bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-xl py-2.5 text-base font-bold btn-press">-</button>
+<div>
+MIN<br>
+<span id="min">0</span>
+</div>
 
-                    <button onclick="inputSciChar('1')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">1</button>
-                    <button onclick="inputSciChar('2')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">2</button>
-                    <button onclick="inputSciChar('3')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">3</button>
-                    <button onclick="inputSciChar(')')" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">)</button>
-                    <button onclick="inputSciChar('+')" class="bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-xl py-2.5 text-base font-bold btn-press">+</button>
+<div>
+RANGE<br>
+<span id="range">0</span>
+</div>
 
-                    <button onclick="inputSciChar('0')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">0</button>
-                    <button onclick="inputSciChar('.')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 text-base font-bold btn-press">.</button>
-                    <button onclick="toggleSciSign()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">±</button>
-                    <button onclick="inputSciChar('%')" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">%</button>
-                    <button onclick="calculateSciResult()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-xl py-2.5 text-lg shadow-lg shadow-cyan-500/20 btn-press">=</button>
-                </div>
-            </div>
+<div>
+MEAN<br>
+<span id="mean">0</span>
+</div>
 
-            <!-- MODE 2: GD&T ENGINE WITH ON-SCREEN NUMPAD -->
-            <div id="view-gdt" class="hidden flex-1 flex flex-col justify-between p-2.5 overflow-hidden">
-                
-                <!-- TOP CONTAINER: TOOL SELECTOR + INPUT FIELDS + LIVE RESULTS -->
-                <div class="flex-1 overflow-y-auto space-y-2.5 pr-0.5 mb-2">
-                    <!-- 1. เลือกสัญลักษณ์ GD&T -->
-                    <div>
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">สัญลักษณ์ GD&T:</div>
-                        <div class="grid grid-cols-4 gap-1">
-                            <button onclick="selectGdtTool('position')" id="gdt-btn-position" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-amber-500/20 border-2 border-amber-500 rounded-xl text-amber-400 transition btn-press">
-                                <span class="text-base font-bold">⌖</span>
-                                <span class="text-[9px] font-semibold">ตำแหน่ง</span>
-                            </button>
-                            <button onclick="selectGdtTool('circularity')" id="gdt-btn-circularity" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">○</span>
-                                <span class="text-[9px] font-semibold">ความกลม</span>
-                            </button>
-                            <button onclick="selectGdtTool('flatness')" id="gdt-btn-flatness" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">▱</span>
-                                <span class="text-[9px] font-semibold">ความแบน</span>
-                            </button>
-                            <button onclick="selectGdtTool('parallelism')" id="gdt-btn-parallelism" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">//</span>
-                                <span class="text-[9px] font-semibold">ความขนาน</span>
-                            </button>
-                            <button onclick="selectGdtTool('perpendicularity')" id="gdt-btn-perpendicularity" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">⊥</span>
-                                <span class="text-[9px] font-semibold">ความตั้งฉาก</span>
-                            </button>
-                            <button onclick="selectGdtTool('concentricity')" id="gdt-btn-concentricity" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">◎</span>
-                                <span class="text-[9px] font-semibold">ความร่วมศูนย์</span>
-                            </button>
-                            <button onclick="selectGdtTool('runout')" id="gdt-btn-runout" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">↗</span>
-                                <span class="text-[9px] font-semibold">ส่ายวงกลม</span>
-                            </button>
-                            <button onclick="selectGdtTool('total_runout')" id="gdt-btn-total_runout" class="gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press">
-                                <span class="text-base font-bold">↗↗</span>
-                                <span class="text-[9px] font-semibold">ส่ายรวม</span>
-                            </button>
-                        </div>
-                    </div>
+</div>
 
-                    <!-- 2. กล่องแสดงผลลัพธ์คำนวณสดทันที -->
-                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 space-y-2 shadow-md">
-                        <div class="flex justify-between items-baseline px-1">
-                            <span id="gdt-result-title" class="text-xs text-slate-400 font-semibold">ผลลัพธ์ค่า GD&T:</span>
-                            <span id="gdt-main-result" class="text-2xl font-bold font-mono-num text-amber-400">0.0000 <span class="text-xs font-normal text-slate-500">มม.</span></span>
-                        </div>
+</div>
 
-                        <!-- ตัวเลข Max, Min, Range, Mean -->
-                        <div class="grid grid-cols-4 gap-1 pt-1.5 border-t border-slate-800/80 text-center font-mono-num">
-                            <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-                                <div class="text-[8px] text-slate-400 font-sans font-bold">แม็ก (MAX)</div>
-                                <div id="gdt-stat-max" class="text-xs font-semibold text-slate-200 mt-0.5">0.000</div>
-                            </div>
-                            <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-                                <div class="text-[8px] text-slate-400 font-sans font-bold">มิน (MIN)</div>
-                                <div id="gdt-stat-min" class="text-xs font-semibold text-slate-200 mt-0.5">0.000</div>
-                            </div>
-                            <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-                                <div class="text-[8px] text-slate-400 font-sans font-bold">พิสัย (RANGE)</div>
-                                <div id="gdt-stat-range" class="text-xs font-semibold text-slate-200 mt-0.5">0.000</div>
-                            </div>
-                            <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-                                <div class="text-[8px] text-slate-400 font-sans font-bold">เฉลี่ย (MEAN)</div>
-                                <div id="gdt-stat-mean" class="text-xs font-semibold text-slate-200 mt-0.5">0.000</div>
-                            </div>
-                        </div>
-                    </div>
+<div class="inputs">
 
-                    <!-- 3. ช่องกรอกข้อมูล (DYNAMIC INPUT SLOTS) -->
-                    <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800 space-y-2">
-                        <div id="gdt-form-header" class="text-xs font-semibold text-amber-400 border-b border-slate-800/80 pb-1.5 flex justify-between items-center">
-                            <span>คำนวณค่าเบี่ยงเบนตำแหน่ง (Position)</span>
-                            <span id="gdt-formula-badge" class="text-[10px] text-cyan-400 font-mono">2 × √(ΔX² + ΔY²)</span>
-                        </div>
+<div
+class="inp active"
+data-f="xn">
+X Nominal
+<div class="num" id="xn">0</div>
+</div>
 
-                        <div id="gdt-slots-container" class="space-y-1.5">
-                            <!-- Dynamic Slots with focus state -->
-                        </div>
-                    </div>
-                </div>
+<div
+class="inp"
+data-f="xa">
+X Actual
+<div class="num" id="xa">0</div>
+</div>
 
-                <!-- BOTTOM FIXED: ON-SCREEN KEYPAD FOR GD&T -->
-                <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-2 shrink-0 shadow-2xl">
-                    <div class="flex justify-between items-center text-[10px] font-semibold text-slate-400 mb-1.5 px-1">
-                        <span class="flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                            ช่องที่เลือก: <strong id="active-slot-label" class="text-amber-400">X เป้าหมาย</strong>
-                        </span>
-                        <span>แตะปุ่มเพื่อพิมพ์ตัวเลข</span>
-                    </div>
+<div
+class="inp"
+data-f="yn">
+Y Nominal
+<div class="num" id="yn">0</div>
+</div>
 
-                    <div class="grid grid-cols-4 gap-1.5 font-mono-num font-bold text-sm">
-                        <button onclick="pressNumpad('7')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">7</button>
-                        <button onclick="pressNumpad('8')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">8</button>
-                        <button onclick="pressNumpad('9')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">9</button>
-                        <button onclick="pressNumpad('DEL')" class="bg-slate-700/80 hover:bg-slate-600 text-slate-200 rounded-xl py-2.5 flex items-center justify-center btn-press">
-                            <i data-lucide="backspace" class="w-4 h-4"></i>
-                        </button>
+<div
+class="inp"
+data-f="ya">
+Y Actual
+<div class="num" id="ya">0</div>
+</div>
 
-                        <button onclick="pressNumpad('4')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">4</button>
-                        <button onclick="pressNumpad('5')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">5</button>
-                        <button onclick="pressNumpad('6')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">6</button>
-                        <button onclick="pressNumpad('CLR')" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 rounded-xl py-2.5 text-xs btn-press">ล้าง (C)</button>
+</div>
 
-                        <button onclick="pressNumpad('1')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">1</button>
-                        <button onclick="pressNumpad('2')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">2</button>
-                        <button onclick="pressNumpad('3')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">3</button>
-                        <button onclick="pressNumpad('NEXT')" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 rounded-xl py-2.5 text-xs font-sans btn-press">ถัดไป ➔</button>
+<div class="result">
 
-                        <button onclick="pressNumpad('-')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">-</button>
-                        <button onclick="pressNumpad('0')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">0</button>
-                        <button onclick="pressNumpad('.')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">.</button>
-                        <button onclick="saveGdtToHistory()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl py-2.5 text-xs font-sans shadow-lg shadow-amber-500/20 btn-press">บันทึก</button>
-                    </div>
-                </div>
+<div
+id="selected"
+class="selected">
+ช่องที่เลือก : X Nominal
+</div>
 
-            </div>
+<div
+class="pad"
+id="pad">
+</div>
 
-            <!-- MODE 3: REAL-TIME UNIT CONVERTER -->
-            <div id="view-unit" class="hidden flex-1 flex flex-col justify-between p-2.5 overflow-hidden">
-                <div class="flex-1 overflow-y-auto space-y-2.5 pr-0.5 mb-2">
-                    <!-- แถบเลือกประเภทหน่วย -->
-                    <div class="flex rounded-xl bg-slate-950 p-1 border border-slate-800 text-xs font-semibold">
-                        <button onclick="setUnitCategory('length')" id="unit-tab-length" class="flex-1 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold transition">ความยาว</button>
-                        <button onclick="setUnitCategory('weight')" id="unit-tab-weight" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition">น้ำหนัก</button>
-                        <button onclick="setUnitCategory('temp')" id="unit-tab-temp" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition">อุณหภูมิ</button>
-                    </div>
+<div
+id="historyList"
+class="history-list">
+</div>
 
-                    <!-- ช่องแปลงหน่วย -->
-                    <div class="bg-slate-950 rounded-2xl border border-slate-800 p-3 space-y-2 shadow-xl">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-semibold text-slate-400 flex justify-between">
-                                <span>ค่าต้นทาง:</span>
-                                <span id="unit-from-label" class="text-emerald-400 font-mono">mm</span>
-                            </label>
-                            <div class="flex gap-2">
-                                <div id="unit-input-slot" onclick="setActiveUnitSlot()" class="flex-1 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 font-mono-num text-xl text-white cursor-pointer active-slot-emerald flex items-center min-h-[42px]">
-                                    <span id="unit-input-val-text">100</span>
-                                </div>
-                                <select id="unit-from-select" onchange="calculateUnitConversion()" class="bg-slate-800 border border-slate-700 rounded-xl px-2 text-xs font-medium text-slate-200 focus:outline-none">
-                                </select>
-                            </div>
-                        </div>
+</div>
 
-                        <!-- Swap button -->
-                        <div class="flex justify-center -my-1">
-                            <button onclick="swapUnits()" class="p-1.5 rounded-full bg-slate-800 border border-slate-700 text-emerald-400 hover:bg-slate-700 transition btn-press">
-                                <i data-lucide="arrow-down-up" class="w-3.5 h-3.5"></i>
-                            </button>
-                        </div>
+</div>
 
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-semibold text-slate-400 flex justify-between">
-                                <span>ผลลัพธ์ที่ได้:</span>
-                                <span id="unit-to-label" class="text-cyan-400 font-mono">inch</span>
-                            </label>
-                            <div class="flex gap-2">
-                                <div id="unit-output-val-text" class="flex-1 bg-slate-900/60 border border-slate-800 rounded-xl px-3 py-2 font-mono-num text-xl font-bold text-emerald-400 flex items-center min-h-[42px] overflow-x-auto">
-                                    3.937008
-                                </div>
-                                <select id="unit-to-select" onchange="calculateUnitConversion()" class="bg-slate-800 border border-slate-700 rounded-xl px-2 text-xs font-medium text-slate-200 focus:outline-none">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+</div>
 
-                    <!-- ตารางเปรียบเทียบทุกหน่วย -->
-                    <div class="space-y-1">
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">เปรียบเทียบทุกหน่วยทันที:</div>
-                        <div id="unit-matrix" class="grid grid-cols-2 gap-1.5">
-                            <!-- Matrix items -->
-                        </div>
-                    </div>
-                </div>
+<script>
 
-                <!-- FIXED NUMPAD FOR UNIT CONVERTER -->
-                <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-2 shrink-0 shadow-2xl">
-                    <div class="grid grid-cols-4 gap-1.5 font-mono-num font-bold text-sm">
-                        <button onclick="pressUnitNumpad('7')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">7</button>
-                        <button onclick="pressUnitNumpad('8')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">8</button>
-                        <button onclick="pressUnitNumpad('9')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">9</button>
-                        <button onclick="pressUnitNumpad('DEL')" class="bg-slate-700/80 hover:bg-slate-600 text-slate-200 rounded-xl py-2.5 flex items-center justify-center btn-press">
-                            <i data-lucide="backspace" class="w-4 h-4"></i>
-                        </button>
+const syms = [
+'⌖',
+'○',
+'▱',
+'∥',
+'⊥',
+'◎',
+'↗',
+'⇉'
+];
 
-                        <button onclick="pressUnitNumpad('4')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">4</button>
-                        <button onclick="pressUnitNumpad('5')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">5</button>
-                        <button onclick="pressUnitNumpad('6')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">6</button>
-                        <button onclick="pressUnitNumpad('CLR')" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 rounded-xl py-2.5 text-xs btn-press">ล้าง (C)</button>
+const names = [
+'Position',
+'Circularity',
+'Flatness',
+'Parallelism',
+'Perpendicularity',
+'Concentricity',
+'Circular Runout',
+'Total Runout'
+];
 
-                        <button onclick="pressUnitNumpad('1')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">1</button>
-                        <button onclick="pressUnitNumpad('2')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">2</button>
-                        <button onclick="pressUnitNumpad('3')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">3</button>
-                        <button onclick="sendConvertedToSci()" class="row-span-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl py-2 text-xs font-sans flex flex-col items-center justify-center gap-1 btn-press">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            ส่งไปจอ
-                        </button>
+const symbolArea =
+document.getElementById('symbols');
 
-                        <button onclick="pressUnitNumpad('-')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl py-2.5 btn-press">-</button>
-                        <button onclick="pressUnitNumpad('0')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">0</button>
-                        <button onclick="pressUnitNumpad('.')" class="bg-slate-800 hover:bg-slate-700 text-white rounded-xl py-2.5 btn-press">.</button>
-                    </div>
-                </div>
-            </div>
+names.forEach((name,index)=>{
 
-        </main>
-    </div>
+    const div =
+    document.createElement('div');
 
-    <!-- ================= 4. JAVASCRIPT APP LOGIC ================= -->
-    <script>
-        // Global App State
-        let currentMode = 'sci'; 
-        let historyList = [];
-        let isEditHistoryMode = false;
+    div.className =
+    'sym' +
+    (index===0 ? ' active' : '');
 
-        // Scientific Calculator State
-        let sciExpression = '';
-        let sciDisplay = '0';
-        let isSciResultShown = false;
-        let angleUnit = 'DEG';
+    div.innerHTML =
+    syms[index] +
+    '<br>' +
+    name;
 
-        // GD&T Calculator State
-        let activeGdtTool = 'position';
-        let activeGdtSlotId = '';
-        let gdtInputsState = {};
-        let gdtPointCount = 5;
+    div.onclick = ()=>{
 
-        // Unit Converter State
-        let activeUnitCat = 'length';
-        let unitInputValue = '100';
+        document
+        .querySelectorAll('.sym')
+        .forEach(x=>
+            x.classList.remove('active')
+        );
 
-        const unitDefinitions = {
-            length: {
-                units: [
-                    { id: 'mm', label: 'มิลลิเมตร (mm)', factor: 0.001 },
-                    { id: 'cm', label: 'เซนติเมตร (cm)', factor: 0.01 },
-                    { id: 'm', label: 'เมตร (m)', factor: 1 },
-                    { id: 'km', label: 'กิโลเมตร (km)', factor: 1000 },
-                    { id: 'inch', label: 'นิ้ว (in)', factor: 0.0254 },
-                    { id: 'ft', label: 'ฟุต (ft)', factor: 0.3048 },
-                    { id: 'yd', label: 'หลา (yd)', factor: 0.9144 }
-                ]
-            },
-            weight: {
-                units: [
-                    { id: 'g', label: 'กรัม (g)', factor: 0.001 },
-                    { id: 'kg', label: 'กิโลกรัม (kg)', factor: 1 },
-                    { id: 'ton', label: 'ตัน (ton)', factor: 1000 },
-                    { id: 'oz', label: 'ออนซ์ (oz)', factor: 0.028349523125 },
-                    { id: 'lb', label: 'ปอนด์ (lb)', factor: 0.45359237 }
-                ]
-            },
-            temp: {
-                units: [
-                    { id: 'C', label: 'องศาเซลเซียส (°C)' },
-                    { id: 'F', label: 'องศาฟาเรนไฮต์ (°F)' },
-                    { id: 'K', label: 'เคลวิน (K)' }
-                ]
-            }
-        };
+        div.classList.add('active');
 
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initGdtDefaults();
-            renderGdtForm();
-            initUnitConverterUI();
-            updateSciDisplay();
+        mode.value = name;
+
+        calc();
+    };
+
+    symbolArea.appendChild(div);
+});
+
+let vals = {
+xn:'0',
+xa:'0',
+yn:'0',
+ya:'0'
+};
+
+let field = 'xn';
+
+let hist =
+JSON.parse(
+localStorage.getItem('gdtHistory')
+|| '[]'
+);
+
+document
+.querySelectorAll('.inp')
+.forEach(el=>{
+
+    el.onclick = ()=>{
+
+        document
+        .querySelectorAll('.inp')
+        .forEach(x=>
+            x.classList.remove('active')
+        );
+
+        el.classList.add('active');
+
+        field = el.dataset.f;
+
+        document
+        .getElementById('selected')
+        .innerText =
+        'ช่องที่เลือก : ' +
+        field.toUpperCase();
+    };
+
+});
+
+const keypad = [
+'7','8','9','⌫',
+'4','5','6','C',
+'1','2','3','Next',
+'-','0','.','Save'
+];
+
+keypad.forEach(key=>{
+
+    const btn =
+    document.createElement('button');
+
+    btn.className = 'k';
+
+    if(key==='C'){
+        btn.classList.add('red');
+    }
+
+    if(key==='Next'){
+        btn.classList.add('blue');
+    }
+
+    if(key==='Save'){
+        btn.classList.add('yellow');
+    }
+
+    btn.textContent = key;
+
+    btn.onclick = ()=>press(key);
+
+    document
+    .getElementById('pad')
+    .appendChild(btn);
+
+});
+
+function press(key){
+
+    if(key==='C'){
+
+        vals[field]='0';
+
+    }
+
+    else if(key==='⌫'){
+
+        vals[field]=
+        vals[field].slice(0,-1)
+        || '0';
+
+    }
+
+    else if(key==='Next'){
+
+        const arr=[
+            'xn',
+            'xa',
+            'yn',
+            'ya'
+        ];
+
+        field =
+        arr[
+            (arr.indexOf(field)+1)
+            %
+            arr.length
+        ];
+
+        document
+        .querySelector(
+            `[data-f="${field}"]`
+        )
+        .click();
+
+        return;
+    }
+
+    else if(key==='Save'){
+
+        hist.push({
+
+            mode:mode.value,
+
+            xn:vals.xn,
+            xa:vals.xa,
+            yn:vals.yn,
+            ya:vals.ya,
+
+            result:
+            document.getElementById('result')
+            .innerText,
+
+            time:
+            new Date()
+            .toLocaleString(
+                'th-TH'
+            )
+
         });
 
-        // Mode Switching
-        function toggleModeDropdown() {
-            document.getElementById('mode-dropdown').classList.toggle('hidden');
+        localStorage.setItem(
+            'gdtHistory',
+            JSON.stringify(hist)
+        );
+
+        alert('บันทึกแล้ว');
+
+        return;
+    }
+
+    else{
+
+        if(
+            key==='.'
+            &&
+            vals[field].includes('.')
+        ){
+            return;
         }
 
-        function switchMode(mode) {
-            currentMode = mode;
-            document.getElementById('mode-dropdown').classList.add('hidden');
-
-            document.getElementById('view-sci').classList.add('hidden');
-            document.getElementById('view-gdt').classList.add('hidden');
-            document.getElementById('view-unit').classList.add('hidden');
-
-            const label = document.getElementById('current-mode-label');
-
-            if (mode === 'sci') {
-                document.getElementById('view-sci').classList.remove('hidden');
-                label.innerText = '1. เครื่องคิดเลขวิทยาศาสตร์';
-            } else if (mode === 'gdt') {
-                document.getElementById('view-gdt').classList.remove('hidden');
-                label.innerText = '2. โหมดวิศวกรรม GD&T';
-                calculateGdtLive();
-            } else if (mode === 'unit') {
-                document.getElementById('view-unit').classList.remove('hidden');
-                label.innerText = '3. ตัวแปลงหน่วยทันที';
-                calculateUnitConversion();
-            }
+        if(
+            vals[field]==='0'
+            &&
+            key!=='.'
+        ){
+            vals[field]='';
         }
 
-        // Calculation History Functions
-        function toggleHistoryDrawer() {
-            document.getElementById('history-drawer').classList.toggle('translate-y-full');
-        }
-
-        function addHistoryRecord(expr, result) {
-            historyList.unshift({ id: Date.now(), expr, result });
-            if (historyList.length > 50) historyList.pop();
-            renderHistoryList();
-        }
-
-        function toggleEditHistoryMode() {
-            isEditHistoryMode = !isEditHistoryMode;
-            const btn = document.getElementById('btn-edit-history');
-            btn.innerText = isEditHistoryMode ? 'เสร็จสิ้น' : 'แก้ไข';
-            btn.className = isEditHistoryMode 
-                ? 'text-xs text-slate-900 bg-amber-400 hover:bg-amber-300 font-bold px-2.5 py-1 rounded-lg transition'
-                : 'text-xs text-amber-400 hover:text-amber-300 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition';
-            renderHistoryList();
-        }
-
-        function renderHistoryList() {
-            const container = document.getElementById('history-list');
-            const indicator = document.getElementById('history-indicator');
-
-            if (historyList.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-500 py-12 text-xs">ไม่มีประวัติการคำนวณ</div>`;
-                indicator.classList.add('hidden');
-                return;
-            }
-
-            indicator.classList.remove('hidden');
-            container.innerHTML = historyList.map(item => `
-                <div class="bg-slate-900/90 border border-slate-800/80 p-2.5 rounded-xl flex justify-between items-center hover:border-amber-500/40 transition cursor-pointer group"
-                     onclick="useHistoryItem('${item.result}')">
-                    <div class="overflow-hidden pr-2">
-                        <div class="text-[11px] text-slate-400 font-mono-num truncate">${item.expr} =</div>
-                        <div class="text-sm font-bold font-mono-num text-amber-400">${item.result}</div>
-                    </div>
-                    ${isEditHistoryMode ? `
-                        <button onclick="event.stopPropagation(); deleteHistoryItem(${item.id})" class="p-1.5 text-rose-400 hover:text-rose-300 bg-rose-500/20 rounded-lg">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    ` : `
-                        <i data-lucide="corner-down-left" class="w-4 h-4 text-slate-600 group-hover:text-amber-400 transition"></i>
-                    `}
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function useHistoryItem(val) {
-            if (isEditHistoryMode) return;
-            
-            if (currentMode === 'sci') {
-                sciDisplay = val;
-                isSciResultShown = false;
-                updateSciDisplay();
-            } else if (currentMode === 'gdt' && activeGdtSlotId) {
-                gdtInputsState[activeGdtSlotId] = val;
-                const slotText = document.getElementById(`slot-val-${activeGdtSlotId}`);
-                if (slotText) slotText.innerText = val;
-                calculateGdtLive();
-            } else if (currentMode === 'unit') {
-                unitInputValue = val;
-                document.getElementById('unit-input-val-text').innerText = val;
-                calculateUnitConversion();
-            }
-
-            toggleHistoryDrawer();
-        }
-
-        function deleteHistoryItem(id) {
-            historyList = historyList.filter(item => item.id !== id);
-            renderHistoryList();
-        }
-
-        function clearAllHistory() {
-            historyList = [];
-            renderHistoryList();
-        }
-
-        // Scientific Calculator Engine
-        function setAngleUnit(unit) {
-            angleUnit = unit;
-            document.getElementById('btn-deg').className = unit === 'DEG' 
-                ? 'px-2.5 py-1 rounded-lg font-bold text-xs text-cyan-400 bg-slate-800' 
-                : 'px-2.5 py-1 rounded-lg font-bold text-xs text-slate-400 hover:text-white';
-            document.getElementById('btn-rad').className = unit === 'RAD' 
-                ? 'px-2.5 py-1 rounded-lg font-bold text-xs text-cyan-400 bg-slate-800' 
-                : 'px-2.5 py-1 rounded-lg font-bold text-xs text-slate-400 hover:text-white';
-        }
-
-        function updateSciDisplay() {
-            document.getElementById('sci-display').innerText = sciDisplay;
-            document.getElementById('sci-expression').innerText = sciExpression;
-        }
-
-        function inputSciChar(char) {
-            if (isSciResultShown && !['+', '-', '*', '/', '%'].includes(char)) {
-                sciDisplay = '0';
-                isSciResultShown = false;
-            } else {
-                isSciResultShown = false;
-            }
-
-            if (sciDisplay === '0' && char !== '.') {
-                sciDisplay = char;
-            } else {
-                sciDisplay += char;
-            }
-            updateSciDisplay();
-        }
-
-        function inputSci(func) {
-            if (func === 'pi') { inputSciChar(Math.PI.toFixed(6)); return; }
-            if (func === 'e') { inputSciChar(Math.E.toFixed(6)); return; }
-            if (func === 'sqr') { sciDisplay = `(${sciDisplay})^2`; updateSciDisplay(); return; }
-            if (func === 'cube') { sciDisplay = `(${sciDisplay})^3`; updateSciDisplay(); return; }
-            if (func === 'pow') { sciDisplay += '^'; updateSciDisplay(); return; }
-            if (func === 'recip') { sciDisplay = `1/(${sciDisplay})`; updateSciDisplay(); return; }
-            if (func === 'fact') { sciDisplay = `fact(${sciDisplay})`; updateSciDisplay(); return; }
-
-            sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay}`;
-            isSciResultShown = false;
-            updateSciDisplay();
-        }
-
-        function toggleSciSign() {
-            if (sciDisplay.startsWith('-')) {
-                sciDisplay = sciDisplay.slice(1);
-            } else if (sciDisplay !== '0') {
-                sciDisplay = '-' + sciDisplay;
-            }
-            updateSciDisplay();
-        }
-
-        function backspaceSci() {
-            if (sciDisplay.length > 1) {
-                sciDisplay = sciDisplay.slice(0, -1);
-            } else {
-                sciDisplay = '0';
-            }
-            updateSciDisplay();
-        }
-
-        function clearSci(type) {
-            sciDisplay = '0';
-            if (type === 'all') sciExpression = '';
-            updateSciDisplay();
-        }
-
-        function factorial(n) {
-            if (n < 0) return NaN;
-            if (n === 0 || n === 1) return 1;
-            let res = 1;
-            for (let i = 2; i <= n; i++) res *= i;
-            return res;
-        }
-
-        function calculateSciResult() {
-            try {
-                let parsed = sciDisplay.replace(/×/g, '*').replace(/÷/g, '/').replace(/\^/g, '**');
-
-                const toRad = deg => (deg * Math.PI) / 180;
-                const toDeg = rad => (rad * 180) / Math.PI;
-
-                parsed = parsed.replace(/sin\(([^)]+)\)/g, (_, v) => Math.sin(angleUnit === 'DEG' ? toRad(eval(v)) : eval(v)));
-                parsed = parsed.replace(/cos\(([^)]+)\)/g, (_, v) => Math.cos(angleUnit === 'DEG' ? toRad(eval(v)) : eval(v)));
-                parsed = parsed.replace(/tan\(([^)]+)\)/g, (_, v) => Math.tan(angleUnit === 'DEG' ? toRad(eval(v)) : eval(v)));
-                
-                parsed = parsed.replace(/asin\(([^)]+)\)/g, (_, v) => angleUnit === 'DEG' ? toDeg(Math.asin(eval(v))) : Math.asin(eval(v)));
-                parsed = parsed.replace(/acos\(([^)]+)\)/g, (_, v) => angleUnit === 'DEG' ? toDeg(Math.acos(eval(v))) : Math.acos(eval(v)));
-                parsed = parsed.replace(/atan\(([^)]+)\)/g, (_, v) => angleUnit === 'DEG' ? toDeg(Math.atan(eval(v))) : Math.atan(eval(v)));
-
-                parsed = parsed.replace(/sqrt\(([^)]+)\)/g, "Math.sqrt($1)");
-                parsed = parsed.replace(/cbrt\(([^)]+)\)/g, "Math.cbrt($1)");
-                parsed = parsed.replace(/ln\(([^)]+)\)/g, "Math.log($1)");
-                parsed = parsed.replace(/log\(([^)]+)\)/g, "Math.log10($1)");
-                parsed = parsed.replace(/fact\(([^)]+)\)/g, (_, v) => factorial(parseInt(eval(v))));
-
-                const numResult = eval(parsed);
-                const formattedResult = Number.isInteger(numResult) ? numResult.toString() : parseFloat(numResult.toFixed(8)).toString();
-
-                sciExpression = `${sciDisplay} =`;
-                addHistoryRecord(sciDisplay, formattedResult);
-                sciDisplay = formattedResult;
-                isSciResultShown = true;
-                updateSciDisplay();
-
-            } catch (err) {
-                sciDisplay = 'ข้อผิดพลาด';
-                updateSciDisplay();
-                setTimeout(() => { sciDisplay = '0'; updateSciDisplay(); }, 1200);
-            }
-        }
-
-        // GD&T Engine & On-screen Numpad System
-        function initGdtDefaults() {
-            gdtInputsState = {
-                'p-xnom': '10.000',
-                'p-xact': '10.035',
-                'p-ynom': '25.000',
-                'p-yact': '25.025',
-                'c-x1': '0.000',
-                'c-y1': '0.000',
-                'c-x2': '0.012',
-                'c-y2': '-0.015',
-                'pt-1': '12.002',
-                'pt-2': '12.015',
-                'pt-3': '11.995',
-                'pt-4': '12.008',
-                'pt-5': '12.010'
-            };
-        }
-
-        function selectGdtTool(tool) {
-            activeGdtTool = tool;
-            document.querySelectorAll('.gdt-tool-btn').forEach(b => {
-                b.className = 'gdt-tool-btn flex flex-col items-center p-1.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 hover:border-amber-500/50 transition btn-press';
-            });
-
-            const activeBtn = document.getElementById(`gdt-btn-${tool}`);
-            if (activeBtn) {
-                activeBtn.className = 'gdt-tool-btn flex flex-col items-center p-1.5 bg-amber-500/20 border-2 border-amber-500 rounded-xl text-amber-400 transition btn-press';
-            }
-
-            renderGdtForm();
-        }
-
-        function setActiveSlot(slotId, labelName) {
-            activeGdtSlotId = slotId;
-            document.querySelectorAll('.gdt-slot-box').forEach(el => el.classList.remove('active-slot'));
-
-            const targetBox = document.getElementById(`slot-box-${slotId}`);
-            if (targetBox) {
-                targetBox.classList.add('active-slot');
-            }
-
-            document.getElementById('active-slot-label').innerText = labelName;
-        }
-
-        function renderGdtForm() {
-            const container = document.getElementById('gdt-slots-container');
-            const header = document.getElementById('gdt-form-header');
-            const formulaBadge = document.getElementById('gdt-formula-badge');
-
-            let html = '';
-
-            if (activeGdtTool === 'position') {
-                header.innerHTML = `<span>⌖ ค่าเบี่ยงเบนตำแหน่ง (Position)</span>`;
-                formulaBadge.innerText = `2 × √(ΔX² + ΔY²)`;
-                
-                html = `
-                    <div class="grid grid-cols-2 gap-2">
-                        <div id="slot-box-p-xnom" onclick="setActiveSlot('p-xnom', 'X เป้าหมาย')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">X เป้าหมาย (Nominal)</span>
-                            <span id="slot-val-p-xnom" class="font-mono-num text-sm text-white font-bold">${gdtInputsState['p-xnom'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-p-xact" onclick="setActiveSlot('p-xact', 'X วัดจริง')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">X วัดจริง (Actual)</span>
-                            <span id="slot-val-p-xact" class="font-mono-num text-sm text-amber-400 font-bold">${gdtInputsState['p-xact'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-p-ynom" onclick="setActiveSlot('p-ynom', 'Y เป้าหมาย')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">Y เป้าหมาย (Nominal)</span>
-                            <span id="slot-val-p-ynom" class="font-mono-num text-sm text-white font-bold">${gdtInputsState['p-ynom'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-p-yact" onclick="setActiveSlot('p-yact', 'Y วัดจริง')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">Y วัดจริง (Actual)</span>
-                            <span id="slot-val-p-yact" class="font-mono-num text-sm text-amber-400 font-bold">${gdtInputsState['p-yact'] || '0'}</span>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML = html;
-                setActiveSlot('p-xact', 'X วัดจริง');
-
-            } else if (activeGdtTool === 'concentricity') {
-                header.innerHTML = `<span>◎ ค่าความร่วมศูนย์ (Concentricity)</span>`;
-                formulaBadge.innerText = `2 × √((X1-X2)² + (Y1-Y2)²)`;
-                
-                html = `
-                    <div class="grid grid-cols-2 gap-2">
-                        <div id="slot-box-c-x1" onclick="setActiveSlot('c-x1', 'Datum X1')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">ศูนย์กลาง Datum X1</span>
-                            <span id="slot-val-c-x1" class="font-mono-num text-sm text-white font-bold">${gdtInputsState['c-x1'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-c-y1" onclick="setActiveSlot('c-y1', 'Datum Y1')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">ศูนย์กลาง Datum Y1</span>
-                            <span id="slot-val-c-y1" class="font-mono-num text-sm text-white font-bold">${gdtInputsState['c-y1'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-c-x2" onclick="setActiveSlot('c-x2', 'ชิ้นงาน X2')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">ศูนย์กลางชิ้นงาน X2</span>
-                            <span id="slot-val-c-x2" class="font-mono-num text-sm text-amber-400 font-bold">${gdtInputsState['c-x2'] || '0'}</span>
-                        </div>
-                        <div id="slot-box-c-y2" onclick="setActiveSlot('c-y2', 'ชิ้นงาน Y2')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">ศูนย์กลางชิ้นงาน Y2</span>
-                            <span id="slot-val-c-y2" class="font-mono-num text-sm text-amber-400 font-bold">${gdtInputsState['c-y2'] || '0'}</span>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML = html;
-                setActiveSlot('c-x2', 'ชิ้นงาน X2');
-
-            } else {
-                const names = {
-                    circularity: '○ ค่าความกลม (Circularity)',
-                    flatness: '▱ ค่าความแบน (Flatness)',
-                    parallelism: '// ค่าความขนาน (Parallelism)',
-                    perpendicularity: '⊥ ค่าความตั้งฉาก (Perpendicularity)',
-                    runout: '↗ ค่าส่ายวงกลม (Circular Runout)',
-                    total_runout: '↗↗ ค่าส่ายรวม (Total Runout)'
-                };
-                header.innerHTML = `<span>${names[activeGdtTool]}</span>`;
-                formulaBadge.innerText = `Max - Min (ผลต่างจุดวัด)`;
-
-                let pointsHtml = '';
-                for (let i = 1; i <= gdtPointCount; i++) {
-                    const key = `pt-${i}`;
-                    if (!gdtInputsState[key]) gdtInputsState[key] = '0.000';
-                    pointsHtml += `
-                        <div id="slot-box-${key}" onclick="setActiveSlot('${key}', 'จุดวัดที่ ${i}')" class="gdt-slot-box bg-slate-900 border border-slate-800 rounded-xl p-2 cursor-pointer transition">
-                            <span class="text-[9px] text-slate-400 block font-semibold">จุดที่ ${i}</span>
-                            <span id="slot-val-${key}" class="font-mono-num text-xs text-amber-400 font-bold truncate block">${gdtInputsState[key]}</span>
-                        </div>
-                    `;
-                }
-
-                html = `
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-[10px] text-slate-400">แตะช่องจุดวัดเพื่อใส่ค่าด้วย Numpad:</span>
-                        <div class="flex gap-1">
-                            <button onclick="addPointSlot()" class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-lg text-[10px] font-bold hover:bg-amber-500/30 transition">+ เพิ่มจุดวัด</button>
-                            <button onclick="removePointSlot()" class="px-2 py-0.5 bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-[10px] font-bold hover:bg-rose-500/30 transition">- ลดจุดวัด</button>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 max-h-[130px] overflow-y-auto pr-0.5">
-                        ${pointsHtml}
-                    </div>
-                `;
-                container.innerHTML = html;
-                setActiveSlot('pt-1', 'จุดวัดที่ 1');
-            }
-
-            calculateGdtLive();
-        }
-
-        function addPointSlot() {
-            if (gdtPointCount < 15) {
-                gdtPointCount++;
-                gdtInputsState[`pt-${gdtPointCount}`] = '0.000';
-                renderGdtForm();
-            }
-        }
-
-        function removePointSlot() {
-            if (gdtPointCount > 2) {
-                delete gdtInputsState[`pt-${gdtPointCount}`];
-                gdtPointCount--;
-                renderGdtForm();
-            }
-        }
-
-        function pressNumpad(btn) {
-            if (!activeGdtSlotId) return;
-
-            let curVal = gdtInputsState[activeGdtSlotId] || '0';
-
-            if (btn === 'DEL') {
-                curVal = curVal.length > 1 ? curVal.slice(0, -1) : '0';
-            } else if (btn === 'CLR') {
-                curVal = '0';
-            } else if (btn === 'NEXT') {
-                navigateNextSlot();
-                return;
-            } else if (btn === '-') {
-                if (curVal.startsWith('-')) curVal = curVal.slice(1);
-                else if (curVal !== '0') curVal = '-' + curVal;
-            } else if (btn === '.') {
-                if (!curVal.includes('.')) curVal += '.';
-            } else {
-                if (curVal === '0') curVal = btn;
-                else curVal += btn;
-            }
-
-            gdtInputsState[activeGdtSlotId] = curVal;
-            const slotValEl = document.getElementById(`slot-val-${activeGdtSlotId}`);
-            if (slotValEl) slotValEl.innerText = curVal;
-
-            calculateGdtLive();
-        }
-
-        function navigateNextSlot() {
-            const keys = Object.keys(gdtInputsState);
-            let idx = keys.indexOf(activeGdtSlotId);
-            if (idx !== -1 && idx < keys.length - 1) {
-                const nextKey = keys[idx + 1];
-                let label = nextKey;
-                if (nextKey.startsWith('pt-')) label = `จุดวัดที่ ${nextKey.replace('pt-', '')}`;
-                else if (nextKey === 'p-xnom') label = 'X เป้าหมาย';
-                else if (nextKey === 'p-xact') label = 'X วัดจริง';
-                else if (nextKey === 'p-ynom') label = 'Y เป้าหมาย';
-                else if (nextKey === 'p-yact') label = 'Y วัดจริง';
-                else if (nextKey === 'c-x1') label = 'Datum X1';
-                else if (nextKey === 'c-y1') label = 'Datum Y1';
-                else if (nextKey === 'c-x2') label = 'ชิ้นงาน X2';
-                else if (nextKey === 'c-y2') label = 'ชิ้นงาน Y2';
-
-                setActiveSlot(nextKey, label);
-            }
-        }
-
-        function calculateGdtLive() {
-            let totalError = 0;
-            let maxVal = 0, minVal = 0, rangeVal = 0, meanVal = 0;
-
-            if (activeGdtTool === 'position') {
-                const xNom = parseFloat(gdtInputsState['p-xnom']) || 0;
-                const xAct = parseFloat(gdtInputsState['p-xact']) || 0;
-                const yNom = parseFloat(gdtInputsState['p-ynom']) || 0;
-                const yAct = parseFloat(gdtInputsState['p-yact']) || 0;
-
-                const dx = xAct - xNom;
-                const dy = yAct - yNom;
-
-                totalError = 2 * Math.sqrt(dx * dx + dy * dy);
-                maxVal = Math.max(Math.abs(dx), Math.abs(dy));
-                minVal = Math.min(Math.abs(dx), Math.abs(dy));
-                rangeVal = totalError;
-                meanVal = (Math.abs(dx) + Math.abs(dy)) / 2;
-
-            } else if (activeGdtTool === 'concentricity') {
-                const x1 = parseFloat(gdtInputsState['c-x1']) || 0;
-                const y1 = parseFloat(gdtInputsState['c-y1']) || 0;
-                const x2 = parseFloat(gdtInputsState['c-x2']) || 0;
-                const y2 = parseFloat(gdtInputsState['c-y2']) || 0;
-
-                const dx = x1 - x2;
-                const dy = y1 - y2;
-
-                totalError = 2 * Math.sqrt(dx * dx + dy * dy);
-                maxVal = Math.max(Math.abs(dx), Math.abs(dy));
-                minVal = Math.min(Math.abs(dx), Math.abs(dy));
-                rangeVal = totalError;
-                meanVal = Math.sqrt(dx * dx + dy * dy);
-
-            } else {
-                const pts = [];
-                for (let i = 1; i <= gdtPointCount; i++) {
-                    const val = parseFloat(gdtInputsState[`pt-${i}`]);
-                    if (!isNaN(val)) pts.push(val);
-                }
-
-                if (pts.length > 0) {
-                    maxVal = Math.max(...pts);
-                    minVal = Math.min(...pts);
-                    rangeVal = maxVal - minVal;
-
-                    if (activeGdtTool === 'circularity') {
-                        totalError = rangeVal / 2;
-                    } else {
-                        totalError = rangeVal;
-                    }
-
-                    meanVal = pts.reduce((a, b) => a + b, 0) / pts.length;
-                }
-            }
-
-            document.getElementById('gdt-main-result').innerHTML = `${totalError.toFixed(4)} <span class="text-xs font-normal text-slate-500">มม.</span>`;
-            document.getElementById('gdt-stat-max').innerText = maxVal.toFixed(3);
-            document.getElementById('gdt-stat-min').innerText = minVal.toFixed(3);
-            document.getElementById('gdt-stat-range').innerText = rangeVal.toFixed(3);
-            document.getElementById('gdt-stat-mean').innerText = meanVal.toFixed(3);
-        }
-
-        function saveGdtToHistory() {
-            const resultText = document.getElementById('gdt-main-result').innerText;
-            addHistoryRecord(`GD&T [${activeGdtTool.toUpperCase()}]`, resultText);
-        }
-
-        // Unit Converter Logic with On-Screen Numpad
-        function setUnitCategory(cat) {
-            activeUnitCat = cat;
-            ['length', 'weight', 'temp'].forEach(c => {
-                const tab = document.getElementById(`unit-tab-${c}`);
-                if (c === cat) {
-                    tab.className = 'flex-1 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold transition';
-                } else {
-                    tab.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition';
-                }
-            });
-            initUnitConverterUI();
-        }
-
-        function initUnitConverterUI() {
-            const fromSelect = document.getElementById('unit-from-select');
-            const toSelect = document.getElementById('unit-to-select');
-            const units = unitDefinitions[activeUnitCat].units;
-
-            const opts = units.map(u => `<option value="${u.id}">${u.label}</option>`).join('');
-            fromSelect.innerHTML = opts;
-            toSelect.innerHTML = opts;
-
-            if (units.length > 1) {
-                toSelect.selectedIndex = 1;
-            }
-
-            calculateUnitConversion();
-        }
-
-        function pressUnitNumpad(btn) {
-            let cur = unitInputValue;
-
-            if (btn === 'DEL') {
-                cur = cur.length > 1 ? cur.slice(0, -1) : '0';
-            } else if (btn === 'CLR') {
-                cur = '0';
-            } else if (btn === '-') {
-                if (cur.startsWith('-')) cur = cur.slice(1);
-                else if (cur !== '0') cur = '-' + cur;
-            } else if (btn === '.') {
-                if (!cur.includes('.')) cur += '.';
-            } else {
-                if (cur === '0') cur = btn;
-                else cur += btn;
-            }
-
-            unitInputValue = cur;
-            document.getElementById('unit-input-val-text').innerText = cur;
-            calculateUnitConversion();
-        }
-
-        function calculateUnitConversion() {
-            const val = parseFloat(unitInputValue);
-            const from = document.getElementById('unit-from-select').value;
-            const to = document.getElementById('unit-to-select').value;
-            const outText = document.getElementById('unit-output-val-text');
-
-            document.getElementById('unit-from-label').innerText = from;
-            document.getElementById('unit-to-label').innerText = to;
-
-            if (isNaN(val)) {
-                outText.innerText = '0';
-                renderUnitMatrix(0, from);
-                return;
-            }
-
-            let result = 0;
-
-            if (activeUnitCat === 'temp') {
-                result = convertTemperature(val, from, to);
-            } else {
-                const units = unitDefinitions[activeUnitCat].units;
-                const fromObj = units.find(u => u.id === from);
-                const toObj = units.find(u => u.id === to);
-
-                const baseVal = val * fromObj.factor;
-                result = baseVal / toObj.factor;
-            }
-
-            const formatted = Number.isInteger(result) ? result.toString() : parseFloat(result.toFixed(6)).toString();
-            outText.innerText = formatted;
-
-            renderUnitMatrix(val, from);
-        }
-
-        function convertTemperature(val, from, to) {
-            if (from === to) return val;
-            let c = 0;
-            if (from === 'C') c = val;
-            else if (from === 'F') c = (val - 32) * (5 / 9);
-            else if (from === 'K') c = val - 273.15;
-
-            if (to === 'C') return c;
-            if (to === 'F') return (c * 9 / 5) + 32;
-            if (to === 'K') return c + 273.15;
-            return 0;
-        }
-
-        function renderUnitMatrix(sourceVal, sourceUnit) {
-            const container = document.getElementById('unit-matrix');
-            const units = unitDefinitions[activeUnitCat].units;
-
-            container.innerHTML = units.map(u => {
-                let converted = 0;
-                if (activeUnitCat === 'temp') {
-                    converted = convertTemperature(sourceVal, sourceUnit, u.id);
-                } else {
-                    const srcObj = units.find(x => x.id === sourceUnit);
-                    const base = sourceVal * srcObj.factor;
-                    converted = base / u.factor;
-                }
-
-                const displayStr = isNaN(converted) ? '0' : (Number.isInteger(converted) ? converted.toString() : parseFloat(converted.toFixed(5)).toString());
-
-                return `
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800/80 flex flex-col justify-between">
-                        <div class="text-[9px] text-slate-400 font-medium">${u.label}</div>
-                        <div class="text-xs font-bold font-mono-num text-slate-200 truncate mt-0.5">${displayStr}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function swapUnits() {
-            const fromSelect = document.getElementById('unit-from-select');
-            const toSelect = document.getElementById('unit-to-select');
-            const tmp = fromSelect.value;
-            fromSelect.value = toSelect.value;
-            toSelect.value = tmp;
-            calculateUnitConversion();
-        }
-
-        function sendConvertedToSci() {
-            const val = document.getElementById('unit-output-val-text').innerText;
-            switchMode('sci');
-            sciDisplay = val;
-            isSciResultShown = false;
-            updateSciDisplay();
-        }
-    </script>
+        vals[field]+=key;
+    }
+
+    document
+    .getElementById(field)
+    .innerText =
+    vals[field];
+
+    calc();
+}
+
+function calc(){
+
+    const xn =
+    parseFloat(vals.xn)||0;
+
+    const xa =
+    parseFloat(vals.xa)||0;
+
+    const yn =
+    parseFloat(vals.yn)||0;
+
+    const ya =
+    parseFloat(vals.ya)||0;
+
+    let resultValue=0;
+
+    const modeValue =
+    document.getElementById('mode')
+    .value;
+
+    if(
+        modeValue==='Position'
+        ||
+        modeValue==='Concentricity'
+    ){
+
+        resultValue =
+        Math.sqrt(
+            Math.pow(xa-xn,2)
+            +
+            Math.pow(ya-yn,2)
+        ) * 2;
+
+    }
+
+    else if(
+        modeValue==='Circularity'
+        ||
+        modeValue==='Flatness'
+    ){
+
+        resultValue =
+        Math.abs(xa-xn);
+
+    }
+
+    else if(
+        modeValue==='Parallelism'
+        ||
+        modeValue==='Perpendicularity'
+    ){
+
+        resultValue =
+        Math.abs(
+            (xa-xn)
+            -
+            (ya-yn)
+        );
+
+    }
+
+    else if(
+        modeValue==='Circular Runout'
+    ){
+
+        resultValue =
+        (
+            Math.abs(xa-xn)
+            +
+            Math.abs(ya-yn)
+        ) / 2;
+
+    }
+
+    else if(
+        modeValue==='Total Runout'
+    ){
+
+        resultValue =
+        Math.abs(xa-xn)
+        +
+        Math.abs(ya-yn);
+
+    }
+
+    document
+    .getElementById('result')
+    .innerText =
+    resultValue.toFixed(4);
+
+    const arr=[
+        xn,
+        xa,
+        yn,
+        ya
+    ];
+
+    document
+    .getElementById('max')
+    .innerText =
+    Math.max(...arr)
+    .toFixed(3);
+
+    document
+    .getElementById('min')
+    .innerText =
+    Math.min(...arr)
+    .toFixed(3);
+
+    document
+    .getElementById('range')
+    .innerText =
+    (
+        Math.max(...arr)
+        -
+        Math.min(...arr)
+    )
+    .toFixed(3);
+
+    document
+    .getElementById('mean')
+    .innerText =
+    (
+        arr.reduce(
+            (a,b)=>a+b,
+            0
+        )
+        /
+        arr.length
+    )
+    .toFixed(3);
+
+}
+
+function viewHistory(){
+
+    const box =
+    document.getElementById(
+        'historyList'
+    );
+
+    if(
+        box.style.display==='block'
+    ){
+        box.style.display='none';
+        return;
+    }
+
+    box.style.display='block';
+
+    if(hist.length===0){
+
+        box.innerHTML =
+        'ยังไม่มีประวัติ';
+
+        return;
+    }
+
+    box.innerHTML='';
+
+    hist
+    .slice()
+    .reverse()
+    .forEach(item=>{
+
+        const div =
+        document.createElement('div');
+
+        div.className =
+        'history-item';
+
+        div.innerHTML =
+
+        '<b>'
+        + item.mode +
+        '</b><br>' +
+
+        'Result : '
+        + item.result +
+        '<br>' +
+
+        item.time;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+document
+.getElementById('mode')
+.onchange = calc;
+
+calc();
+
+</script>
+
+<script>
+
+let lastTouchEnd = 0;
+
+document.addEventListener(
+'touchend',
+function(event){
+
+    const now = Date.now();
+
+    if(now - lastTouchEnd <= 300){
+        event.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+},
+{ passive:false }
+);
+
+document.addEventListener(
+'gesturestart',
+function(e){
+    e.preventDefault();
+}
+);
+
+</script>
+
 </body>
 </html>
