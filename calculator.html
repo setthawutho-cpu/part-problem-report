@@ -291,6 +291,56 @@ body{
     color:#ffbf2f;
     font-size:26px;
 }
+
+.history-panel{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    max-width:480px;
+    margin:auto;
+
+    background:#04112d;
+    z-index:9999;
+
+    transform:translateY(-100%);
+    transition:.3s ease;
+
+    border-bottom-left-radius:24px;
+    border-bottom-right-radius:24px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+.history-panel.show{
+    transform:translateY(0);
+}
+
+.history-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.close-history{
+    border:none;
+    background:none;
+    color:#fff;
+    font-size:24px;
+}
+
+.history-content{
+    max-height:70vh;
+    overflow-y:auto;
+    padding:10px;
+}
     
 </style>
 </head>
@@ -805,25 +855,45 @@ function viewHistory(){
 
     const box =
     document.getElementById(
-        'historyList'
+        'historyContent'
     );
 
-    if(
-        box.style.display==='block'
-    ){
-        box.style.display='none';
-        return;
-    }
-
-    box.style.display='block';
+    box.innerHTML='';
 
     if(hist.length===0){
 
-        box.innerHTML =
-        'ยังไม่มีประวัติ';
+        box.innerHTML=
+        '<div class="history-item">ยังไม่มีประวัติ</div>';
 
-        return;
+    }else{
+
+        hist
+        .slice()
+        .reverse()
+        .forEach(item=>{
+
+            const div=
+            document.createElement('div');
+
+            div.className=
+            'history-item';
+
+            div.innerHTML=
+            '<b>'+item.mode+'</b><br>' +
+            'Result : '+item.result+'<br>' +
+            item.time;
+
+            box.appendChild(div);
+
+        });
+
     }
+
+    document
+    .getElementById('historyPanel')
+    .classList.add('show');
+
+}
 
     box.innerHTML='';
 
@@ -887,6 +957,14 @@ function selectMode(index){
 
 }
 
+function closeHistoryPanel(){
+
+    document
+    .getElementById('historyPanel')
+    .classList.remove('show');
+
+}
+
 document
 .addEventListener(
 'click',
@@ -937,6 +1015,23 @@ function(e){
 );
 
 </script>
+
+<div id="historyPanel" class="history-panel">
+
+    <div class="history-header">
+        <span>🕘 ประวัติการคำนวณ</span>
+
+        <button
+        class="close-history"
+        onclick="closeHistoryPanel()">
+        ✕
+        </button>
+    </div>
+
+    <div id="historyContent" class="history-content">
+    </div>
+
+</div>
 
 </body>
 </html>
