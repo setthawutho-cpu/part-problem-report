@@ -8,7 +8,129 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+/* ===== HEADER ICON BUTTON ===== */
+
+.header-icon-btn{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    background:rgba(15,23,42,.55);
+    backdrop-filter:blur(12px);
+    transition:all .25s ease;
+    position:relative;
+}
+
+.header-icon-btn svg{
+    width:26px;
+    height:26px;
+}
+
+.header-icon-btn.amber{
+    color:#fbbf24;
+}
+
+.header-icon-btn.cyan{
+    color:#22d3ee;
+}
+
+.header-icon-btn:active{
+    transform:scale(.92);
+}
+
+.header-icon-btn.amber:hover{
+    box-shadow:0 0 18px rgba(251,191,36,.35);
+}
+
+.header-icon-btn.cyan:hover{
+    box-shadow:0 0 18px rgba(34,211,238,.35);
+}
+
     <style>
+
+/* ===== HEADER ICON BUTTON ===== */
+
+.header-icon-btn{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(15,23,42,.55);
+
+    backdrop-filter:blur(12px);
+
+    transition:all .25s ease;
+
+    position:relative;
+}
+
+.header-icon-btn svg{
+    width:26px;
+    height:26px;
+}
+
+/* CLOCK */
+
+.header-icon-btn.amber{
+    color:#fbbf24;
+}
+
+.header-icon-btn.amber:hover{
+    background:rgba(251,191,36,.12);
+
+    box-shadow:
+    0 0 18px rgba(251,191,36,.35),
+    0 0 40px rgba(251,191,36,.18);
+}
+
+/* CALCULATOR */
+
+.header-icon-btn.cyan{
+    color:#22d3ee;
+}
+
+.header-icon-btn.cyan:hover{
+    background:rgba(34,211,238,.12);
+
+    box-shadow:
+    0 0 18px rgba(34,211,238,.35),
+    0 0 40px rgba(34,211,238,.18);
+}
+
+/* ACTIVE PRESS */
+
+.header-icon-btn:active{
+    transform:scale(.92);
+}
+
+/* NOTIFICATION DOT */
+
+#history-indicator{
+    width:8px;
+    height:8px;
+
+    border-radius:999px;
+
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    background:#fbbf24;
+
+    box-shadow:
+    0 0 10px #fbbf24,
+    0 0 18px #fbbf24;
+}
+    
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
         
         body {
@@ -92,26 +214,36 @@
     <div id="app" class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[96vh] max-h-[890px] relative">
         
         <!-- ================= 1. HEADER BAR ================= -->
-        <header class="flex items-center justify-between px-4 py-2.5 bg-slate-950/90 border-b border-slate-800/80 z-20 shrink-0">
-            <!-- ปุ่มมุมซ้ายบน 🕘 ไอคอนนาฬิกา: ประวัติการคำนวณ -->
-            <button id="btn-history-toggle" onclick="toggleHistoryDrawer()" class="p-2.5 rounded-2xl hover:bg-slate-800/80 text-amber-400 hover:text-amber-300 transition flex items-center justify-center relative btn-press" title="ประวัติการคำนวณ">
-                <i data-lucide="clock" class="w-5 h-5"></i>
-                <span id="history-indicator" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping"></span>
-            </button>
+        <header class="flex items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800 z-20 shrink-0">
 
-            <!-- ตัวบอกชื่อโหมดปัจจุบัน / ปุ่มเปลี่ยนโหมด -->
-            <div class="relative">
-                <button onclick="toggleModeDropdown()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-200 hover:border-cyan-500/50 transition btn-press">
-                    <span id="current-mode-label" class="text-cyan-400 font-bold">1. เครื่องคิดเลขวิทยาศาสตร์</span>
-                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
-                </button>
-            </div>
+    <!-- ซ้าย -->
+    <button id="btn-history-toggle"
+        onclick="toggleHistoryDrawer()"
+        class="text-amber-400 btn-press">
+        <i data-lucide="clock-3" class="w-7 h-7"></i>
+    </button>
 
-            <!-- ปุ่มมุมขวาบน 🧮 ไอคอนเครื่องคิดเลข: สลับโหมด -->
-            <button id="btn-mode-quick" onclick="toggleModeDropdown()" class="p-2.5 rounded-2xl hover:bg-slate-800/80 text-cyan-400 hover:text-cyan-300 transition flex items-center justify-center btn-press" title="สลับโหมดการทำงาน">
-                <i data-lucide="calculator" class="w-5 h-5"></i>
-            </button>
-        </header>
+    <!-- กลาง -->
+    <div class="flex-1 flex justify-center px-2">
+        <button onclick="toggleModeDropdown()"
+            class="px-5 py-2 rounded-2xl
+            bg-slate-900 border border-slate-700
+            text-cyan-400 font-bold text-sm">
+
+            CALC
+        </button>
+    </div>
+
+    <!-- ขวา -->
+    <button id="btn-mode-quick"
+        onclick="toggleModeDropdown()"
+        class="text-cyan-400 btn-press">
+
+        <i data-lucide="calculator" class="w-7 h-7"></i>
+
+    </button>
+
+</header>
 
         <!-- DROPDOWN MODE SELECTOR -->
         <div id="mode-dropdown" class="hidden absolute top-14 left-1/2 -translate-x-1/2 z-50 w-72 glass-card bg-slate-900/95 rounded-2xl shadow-2xl border border-slate-700/80 p-2 transition-all">
