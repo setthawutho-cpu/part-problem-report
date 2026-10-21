@@ -460,8 +460,7 @@
     <script>
         // Global App State
         let currentMode = 'sci'; 
-        let historyList =
-JSON.parse(localStorage.getItem('calcHistory') || '[]');
+        let historyList = [];
         let isEditHistoryMode = false;
 
         // Scientific Calculator State
@@ -511,6 +510,13 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         };
 
         // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            initGdtDefaults();
+            renderGdtForm();
+            initUnitConverterUI();
+            updateSciDisplay();
+        });
 
         // Mode Switching
         function toggleModeDropdown() {
@@ -547,23 +553,10 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         }
 
         function addHistoryRecord(expr, result) {
-    historyList.unshift({
-        id: Date.now(),
-        expr,
-        result
-    });
-
-    if(historyList.length > 50){
-        historyList.pop();
-    }
-
-    localStorage.setItem(
-        'calcHistory',
-        JSON.stringify(historyList)
-    );
-
-    renderHistoryList();
-}
+            historyList.unshift({ id: Date.now(), expr, result });
+            if (historyList.length > 50) historyList.pop();
+            renderHistoryList();
+        }
 
         function toggleEditHistoryMode() {
             isEditHistoryMode = !isEditHistoryMode;
@@ -602,10 +595,9 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                     `}
                 </div>
             `).join('');
-            if(window.lucide){
-    lucide.createIcons();
-}
-}
+            lucide.createIcons();
+        }
+
         function useHistoryItem(val) {
             if (isEditHistoryMode) return;
             
@@ -628,24 +620,14 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         }
 
         function deleteHistoryItem(id) {
-    historyList =
-        historyList.filter(item => item.id !== id);
-
-    localStorage.setItem(
-        'calcHistory',
-        JSON.stringify(historyList)
-    );
-
-    renderHistoryList();
-}
+            historyList = historyList.filter(item => item.id !== id);
+            renderHistoryList();
+        }
 
         function clearAllHistory() {
-    historyList = [];
-
-    localStorage.removeItem('calcHistory');
-
-    renderHistoryList();
-}
+            historyList = [];
+            renderHistoryList();
+        }
 
         // Scientific Calculator Engine
         function setAngleUnit(unit) {
@@ -680,64 +662,18 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         }
 
         function inputSci(func) {
+            if (func === 'pi') { inputSciChar(Math.PI.toFixed(6)); return; }
+            if (func === 'e') { inputSciChar(Math.E.toFixed(6)); return; }
+            if (func === 'sqr') { sciDisplay = `(${sciDisplay})^2`; updateSciDisplay(); return; }
+            if (func === 'cube') { sciDisplay = `(${sciDisplay})^3`; updateSciDisplay(); return; }
+            if (func === 'pow') { sciDisplay += '^'; updateSciDisplay(); return; }
+            if (func === 'recip') { sciDisplay = `1/(${sciDisplay})`; updateSciDisplay(); return; }
+            if (func === 'fact') { sciDisplay = `fact(${sciDisplay})`; updateSciDisplay(); return; }
 
-    if (func === 'pi') {
-        inputSciChar(Math.PI.toFixed(6));
-        return;
-    }
-
-    if (func === 'e') {
-        inputSciChar(Math.E.toFixed(6));
-        return;
-    }
-
-    if (func === 'sqr') {
-        sciDisplay = `(${sciDisplay})^2`;
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'cube') {
-        sciDisplay = `(${sciDisplay})^3`;
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'pow') {
-        sciDisplay += '^';
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'sqrt') {
-        sciDisplay = `sqrt(${sciDisplay})`;
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'cbrt') {
-        sciDisplay = `cbrt(${sciDisplay})`;
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'recip') {
-        sciDisplay = `1/(${sciDisplay})`;
-        updateSciDisplay();
-        return;
-    }
-
-    if (func === 'fact') {
-        sciDisplay = `fact(${sciDisplay})`;
-        updateSciDisplay();
-        return;
-    }
-
-    sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay})`;
-
-    isSciResultShown = false;
-    updateSciDisplay();
-}
+            sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay}`;
+            isSciResultShown = false;
+            updateSciDisplay();
+        }
 
         function toggleSciSign() {
             if (sciDisplay.startsWith('-')) {
@@ -758,16 +694,10 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
         }
 
         function clearSci(type) {
-
-    if(type === 'all'){
-        sciDisplay = '0';
-        sciExpression = '';
-    }else{
-        sciDisplay = '0';
-    }
-
-    updateSciDisplay();
-}
+            sciDisplay = '0';
+            if (type === 'all') sciExpression = '';
+            updateSciDisplay();
+        }
 
         function factorial(n) {
             if (n < 0) return NaN;
@@ -797,12 +727,8 @@ JSON.parse(localStorage.getItem('calcHistory') || '[]');
                 parsed = parsed.replace(/ln\(([^)]+)\)/g, "Math.log($1)");
                 parsed = parsed.replace(/log\(([^)]+)\)/g, "Math.log10($1)");
                 parsed = parsed.replace(/fact\(([^)]+)\)/g, (_, v) => factorial(parseInt(eval(v))));
-parsed = parsed.replace(/(\d+)%/g, '($1/100)');
 
                 const numResult = eval(parsed);
-                if (!isFinite(numResult)) {
-    throw new Error();
-}
                 const formattedResult = Number.isInteger(numResult) ? numResult.toString() : parseFloat(numResult.toFixed(8)).toString();
 
                 sciExpression = `${sciDisplay} =`;
@@ -895,12 +821,7 @@ parsed = parsed.replace(/(\d+)%/g, '($1/100)');
                     </div>
                 `;
                 container.innerHTML = html;
-
-if(window.lucide){
-    lucide.createIcons();
-}
-
-setActiveSlot('p-xact', 'X วัดจริง');
+                setActiveSlot('p-xact', 'X วัดจริง');
 
             } else if (activeGdtTool === 'concentricity') {
                 header.innerHTML = `<span>◎ ค่าความร่วมศูนย์ (Concentricity)</span>`;
@@ -927,12 +848,7 @@ setActiveSlot('p-xact', 'X วัดจริง');
                     </div>
                 `;
                 container.innerHTML = html;
-
-if(window.lucide){
-    lucide.createIcons();
-}
-
-setActiveSlot('c-x2', 'ชิ้นงาน X2');
+                setActiveSlot('c-x2', 'ชิ้นงาน X2');
 
             } else {
                 const names = {
@@ -971,12 +887,7 @@ setActiveSlot('c-x2', 'ชิ้นงาน X2');
                     </div>
                 `;
                 container.innerHTML = html;
-
-if(window.lucide){
-    lucide.createIcons();
-}
-
-setActiveSlot('pt-1', 'จุดวัดที่ 1');
+                setActiveSlot('pt-1', 'จุดวัดที่ 1');
             }
 
             calculateGdtLive();
@@ -1016,15 +927,7 @@ setActiveSlot('pt-1', 'จุดวัดที่ 1');
             } else if (btn === '.') {
                 if (!curVal.includes('.')) curVal += '.';
             } else {
-                if (
-    if (
-    curVal === '0' ||
-    curVal === '0.000'
-){
-    curVal = btn;
-}else{
-    curVal += btn;
-}
+                if (curVal === '0') curVal = btn;
                 else curVal += btn;
             }
 
@@ -1036,9 +939,7 @@ setActiveSlot('pt-1', 'จุดวัดที่ 1');
         }
 
         function navigateNextSlot() {
-            const keys =
-[...document.querySelectorAll('.gdt-slot-box')]
-.map(el => el.id.replace('slot-box-',''));
+            const keys = Object.keys(gdtInputsState);
             let idx = keys.indexOf(activeGdtSlotId);
             if (idx !== -1 && idx < keys.length - 1) {
                 const nextKey = keys[idx + 1];
@@ -1103,23 +1004,11 @@ setActiveSlot('pt-1', 'จุดวัดที่ 1');
                     minVal = Math.min(...pts);
                     rangeVal = maxVal - minVal;
 
-                    switch(activeGdtTool){
-
-    case 'circularity':
-        totalError = rangeVal / 2;
-        break;
-
-    case 'flatness':
-    case 'parallelism':
-    case 'perpendicularity':
-    case 'runout':
-    case 'total_runout':
-        totalError = rangeVal;
-        break;
-
-    default:
-        totalError = rangeVal;
-}
+                    if (activeGdtTool === 'circularity') {
+                        totalError = rangeVal / 2;
+                    } else {
+                        totalError = rangeVal;
+                    }
 
                     meanVal = pts.reduce((a, b) => a + b, 0) / pts.length;
                 }
@@ -1167,16 +1056,6 @@ setActiveSlot('pt-1', 'จุดวัดที่ 1');
             calculateUnitConversion();
         }
 
-function setActiveUnitSlot() {
-    const slot = document.getElementById('unit-input-slot');
-
-    document
-        .querySelectorAll('.active-slot-emerald')
-        .forEach(el => el.classList.remove('active-slot-emerald'));
-
-    slot.classList.add('active-slot-emerald');
-}
-        
         function pressUnitNumpad(btn) {
             let cur = unitInputValue;
 
@@ -1190,12 +1069,7 @@ function setActiveUnitSlot() {
             } else if (btn === '.') {
                 if (!cur.includes('.')) cur += '.';
             } else {
-                if (
-    cur === '0' ||
-    cur === '100'
-){
-    cur = btn;
-}
+                if (cur === '0') cur = btn;
                 else cur += btn;
             }
 
@@ -1286,60 +1160,12 @@ function setActiveUnitSlot() {
         }
 
         function sendConvertedToSci() {
-    const val =
-        document.getElementById('unit-output-val-text').innerText;
-
-    switchMode('sci');
-
-    sciDisplay = val;
-    isSciResultShown = true;
-
-    updateSciDisplay();
-}
-
-document.addEventListener('click', (e) => {
-
-    const menu =
-        document.getElementById('mode-dropdown');
-
-    const toggleBtn =
-        document.getElementById('btn-mode-quick');
-
-    const historyBtn =
-        document.getElementById('btn-history-toggle');
-
-    if (
-        menu &&
-        !menu.contains(e.target) &&
-        !toggleBtn.contains(e.target) &&
-        !historyBtn.contains(e.target)
-    ) {
-        menu.classList.add('hidden');
-    }
-
-});
-
-window.onload = function(){
-
-    try{
-
-        if(window.lucide){
-            lucide.createIcons();
+            const val = document.getElementById('unit-output-val-text').innerText;
+            switchMode('sci');
+            sciDisplay = val;
+            isSciResultShown = false;
+            updateSciDisplay();
         }
-
-        initGdtDefaults();
-        renderGdtForm();
-        initUnitConverterUI();
-        updateSciDisplay();
-        renderHistoryList();
-        switchMode('sci');
-
-    }catch(err){
-        console.error(err);
-    }
-
-};
-        
     </script>
 </body>
 </html>
