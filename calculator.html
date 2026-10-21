@@ -264,6 +264,52 @@ body{
     -webkit-tap-highlight-color:transparent;
 }
 
+.gdt-menu{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    display:none;
+    justify-content:center;
+    align-items:flex-start;
+    z-index:9999;
+}
+
+.gdt-box{
+    width:85%;
+    max-width:420px;
+    margin-top:80px;
+    background:rgba(44,68,116,.92);
+    backdrop-filter:blur(20px);
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+.gdt-item{
+    padding:24px 28px;
+    font-size:22px;
+    color:#fff;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.gdt-item:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.gdt-item.active{
+    color:#fff;
+}
+
+.gdt-icon{
+    width:32px;
+    text-align:center;
+    color:#ffbf2f;
+    font-size:26px;
+}
+    
 </style>
 </head>
 
@@ -294,13 +340,61 @@ onclick="viewHistory()">
 
 <button
 class="icon-btn"
-onclick="document.getElementById('mode').focus();document.getElementById('mode').click();">
+onclick="openGdtMenu()">
 🧮
 </button>
 
 </div>
 
 <div class="symbols" id="symbols">
+</div>
+
+<div id="gdtMenu" class="gdt-menu">
+
+<div class="gdt-box">
+
+<div class="gdt-item" onclick="selectMode(0)">
+<span class="gdt-icon">⌖</span>
+<span>Position</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(1)">
+<span class="gdt-icon">○</span>
+<span>Circularity</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(2)">
+<span class="gdt-icon">▱</span>
+<span>Flatness</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(3)">
+<span class="gdt-icon">∥</span>
+<span>Parallelism</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(4)">
+<span class="gdt-icon">⊥</span>
+<span>Perpendicularity</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(5)">
+<span class="gdt-icon">◎</span>
+<span>Concentricity</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(6)">
+<span class="gdt-icon">↗</span>
+<span>Circular Runout</span>
+</div>
+
+<div class="gdt-item" onclick="selectMode(7)">
+<span class="gdt-icon">⇉</span>
+<span>Total Runout</span>
+</div>
+
+</div>
+
 </div>
 
 <div class="result">
@@ -821,6 +915,64 @@ function viewHistory(){
     });
 
 }
+
+function openGdtMenu(){
+
+    document
+    .getElementById('gdtMenu')
+    .style.display='flex';
+
+}
+
+function closeGdtMenu(){
+
+    document
+    .getElementById('gdtMenu')
+    .style.display='none';
+
+}
+
+function selectMode(index){
+
+    const mode =
+    document.getElementById('mode');
+
+    mode.value =
+    names[index];
+
+    document
+    .querySelectorAll('.sym')
+    .forEach(x=>
+        x.classList.remove('active')
+    );
+
+    document
+    .querySelectorAll('.sym')[index]
+    .classList.add('active');
+
+    closeGdtMenu();
+
+    calc();
+
+}
+
+document
+.addEventListener(
+'click',
+function(e){
+
+    const menu =
+    document.getElementById(
+        'gdtMenu'
+    );
+
+    if(
+        e.target.id==='gdtMenu'
+    ){
+        closeGdtMenu();
+    }
+
+});
 
 document
 .getElementById('mode')
