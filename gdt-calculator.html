@@ -11,6 +11,11 @@ minimum-scale=1,
 user-scalable=no,
 viewport-fit=cover">
 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#04112d">
+
 <title>GD&T Calculator</title>
 
 <style>
@@ -74,10 +79,15 @@ body{
 }
 
 .symbols{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    margin-top:12px;
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:8px;
+}
+
+.sym{
+    min-width:160px;
+    flex-shrink:0;
 }
 
 .sym{
@@ -171,9 +181,9 @@ body{
     border:none;
     color:#fff;
     border-radius:16px;
-    padding:18px;
-    font-size:22px;
-    font-weight:bold;
+    min-height:90px;
+    font-size:24px;
+    font-weight:700;
     cursor:pointer;
 }
 
@@ -215,6 +225,24 @@ body{
 .history-item:last-child{
     border-bottom:none;
 }
+
+.pad{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:10px;
+}
+
+.result:last-child{
+    padding-bottom:20px;
+}
+
+*{
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
 </style>
 </head>
 
