@@ -511,12 +511,14 @@
 
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initGdtDefaults();
-            renderGdtForm();
-            initUnitConverterUI();
-            updateSciDisplay();
-        });
+    lucide.createIcons();
+    initGdtDefaults();
+    renderGdtForm();
+    initUnitConverterUI();
+    updateSciDisplay();
+    renderHistoryList();
+    switchMode('sci');
+});
 
         // Mode Switching
         function toggleModeDropdown() {
@@ -670,7 +672,7 @@
             if (func === 'recip') { sciDisplay = `1/(${sciDisplay})`; updateSciDisplay(); return; }
             if (func === 'fact') { sciDisplay = `fact(${sciDisplay})`; updateSciDisplay(); return; }
 
-            sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay}`;
+            sciDisplay = `${func}(${sciDisplay === '0' ? '' : sciDisplay})`;
             isSciResultShown = false;
             updateSciDisplay();
         }
@@ -694,10 +696,16 @@
         }
 
         function clearSci(type) {
-            sciDisplay = '0';
-            if (type === 'all') sciExpression = '';
-            updateSciDisplay();
-        }
+
+    if (type === 'all') {
+        sciDisplay = '0';
+        sciExpression = '';
+    } else {
+        sciDisplay = '0';
+    }
+
+    updateSciDisplay();
+}
 
         function factorial(n) {
             if (n < 0) return NaN;
@@ -825,7 +833,7 @@
 
             } else if (activeGdtTool === 'concentricity') {
                 header.innerHTML = `<span>◎ ค่าความร่วมศูนย์ (Concentricity)</span>`;
-                formulaBadge.innerText = `2 × √((X1-X2)² + (Y1-Y2)²)`;
+                formulaBadge.innerText = `√((X1-X2)² + (Y1-Y2)²)`;
                 
                 html = `
                     <div class="grid grid-cols-2 gap-2">
@@ -939,24 +947,31 @@
         }
 
         function navigateNextSlot() {
-            const keys = Object.keys(gdtInputsState);
-            let idx = keys.indexOf(activeGdtSlotId);
-            if (idx !== -1 && idx < keys.length - 1) {
-                const nextKey = keys[idx + 1];
-                let label = nextKey;
-                if (nextKey.startsWith('pt-')) label = `จุดวัดที่ ${nextKey.replace('pt-', '')}`;
-                else if (nextKey === 'p-xnom') label = 'X เป้าหมาย';
-                else if (nextKey === 'p-xact') label = 'X วัดจริง';
-                else if (nextKey === 'p-ynom') label = 'Y เป้าหมาย';
-                else if (nextKey === 'p-yact') label = 'Y วัดจริง';
-                else if (nextKey === 'c-x1') label = 'Datum X1';
-                else if (nextKey === 'c-y1') label = 'Datum Y1';
-                else if (nextKey === 'c-x2') label = 'ชิ้นงาน X2';
-                else if (nextKey === 'c-y2') label = 'ชิ้นงาน Y2';
 
-                setActiveSlot(nextKey, label);
-            }
+    let keys = [];
+
+    if (activeGdtTool === 'position') {
+        keys = ['p-xnom','p-xact','p-ynom','p-yact'];
+    }
+    else if (activeGdtTool === 'concentricity') {
+        keys = ['c-x1','c-y1','c-x2','c-y2'];
+    }
+    else {
+        for(let i=1;i<=gdtPointCount;i++){
+            keys.push(`pt-${i}`);
         }
+    }
+
+    const idx = keys.indexOf(activeGdtSlotId);
+
+    if(idx >= 0 && idx < keys.length - 1){
+        const nextKey = keys[idx + 1];
+
+        document
+            .getElementById(`slot-box-${nextKey}`)
+            ?.click();
+    }
+}
 
         function calculateGdtLive() {
             let totalError = 0;
@@ -986,11 +1001,13 @@
                 const dx = x1 - x2;
                 const dy = y1 - y2;
 
-                totalError = 2 * Math.sqrt(dx * dx + dy * dy);
-                maxVal = Math.max(Math.abs(dx), Math.abs(dy));
-                minVal = Math.min(Math.abs(dx), Math.abs(dy));
-                rangeVal = totalError;
-                meanVal = Math.sqrt(dx * dx + dy * dy);
+                const centerOffset = Math.sqrt(dx * dx + dy * dy);
+
+                totalError = centerOffset;
+maxVal = centerOffset;
+minVal = centerOffset;
+rangeVal = centerOffset;
+meanVal = centerOffset;
 
             } else {
                 const pts = [];
@@ -1005,14 +1022,41 @@
                     rangeVal = maxVal - minVal;
 
                     if (activeGdtTool === 'circularity') {
-                        totalError = rangeVal / 2;
-                    } else {
-                        totalError = rangeVal;
-                    }
+    totalError = rangeVal;
+} else {
+    totalError = rangeVal;
+}
 
                     meanVal = pts.reduce((a, b) => a + b, 0) / pts.length;
                 }
             }
+
+        const resultTitle = document.getElementById('gdt-result-title');
+
+if (activeGdtTool === 'position') {
+    resultTitle.innerText = 'ผลลัพธ์ Position';
+}
+else if (activeGdtTool === 'concentricity') {
+    resultTitle.innerText = 'ผลลัพธ์ Center Offset';
+}
+else if (activeGdtTool === 'circularity') {
+    resultTitle.innerText = 'ผลลัพธ์ Circularity';
+}
+else if (activeGdtTool === 'flatness') {
+    resultTitle.innerText = 'ผลลัพธ์ Flatness';
+}
+else if (activeGdtTool === 'parallelism') {
+    resultTitle.innerText = 'ผลลัพธ์ Parallelism';
+}
+else if (activeGdtTool === 'perpendicularity') {
+    resultTitle.innerText = 'ผลลัพธ์ Perpendicularity';
+}
+else if (activeGdtTool === 'runout') {
+    resultTitle.innerText = 'ผลลัพธ์ Circular Runout';
+}
+else if (activeGdtTool === 'total_runout') {
+    resultTitle.innerText = 'ผลลัพธ์ Total Runout';
+}
 
             document.getElementById('gdt-main-result').innerHTML = `${totalError.toFixed(4)} <span class="text-xs font-normal text-slate-500">มม.</span>`;
             document.getElementById('gdt-stat-max').innerText = maxVal.toFixed(3);
@@ -1027,6 +1071,17 @@
         }
 
         // Unit Converter Logic with On-Screen Numpad
+
+function setActiveUnitSlot() {
+    const slot = document.getElementById('unit-input-slot');
+
+    document
+        .querySelectorAll('.active-slot-emerald')
+        .forEach(el => el.classList.remove('active-slot-emerald'));
+
+    slot.classList.add('active-slot-emerald');
+}
+    
         function setUnitCategory(cat) {
             activeUnitCat = cat;
             ['length', 'weight', 'temp'].forEach(c => {
