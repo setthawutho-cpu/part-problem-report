@@ -2,7 +2,15 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+minimum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
+
 <title>GD&T Calculator</title>
 
 <style>
@@ -12,10 +20,19 @@
     padding:0;
 }
 
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    touch-action:manipulation;
+    overscroll-behavior:none;
+}
+
 body{
     background:#04112d;
     color:#ffffff;
     font-family:system-ui,sans-serif;
+    -webkit-text-size-adjust:100%;
 }
 
 .wrap{
@@ -757,6 +774,35 @@ document
 .onchange = calc;
 
 calc();
+
+</script>
+
+<script>
+
+let lastTouchEnd = 0;
+
+document.addEventListener(
+'touchend',
+function(event){
+
+    const now = Date.now();
+
+    if(now - lastTouchEnd <= 300){
+        event.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+},
+{ passive:false }
+);
+
+document.addEventListener(
+'gesturestart',
+function(e){
+    e.preventDefault();
+}
+);
 
 </script>
 
