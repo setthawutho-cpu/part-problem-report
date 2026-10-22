@@ -527,29 +527,39 @@ MEAN<br>
 
 <div class="inputs">
 
-<div class="inp active" data-f="xn">
-<span class="lbl">X Nominal</span>
+<div id="box-xn"
+class="inp active"
+data-f="xn">
+<span class="lbl" id="lbl-xn">
+X Nominal
+</span>
 <div class="num" id="xn">0</div>
 </div>
 
-<div
+<div id="box-xa"
 class="inp"
 data-f="xa">
-<span class="lbl">X Actual</span>
+<span class="lbl" id="lbl-xa">
+X Actual
+</span>
 <div class="num" id="xa">0</div>
 </div>
 
-<div
+<div id="box-yn"
 class="inp"
 data-f="yn">
-<span class="lbl">Y Nominal</span>
+<span class="lbl" id="lbl-yn">
+Y Nominal
+</span>
 <div class="num" id="yn">0</div>
 </div>
 
-<div
+<div id="box-ya"
 class="inp"
 data-f="ya">
-<span class="lbl">Y Actual</span>
+<span class="lbl" id="lbl-ya">
+Y Actual
+</span>
 <div class="num" id="ya">0</div>
 </div>
 
@@ -608,6 +618,66 @@ const formulas = [
 'Runout = Max - Min',
 'Total Runout = Max - Min'
 ];
+
+const modeLabels = {
+
+Position:[
+'X Nominal',
+'X Actual',
+'Y Nominal',
+'Y Actual'
+],
+
+Circularity:[
+'R Max',
+'R Min',
+'',
+''
+],
+
+Flatness:[
+'Highest',
+'Lowest',
+'',
+''
+],
+
+Parallelism:[
+'Distance Max',
+'Distance Min',
+'',
+''
+],
+
+Perpendicularity:[
+'Height Max',
+'Height Min',
+'',
+''
+],
+
+Concentricity:[
+'X Offset',
+'Y Offset',
+'',
+''
+],
+
+'Circular Runout':[
+'Max Reading',
+'Min Reading',
+'',
+''
+],
+
+'Total Runout':[
+'Max Reading',
+'Min Reading',
+'',
+''
+]
+
+};
 
 let currentMode = 0;
 
@@ -891,19 +961,6 @@ parseFloat(
     resultValue.toFixed(4)
 );;
 
-    document
-    .getElementById('mean')
-    .innerText =
-    (
-        arr.reduce(
-            (a,b)=>a+b,
-            0
-        )
-        /
-        arr.length
-    )
-    .toFixed(3);
-
 }
 
 function viewHistory(){
@@ -966,6 +1023,31 @@ function closeGdtMenu(){
 
 }
 
+function updateInputs(){
+
+    const mode =
+    names[currentMode];
+
+    const cfg =
+    modeLabels[mode];
+
+    document.getElementById('lbl-xn').innerText = cfg[0];
+    document.getElementById('lbl-xa').innerText = cfg[1];
+
+    if(cfg[2]){
+        document.getElementById('box-yn').style.display='flex';
+        document.getElementById('box-ya').style.display='flex';
+
+        document.getElementById('lbl-yn').innerText = cfg[2];
+        document.getElementById('lbl-ya').innerText = cfg[3];
+    }
+    else{
+        document.getElementById('box-yn').style.display='none';
+        document.getElementById('box-ya').style.display='none';
+    }
+
+}
+
 function selectMode(index){
 
     currentMode = index;
@@ -978,6 +1060,8 @@ function selectMode(index){
 
     document.getElementById('formula').innerText =
     formulas[index];
+
+    updateInputs();
 
     closeGdtMenu();
 
@@ -1015,6 +1099,7 @@ syms[0] + ' ' + names[0];
 document.getElementById('formula').innerText =
 formulas[0];
 
+updateInputs();
 calc();
 
 </script>
