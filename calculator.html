@@ -110,6 +110,12 @@ body{
     margin-bottom:8px;
 }
 
+.formula{
+    color:#86b2ff;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
 .value{
     font-size:clamp(20px,8vw,42px);
     color:#ffbf2f;
@@ -151,19 +157,26 @@ body{
 }
 
 .inputs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
     margin-top:12px;
 }
 
 .inp{
     background:#102043;
     border:2px solid #29406b;
-    border-radius:16px;
-    padding:10px;
-    min-height:60px;
+    border-radius:18px;
+
+    min-height:62px;
+
+    padding:12px 16px;
+
     cursor:pointer;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .inp.active{
@@ -387,6 +400,11 @@ body{
 .history-content{
     scrollbar-width:none;
 }
+
+.lbl{
+    color:#b7c9ee;
+    font-size:15px;
+}
     
 </style>
 </head>
@@ -467,14 +485,19 @@ onclick="openGdtMenu()">
 
 <div class="result">
 
-<div class="result-title">
-ผลลัพธ์ GD&T
+<div class="result-title" id="modeTitle">
+⌖ Position
+</div>
+
+<div id="formula" class="formula">
+TP = 2√(ΔX² + ΔY²)
 </div>
 
 <div class="value" id="result">
 0
 </div>
 
+<!--
 <div class="stats">
 
 <div>
@@ -498,36 +521,35 @@ MEAN<br>
 </div>
 
 </div>
+-->
 
 </div>
 
 <div class="inputs">
 
-<div
-class="inp active"
-data-f="xn">
-X Nominal
+<div class="inp active" data-f="xn">
+<span class="lbl">X Nominal</span>
 <div class="num" id="xn">0</div>
 </div>
 
 <div
 class="inp"
 data-f="xa">
-X Actual
+<span class="lbl">X Actual</span>
 <div class="num" id="xa">0</div>
 </div>
 
 <div
 class="inp"
 data-f="yn">
-Y Nominal
+<span class="lbl">Y Nominal</span>
 <div class="num" id="yn">0</div>
 </div>
 
 <div
 class="inp"
 data-f="ya">
-Y Actual
+<span class="lbl">Y Actual</span>
 <div class="num" id="ya">0</div>
 </div>
 
@@ -574,6 +596,17 @@ const names = [
 'Concentricity',
 'Circular Runout',
 'Total Runout'
+];
+
+const formulas = [
+'TP = 2√(ΔX² + ΔY²)',
+'Circularity = Rmax - Rmin',
+'Flatness = Highest - Lowest',
+'Parallelism = Max - Min',
+'Perpendicularity = Max - Min',
+'Error = √(X²+Y²)',
+'Runout = Max - Min',
+'Total Runout = Max - Min'
 ];
 
 let currentMode = 0;
@@ -966,10 +999,14 @@ function selectMode(index){
 
     currentMode = index;
 
-    document
-    .getElementById('modeDisplay')
-    .innerHTML =
+    document.getElementById('modeDisplay').innerHTML =
     syms[index] + ' ' + names[index];
+
+    document.getElementById('modeTitle').innerHTML =
+    syms[index] + ' ' + names[index];
+
+    document.getElementById('formula').innerText =
+    formulas[index];
 
     closeGdtMenu();
 
