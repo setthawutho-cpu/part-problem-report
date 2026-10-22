@@ -548,6 +548,11 @@ onclick="openGdtMenu()">
   <div class="gdt-name">Total Runout</div>
 </div>
 
+<div class="gdt-item" onclick="selectMode(8)">
+   <div class="gdt-icon">HB</div>
+   <div class="gdt-name">Brinell</div>
+</div>
+
 </div>
 
 </div>
@@ -663,7 +668,8 @@ const syms = [
 '⊥',
 '◎',
 '↗',
-'⇉'
+'⇉',
+'HB'
 ];
 
 const names = [
@@ -674,7 +680,8 @@ const names = [
 'Perpendicularity',
 'Concentricity',
 'Circular Runout',
-'Total Runout'
+'Total Runout',
+'Brinell'
 ];
 
 const formulas = [
@@ -685,7 +692,8 @@ const formulas = [
 'Perpendicularity = Max - Min',
 'Error = √(X²+Y²)',
 'Runout = Max - Min',
-'Total Runout = Max - Min'
+'Total Runout = Max - Min',
+'HB = 2F / (πD(D-√(D²-d²)))'
 ];
 
 const modeLabels = {
@@ -743,6 +751,13 @@ Concentricity:[
 'Max Reading',
 'Min Reading',
 '',
+''
+],
+
+Brinell:[
+'Force',
+'Ball Dia',
+'Indent Dia',
 ''
 ]
 
@@ -1035,6 +1050,33 @@ else if(modeValue==='Concentricity'){
 
     }
 
+    else if(modeValue==='Brinell'){
+
+    const F = parseFloat(vals.xn)||0;
+    const B = parseFloat(vals.xa)||0;
+    const D = parseFloat(vals.yn)||0;
+
+    if(
+        F>0 &&
+        B>0 &&
+        D>0 &&
+        D < B
+    ){
+        resultValue =
+        (2*F) /
+        (
+            Math.PI *
+            B *
+            (
+                B -
+                Math.sqrt(
+                    (B*B) - (D*D)
+                )
+            )
+        );
+    }
+}
+
 document
 .getElementById('result')
 .innerText =
@@ -1111,6 +1153,18 @@ function updateInputs(){
 
     const cfg =
     modeLabels[mode];
+
+if(mode==='Brinell'){
+
+    document.getElementById('box-yn').classList.remove('hide-input');
+    document.getElementById('box-ya').classList.add('hide-input');
+
+    document.getElementById('lbl-xn').innerText='Force';
+    document.getElementById('lbl-xa').innerText='Ball Dia';
+    document.getElementById('lbl-yn').innerText='Indent Dia';
+
+    return;
+}
 
     document.getElementById('lbl-xn').innerText = cfg[0];
     document.getElementById('lbl-xa').innerText = cfg[1];
