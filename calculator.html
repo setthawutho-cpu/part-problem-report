@@ -891,35 +891,6 @@ parseFloat(
     resultValue.toFixed(4)
 );;
 
-    const arr=[
-        xn,
-        xa,
-        yn,
-        ya
-    ];
-
-    document
-    .getElementById('max')
-    .innerText =
-    Math.max(...arr)
-    .toFixed(3);
-
-    document
-    .getElementById('min')
-    .innerText =
-    Math.min(...arr)
-    .toFixed(3);
-
-    document
-    .getElementById('range')
-    .innerText =
-    (
-        Math.max(...arr)
-        -
-        Math.min(...arr)
-    )
-    .toFixed(3);
-
     document
     .getElementById('mean')
     .innerText =
@@ -1035,10 +1006,14 @@ function(e){
 
 });
 
-document
-.getElementById('modeDisplay')
-.innerHTML =
+document.getElementById('modeDisplay').innerHTML =
 syms[0] + ' ' + names[0];
+
+document.getElementById('modeTitle').innerHTML =
+syms[0] + ' ' + names[0];
+
+document.getElementById('formula').innerText =
+formulas[0];
 
 calc();
 
