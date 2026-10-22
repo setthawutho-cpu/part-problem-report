@@ -259,10 +259,13 @@ body{
 }
 
 .pressed{
-    transform:scale(.90);
-    background:#4b6ea8 !important;
-    color:#ffffff !important;
-    box-shadow:0 0 20px #4be0ff;
+    transform:scale(.88);
+    background:#00a8ff !important;
+    color:#fff !important;
+    box-shadow:
+        0 0 10px #4be0ff,
+        0 0 20px #4be0ff,
+        0 0 30px #4be0ff;
 }
 
 .history-item{
@@ -713,10 +716,10 @@ document
         field = el.dataset.f;
 
         document
-        .getElementById('selected')
-        .innerText =
-        'ช่องที่เลือก : ' +
-        field.toUpperCase();
+.getElementById('selected')
+.innerText =
+'ช่องที่เลือก : ' +
+document.getElementById('lbl-' + field).innerText;
     };
 
 });
@@ -798,10 +801,16 @@ function press(key){
         ];
 
         document
-        .querySelector(
-            `[data-f="${field}"]`
-        )
-        .click();
+.querySelector(
+`[data-f="${field}"]`
+)
+.click();
+
+document
+.getElementById('selected')
+.innerText =
+'ช่องที่เลือก : ' +
+document.getElementById('lbl-' + field).innerText;
 
         return;
     }
@@ -889,20 +898,26 @@ function calc(){
     const modeValue =
 names[currentMode];
 
-    if(
-        modeValue==='Position'
-        ||
-        modeValue==='Concentricity'
-    ){
+    if(modeValue==='Position'){
 
-        resultValue =
-        Math.sqrt(
-            Math.pow(xa-xn,2)
-            +
-            Math.pow(ya-yn,2)
-        ) * 2;
+    resultValue =
+    Math.sqrt(
+        Math.pow(xa-xn,2)
+        +
+        Math.pow(ya-yn,2)
+    ) * 2;
 
-    }
+}
+else if(modeValue==='Concentricity'){
+
+    resultValue =
+    Math.sqrt(
+        Math.pow(xa-xn,2)
+        +
+        Math.pow(ya-yn,2)
+    );
+
+}
 
     else if(
         modeValue==='Circularity'
