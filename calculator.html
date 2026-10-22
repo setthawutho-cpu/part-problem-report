@@ -304,6 +304,10 @@ body{
 
 .result:last-child{
     padding-bottom:10px;
+
+    height:350px;
+    min-height:350px;
+    max-height:350px;
 }
 
 #pad{
@@ -430,7 +434,11 @@ body{
     gap:8px;
     margin-top:12px;
 
-    height:240px;
+    height:232px;
+    min-height:232px;
+    max-height:232px;
+
+    overflow:hidden;
 }
     
 </style>
@@ -1074,15 +1082,15 @@ function updateInputs(){
     document.getElementById('lbl-xa').innerText = cfg[1];
 
     if(cfg[2]){
-        document.getElementById('box-yn').style.visibility='visible';
-        document.getElementById('box-ya').style.visibility='visible';
+        document.getElementById('box-yn').classList.remove('hide-input');
+        document.getElementById('box-ya').classList.remove('hide-input');
 
         document.getElementById('lbl-yn').innerText = cfg[2];
         document.getElementById('lbl-ya').innerText = cfg[3];
     }
     else{
-        document.getElementById('box-yn').style.visibility='hidden';
-        document.getElementById('box-ya').style.visibility='hidden';
+        document.getElementById('box-yn').classList.add('hide-input');
+        document.getElementById('box-ya').classList.add('hide-input');
     }
 
 }
