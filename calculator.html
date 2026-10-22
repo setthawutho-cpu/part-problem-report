@@ -341,24 +341,38 @@ body{
 }
 
 .gdt-box{
-    width:85%;
-    max-width:420px;
+    width:90%;
+    max-width:460px;
     margin-top:80px;
-    background:rgba(44,68,116,.92);
+
+    background:rgba(44,68,116,.95);
     backdrop-filter:blur(20px);
-    border-radius:30px;
-    overflow:hidden;
+
+    border-radius:24px;
+    padding:16px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+
     box-shadow:0 10px 40px rgba(0,0,0,.5);
 }
 
 .gdt-item{
-    padding:24px 28px;
-    font-size:22px;
-    color:#fff;
-    cursor:pointer;
     display:flex;
+    flex-direction:column;
+
     align-items:center;
-    gap:16px;
+    justify-content:center;
+
+    min-height:90px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.05);
+
+    cursor:pointer;
+    text-align:center;
 }
 
 .gdt-item:hover{
@@ -370,10 +384,15 @@ body{
 }
 
 .gdt-icon{
-    width:32px;
-    text-align:center;
+    font-size:28px;
     color:#ffbf2f;
-    font-size:26px;
+    margin-bottom:6px;
+}
+
+.gdt-name{
+    font-size:11px;
+    line-height:1.2;
+    color:#fff;
 }
 
 .history-panel{
@@ -483,43 +502,43 @@ onclick="openGdtMenu()">
 <div class="gdt-box">
 
 <div class="gdt-item" onclick="selectMode(0)">
-<span class="gdt-icon">⌖</span>
-<span>Position</span>
+  <div class="gdt-icon">⌖</div>
+  <div class="gdt-name">Position</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(1)">
-<span class="gdt-icon">○</span>
-<span>Circularity</span>
+  <div class="gdt-icon">○</div>
+  <div class="gdt-name">Circularity</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(2)">
-<span class="gdt-icon">▱</span>
-<span>Flatness</span>
+  <div class="gdt-icon">▱</div>
+  <div class="gdt-name">Flatness</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(3)">
-<span class="gdt-icon">∥</span>
-<span>Parallelism</span>
+  <div class="gdt-icon">∥</div>
+  <div class="gdt-name">Parallelism</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(4)">
-<span class="gdt-icon">⊥</span>
-<span>Perpendicularity</span>
+  <div class="gdt-icon">⊥</div>
+  <div class="gdt-name">Perpendicularity</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(5)">
-<span class="gdt-icon">◎</span>
-<span>Concentricity</span>
+  <div class="gdt-icon">◎</div>
+  <div class="gdt-name">Concentricity</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(6)">
-<span class="gdt-icon">↗</span>
-<span>Circular Runout</span>
+  <div class="gdt-icon">↗</div>
+  <div class="gdt-name">Runout</div>
 </div>
 
 <div class="gdt-item" onclick="selectMode(7)">
-<span class="gdt-icon">⇉</span>
-<span>Total Runout</span>
+  <div class="gdt-icon">⇉</div>
+  <div class="gdt-name">Total Runout</div>
 </div>
 
 </div>
