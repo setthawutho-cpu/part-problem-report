@@ -341,23 +341,24 @@ function calculate(){
 
 try{
 
-let result=
-eval(expression);
+let exp = expression;
+
+// แปลง % เป็น /100
+exp = exp.replace(/(\d+(\.\d+)?)%/g,"($1/100)");
+
+let result = eval(exp);
 
 saveHistory(
 expression+" = "+result
 );
 
-expression=
-String(result);
+expression = String(result);
 
 update();
 
 }catch{
 
-display.textContent=
-"Error";
-
+display.textContent="Error";
 expression="";
 
 }
