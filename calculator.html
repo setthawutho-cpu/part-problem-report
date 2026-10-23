@@ -201,6 +201,34 @@ body{
     color:#fff;
 }
 
+.hbPage{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding-top:10px;
+}
+
+.hbInput{
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:12px;
+    background:#222;
+    color:#fff;
+    font-size:18px;
+    padding:12px;
+}
+
+.hbCalc{
+    height:55px;
+    border:none;
+    border-radius:12px;
+    background:#f5a033;
+    color:#fff;
+    font-size:18px;
+}
+
 @media (max-width:767px){
 
     body{
@@ -236,7 +264,10 @@ body{
 
 <div class="display" id="display">0</div>
 
-<div class="pad">
+<div id="hbPage" style="display:none">
+</div>
+
+<div class="pad" id="calculatorPad">
 
 <button class="btn gray" onclick="backspace()">⌫</button>
 <button class="btn gray" onclick="clearAll()">AC</button>
@@ -426,6 +457,60 @@ document
 .toggle("show");
 }
 
+function selectMode(mode){
+
+    document
+    .getElementById("modePanel")
+    .classList.remove("show");
+
+    if(mode==="HB"){
+
+        document
+        .getElementById("calculatorPad")
+        .style.display="none";
+
+        document
+        .getElementById("hbPage")
+        .style.display="flex";
+
+        document
+        .getElementById("hbPage")
+        .className="hbPage";
+
+        document
+        .getElementById("hbPage")
+        .innerHTML=`
+
+        <input class="hbInput"
+        id="hbD"
+        placeholder="Ball Diameter">
+
+        <input class="hbInput"
+        id="hbF"
+        placeholder="Force">
+
+        <input class="hbInput"
+        id="hbX"
+        placeholder="Indentation">
+
+        <button class="hbCalc"
+        onclick="calculateHB()">
+        Calculate HB
+        </button>
+
+        <button class="hbCalc"
+        onclick="showCalculator()">
+        Back
+        </button>
+
+        `;
+
+        display.innerText="HB";
+
+    }
+
+}
+
 function getHistory(){
 
 return JSON.parse(
@@ -488,17 +573,62 @@ localStorage.setItem(
 JSON.stringify(data)
 );
 
+
 renderHistory();
 
 }
 
 function clearHistory(){
 
-localStorage.removeItem(
-"calcHistory"
-);
+    localStorage.removeItem(
+        "calcHistory"
+    );
 
-renderHistory();
+    renderHistory();
+
+}
+
+function showCalculator(){
+
+    document
+    .getElementById("hbPage")
+    .style.display="none";
+
+    document
+    .getElementById("calculatorPad")
+    .style.display="grid";
+
+    display.innerText=
+    expression==="" ? "0" : expression;
+
+}
+
+function calculateHB(){
+
+    let D = parseFloat(
+        document.getElementById("hbD").value
+    ) || 0;
+
+    let F = parseFloat(
+        document.getElementById("hbF").value
+    ) || 0;
+
+    let X = parseFloat(
+        document.getElementById("hbX").value
+    ) || 0;
+
+    if(D<=0 || F<=0 || X<=0){
+        display.innerText="Input Error";
+        return;
+    }
+
+    let HB=
+    (2*F)/
+    (3.14159*D*
+    (D-Math.sqrt(D*D-X*X)));
+
+    display.innerText=
+    HB.toFixed(1);
 
 }
 
