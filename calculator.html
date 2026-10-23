@@ -78,19 +78,23 @@ body{
 }
 
 .display{
-    height:160px;
+    height:260px;
 
     display:flex;
+    flex-direction:column;
     justify-content:flex-end;
-    align-items:flex-end;
 
     padding:20px 10px;
 
+    overflow:hidden;
+}
+
+#display{
     color:#fff;
     font-size:clamp(48px,16vw,110px);
-
-    overflow:hidden;
-    word-break:break-all;
+    text-align:right;
+    width:100%;
+    margin-bottom:10px;
 }
 
 .pad{
@@ -208,9 +212,8 @@ body{
 
 .hbPage{
     width:100%;
-    height:180px;
-    flex-shrink:0;
-    margin-bottom:10px;
+    height:130px;
+    overflow:hidden;
 }
 
 .hbInput{
@@ -258,9 +261,13 @@ body{
 <button class="iconBtn" onclick="toggleMode()">🧮</button>
 </div>
 
-<div class="display" id="display">0</div>
+<div class="display">
 
-<div id="hbPage" class="hbPage">
+    <div id="display">0</div>
+
+    <div id="hbPage" class="hbPage">
+    </div>
+
 </div>
 
 <div class="pad" id="calculatorPad">
