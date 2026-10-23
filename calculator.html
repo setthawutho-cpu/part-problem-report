@@ -30,7 +30,7 @@ body{
 
 #app{
     width:100%;
-    min-height:100dvh;
+    height:100dvh;
 
     display:flex;
     flex-direction:column;
@@ -41,10 +41,11 @@ body{
     padding-left:20px;
     padding-right:20px;
 
+    /* เผื่อแถบนำทาง Android */
     padding-bottom:
-        calc(20px + env(safe-area-inset-bottom));
+        calc(55px + env(safe-area-inset-bottom));
 
-    overflow:auto;
+    overflow:hidden;
 }
 
 .topbar{
