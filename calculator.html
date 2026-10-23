@@ -260,43 +260,61 @@ Close
 
 <div class="modePanel" id="modePanel">
 
-<button class="modeBtn">HB</button>
+<button class="modeBtn" onclick="selectMode('HB')">HB</button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Position')">
 ⌖ Position
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Circularity')">
 ○ Circularity
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Flatness')">
 ▱ Flatness
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Parallelism')">
 ∥ Parallelism
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Perpendicularity')">
 ⊥ Perpendicularity
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Concentricity')">
 ◎ Concentricity
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Circular Runout')">
 ↗ Circular Runout
 </button>
 
-<button class="modeBtn">
+<button class="modeBtn" onclick="selectMode('Total Runout')">
 ⇉ Total Runout
 </button>
 
 </div>
 
 <script>
+
+document.addEventListener("click",function(e){
+
+    const panel =
+        document.getElementById("modePanel");
+
+    const btn =
+        e.target.closest(".iconBtn");
+
+    if(
+        panel.classList.contains("show") &&
+        !panel.contains(e.target) &&
+        !btn
+    ){
+        panel.classList.remove("show");
+    }
+
+});
 
 let expression="";
 
