@@ -424,11 +424,10 @@ function input(v){
         let box =
         document.getElementById(activeInput);
 
-        if(
-    box.innerText==="Force" ||
-    box.innerText==="Ball Diameter" ||
-    box.innerText==="Indentation"
-){
+let ph =
+box.dataset.placeholder;
+
+if(box.innerText===ph){
     box.innerText=v;
 }else{
     box.innerText+=v;
@@ -446,9 +445,11 @@ function clearAll(){
 
     if(activeInput){
 
-document
-.getElementById(activeInput)
-.innerText="";
+let box =
+document.getElementById(activeInput);
+
+box.innerText =
+box.dataset.placeholder;
 
         return;
     }
@@ -465,8 +466,13 @@ function backspace(){
         let box =
         document.getElementById(activeInput);
 
-        box.innerText =
-        box.innerText.slice(0,-1);
+box.innerText =
+box.innerText.slice(0,-1);
+
+if(box.innerText===""){
+    box.innerText=
+    box.dataset.placeholder;
+});
 
         return;
     }
@@ -575,6 +581,7 @@ function selectMode(mode){
 <div
 class="hbInput"
 id="hbF"
+data-placeholder="Force"
 onclick="setInput('hbF')">
 Force
 </div>
@@ -582,13 +589,15 @@ Force
 <div
 class="hbInput"
 id="hbD"
+data-placeholder="Ball Diameter"
 onclick="setInput('hbD')">
 Ball Diameter
-</div>
+</div>>
 
 <div
 class="hbInput"
 id="hbX"
+data-placeholder="Indentation"
 onclick="setInput('hbX')">
 Indentation
 </div>
