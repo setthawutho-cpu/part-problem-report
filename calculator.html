@@ -235,6 +235,11 @@ body{
     align-items:center;
 }
 
+.hbInput.active{
+    border:2px solid #f5a033;
+    box-shadow:0 0 8px rgba(245,160,51,.5);
+}
+
 @media (max-width:767px){
 
     body{
@@ -393,7 +398,18 @@ const display=document.getElementById("display");
 document.getElementById("hbPage").innerHTML="";
 
 function setInput(id){
+
+    document
+    .querySelectorAll(".hbInput")
+    .forEach(el =>
+        el.classList.remove("active")
+    );
+
     activeInput=id;
+
+    document
+    .getElementById(id)
+    .classList.add("active");
 }
 
 function update(){
