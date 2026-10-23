@@ -387,7 +387,15 @@ function input(v){
         let box =
         document.getElementById(activeInput);
 
-        box.value += v;
+        if(
+    box.innerText==="Force" ||
+    box.innerText==="Ball Diameter" ||
+    box.innerText==="Indentation"
+){
+    box.innerText=v;
+}else{
+    box.innerText+=v;
+}
 
         return;
     }
@@ -401,9 +409,9 @@ function clearAll(){
 
     if(activeInput){
 
-        document
-        .getElementById(activeInput)
-        .value="";
+document
+.getElementById(activeInput)
+.innerText="";
 
         return;
     }
@@ -420,8 +428,8 @@ function backspace(){
         let box =
         document.getElementById(activeInput);
 
-        box.value =
-        box.value.slice(0,-1);
+        box.innerText =
+        box.innerText.slice(0,-1);
 
         return;
     }
@@ -521,27 +529,30 @@ function selectMode(mode){
 
         document
         .getElementById("hbPage")
-        .innerHTML=`
+.innerHTML=`
 
-<input
+<div
 class="hbInput"
 id="hbF"
-placeholder="Force"
 onclick="setInput('hbF')">
+Force
+</div>
 
-<input
+<div
 class="hbInput"
 id="hbD"
-placeholder="Ball Diameter"
 onclick="setInput('hbD')">
+Ball Diameter
+</div>
 
-<input
+<div
 class="hbInput"
 id="hbX"
-placeholder="Indentation"
 onclick="setInput('hbX')">
+Indentation
+</div>
 
-        `;
+`;
 
         display.innerText="HB";
 
@@ -641,15 +652,15 @@ function showCalculator(){
 function calculateHB(){
 
 let F = parseFloat(
-    document.getElementById("hbF").value
+    document.getElementById("hbF").innerText
 ) || 0;
 
 let D = parseFloat(
-    document.getElementById("hbD").value
+    document.getElementById("hbD").innerText
 ) || 0;
 
 let X = parseFloat(
-    document.getElementById("hbX").value
+    document.getElementById("hbX").innerText
 ) || 0;
 
     if(D<=0 || F<=0 || X<=0){
