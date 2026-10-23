@@ -31,18 +31,11 @@ max-height:100vh;
 }
 
 #app{
-width:100%;
-max-width:480px;
-
-height:100%;
-
-margin:auto;
-
+width:100vw;
+height:100dvh;
 display:flex;
 flex-direction:column;
-
-padding:12px;
-
+padding:20px;
 overflow:hidden;
 }
 
@@ -65,20 +58,12 @@ font-size:28px;
 
 .display{
 flex:1;
-
-min-height:100px;
-max-height:150px;
-
 display:flex;
 justify-content:flex-end;
 align-items:flex-end;
-
-padding:10px;
-
+padding:20px 10px;
 color:#fff;
-
-font-size:clamp(40px,13vw,90px);
-
+font-size:clamp(48px,16vw,110px);
 overflow:hidden;
 word-break:break-all;
 }
@@ -86,24 +71,14 @@ word-break:break-all;
 .pad{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-
-gap:8px;
-
-padding-bottom:8px;
-
-flex:none;
+gap:12px;
 }
 
 .btn{
-width:100%;
-
-height:min(16vw,72px);
-
+aspect-ratio:1;
 border:none;
 border-radius:50%;
-
-font-size:clamp(20px,4vw,34px);
-
+font-size:clamp(22px,5vw,42px);
 background:#333;
 color:white;
 }
