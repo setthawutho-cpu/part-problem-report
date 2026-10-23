@@ -28,7 +28,7 @@ viewport-fit=cover">
 html,
 body{
     width:100%;
-    overflow-x:hidden;
+    overflow:hidden !important;
     touch-action:manipulation;
     overscroll-behavior:none;
 }
@@ -39,7 +39,8 @@ body{
     font-family:system-ui,sans-serif;
     -webkit-text-size-adjust:100%;
 
-    min-height:100dvh;
+    height:100dvh;
+    overflow:hidden;
 
     display:flex;
     justify-content:center;
@@ -53,7 +54,8 @@ body{
     margin:auto;
     padding:12px;
 
-    min-height:100dvh;
+    height:100%;
+    overflow:hidden;
 }
 
 .card{
@@ -61,7 +63,8 @@ body{
     border-radius:24px;
     padding:14px;
 
-    min-height:calc(100dvh - 24px);
+    height:calc(100dvh - 24px);
+    overflow:hidden;
 }
 
 .top{
