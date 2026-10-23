@@ -481,17 +481,17 @@ function selectMode(mode){
         .getElementById("hbPage")
         .innerHTML=`
 
-        <input class="hbInput"
-        id="hbD"
-        placeholder="Ball Diameter">
+<input class="hbInput"
+id="hbF"
+placeholder="Force">
 
-        <input class="hbInput"
-        id="hbF"
-        placeholder="Force">
+<input class="hbInput"
+id="hbD"
+placeholder="Ball Diameter">
 
-        <input class="hbInput"
-        id="hbX"
-        placeholder="Indentation">
+<input class="hbInput"
+id="hbX"
+placeholder="Indentation">
 
         <button class="hbCalc"
         onclick="calculateHB()">
@@ -605,17 +605,17 @@ function showCalculator(){
 
 function calculateHB(){
 
-    let D = parseFloat(
-        document.getElementById("hbD").value
-    ) || 0;
+let F = parseFloat(
+    document.getElementById("hbF").value
+) || 0;
 
-    let F = parseFloat(
-        document.getElementById("hbF").value
-    ) || 0;
+let D = parseFloat(
+    document.getElementById("hbD").value
+) || 0;
 
-    let X = parseFloat(
-        document.getElementById("hbX").value
-    ) || 0;
+let X = parseFloat(
+    document.getElementById("hbX").value
+) || 0;
 
     if(D<=0 || F<=0 || X<=0){
         display.innerText="Input Error";
