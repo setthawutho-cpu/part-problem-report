@@ -2,1277 +2,440 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta
-name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-minimum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#04112d">
-
-<title>GD&T Calculator</title>
+<title>HB Calculator</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
-html,
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+font-family:Arial,sans-serif;
+touch-action:manipulation;
+position:fixed;
+inset:0;
+}
+
 body{
-    width:100%;
-    overflow:hidden !important;
-    touch-action:manipulation;
-    overscroll-behavior:none;
+max-width:100vw;
+max-height:100vh;
 }
 
-body{
-    background:#04112d;
-    color:#ffffff;
-    font-family:system-ui,sans-serif;
-    -webkit-text-size-adjust:100%;
-
-    height:100vh;
-    min-height:100vh;
-    overflow:hidden;
-
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
+#app{
+width:100vw;
+height:100dvh;
+display:flex;
+flex-direction:column;
+padding:20px;
+overflow:hidden;
 }
 
-.wrap{
-    width:100%;
-    max-width:480px;
-
-    margin:auto;
-    padding:12px;
-
-    height:100%;
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding-top:env(safe-area-inset-top);
 }
 
-.card{
-    background:#081a40;
-    border-radius:24px;
-    padding:14px;
-
-    height:calc(100vh - 24px);
-    overflow:visible;
+.iconBtn{
+width:56px;
+height:56px;
+border:none;
+border-radius:50%;
+background:#2c2c2e;
+color:#fff;
+font-size:28px;
 }
 
-.top{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:12px;
-}
-
-.sel{
-    flex:1;
-    margin-top:0;
-}
-
-.icon-btn{
-    width:52px;
-    height:52px;
-    border:none;
-    border-radius:14px;
-    background:#081a40;
-    color:#4be0ff;
-    border:2px solid #20345d;
-    font-size:26px;
-    cursor:pointer;
-}
-
-.history-btn{
-    background:#ffaf1a;
-    color:#000;
-    border:none;
-    padding:10px 15px;
-    border-radius:12px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.sel{
-    width:100%;
-    margin-top:10px;
-    padding:12px;
-    border:none;
-    border-radius:14px;
-    background:#213150;
-    color:#4be0ff;
-    font-size:18px;
-}
-
-.result{
-    background:#020c24;
-    border-radius:20px;
-    padding:14px;
-    margin-top:12px;
-    overflow:hidden;
-}
-
-.result-title{
-    margin-bottom:8px;
-}
-
-.formula{
-    color:#86b2ff;
-    font-size:13px;
-    margin-bottom:8px;
-}
-
-.value{
-    font-size:clamp(20px,8vw,42px);
-    color:#ffbf2f;
-    text-align:right;
-    font-weight:bold;
-
-    overflow-x:auto;
-    overflow-y:hidden;
-    white-space:nowrap;
-    width:100%;
-
-    scrollbar-width:none;
-}
-
-.value::-webkit-scrollbar{
-    display:none;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    margin-top:12px;
-}
-
-.stats div{
-    background:#132547;
-    padding:10px;
-    border-radius:12px;
-    text-align:center;
-    font-size:12px;
-}
-
-.stats span{
-    display:block;
-    font-size:11px;
-    word-break:break-all;
-    line-height:1.1;
-}
-
-.inputs{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    margin-top:12px;
-}
-
-.inp{
-    background:#102043;
-    border:2px solid #29406b;
-    border-radius:16px;
-
-    min-height:42px;
-    max-height:42px;
-
-    padding:6px 12px;
-
-    cursor:pointer;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.inp.active{
-    border-color:#ffaf1a;
-}
-
-.hide-input{
-    visibility:hidden;
-}
-
-.num{
-    color:#ffbf2f;
-    font-size:16px;
-    margin-top:4px;
-    font-weight:bold;
-
-    overflow-x:auto;
-    white-space:nowrap;
-    scrollbar-width:none;
-}
-
-.num::-webkit-scrollbar{
-    display:none;
-}
-
-.selected{
-    margin-bottom:10px;
-    color:#ffbf2f;
-    font-weight:bold;
-}
-
-.k{
-    background:#233452;
-    border:none;
-    color:#fff;
-    border-radius:14px;
-
-    width:100%;
-    height:56px;
-
-    min-height:56px;
-    max-height:56px;
-
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.red{
-    background:#641b36;
-    color:#ffb0bf;
-}
-
-.blue{
-    background:#005981;
-    color:#70dfff;
-}
-
-.yellow{
-    background:#ffb000;
-    color:#111;
-}
-
-.k{
-    background:#233452;
-    border:none;
-    color:#fff;
-    border-radius:14px;
-    width:100%;
-    height:56px;
-    min-height:56px;
-    max-height:56px;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-
-    transition:all .08s ease;
-}
-
-.k:active{
-    transform:scale(.92);
-    filter:brightness(1.4);
-    box-shadow:0 0 15px rgba(75,224,255,.6);
-}
-
-.pressed{
-    transform:scale(.88);
-    background:#00a8ff !important;
-    color:#fff !important;
-    box-shadow:
-        0 0 10px #4be0ff,
-        0 0 20px #4be0ff,
-        0 0 30px #4be0ff;
-}
-
-.history-item{
-    padding:8px;
-    border-bottom:1px solid rgba(255,255,255,.1);
-    font-size:13px;
-}
-
-.history-item:last-child{
-    border-bottom:none;
+.display{
+flex:1;
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+padding:20px 10px;
+color:#fff;
+font-size:clamp(48px,16vw,110px);
+overflow:hidden;
+word-break:break-all;
 }
 
 .pad{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:60px;
-    gap:8px;
-    margin-top:10px;
-    width:100%;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
 }
 
-.result:last-child{
-    padding:14px;
-
-    height:auto;
-    min-height:auto;
-    max-height:none;
-}
-    
-#pad{
-    height:auto;
-    min-height:auto;
-    max-height:none;
+.btn{
+aspect-ratio:1;
+border:none;
+border-radius:50%;
+font-size:clamp(22px,5vw,42px);
+background:#333;
+color:white;
 }
 
-*{
-    -webkit-user-select:none;
-    user-select:none;
-    -webkit-tap-highlight-color:transparent;
+.gray{
+background:#707070;
 }
 
-.gdt-menu{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.35);
-    display:none;
-    justify-content:center;
-    align-items:flex-start;
-    z-index:9999;
+.orange{
+background:#f5a033;
 }
 
-.gdt-box{
-    width:90%;
-    max-width:460px;
-    margin-top:80px;
-
-    background:rgba(44,68,116,.95);
-    backdrop-filter:blur(20px);
-
-    border-radius:24px;
-    padding:16px;
-
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-
-    box-shadow:0 10px 40px rgba(0,0,0,.5);
+.btn:active{
+transform:scale(.92);
+filter:brightness(1.4);
+box-shadow:0 0 20px rgba(255,255,255,.4);
 }
 
-.gdt-item{
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
-
-    min-height:90px;
-
-    border-radius:16px;
-
-    background:rgba(255,255,255,.05);
-
-    cursor:pointer;
-    text-align:center;
+.history{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#111;
+color:white;
+z-index:1000;
+transform:translateY(-100%);
+transition:.3s;
 }
 
-.gdt-item:hover{
-    background:rgba(255,255,255,.08);
+.history.show{
+transform:translateY(0);
 }
 
-.gdt-item.active{
-    color:#fff;
+.historyHeader{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #333;
 }
 
-.gdt-icon{
-    font-size:28px;
-    color:#ffbf2f;
-    margin-bottom:6px;
+.historyContent{
+height:calc(100% - 70px);
+overflow:auto;
+padding:10px;
 }
 
-.gdt-name{
-    font-size:11px;
-    line-height:1.2;
-    color:#fff;
+.historyItem{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+border-bottom:1px solid #222;
 }
 
-.history-panel{
-    position:fixed;
-    inset:0;
-
-    max-width:480px;
-    margin:auto;
-
-    background:#04112d;
-
-    z-index:99999;
-
-    transform:translateY(-100%);
-    transition:.35s ease;
-
-    overflow:hidden;
+.delBtn{
+background:#ff3b30;
+color:#fff;
+border:none;
+padding:6px 10px;
+border-radius:8px;
 }
 
-.history-panel.show{
-    transform:translateY(0);
+.modePanel{
+position:fixed;
+right:-270px;
+top:0;
+width:260px;
+height:100%;
+background:#111;
+z-index:999;
+transition:.3s;
+padding-top:80px;
+overflow-y:auto;
 }
 
-.history-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:15px;
-    font-size:20px;
-    font-weight:bold;
-
-    border-bottom:1px solid rgba(255,255,255,.1);
+.modePanel.show{
+right:0;
 }
 
-.close-history{
-    border:none;
-    background:none;
-    color:#fff;
-    font-size:24px;
-    cursor:pointer;
+.modeBtn{
+width:92%;
+margin:6px auto;
+display:block;
+padding:15px;
+border:none;
+border-radius:12px;
+font-size:18px;
+background:#262626;
+color:#fff;
 }
-
-.history-content{
-    height:75vh;
-    overflow-y:auto;
-    padding:10px;
-}
-
-.history-content::-webkit-scrollbar{
-    display:none;
-}
-
-.history-content{
-    scrollbar-width:none;
-}
-
-.lbl{
-    color:#b7c9ee;
-    font-size:13px;
-}
-
-.inputs{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    margin-top:10px;
-
-    height:176px;
-    min-height:176px;
-    max-height:176px;
-
-    overflow:hidden;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div id="app">
 
-<div class="card">
+<div class="topbar">
+<button class="iconBtn" onclick="toggleHistory()">🕒</button>
+<button class="iconBtn" onclick="toggleMode()">🧮</button>
+</div>
 
-<div class="top">
+<div class="display" id="display">0</div>
 
-<button
-class="icon-btn"
-onclick="viewHistory()">
-🕘
+<div class="pad">
+
+<button class="btn gray" onclick="backspace()">⌫</button>
+<button class="btn gray" onclick="clearAll()">AC</button>
+<button class="btn gray" onclick="input('%')">%</button>
+<button class="btn orange" onclick="input('/')">÷</button>
+
+<button class="btn" onclick="input('7')">7</button>
+<button class="btn" onclick="input('8')">8</button>
+<button class="btn" onclick="input('9')">9</button>
+<button class="btn orange" onclick="input('*')">×</button>
+
+<button class="btn" onclick="input('4')">4</button>
+<button class="btn" onclick="input('5')">5</button>
+<button class="btn" onclick="input('6')">6</button>
+<button class="btn orange" onclick="input('-')">−</button>
+
+<button class="btn" onclick="input('1')">1</button>
+<button class="btn" onclick="input('2')">2</button>
+<button class="btn" onclick="input('3')">3</button>
+<button class="btn orange" onclick="input('+')">+</button>
+
+<button class="btn" onclick="plusminus()">±</button>
+<button class="btn" onclick="input('0')">0</button>
+<button class="btn" onclick="input('.')">.</button>
+<button class="btn orange" onclick="calculate()">=</button>
+
+</div>
+</div>
+
+<div class="history" id="history">
+
+<div class="historyHeader">
+<h3>History</h3>
+
+<div>
+<button class="delBtn" onclick="clearHistory()">
+Clear
 </button>
 
-<div id="modeDisplay" class="sel">
-⌖ Position
+<button class="delBtn" onclick="toggleHistory()">
+Close
+</button>
 </div>
 
-<button
-class="icon-btn"
-onclick="openGdtMenu()">
-🧮
+</div>
+
+<div class="historyContent" id="historyList"></div>
+
+</div>
+
+<div class="modePanel" id="modePanel">
+
+<button class="modeBtn">HB</button>
+
+<button class="modeBtn">
+⌖ Position
 </button>
 
-</div>
+<button class="modeBtn">
+○ Circularity
+</button>
 
-<div id="gdtMenu" class="gdt-menu">
+<button class="modeBtn">
+▱ Flatness
+</button>
 
-<div class="gdt-box">
+<button class="modeBtn">
+∥ Parallelism
+</button>
 
-<div class="gdt-item" onclick="selectMode(0)">
-  <div class="gdt-icon">⌖</div>
-  <div class="gdt-name">Position</div>
-</div>
+<button class="modeBtn">
+⊥ Perpendicularity
+</button>
 
-<div class="gdt-item" onclick="selectMode(1)">
-  <div class="gdt-icon">○</div>
-  <div class="gdt-name">Circularity</div>
-</div>
+<button class="modeBtn">
+◎ Concentricity
+</button>
 
-<div class="gdt-item" onclick="selectMode(2)">
-  <div class="gdt-icon">▱</div>
-  <div class="gdt-name">Flatness</div>
-</div>
+<button class="modeBtn">
+↗ Circular Runout
+</button>
 
-<div class="gdt-item" onclick="selectMode(3)">
-  <div class="gdt-icon">∥</div>
-  <div class="gdt-name">Parallelism</div>
-</div>
-
-<div class="gdt-item" onclick="selectMode(4)">
-  <div class="gdt-icon">⊥</div>
-  <div class="gdt-name">Perpendicularity</div>
-</div>
-
-<div class="gdt-item" onclick="selectMode(5)">
-  <div class="gdt-icon">◎</div>
-  <div class="gdt-name">Concentricity</div>
-</div>
-
-<div class="gdt-item" onclick="selectMode(6)">
-  <div class="gdt-icon">↗</div>
-  <div class="gdt-name">Runout</div>
-</div>
-
-<div class="gdt-item" onclick="selectMode(7)">
-  <div class="gdt-icon">⇉</div>
-  <div class="gdt-name">Total Runout</div>
-</div>
-
-<div class="gdt-item" onclick="selectMode(8)">
-   <div class="gdt-icon">HB</div>
-   <div class="gdt-name">Brinell</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="result">
-
-<div class="result-title" id="modeTitle">
-⌖ Position
-</div>
-
-<div id="formula" class="formula">
-TP = 2√(ΔX² + ΔY²)
-</div>
-
-<div class="value" id="result">
-0
-</div>
-
-<!--
-<div class="stats">
-
-<div>
-MAX<br>
-<span id="max">0</span>
-</div>
-
-<div>
-MIN<br>
-<span id="min">0</span>
-</div>
-
-<div>
-RANGE<br>
-<span id="range">0</span>
-</div>
-
-<div>
-MEAN<br>
-<span id="mean">0</span>
-</div>
-
-</div>
--->
-
-</div>
-
-<div class="inputs">
-
-<div id="box-xn"
-class="inp active"
-data-f="xn">
-<span class="lbl" id="lbl-xn">
-X Nominal
-</span>
-<div class="num" id="xn">0</div>
-</div>
-
-<div id="box-xa"
-class="inp"
-data-f="xa">
-<span class="lbl" id="lbl-xa">
-X Actual
-</span>
-<div class="num" id="xa">0</div>
-</div>
-
-<div id="box-yn"
-class="inp"
-data-f="yn">
-<span class="lbl" id="lbl-yn">
-Y Nominal
-</span>
-<div class="num" id="yn">0</div>
-</div>
-
-<div id="box-ya"
-class="inp"
-data-f="ya">
-<span class="lbl" id="lbl-ya">
-Y Actual
-</span>
-<div class="num" id="ya">0</div>
-</div>
-
-</div>
-
-<div class="result">
-
-<div
-id="selected"
-class="selected">
-ช่องที่เลือก : X Nominal
-</div>
-
-<div
-class="pad"
-id="pad">
-</div>
-
-</div>
-
-</div>
+<button class="modeBtn">
+⇉ Total Runout
+</button>
 
 </div>
 
 <script>
 
-const syms = [
-'⌖',
-'○',
-'▱',
-'∥',
-'⊥',
-'◎',
-'↗',
-'⇉',
-'HB'
-];
+let expression="";
 
-const names = [
-'Position',
-'Circularity',
-'Flatness',
-'Parallelism',
-'Perpendicularity',
-'Concentricity',
-'Circular Runout',
-'Total Runout',
-'Brinell'
-];
+const display=document.getElementById("display");
 
-const formulas = [
-'TP = 2√(ΔX² + ΔY²)',
-'Circularity = Rmax - Rmin',
-'Flatness = Highest - Lowest',
-'Parallelism = Max - Min',
-'Perpendicularity = Max - Min',
-'Error = √(X²+Y²)',
-'Runout = Max - Min',
-'Total Runout = Max - Min',
-'HB = 2F / (πD(D-√(D²-d²)))'
-];
+function update(){
+display.textContent=
+expression==="" ? "0" : expression;
+}
 
-const modeLabels = {
+function input(v){
+expression+=v;
+update();
+}
 
-Position:[
-'X Nominal',
-'X Actual',
-'Y Nominal',
-'Y Actual'
-],
+function clearAll(){
+expression="";
+update();
+}
 
-Circularity:[
-'R Max',
-'R Min',
-'',
-''
-],
+function backspace(){
+expression=
+expression.slice(0,-1);
+update();
+}
 
-Flatness:[
-'Highest',
-'Lowest',
-'',
-''
-],
+function plusminus(){
 
-Parallelism:[
-'Distance Max',
-'Distance Min',
-'',
-''
-],
+if(expression==="") return;
 
-Perpendicularity:[
-'Height Max',
-'Height Min',
-'',
-''
-],
+if(expression.startsWith("-")){
+expression=
+expression.substring(1);
+}else{
+expression="-"+expression;
+}
 
-Concentricity:[
-'X Offset',
-'Y Offset',
-'',
-''
-],
+update();
+}
 
-'Circular Runout':[
-'Max Reading',
-'Min Reading',
-'',
-''
-],
+function calculate(){
 
-'Total Runout':[
-'Max Reading',
-'Min Reading',
-'',
-''
-],
+try{
 
-Brinell:[
-'Force',
-'Ball Dia',
-'Indent Dia',
-''
-]
+let result=
+eval(expression);
 
-};
-
-let currentMode = 0;
-
-let vals = {
-xn:'0',
-xa:'0',
-yn:'0',
-ya:'0'
-};
-
-let field = 'xn';
-
-let hist =
-JSON.parse(
-localStorage.getItem('gdtHistory')
-|| '[]'
+saveHistory(
+expression+" = "+result
 );
 
+expression=
+String(result);
+
+update();
+
+}catch{
+
+display.textContent=
+"Error";
+
+expression="";
+
+}
+
+}
+
+function toggleHistory(){
 document
-.querySelectorAll('.inp')
-.forEach(el=>{
+.getElementById("history")
+.classList
+.toggle("show");
+}
 
-    el.onclick = ()=>{
-
-        document
-        .querySelectorAll('.inp')
-        .forEach(x=>
-            x.classList.remove('active')
-        );
-
-        el.classList.add('active');
-
-        field = el.dataset.f;
-
-        document
-.getElementById('selected')
-.innerText =
-'ช่องที่เลือก : ' +
-document.getElementById('lbl-' + field).innerText;
-    };
-
-});
-
-const keypad = [
-'7','8','9','⌫',
-'4','5','6','C',
-'1','2','3','Next',
-'-','0','.','Save'
-];
-
-keypad.forEach(key=>{
-
-    const btn =
-    document.createElement('button');
-
-    btn.className = 'k';
-
-    if(key==='C'){
-        btn.classList.add('red');
-    }
-
-    if(key==='Next'){
-        btn.classList.add('blue');
-    }
-
-    if(key==='Save'){
-        btn.classList.add('yellow');
-    }
-
-    btn.textContent = key;
-
-    btn.onclick = ()=>{
-    btn.classList.add('pressed');
-
-    setTimeout(()=>{
-        btn.classList.remove('pressed');
-    },120);
-
-    press(key);
-};
-
-    document
-    .getElementById('pad')
-    .appendChild(btn);
-
-});
-
-function press(key){
-
-    if(key==='C'){
-
-        vals[field]='0';
-
-    }
-
-    else if(key==='⌫'){
-
-        vals[field]=
-        vals[field].slice(0,-1)
-        || '0';
-
-    }
-
-    else if(key==='Next'){
-
-        const arr=[
-            'xn',
-            'xa',
-            'yn',
-            'ya'
-        ];
-
-        field =
-        arr[
-            (arr.indexOf(field)+1)
-            %
-            arr.length
-        ];
-
-        document
-.querySelector(
-`[data-f="${field}"]`
-)
-.click();
-
+function toggleMode(){
 document
-.getElementById('selected')
-.innerText =
-'ช่องที่เลือก : ' +
-document.getElementById('lbl-' + field).innerText;
-
-        return;
-    }
-
-    else if(key==='Save'){
-
-        hist.push({
-
-            mode:names[currentMode],
-
-            xn:vals.xn,
-            xa:vals.xa,
-            yn:vals.yn,
-            ya:vals.ya,
-
-            result:
-            document.getElementById('result')
-            .innerText,
-
-            time:
-            new Date()
-            .toLocaleString(
-                'th-TH'
-            )
-
-        });
-
-        localStorage.setItem(
-            'gdtHistory',
-            JSON.stringify(hist)
-        );
-
-        alert('บันทึกแล้ว');
-
-        return;
-    }
-
-    else{
-
-        if(
-            key==='.'
-            &&
-            vals[field].includes('.')
-        ){
-            return;
-        }
-
-        if(
-            vals[field]==='0'
-            &&
-            key!=='.'
-        ){
-            vals[field]='';
-        }
-
-        if(vals[field].length < 12){
-    vals[field] += key;
-}
-    }
-
-    document
-    .getElementById(field)
-    .innerText =
-    vals[field];
-
-    calc();
+.getElementById("modePanel")
+.classList
+.toggle("show");
 }
 
-function calc(){
-
-    const xn =
-    parseFloat(vals.xn)||0;
-
-    const xa =
-    parseFloat(vals.xa)||0;
-
-    const yn =
-    parseFloat(vals.yn)||0;
-
-    const ya =
-    parseFloat(vals.ya)||0;
-
-    let resultValue=0;
-
-    const modeValue =
-names[currentMode];
-
-    if(modeValue==='Position'){
-
-    resultValue =
-    Math.sqrt(
-        Math.pow(xa-xn,2)
-        +
-        Math.pow(ya-yn,2)
-    ) * 2;
-
-}
-else if(modeValue==='Concentricity'){
-
-    resultValue =
-    Math.sqrt(
-        Math.pow(xa-xn,2)
-        +
-        Math.pow(ya-yn,2)
-    );
-
-}
-
-    else if(
-        modeValue==='Circularity'
-        ||
-        modeValue==='Flatness'
-    ){
-
-        resultValue =
-        Math.abs(xa-xn);
-
-    }
-
-    else if(
-        modeValue==='Parallelism'
-        ||
-        modeValue==='Perpendicularity'
-    ){
-
-        resultValue =
-        Math.abs(
-            (xa-xn)
-            -
-            (ya-yn)
-        );
-
-    }
-
-    else if(
-        modeValue==='Circular Runout'
-    ){
-
-        resultValue =
-        (
-            Math.abs(xa-xn)
-            +
-            Math.abs(ya-yn)
-        ) / 2;
-
-    }
-
-    else if(
-        modeValue==='Total Runout'
-    ){
-
-        resultValue =
-        Math.abs(xa-xn)
-        +
-        Math.abs(ya-yn);
-
-    }
-
-    else if(modeValue==='Brinell'){
-
-    const F = parseFloat(vals.xn)||0;
-    const B = parseFloat(vals.xa)||0;
-    const D = parseFloat(vals.yn)||0;
-
-    if(
-        F>0 &&
-        B>0 &&
-        D>0 &&
-        D < B
-    ){
-        resultValue =
-        (2*F) /
-        (
-            Math.PI *
-            B *
-            (
-                B -
-                Math.sqrt(
-                    (B*B) - (D*D)
-                )
-            )
-        );
-    }
-}
-
-document
-.getElementById('result')
-.innerText =
-parseFloat(
-    resultValue.toFixed(4)
-);;
-
-}
-
-function viewHistory(){
-
-    const box =
-    document.getElementById(
-        'historyContent'
-    );
-
-    box.innerHTML='';
-
-    if(hist.length===0){
-
-        box.innerHTML=
-        '<div class="history-item">ยังไม่มีประวัติ</div>';
-
-    }else{
-
-        hist
-        .slice()
-        .reverse()
-        .forEach(item=>{
-
-            const div=
-            document.createElement('div');
-
-            div.className=
-            'history-item';
-
-            div.innerHTML=
-            '<b>'+item.mode+'</b><br>' +
-            'Result : '+item.result+'<br>' +
-            item.time;
-
-            box.appendChild(div);
-
-        });
-
-    }
-
-    document
-    .getElementById('historyPanel')
-    .classList.add('show');
-
-}
-
-function openGdtMenu(){
-
-    document
-    .getElementById('gdtMenu')
-    .style.display='flex';
-
-}
-
-function closeGdtMenu(){
-
-    document
-    .getElementById('gdtMenu')
-    .style.display='none';
-
-}
-
-function updateInputs(){
-
-    const mode =
-    names[currentMode];
-
-    const cfg =
-    modeLabels[mode];
-
-if(mode==='Brinell'){
-
-    document.getElementById('box-yn').classList.remove('hide-input');
-    document.getElementById('box-ya').classList.add('hide-input');
-
-    document.getElementById('lbl-xn').innerText='Force';
-    document.getElementById('lbl-xa').innerText='Ball Dia';
-    document.getElementById('lbl-yn').innerText='Indent Dia';
-
-    return;
-}
-
-    document.getElementById('lbl-xn').innerText = cfg[0];
-    document.getElementById('lbl-xa').innerText = cfg[1];
-
-    if(cfg[2]){
-        document.getElementById('box-yn').classList.remove('hide-input');
-        document.getElementById('box-ya').classList.remove('hide-input');
-
-        document.getElementById('lbl-yn').innerText = cfg[2];
-        document.getElementById('lbl-ya').innerText = cfg[3];
-    }
-    else{
-        document.getElementById('box-yn').classList.add('hide-input');
-        document.getElementById('box-ya').classList.add('hide-input');
-    }
-
-}
-
-function selectMode(index){
-
-    currentMode = index;
-
-    document.getElementById('modeDisplay').innerHTML =
-    syms[index] + ' ' + names[index];
-
-    document.getElementById('modeTitle').innerHTML =
-    syms[index] + ' ' + names[index];
-
-    document.getElementById('formula').innerText =
-    formulas[index];
-
-    updateInputs();
-
-    closeGdtMenu();
-
-    calc();
-
-}
-
-function closeHistoryPanel(){
-
-    document
-    .getElementById('historyPanel')
-    .classList.remove('show');
-
-}
-
-document
-.addEventListener(
-'click',
-function(e){
-
-    if(
-        e.target.id==='gdtMenu'
-    ){
-        closeGdtMenu();
-    }
-
-});
-
-document.getElementById('modeDisplay').innerHTML =
-syms[0] + ' ' + names[0];
-
-document.getElementById('modeTitle').innerHTML =
-syms[0] + ' ' + names[0];
-
-document.getElementById('formula').innerText =
-formulas[0];
-
-updateInputs();
-calc();
-
-</script>
-
-<script>
-
-let lastTouchEnd = 0;
-
-document.addEventListener(
-'touchend',
-function(event){
-
-    const now = Date.now();
-
-    if(now - lastTouchEnd <= 300){
-        event.preventDefault();
-    }
-
-    lastTouchEnd = now;
-
-},
-{ passive:false }
+function getHistory(){
+
+return JSON.parse(
+localStorage.getItem("calcHistory")
+|| "[]"
 );
 
-document.addEventListener(
-'gesturestart',
-function(e){
-    e.preventDefault();
 }
+
+function saveHistory(txt){
+
+let data=getHistory();
+
+data.unshift(txt);
+
+localStorage.setItem(
+"calcHistory",
+JSON.stringify(data)
 );
 
-</script>
+renderHistory();
 
-<div id="historyPanel" class="history-panel">
+}
 
-    <div class="history-header">
-        <span>🕘 ประวัติการคำนวณ</span>
+function renderHistory(){
 
-        <button
-        class="close-history"
-        onclick="closeHistoryPanel()">
-        ✕
-        </button>
-    </div>
+let data=getHistory();
 
-    <div id="historyContent" class="history-content">
-    </div>
+let html="";
 
+data.forEach((item,index)=>{
+
+html+=`
+<div class="historyItem">
+<div>${item}</div>
+<button
+class="delBtn"
+onclick="deleteHistory(${index})">
+X
+</button>
 </div>
+`;
+
+});
+
+document.getElementById(
+"historyList"
+).innerHTML=html;
+
+}
+
+function deleteHistory(index){
+
+let data=getHistory();
+
+data.splice(index,1);
+
+localStorage.setItem(
+"calcHistory",
+JSON.stringify(data)
+);
+
+renderHistory();
+
+}
+
+function clearHistory(){
+
+localStorage.removeItem(
+"calcHistory"
+);
+
+renderHistory();
+
+}
+
+renderHistory();
+
+</script>
 
 </body>
 </html>
