@@ -73,7 +73,7 @@ body{
 }
 
 .display{
-    height:220px;
+    height:160px;
 
     display:flex;
     justify-content:flex-end;
@@ -202,31 +202,21 @@ body{
 }
 
 .hbPage{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    padding-top:10px;
+    width:100%;
+    margin-bottom:15px;
+    flex-shrink:0;
 }
 
 .hbInput{
     width:100%;
-    height:55px;
+    height:65px;
+    margin-bottom:12px;
     border:none;
     border-radius:12px;
     background:#222;
     color:#fff;
     font-size:18px;
     padding:12px;
-}
-
-.hbCalc{
-    height:55px;
-    border:none;
-    border-radius:12px;
-    background:#f5a033;
-    color:#fff;
-    font-size:18px;
 }
 
 @media (max-width:767px){
@@ -519,7 +509,7 @@ function selectMode(mode){
 
         document
         .getElementById("calculatorPad")
-        .style.display="none";
+        .style.display="grid";
 
         document
         .getElementById("hbPage")
@@ -642,12 +632,9 @@ function showCalculator(){
     .getElementById("hbPage")
     .style.display="none";
 
-    document
-    .getElementById("calculatorPad")
-    .style.display="grid";
+    activeInput = null;
 
-    display.innerText=
-    expression==="" ? "0" : expression;
+    update();
 
 }
 
