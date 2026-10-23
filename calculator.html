@@ -208,8 +208,9 @@ body{
 
 .hbPage{
     width:100%;
-    margin-bottom:15px;
+    height:180px;
     flex-shrink:0;
+    margin-bottom:10px;
 }
 
 .hbInput{
@@ -259,7 +260,7 @@ body{
 
 <div class="display" id="display">0</div>
 
-<div id="hbPage" style="display:none">
+<div id="hbPage" class="hbPage">
 </div>
 
 <div class="pad" id="calculatorPad">
@@ -375,6 +376,7 @@ let expression="";
 let activeInput=null;
 
 const display=document.getElementById("display");
+document.getElementById("hbPage").innerHTML="";
 
 function setInput(id){
     activeInput=id;
@@ -526,7 +528,7 @@ function selectMode(mode){
 
         document
         .getElementById("hbPage")
-        .style.display="flex";
+        .style.display="block";
 
         document
         .getElementById("hbPage")
