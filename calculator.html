@@ -42,9 +42,9 @@ body{
     padding-right:20px;
 
     padding-bottom:
-        calc(90px + env(safe-area-inset-bottom));
+        calc(20px + env(safe-area-inset-bottom));
 
-    overflow:hidden;
+    overflow:auto;
 }
 
 .topbar{
@@ -65,7 +65,8 @@ body{
 }
 
 .display{
-    flex:1;
+    height:120px;
+
     display:flex;
     justify-content:flex-end;
     align-items:flex-end;
@@ -84,8 +85,6 @@ body{
     grid-template-columns:repeat(4,1fr);
     gap:12px;
 
-    padding-bottom:
-        calc(120px + env(safe-area-inset-bottom));
 }
 
 .btn{
