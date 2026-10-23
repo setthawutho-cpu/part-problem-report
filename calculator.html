@@ -377,8 +377,13 @@ document.addEventListener("click",function(e){
 });
 
 let expression="";
+let activeInput=null;
 
 const display=document.getElementById("display");
+
+function setInput(id){
+    activeInput=id;
+}
 
 function update(){
 display.textContent=
@@ -386,19 +391,56 @@ expression==="" ? "0" : expression;
 }
 
 function input(v){
-expression+=v;
-update();
+
+    if(activeInput){
+
+        let box =
+        document.getElementById(activeInput);
+
+        box.value += v;
+
+        return;
+    }
+
+    expression += v;
+    update();
+
 }
 
 function clearAll(){
-expression="";
-update();
+
+    if(activeInput){
+
+        document
+        .getElementById(activeInput)
+        .value="";
+
+        return;
+    }
+
+    expression="";
+    update();
+
 }
 
 function backspace(){
-expression=
-expression.slice(0,-1);
-update();
+
+    if(activeInput){
+
+        let box =
+        document.getElementById(activeInput);
+
+        box.value =
+        box.value.slice(0,-1);
+
+        return;
+    }
+
+    expression =
+    expression.slice(0,-1);
+
+    update();
+
 }
 
 function plusminus(){
@@ -417,29 +459,39 @@ update();
 
 function calculate(){
 
-try{
+    if(
+        document.getElementById("hbPage")
+        .style.display==="flex"
+    ){
+        calculateHB();
+        return;
+    }
 
-let exp = expression;
+    try{
 
-// แปลง % เป็น /100
-exp = exp.replace(/(\d+(\.\d+)?)%/g,"($1/100)");
+        let exp = expression;
 
-let result = eval(exp);
+        exp = exp.replace(
+            /(\d+(\.\d+)?)%/g,
+            "($1/100)"
+        );
 
-saveHistory(
-expression+" = "+result
-);
+        let result = eval(exp);
 
-expression = String(result);
+        saveHistory(
+            expression+" = "+result
+        );
 
-update();
+        expression = String(result);
 
-}catch{
+        update();
 
-display.textContent="Error";
-expression="";
+    }catch{
 
-}
+        display.textContent="Error";
+        expression="";
+
+    }
 
 }
 
@@ -481,27 +533,23 @@ function selectMode(mode){
         .getElementById("hbPage")
         .innerHTML=`
 
-<input class="hbInput"
+<input
+class="hbInput"
 id="hbF"
-placeholder="Force">
+placeholder="Force"
+onclick="setInput('hbF')">
 
-<input class="hbInput"
+<input
+class="hbInput"
 id="hbD"
-placeholder="Ball Diameter">
+placeholder="Ball Diameter"
+onclick="setInput('hbD')">
 
-<input class="hbInput"
+<input
+class="hbInput"
 id="hbX"
-placeholder="Indentation">
-
-        <button class="hbCalc"
-        onclick="calculateHB()">
-        Calculate HB
-        </button>
-
-        <button class="hbCalc"
-        onclick="showCalculator()">
-        Back
-        </button>
+placeholder="Indentation"
+onclick="setInput('hbX')">
 
         `;
 
@@ -628,7 +676,7 @@ let X = parseFloat(
     (D-Math.sqrt(D*D-X*X)));
 
     display.innerText=
-    HB.toFixed(1);
+    HB.toFixed(1)+" HB";
 
 }
 
