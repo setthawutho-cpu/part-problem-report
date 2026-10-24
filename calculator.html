@@ -405,15 +405,18 @@ function setInput(id){
 
     document
     .querySelectorAll(".hbInput")
-    .forEach(el =>
-        el.classList.remove("active")
-    );
+    .forEach(el=>{
+        el.classList.remove("active");
+        el.blur();
+    });
 
     activeInput=id;
 
     let box=document.getElementById(id);
 
     box.classList.add("active");
+
+    box.blur();
 }
 
 function update(){
