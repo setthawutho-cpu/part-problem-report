@@ -30,6 +30,41 @@ body{
     padding:0;
 }
 
+/* พื้นหลังดำจางๆ */
+.report-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.4);
+    display:none;
+    justify-content:center;
+    align-items:flex-start;
+    z-index:99998;
+}
+
+/* กล่อง Report */
+.report-sheet{
+    width:95%;
+    max-width:500px;
+    max-height:75vh; /* ไม่เต็มจอ */
+    margin-top:15px;
+    background:#fff;
+    border-radius:0 0 16px 16px;
+    overflow:auto;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+
+    transform:translateY(-100%);
+    transition:.3s ease;
+}
+
+/* ตอนเปิด */
+.report-overlay.show{
+    display:flex;
+}
+
+.report-overlay.show .report-sheet{
+    transform:translateY(0);
+}
+
 #splash{
     position:fixed;
     top:0;
@@ -1019,7 +1054,11 @@ Remark
 📤 Send LINE
 </button>
 
-<div id="report" class="report"></div>
+<div id="reportOverlay" class="report-overlay">
+
+    <div id="report" class="report report-sheet"></div>
+
+</div>
 
 </div>
 
@@ -1408,11 +1447,15 @@ const result = allPartNo
 
 function reviewReport(){
 
-    if(reportVisible){
-        document.getElementById("report").style.display = "none";
-        reportVisible = false;
-        return;
-    }
+if(reportVisible){
+
+    document
+    .getElementById("reportOverlay")
+    .classList.remove("show");
+
+    reportVisible = false;
+    return;
+}
 
     reportVisible = true;
 
@@ -1637,9 +1680,14 @@ Supplier : ${supplier.value}
 text += `━━━━━━━━━━━━━━
 Photo : Attached`;
       
-    document.getElementById("report").style.display = "block";
 document.getElementById("report").innerText = text.trim();
+
+document
+.getElementById("reportOverlay")
+.classList.add("show");
+      
 }
+      
 document
 .querySelectorAll("input,select,textarea")
 .forEach(el => {
@@ -1994,14 +2042,25 @@ function changeLanguage(){
 
 changeLanguage();
 
+document
+.getElementById("reportOverlay")
+.addEventListener("click", function(e){
+
+    if(e.target === this){
+
+        this.classList.remove("show");
+        reportVisible = false;
+    }
+
+});
+
 </script>
-    <script>
+
+<script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js");
 }
 </script>
-
-<script src="bottom-nav.js"></script>
 
 </body>
 </html>
