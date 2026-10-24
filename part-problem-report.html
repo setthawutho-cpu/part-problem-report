@@ -755,9 +755,17 @@ textarea{
         ❮ กลับ
     </span>
 
-    <span onclick="openStandard()">
-        📏 Standard
-    </span>
+    <button
+        onclick="reviewReport()"
+        style="
+            background:#2196f3;
+            color:#fff;
+            border:none;
+            padding:6px 12px;
+            border-radius:4px;
+        ">
+        🔍 Review
+    </button>
 
 </div>
 
@@ -1038,10 +1046,6 @@ Remark
 </div>
 
 </div>
-
-<button class="review" onclick="reviewReport()">
-🔍 Review Report
-</button>
 
 <button class="copy" onclick="copyReport()">
 📋 Copy Report
