@@ -15,10 +15,10 @@ document.write(`
         <span>Dashboard</span>
     </button>
 
-    <button class="${page==='document.html' ? 'active' : ''}"
-        onclick="location.href='document.html'">
-        📝
-        <span>Document</span>
+    <button class="${page==='manu.html' ? 'active' : ''}"
+        onclick="location.href='manu.html'">
+        📋
+        <span>Maun</span>
     </button>
 
     <button class="${page==='calculator.html' ? 'active' : ''}"
