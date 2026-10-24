@@ -882,6 +882,41 @@ textarea{
     background:#fffef0;
     outline:2px solid #2196f3;
 }
+
+.std-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.4);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999999;
+}
+
+.std-overlay.show{
+    display:flex;
+}
+
+.std-box{
+    width:90%;
+    max-width:550px;
+
+    height:80dvh;
+
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+
+    box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+#stdFrame{
+    width:100%;
+    height:100%;
+    border:none;
+}
     
 </style>
 
@@ -1243,6 +1278,19 @@ Remark
     </div>
 
 </div>
+
+</div>
+
+<div id="stdOverlay" class="std-overlay">
+
+    <div class="std-box">
+
+        <iframe
+            id="stdFrame"
+            src="standard.html">
+        </iframe>
+
+    </div>
 
 </div>
 
@@ -2170,7 +2218,9 @@ function openStandard(){
         "detail"
     );
 
-    location.href = "standard.html";
+    document
+    .getElementById("stdOverlay")
+    .classList.add("show");
 
 }
 
@@ -2322,6 +2372,18 @@ document
         reportVisible = false;
 
         document.body.style.overflow = "";
+    }
+
+});
+
+document
+.getElementById("stdOverlay")
+.addEventListener("click", function(e){
+
+    if(e.target === this){
+
+        this.classList.remove("show");
+
     }
 
 });
