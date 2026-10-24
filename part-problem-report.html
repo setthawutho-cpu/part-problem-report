@@ -34,10 +34,17 @@ body{
 .report-overlay{
     position:fixed;
     inset:0;
+
     background:rgba(0,0,0,.35);
+
     display:none;
     align-items:flex-end;
     justify-content:center;
+
+    padding-top:80px;
+
+    box-sizing:border-box;
+
     z-index:99998;
     backdrop-filter:blur(3px);
 }
@@ -46,10 +53,10 @@ body{
     width:100%;
     max-width:600px;
 
-    height:80vh;
+    height:auto;
     max-height:calc(100dvh - 80px);
 
-    margin-top:40px;
+    margin-top:auto;
 
     background:#fff;
     color:#000;
