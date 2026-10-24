@@ -89,6 +89,7 @@ body{
     flex:1;
 
     overflow-y:auto;
+    overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
 
     padding:20px;
@@ -1582,6 +1583,9 @@ if(reportVisible){
     .classList.remove("show");
 
     reportVisible = false;
+
+    document.body.style.overflow = "";
+
     return;
 }
 
@@ -1815,6 +1819,8 @@ console.log(text);
 document
 .getElementById("reportOverlay")
 .classList.add("show");
+
+document.body.style.overflow = "hidden";
       
 }
       
@@ -2208,6 +2214,8 @@ document
 
         this.classList.remove("show");
         reportVisible = false;
+
+        document.body.style.overflow = "";
     }
 
 });
