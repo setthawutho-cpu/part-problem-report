@@ -87,15 +87,22 @@ body{
 .report-actions button{
     flex:1;
     height:46px;
-    border:none;
-    color:#fff;
-    font-weight:bold;
-    border-radius:12px !important;
 
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:6px;
+
+    border:none;
+    color:#fff;
+    font-weight:600;
+    font-size:17px;
+
+    border-radius:14px !important;
+
+    text-align:center;
+    padding:0;
+
+    gap:8px;
 }
 
 .btn-save{
@@ -1131,23 +1138,23 @@ Remark
 
         <div class="report-actions">
 
-            <button
-                class="btn-save"
-                onclick="saveReport()">
-                💾 Save
-            </button>
+<button
+    class="btn-save" onclick="saveReport()">
 
-            <button
-                class="btn-copy"
-                onclick="copyReport()">
-                📋 Copy
-            </button>
+    <span>💾</span>
+    <span>Save</span>
 
-            <button
-                class="btn-line"
-                onclick="sendLine()">
-                📤 LINE
-            </button>
+</button>
+
+<button class="btn-copy" onclick="copyReport()">
+    <span>📋</span>
+    <span>Copy</span>
+</button>
+
+<button class="btn-line" onclick="sendLine()">
+    <span>📤</span>
+    <span>LINE</span>
+</button>
 
         </div>
 
