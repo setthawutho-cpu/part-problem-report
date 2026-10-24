@@ -422,36 +422,41 @@ onclick="location.href='standard.html'">
 
 <script>
 
-let currentLang="en";
+let thai = false;
 
 function changeLanguage(){
 
-    currentLang=
-    currentLang==="en"?"th":"en";
+    thai = !thai;
 
-    if(currentLang==="th"){
+    document.getElementById("appTitle").innerText =
+    thai ? "ระบบ Inspection Part" : "INSPECTION PART";
 
-        appTitle.innerText="ระบบ Inspection Part";
+    document.getElementById("reportText").innerText =
+    thai ? "แจ้งปัญหาชิ้นส่วน" : "PART PROBLEM REPORT";
 
-        reportText.innerText="แจ้งปัญหา";
-        newModelText.innerText="ปัญหา New Model";
-        borrowText.innerText="ยืมชิ้นส่วนจาก PL";
-        trialText.innerText="ประกอบทดลอง";
-        washText.innerText="ห้องล้าง";
+    document.getElementById("newModelText").innerText =
+    thai ? "ชิ้นส่วน NEW MODEL" : "PART PROBLEM NEW MODEL";
 
-    }else{
+    document.getElementById("borrowText").innerText =
+    thai ? "ยืมชิ้นส่วนจาก PL" : "PART BORROWING FROM PL";
 
-        appTitle.innerText="INSPECTION PART";
+    document.getElementById("trialText").innerText =
+    thai ? "ทดลองประกอบ" : "ASSEMBLY TRIAL";
 
-        reportText.innerText="PART PROBLEM REPORT";
-        newModelText.innerText="PART PROBLEM NEW MODEL";
-        borrowText.innerText="PART BORROWING FROM PL";
-        trialText.innerText="ASSEMBLY TRIAL";
-        washText.innerText="WASHING ROOM";
+    document.getElementById("washText").innerText =
+    thai ? "ห้องตรวจสอบชิ้นงาน" : "WASHING ROOM";
 
-    }
+    document.getElementById("dashboardText").innerText =
+    thai ? "แดชบอร์ด" : "DASHBOARD";
 
+    document.getElementById("documentText").innerText =
+    thai ? "เอกสาร" : "DOCUMENT";
+
+    document.getElementById("standardText").innerText =
+    thai ? "มาตรฐาน" : "STANDARD";
 }
+
+changeLanguage();
 
 </script>
 
