@@ -45,7 +45,9 @@ body{
 .report-sheet{
     width:100%;
     max-width:600px;
+
     height:80vh;
+    max-height:calc(100dvh - 20px);
 
     background:#fff;
     color:#000;
@@ -82,9 +84,10 @@ body{
     overflow-y:auto;
     -webkit-overflow-scrolling:touch;
 
-    padding:15px;
+    padding:20px;
+    padding-bottom:60px;
 
-    padding-bottom:30px;
+    box-sizing:border-box;
 }
 
 .report-actions{
@@ -386,10 +389,10 @@ textarea{
 }
 
 .report{
-    margin-top:10px;
+    margin:0;
     background:white;
-    padding:10px;
-    border:1px solid #ccc;
+    border:none;
+
     white-space:pre-wrap;
     line-height:1.2;
 
