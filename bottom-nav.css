@@ -61,5 +61,8 @@
 .bottom-nav button.active{
     background:rgba(0,0,0,.08);
     color:#333;
-    border-radius:15px;
+
+    border-radius:20px;
+
+    margin:6px;
 }
