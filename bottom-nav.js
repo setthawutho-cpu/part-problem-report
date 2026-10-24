@@ -1,6 +1,6 @@
 document.write(`
 <div class="bottom-nav">
-    <button onclick="location.href='menu.html'">
+    <button onclick="location.href='home.html'">
         🏠
         <span>Home</span>
     </button>
