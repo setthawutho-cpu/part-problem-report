@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+minimum-scale=1.0,
+user-scalable=no">
+
+<title>Inspection Part</title>
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Inspection">
+<meta name="theme-color" content="#dfeaf3">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="stylesheet" href="bottom-nav.css">
+
+<style>
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    touch-action:manipulation;
+    overscroll-behavior:none;
+}
+
+*{
+    -webkit-tap-highlight-color: transparent;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    min-height:100vh;
+    padding-bottom:80px;
+}
+
+/* HEADER */
+
+.header{
+    background:#009688;
+    color:#fff;
+    padding:calc(env(safe-area-inset-top) + 12px) 15px 12px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+}
+
+#appTitle{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.lang-btn{
+    border:none;
+    background:#fff;
+    color:#009688;
+    padding:8px 14px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* MENU */
+
+.menu-grid{
+
+    padding:15px;
+
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
+}
+
+.menu-card{
+    height:100px;
+    min-height:100px;
+    background:#fff;
+    border:1px solid #999;
+    border-radius:8px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:5px;
+    cursor:pointer;
+
+    box-shadow:none;
+    transition:.2s;
+}
+
+.menu-card:hover{
+    transform:translateY(-3px);
+}
+
+.icon{
+    font-size:28px;
+}
+
+.menu-card span{
+    text-align:center;
+    font-size:14px;
+    padding:0 8px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .menu-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:6px;
+        padding:8px;
+    }
+
+    .menu-card{
+        height:85px;
+        min-height:85px;
+    }
+
+    .icon{
+        font-size:24px;
+    }
+
+    .menu-card span{
+        font-size:9px;
+        line-height:1.1;
+        padding:0 2px;
+    }
+
+    .logo{
+        width:30px;
+        height:30px;
+    }
+
+    #appTitle{
+        font-size:12px;
+    }
+
+    .lang-btn{
+        padding:6px 8px;
+        font-size:12px;
+    }
+
+.summary-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.summary-number{
+    font-size:24px;
+}
+
+.section-title{
+    font-size:16px;
+}
+
+.activity{
+    padding:12px;
+}
+
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
+}
+
+.section-title{
+    background:#009688;
+    color:#fff;
+    padding:12px;
+    font-size:18px;
+    font-weight:bold;
+    margin:15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 4px rgba(0,0,0,.15);
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:0 15px 15px;
+}
+
+.summary-card{
+    background:#fff;
+    border:1px solid #999;
+    padding:15px;
+    text-align:center;
+}
+
+.summary-number{
+    font-size:32px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.activity{
+    background:#fff;
+    border:1px solid #999;
+    padding:15px;
+    margin:0 15px 10px;
+}
+
+.menu-card{
+    min-width:0;
+}
+
+.summary-card{
+    min-width:0;
+}
+
+.bottom-nav button{
+    min-width:0 !important;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+    
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="logo-area">
+
+        <img src="icon-192.png" class="logo">
+
+        <span id="appTitle">
+            INSPECTION PART
+        </span>
+
+    </div>
+
+    <button class="lang-btn"
+        onclick="changeLanguage()">
+        🌐 TH | EN
+    </button>
+
+</div>
+
+<div class="menu-grid">
+
+    <button class="menu-card"
+        onclick="location.href='part-problem-report.html'">
+
+        <div class="icon">📋</div>
+
+        <span id="reportText">
+            PART PROBLEM REPORT
+        </span>
+
+    </button>
+
+    <button class="menu-card"
+        onclick="location.href='part-problem-newmodel.html'">
+
+        <div class="icon">📦</div>
+
+        <span id="newModelText">
+            PART PROBLEM NEW MODEL
+        </span>
+
+    </button>
+
+    <button class="menu-card"
+        onclick="location.href='part-borrowing-pl.html'">
+
+        <div class="icon">📨</div>
+
+        <span id="borrowText">
+            PART BORROWING FROM PL
+        </span>
+
+    </button>
+
+    <button class="menu-card"
+        onclick="location.href='assembly-trial.html'">
+
+        <div class="icon">🧪</div>
+
+        <span id="trialText">
+            ASSEMBLY TRIAL
+        </span>
+
+    </button>
+
+    <button class="menu-card"
+        onclick="location.href='washing-room.html'">
+
+        <div class="icon">🔬</div>
+
+        <span id="washText">
+            WASHING ROOM
+        </span>
+
+    </button>
+
+    <button class="menu-card"
+onclick="location.href='dashboard.html'">
+
+    <div class="icon">📊</div>
+
+    <span id="dashboardText">
+        DASHBOARD
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='document.html'">
+
+    <div class="icon">📄</div>
+
+    <span id="documentText">
+        DOCUMENT
+    </span>
+
+</button>
+
+<button class="menu-card"
+onclick="location.href='standard.html'">
+
+    <div class="icon">📏</div>
+
+    <span id="standardText">
+        STANDARD
+    </span>
+
+</button>
+
+</div>
+
+<div class="section-title">
+    📊 TODAY SUMMARY
+</div>
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+        <div class="summary-number">3</div>
+        <div>Problem</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">2</div>
+        <div>New Model</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">5</div>
+        <div>Borrow PL</div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-number">1</div>
+        <div>Defect</div>
+    </div>
+
+</div>
+
+<div class="section-title">
+    📋 RECENT ACTIVITY
+</div>
+
+<div class="activity">
+    08:10 🚨 PART PROBLEM
+</div>
+
+<div class="activity">
+    09:20 📦 BORROW FROM PL
+</div>
+
+<div class="activity">
+    10:35 🆕 NEW MODEL
+</div>
+
+<script>
+
+let currentLang="en";
+
+function changeLanguage(){
+
+    currentLang=
+    currentLang==="en"?"th":"en";
+
+    if(currentLang==="th"){
+
+        appTitle.innerText="ระบบ Inspection Part";
+
+        reportText.innerText="แจ้งปัญหา";
+        newModelText.innerText="ปัญหา New Model";
+        borrowText.innerText="ยืมชิ้นส่วนจาก PL";
+        trialText.innerText="ประกอบทดลอง";
+        washText.innerText="ห้องล้าง";
+
+    }else{
+
+        appTitle.innerText="INSPECTION PART";
+
+        reportText.innerText="PART PROBLEM REPORT";
+        newModelText.innerText="PART PROBLEM NEW MODEL";
+        borrowText.innerText="PART BORROWING FROM PL";
+        trialText.innerText="ASSEMBLY TRIAL";
+        washText.innerText="WASHING ROOM";
+
+    }
+
+}
+
+</script>
+
+<script>
+document.addEventListener('gesturestart', function(e){
+    e.preventDefault();
+});
+
+let lastTouchEnd = 0;
+
+document.addEventListener('touchend', function(e){
+
+    const now = Date.now();
+
+    if(now - lastTouchEnd <= 300){
+        e.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+},{passive:false});
+</script>
+
+<script src="bottom-nav.js"></script>
+    
+</body>
+</html>
