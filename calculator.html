@@ -397,6 +397,7 @@ document.addEventListener("click",function(e){
 
 let expression="";
 let activeInput=null;
+let currentMode="CALC";
 
 const display=document.getElementById("display");
 document.getElementById("hbPage").innerHTML="";
@@ -411,9 +412,13 @@ function setInput(id){
 
     activeInput=id;
 
-    document
-    .getElementById(id)
-    .classList.add("active");
+    let box=document.getElementById(id);
+
+    if(box.innerText===box.dataset.placeholder){
+        box.innerText="";
+    }
+
+    box.classList.add("active");
 }
 
 function update(){
@@ -428,21 +433,13 @@ function input(v){
         let box =
         document.getElementById(activeInput);
 
-let ph =
-box.dataset.placeholder;
-
-if(box.innerText===ph){
-    box.innerText=v;
-}else{
-    box.innerText+=v;
-}
+        box.innerText += v;
 
         return;
     }
 
     expression += v;
     update();
-
 }
 
 function clearAll(){
@@ -502,44 +499,6 @@ expression="-"+expression;
 update();
 }
 
-function calculate(){
-
-    if(
-        document.getElementById("hbPage")
-        .style.display==="flex"
-    ){
-        calculateHB();
-        return;
-    }
-
-    try{
-
-        let exp = expression;
-
-        exp = exp.replace(
-            /(\d+(\.\d+)?)%/g,
-            "($1/100)"
-        );
-
-        let result = eval(exp);
-
-        saveHistory(
-            expression+" = "+result
-        );
-
-        expression = String(result);
-
-        update();
-
-    }catch{
-
-        display.textContent="Error";
-        expression="";
-
-    }
-
-}
-
 function toggleHistory(){
 document
 .getElementById("history")
@@ -562,9 +521,11 @@ function selectMode(mode){
 
     if(mode==="HB"){
 
-        document
-        .getElementById("calculatorPad")
-        .style.display="grid";
+    currentMode="HB";
+
+    document
+    .getElementById("calculatorPad")
+    .style.display="grid";
 
         document
         .getElementById("hbPage")
@@ -694,20 +655,37 @@ function clearHistory(){
 
 }
 
-function showCalculator(){
+function calculate(){
 
-    document
-    .getElementById("hbPage")
-    .style.display="none";
+    if(currentMode==="HB"){
+        calculateHB();
+        return;
+    }
 
-    document
-    .getElementById("hbPage")
-    .style.height="0";
+    try{
 
-    activeInput=null;
+        let exp = expression;
 
-    update();
+        exp = exp.replace(
+            /(\d+(\.\d+)?)%/g,
+            "($1/100)"
+        );
 
+        let result = eval(exp);
+
+        saveHistory(
+            expression+" = "+result
+        );
+
+        expression = String(result);
+
+        update();
+
+    }catch{
+
+        display.textContent="Error";
+        expression="";
+    }
 }
 
 function calculateHB(){
@@ -724,10 +702,15 @@ let X = parseFloat(
     document.getElementById("hbX").innerText
 ) || 0;
 
-    if(D<=0 || F<=0 || X<=0){
-        display.innerText="Input Error";
-        return;
-    }
+if(D<=0 || F<=0 || X<=0){
+    display.innerText="Input Error";
+    return;
+}
+
+if(X>=D){
+    display.innerText="Input Error";
+    return;
+}
 
     let HB=
     (2*F)/
