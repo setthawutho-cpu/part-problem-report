@@ -1626,11 +1626,11 @@ if(supplier.value){
 text += `━━━━━━━━━━━━━━
 ACTION REQUEST
 Supplier : ${supplier.value}
-1.ตรวจสอบ Stock คงเหลือทั้งหมด
-2.แจ้งจำนวน OK / NG
-3.แนบรูป Mark Check
-4.ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
-5.ขยายผลไปยัง Spare Part (ถ้ามี)
+ตรวจสอบ Stock คงเหลือทั้งหมด
+แจ้งจำนวน OK / NG
+แนบรูป Mark Check
+ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+ขยายผลไปยัง Spare Part (ถ้ามี)
 `;
 }
 
@@ -1829,9 +1829,6 @@ document.querySelectorAll('input[name="okmark"]')
 });
 
 function backToMenu(){
-
-    saveFormData();
-
     location.href = "menu.html";
 }
 
@@ -1844,23 +1841,6 @@ function openReport(){
 }
 
 function openStandard(){
-
-    saveFormData();
-
-    const active =
-    document.activeElement;
-
-    if(active && active.id){
-
-        localStorage.setItem(
-            "activeFieldId",
-            active.id
-        );
-
-    }
-
-    location.href = "standard.html";
-}
 
     const active =
     document.activeElement;
@@ -2019,86 +1999,6 @@ changeLanguage();
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js");
 }
-
-// Auto Save Form
-function saveFormData(){
-
-    const formData = {};
-
-    document.querySelectorAll("input, textarea, select")
-    .forEach(el => {
-
-        if(!el.id) return;
-
-        if(el.type === "radio"){
-
-            if(el.checked){
-                formData[el.name] = el.value;
-            }
-
-        }else{
-
-            formData[el.id] = el.value;
-        }
-
-    });
-
-    localStorage.setItem(
-        "partReportData",
-        JSON.stringify(formData)
-    );
-}
-
-// Restore Form
-function loadFormData(){
-
-    const data =
-    localStorage.getItem("partReportData");
-
-    if(!data) return;
-
-    const formData = JSON.parse(data);
-
-    Object.keys(formData).forEach(key => {
-
-        const el =
-        document.getElementById(key);
-
-        if(el){
-            el.value = formData[key];
-        }
-
-    });
-
-    // radio button
-    if(formData.okmark){
-
-        const radio =
-        document.querySelector(
-            `input[name="okmark"][value="${formData.okmark}"]`
-        );
-
-        if(radio){
-            radio.checked = true;
-        }
-
-    }
-
-    calculateNG();
-}
-
-// Save ทุกครั้งที่มีการแก้ไข
-document.addEventListener("input", saveFormData);
-document.addEventListener("change", saveFormData);
-
-// โหลดข้อมูลกลับ
-window.addEventListener("load", loadFormData);
-
-// เซฟก่อนออกจากหน้า
-window.addEventListener("beforeunload", () => {
-    saveFormData();
-});
-
 </script>
 
 <script src="bottom-nav.js"></script>
