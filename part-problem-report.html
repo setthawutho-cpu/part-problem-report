@@ -1016,7 +1016,18 @@ textarea{
 <label id="lblProblem">Problem</label>
 <textarea id="problem"></textarea>
 
-<label id="lblDetail">Detail</label>
+<div style="display:flex;justify-content:space-between;align-items:center;">
+    <label id="lblDetail">Detail</label>
+
+    <button
+        type="button"
+        id="specialBtn"
+        class="manual-btn"
+        onclick="openStandard()">
+        📚 STD
+    </button>
+</div>
+
 <textarea id="detail"></textarea>
 
 <div class="section" id="lblContainment">
@@ -2154,17 +2165,10 @@ function openReport(){
 
 function openStandard(){
 
-    const active =
-    document.activeElement;
-
-    if(active && active.id){
-
-        localStorage.setItem(
-            "activeFieldId",
-            active.id
-        );
-
-    }
+    localStorage.setItem(
+        "activeFieldId",
+        "detail"
+    );
 
     location.href = "standard.html";
 
