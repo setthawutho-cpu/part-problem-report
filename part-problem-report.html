@@ -877,6 +877,11 @@ textarea{
 .bottom-nav button span{
     font-weight:400 !important;
 }
+
+.report[contenteditable="true"]{
+    background:#fffef0;
+    outline:2px solid #2196f3;
+}
     
 </style>
 
@@ -1189,16 +1194,17 @@ Remark
 
 <div class="report-sheet">
 
-    <button
-        class="add-btn"
-        onclick="editReport()">
-        📝
-    </button>
+<button
+    id="editBtn"
+    class="add-btn"
+    onclick="toggleEditReport()">
+    📝
+</button>
 
 <div
     id="report"
     class="report report-content"
-    contenteditable="true">
+    contenteditable="false">
 </div>
 
         <div class="report-actions">
@@ -1475,6 +1481,7 @@ let total = ngQty + partQty;
 }
 
 let reportVisible = false;
+let reportEditMode = false;
 
 function addRemark(){
 
@@ -2006,26 +2013,59 @@ setTimeout(()=>{
 
 }
 
-function editReport(){
+function toggleEditReport(){
 
     const report =
     document.getElementById("report");
 
-    report.focus();
+    const btn =
+    document.getElementById("editBtn");
 
-    const range =
-    document.createRange();
+    if(!reportEditMode){
 
-    range.selectNodeContents(report);
+        report.contentEditable = "true";
 
-    range.collapse(false);
+        report.focus();
 
-    const sel =
-    window.getSelection();
+        btn.innerHTML = "💾";
 
-    sel.removeAllRanges();
+        btn.style.background = "#4caf50";
 
-    sel.addRange(range);
+        reportEditMode = true;
+
+    }else{
+
+        report.contentEditable = "false";
+
+        btn.innerHTML = "📝";
+
+        btn.style.background = "#2196f3";
+
+        reportEditMode = false;
+
+        const msg =
+        document.createElement("div");
+
+        msg.innerHTML = "💾 บันทึกข้อความแล้ว";
+
+        msg.style.cssText = `
+        position:fixed;
+        top:80px;
+        left:50%;
+        transform:translateX(-50%);
+        background:#4caf50;
+        color:#fff;
+        padding:12px 20px;
+        border-radius:10px;
+        z-index:999999;
+        `;
+
+        document.body.appendChild(msg);
+
+        setTimeout(()=>{
+            msg.remove();
+        },1500);
+    }
 }
 
 function sendLine(){
