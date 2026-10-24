@@ -1,22 +1,36 @@
 .bottom-nav{
     position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
+
+    bottom:10px;
+    left:10px;
+    right:10px;
+
+    width:auto;
     height:65px;
-    background:#fff;
-    border-top:1px solid #ccc;
+
+    background:rgba(255,255,255,0.25);
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.6);
+
+    border-radius:30px;
+
     display:flex;
+
     z-index:99999;
 
     box-sizing:border-box;
     padding-bottom:env(safe-area-inset-bottom);
+
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
 }
 
 .bottom-nav button{
     flex:1;
     border:none;
-    background:#fff;
+    background:transparent;
     color:#333;
 
     display:flex;
@@ -41,5 +55,5 @@
 }
 
 .bottom-nav button:active{
-    background:#f1f1f1;
+    background:rgba(255,255,255,.25);
 }
