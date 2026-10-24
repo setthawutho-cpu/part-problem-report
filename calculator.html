@@ -235,8 +235,7 @@ body{
     color:#fff;
     font-size:15px;
     padding:6px 12px;
-    display:flex;
-    align-items:center;
+    line-height:34px;
 }
 
 .hbInput.active{
@@ -414,10 +413,6 @@ function setInput(id){
 
     let box=document.getElementById(id);
 
-    if(box.innerText===box.dataset.placeholder){
-        box.innerText="";
-    }
-
     box.classList.add("active");
 }
 
@@ -433,7 +428,7 @@ function input(v){
         let box =
         document.getElementById(activeInput);
 
-        box.innerText += v;
+        box.value += v;
 
         return;
     }
@@ -446,11 +441,10 @@ function clearAll(){
 
     if(activeInput){
 
-let box =
-document.getElementById(activeInput);
+        let box =
+        document.getElementById(activeInput);
 
-box.innerText =
-box.dataset.placeholder;
+        box.value = "";
 
         return;
     }
@@ -467,13 +461,8 @@ function backspace(){
         let box =
         document.getElementById(activeInput);
 
-box.innerText =
-box.innerText.slice(0,-1);
-
-if(box.innerText===""){
-    box.innerText =
-    box.dataset.placeholder;
-}
+box.value =
+box.value.slice(0,-1);
 
         return;
     }
@@ -543,29 +532,26 @@ function selectMode(mode){
         .getElementById("hbPage")
 .innerHTML=`
 
-<div
+<input
 class="hbInput"
 id="hbF"
-data-placeholder="Force"
-onclick="setInput('hbF')">
-Force
-</div>
+placeholder="Force"
+onclick="setInput('hbF')"
+readonly>
 
-<div
+<input
 class="hbInput"
 id="hbD"
-data-placeholder="Ball Diameter"
-onclick="setInput('hbD')">
-Ball Diameter
-</div>
+placeholder="Ball Diameter"
+onclick="setInput('hbD')"
+readonly>
 
-<div
+<input
 class="hbInput"
 id="hbX"
-data-placeholder="Indentation"
-onclick="setInput('hbX')">
-Indentation
-</div>
+placeholder="Indentation"
+onclick="setInput('hbX')"
+readonly>
 
 `;
 
@@ -691,15 +677,15 @@ function calculate(){
 function calculateHB(){
 
 let F = parseFloat(
-    document.getElementById("hbF").innerText
+    document.getElementById("hbF").value
 ) || 0;
 
 let D = parseFloat(
-    document.getElementById("hbD").innerText
+    document.getElementById("hbD").value
 ) || 0;
 
 let X = parseFloat(
-    document.getElementById("hbX").innerText
+    document.getElementById("hbX").value
 ) || 0;
 
 if(D<=0 || F<=0 || X<=0){
