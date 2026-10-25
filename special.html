@@ -76,13 +76,6 @@ flex-direction:column;
 overflow:hidden;
 }
 
-.label{
-margin-top:8px;
-margin-bottom:4px;
-font-weight:bold;
-font-size:16px;
-}
-
 .box{
 height:50px;
 background:#fff;
@@ -103,6 +96,11 @@ border:2px solid #2196f3;
 background:#e3f2fd;
 }
 
+.placeholder{
+color:#999;
+font-weight:normal;
+}
+  
 .row{
 display:flex;
 gap:10px;
@@ -200,13 +198,9 @@ outline:none;
 
 <div class="main">
 
-<div class="label">STD.</div>
-<div id="stdBox" class="box">500</div>
-
-<div class="label">Tolerance</div>
+<div id="stdBox" class="box placeholder">STD.</div>
 
 <div class="box">
-
 <select id="tol" onchange="calculate()">
 
 <option>±0.10</option>
@@ -225,8 +219,7 @@ outline:none;
 
 </div>
 
-<div class="label">ACT.</div>
-<div id="actBox" class="box">500.60</div>
+<div id="actBox" class="box placeholder">ACT.</div>
 
 <div id="result" class="result">
 NG +0.60 mm
@@ -285,8 +278,13 @@ activeField==='std'
 ?document.getElementById('stdBox')
 :document.getElementById('actBox');
 
-if(box.innerText==='0'){
+if(
+box.innerText==='STD.' ||
+box.innerText==='ACT.' ||
+box.innerText==='0'
+){
 box.innerText=n;
+box.classList.remove('placeholder');
 }else{
 box.innerText+=n;
 }
@@ -305,7 +303,14 @@ box.innerText=
 box.innerText.slice(0,-1);
 
 if(box.innerText===""){
-box.innerText="0";
+
+if(activeField==='std'){
+box.innerText='STD.';
+}else{
+box.innerText='ACT.';
+}
+
+box.classList.add('placeholder');
 }
 
 calculate();
@@ -313,14 +318,14 @@ calculate();
 
 function calculate(){
 
-let std=
-parseFloat(
+let std=parseFloat(
 document.getElementById('stdBox').innerText
+.replace('STD.','')
 )||0;
 
-let act=
-parseFloat(
+let act=parseFloat(
 document.getElementById('actBox').innerText
+.replace('ACT.','')
 )||0;
 
 let tol=
