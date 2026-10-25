@@ -255,20 +255,75 @@ WAITING INPUT
 
 let activeField='std';
 
+function showPlaceholder(){
+
+const stdBox=document.getElementById('stdBox');
+const actBox=document.getElementById('actBox');
+
+if(stdBox.innerText.trim()===''){
+stdBox.innerText='STD.';
+stdBox.classList.add('placeholder');
+}
+
+if(actBox.innerText.trim()===''){
+actBox.innerText='ACT.';
+actBox.classList.add('placeholder');
+}
+
+}
+
 window.onload=()=>{
+
 document.getElementById('stdBox').classList.add('active');
+
+document.getElementById('stdBox').innerText='STD.';
+document.getElementById('actBox').innerText='ACT.';
+
+document.getElementById('stdBox').classList.add('placeholder');
+document.getElementById('actBox').classList.add('placeholder');
+
 };
 
 document.getElementById('stdBox').onclick=()=>{
+
+if(
+document.getElementById('actBox').innerText===''
+){
+document.getElementById('actBox').innerText='ACT.';
+document.getElementById('actBox').classList.add('placeholder');
+}
+
 activeField='std';
+
+if(document.getElementById('stdBox').innerText==='STD.'){
+document.getElementById('stdBox').innerText='';
+document.getElementById('stdBox').classList.remove('placeholder');
+}
+
 document.getElementById('stdBox').classList.add('active');
 document.getElementById('actBox').classList.remove('active');
+
 };
 
 document.getElementById('actBox').onclick=()=>{
+
+if(
+document.getElementById('stdBox').innerText===''
+){
+document.getElementById('stdBox').innerText='STD.';
+document.getElementById('stdBox').classList.add('placeholder');
+}
+
 activeField='act';
+
+if(document.getElementById('actBox').innerText==='ACT.'){
+document.getElementById('actBox').innerText='';
+document.getElementById('actBox').classList.remove('placeholder');
+}
+
 document.getElementById('actBox').classList.add('active');
 document.getElementById('stdBox').classList.remove('active');
+
 };
 
 function num(n){
@@ -299,18 +354,12 @@ activeField==='std'
 ?document.getElementById('stdBox')
 :document.getElementById('actBox');
 
+if(
+box.innerText!=='STD.' &&
+box.innerText!=='ACT.'
+){
 box.innerText=
 box.innerText.slice(0,-1);
-
-if(box.innerText===""){
-
-if(activeField==='std'){
-box.innerText='STD.';
-}else{
-box.innerText='ACT.';
-}
-
-box.classList.add('placeholder');
 }
 
 calculate();
@@ -336,6 +385,8 @@ document.getElementById('tol')
 );
 
 if(
+document.getElementById('stdBox').innerText==='' ||
+document.getElementById('actBox').innerText==='' ||
 document.getElementById('stdBox').innerText==='STD.' ||
 document.getElementById('actBox').innerText==='ACT.'
 ){
