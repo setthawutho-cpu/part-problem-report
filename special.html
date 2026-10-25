@@ -98,6 +98,11 @@ overflow:hidden;
 white-space:nowrap;
 }
 
+.box.active{
+border:2px solid #2196f3;
+background:#e3f2fd;
+}
+
 .row{
 display:flex;
 gap:10px;
@@ -128,13 +133,20 @@ padding-top:15px;
 }
 
 .keypad button{
-height:50px;
+height:55px;
 border:none;
 border-radius:12px;
 background:white;
-font-size:18px;
+font-size:24px;
 font-weight:bold;
 box-shadow:0 2px 5px rgba(0,0,0,.1);
+transition:.1s;
+}
+
+.keypad button:active{
+transform:scale(.92);
+background:#e3f2fd;
+box-shadow:0 1px 2px rgba(0,0,0,.15);
 }
 
 .saveBtn{
@@ -250,12 +262,20 @@ NG +0.60 mm
 
 let activeField='act';
 
+window.onload=()=>{
+document.getElementById('actBox').classList.add('active');
+};
+
 document.getElementById('stdBox').onclick=()=>{
 activeField='std';
+document.getElementById('stdBox').classList.add('active');
+document.getElementById('actBox').classList.remove('active');
 };
 
 document.getElementById('actBox').onclick=()=>{
 activeField='act';
+document.getElementById('actBox').classList.add('active');
+document.getElementById('stdBox').classList.remove('active');
 };
 
 function num(n){
