@@ -1054,13 +1054,13 @@ textarea{
 <div style="display:flex;justify-content:space-between;align-items:center;">
     <label id="lblDetail">Detail</label>
 
-    <button
-        type="button"
-        id="specialBtn"
-        class="manual-btn"
-        onclick="openStandard()">
-        📚 STD
-    </button>
+<button
+    type="button"
+    id="specialBtn"
+    class="manual-btn"
+    onclick="openSpecial()">
+    📚 STD
+</button>
 </div>
 
 <textarea id="detail"></textarea>
@@ -2221,6 +2221,23 @@ function openSpecial(){
     document
     .getElementById("stdOverlay")
     .classList.add("show");
+
+}
+
+function receiveSpecial(text){
+
+    const detail =
+    document.getElementById("detail");
+
+    if(detail.value.trim() !== ""){
+        detail.value += "\n";
+    }
+
+    detail.value += text;
+
+    document
+    .getElementById("stdOverlay")
+    .classList.remove("show");
 
 }
 
