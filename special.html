@@ -222,7 +222,7 @@ outline:none;
 <div id="actBox" class="box placeholder">ACT.</div>
 
 <div id="result" class="result">
-NG +0.60 mm
+WAITING INPUT
 </div>
 
 <div class="keypad">
@@ -334,6 +334,15 @@ document.getElementById('tol')
 .value
 .replace('±','')
 );
+
+if(
+document.getElementById('stdBox').innerText==='STD.' ||
+document.getElementById('actBox').innerText==='ACT.'
+){
+document.getElementById('result').style.color='#999';
+document.getElementById('result').innerHTML='WAITING INPUT';
+return;
+}
 
 let diff=act-std;
 
