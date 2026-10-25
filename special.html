@@ -1,1 +1,521 @@
 
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#dfeaf3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<title>📏 STANDARD MENU</title>
+
+<style>
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden !important;
+}
+
+*{
+    box-sizing:border-box;
+}
+    
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+}
+
+body{
+    font-family:Segoe UI,sans-serif;
+    background:#dfeaf3;
+    margin:0;
+    padding:10px;
+}
+
+h2{
+    text-align:center;
+    margin:30px 0;
+}
+
+input,
+textarea,
+select{
+    font-size:16px !important;
+}
+
+button{
+    width:min(350px,90%);
+    height:60px;
+    display:block;
+    margin:12px auto;
+    font-size:18px;
+    border:none;
+    background:#2196f3;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+#stdArea{
+    margin-top:15px;
+}
+
+.std-item{
+    background:white;
+    border:1px solid #ccc;
+    padding:14px;
+    margin:5px 0;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:16px;
+}
+
+.std-item:active{
+    background:#e3f2fd;
+}
+
+.std-input{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px !important;
+}
+
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+}
+
+.std-title{
+    text-align:center;
+    margin-top:60px;
+    margin-bottom:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.std-grid{
+    padding:15px;
+
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
+}
+
+.std-card{
+    height:120px;
+    min-height:120px;
+
+    background:#fff;
+    border:1px solid #999;
+    border-radius:8px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:5px;
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.std-card:active{
+    transform:scale(.96);
+}
+
+.std-icon{
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.std-text{
+    font-size:14px;
+    line-height:1.2;
+    padding:0 8px;
+}
+
+@media(max-width:768px){
+
+    .std-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    padding:10px;
+}
+
+    .std-card{
+        height:85px;
+        min-height:85px;
+    }
+
+    .std-icon{
+        font-size:24px;
+    }
+
+    .std-text{
+        font-size:9px;
+        line-height:1.1;
+        padding:0 2px;
+    }
+
+}
+    
+</style>
+
+</head>
+
+<body>
+
+<div class="top-nav">
+    <span onclick="goBack()">❮ กลับ</span>
+</div>
+
+<div class="std-title">
+📏 STANDARD MENU
+</div>
+
+<div class="std-grid">
+
+    <div class="std-card" onclick="showStd('length')">
+        <div class="std-icon">📏</div>
+        <div class="std-text">Length</div>
+    </div>
+
+    <div class="std-card" onclick="showStd('diameter')">
+        <div class="std-icon">⭕</div>
+        <div class="std-text">Diameter</div>
+    </div>
+
+    <div class="std-card" onclick="showStd('gap')">
+        <div class="std-icon">↔️</div>
+        <div class="std-text">Gap</div>
+    </div>
+
+    <div class="std-card" onclick="showStd('height')">
+        <div class="std-icon">📐</div>
+        <div class="std-text">Height</div>
+    </div>
+
+<div class="std-card"
+     onclick="location.href='gdt-calculator.html'">
+
+    <div class="std-icon">🎯</div>
+
+    <div class="std-text">
+        GD&T Calculator
+    </div>
+
+</div>
+
+    <div class="std-card" onclick="showStd('torque')">
+        <div class="std-icon">🔩</div>
+        <div class="std-text">Torque</div>
+    </div>
+
+    <div class="std-card" onclick="showStd('appearance')">
+        <div class="std-icon">👀</div>
+        <div class="std-text">Appearance</div>
+    </div>
+
+</div>
+
+<hr>
+
+<div id="stdArea"></div>
+
+<script>
+
+function goBack(){
+    history.back();
+}
+
+function sendToProblem(text){
+
+    localStorage.setItem(
+        "selectedStd",
+        text
+    );
+
+    history.back();
+}
+
+function sendLengthTolerance(tolerance){
+
+    const length =
+    document.getElementById("lengthValue").value;
+
+    const act =
+    document.getElementById("lengthAct").value;
+
+    if(!length){
+        alert("กรุณากรอก Length");
+        return;
+    }
+
+    if(!act){
+        alert("กรุณากรอก NG Act.");
+        return;
+    }
+
+    sendToProblem(
+        `Length ${length} ${tolerance} NG Act. ${act} mm.`
+    );
+}
+
+function sendDiameterTolerance(tolerance){
+
+    const diameter =
+    document.getElementById("diameterValue").value;
+
+    const act =
+    document.getElementById("diameterAct").value;
+
+    if(!diameter){
+        alert("กรุณากรอก Diameter");
+        return;
+    }
+
+    if(!act){
+        alert("กรุณากรอก NG Act.");
+        return;
+    }
+
+    sendToProblem(
+        `Diameter Ø${diameter} ${tolerance} NG Act. ${act} mm.`
+    );
+}
+
+function sendGapTolerance(tolerance){
+
+    const gap =
+    document.getElementById("gapValue").value;
+
+    const act =
+    document.getElementById("gapAct").value;
+
+    if(!gap){
+        alert("กรุณากรอก Gap");
+        return;
+    }
+
+    if(!act){
+        alert("กรุณากรอก NG Act.");
+        return;
+    }
+
+    sendToProblem(
+        `Gap ${gap} ${tolerance} NG Act. ${act} mm.`
+    );
+}
+
+function showStd(type){
+
+    const stdArea =
+    document.getElementById("stdArea");
+
+if(type === "length"){
+
+    stdArea.innerHTML = `
+    <h3>📏 Length Tolerance</h3>
+
+<input
+    id="lengthValue"
+    class="std-input"
+    type="number"
+    step="0.01"
+    placeholder="STD Length เช่น 100"
+>
+
+<input
+    id="lengthAct"
+    class="std-input"
+    type="text"
+    placeholder="Act. เช่น +1.0"
+>
+
+    <div class="std-item" onclick="sendLengthTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.4 mm.')">±0.4 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±1.0 mm.')">±1.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±1.5 mm.')">±1.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±2.0 mm.')">±2.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±2.5 mm.')">±2.5 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±3.0 mm.')">±3.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±5.0 mm.')">±5.0 mm.</div>
+    <div class="std-item" onclick="sendLengthTolerance('±10.0 mm.')">±10.0 mm.</div>
+    `;
+}
+
+if(type === "diameter"){
+
+    stdArea.innerHTML = `
+    <h3>⭕ Diameter Tolerance</h3>
+
+<input
+    id="diameterValue"
+    class="std-input"
+    type="number"
+    step="0.01"
+    placeholder="STD Diameter เช่น 10"
+>
+
+<input
+    id="diameterAct"
+    class="std-input"
+    type="text"
+    placeholder="Act. เช่น +0.3"
+>
+
+    <div class="std-item" onclick="sendDiameterTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendDiameterTolerance('±1.0 mm.')">±1.0 mm.</div>
+    `;
+}
+
+
+if(type === "gap"){
+
+    stdArea.innerHTML = `
+    <h3>↔️ Gap Tolerance</h3>
+
+<input
+    id="gapValue"
+    class="std-input"
+    type="number"
+    step="0.01"
+    placeholder="STD Gap เช่น 1.0"
+>
+
+<input
+    id="gapAct"
+    class="std-input"
+    type="text"
+    placeholder="Act. เช่น -0.2"
+>
+
+    <div class="std-item" onclick="sendGapTolerance('±0.1 mm.')">±0.1 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.2 mm.')">±0.2 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.3 mm.')">±0.3 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±0.5 mm.')">±0.5 mm.</div>
+    <div class="std-item" onclick="sendGapTolerance('±1.0 mm.')">±1.0 mm.</div>
+    `;
+}
+
+    if(type === "height"){
+
+        stdArea.innerHTML = `
+        <h3>📐 Height Tolerance</h3>
+
+        <div class="std-item" onclick="sendToProblem('±')">±</div>
+        <div class="std-item" onclick="sendToProblem('±0.01 mm. NG Act.')">±0.01 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.02 mm. NG Act.')">±0.02 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.03 mm. NG Act.')">±0.03 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.05 mm. NG Act.')">±0.05 mm.</div>
+        <div class="std-item" onclick="sendToProblem('±0.10 mm. NG Act.')">±0.10 mm.</div>
+        `;
+    }
+
+    if(type === "torque"){
+
+        stdArea.innerHTML = `
+        <h3>🔩 Torque Standard</h3>
+        
+        <div class="std-item" onclick="sendToProblem('±')">±</div>
+        <div class="std-item" onclick="sendToProblem('5 ±1 Nm')">5 ±1 Nm</div>
+        <div class="std-item" onclick="sendToProblem('8 ±1 Nm')">8 ±1 Nm</div>
+        <div class="std-item" onclick="sendToProblem('10 ±1 Nm')">10 ±1 Nm</div>
+        <div class="std-item" onclick="sendToProblem('15 ±2 Nm')">15 ±2 Nm</div>
+        <div class="std-item" onclick="sendToProblem('20 ±2 Nm')">20 ±2 Nm</div>
+        `;
+    }
+
+    if(type === "appearance"){
+    stdArea.innerHTML = `
+    <h3>👀 Appearance Standard</h3>
+
+    <div class="std-item" onclick="sendToProblem('Appearance NG Scratch')">มีรอยขีดข่วน</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Dent')">มีรอยบุบ</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Crack')">มีรอยแตก / ร้าว</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Rust')">มีสนิม</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Deformation')">มีการเสียรูป / บิดงอ / ผิดรูป</div>
+
+    <br><br>
+
+    <div class="std-item" onclick="sendToProblem('Appearance NG Dirty')">มีคราบสกปรก</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Burr')">มีครีบ</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Chip')">มีรอยบิ่น</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Damage')">มีความเสียหาย</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Missing Part')">มีชิ้นส่วนขาดหาย</div>
+
+    <br><br>
+
+    <div class="std-item" onclick="sendToProblem('Appearance NG Oil Stain')">มีคราบน้ำมัน</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Grease Stain')">มีคราบจาระบี</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Weld Spatter')">มีสะเก็ดเชื่อม</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Color Defect')">มีสีผิดปกติ</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Burn Mark')">มีรอยไหม้</div>
+
+    <br><br>
+
+    <div class="std-item" onclick="sendToProblem('Appearance NG White Rust')">มีสนิมขาว</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Press Mark')">มีรอยกดทับ</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Transportation Scratch')">มีรอยข่วนจากการขนส่ง</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Contamination')">มีการปนเปื้อน</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Foreign Material')">มีสิ่งแปลกปลอม</div>
+
+    <br><br>
+
+    <div class="std-item" onclick="sendToProblem('Appearance NG Surface Condition')">พื้นผิวไม่สมบูรณ์</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Marking')">Mark ไม่ชัดเจน / อ่านไม่ได้</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Label')">ฉลากไม่สมบูรณ์</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Color')">สีไม่ถูกต้องตามมาตรฐาน</div>
+    <div class="std-item" onclick="sendToProblem('Appearance NG Abnormal Appearance')">ลักษณะภายนอกผิดปกติ</div>
+    `;
+}
+
+} // ปิด function showStd
+
+
+</script>
+
+</body>
+</html>
