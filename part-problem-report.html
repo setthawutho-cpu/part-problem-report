@@ -1155,7 +1155,8 @@ textarea{
 
     <div class="total-ng-box">
 
-<div style="width:100%; display:flex; align-items:center; gap:10px; margin-top:5px;">
+<div id="partNgShowArea"
+     style="width:100%; display:none; align-items:center; gap:10px; margin-top:5px;">
 
     <label id="lblPartNgShow" style="width:70px;margin:0;">
         <b>Part NG</b>
@@ -1542,6 +1543,21 @@ let total = ngQty + partQty;
 
     document.getElementById("totalNg").value =
 (total === 0) ? "" : total;
+
+const partNgShowArea =
+document.getElementById("partNgShowArea");
+
+if(total > 0){
+
+    partNgShowArea.style.display = "flex";
+
+}else{
+
+    partNgShowArea.style.display = "none";
+
+    document.getElementById("partNgShow").value = "";
+}
+
 }
 
 let reportVisible = false;
