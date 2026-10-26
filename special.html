@@ -239,9 +239,18 @@ WAITING INPUT
 <button onclick="num('8')">8</button>
 <button onclick="num('9')">9</button>
 
-<button onclick="num('.')">.</button>
-<button onclick="num('0')">0</button>
-<button onclick="backspace()">⌫</button>
+<button id="dotBtn"
+onclick="angleMode?angleChar():num('.')">
+.
+</button>
+
+<button onclick="num('0')">
+0
+</button>
+
+<button onclick="backspace()">
+⌫
+</button>
 
 </div>
 
@@ -255,6 +264,9 @@ WAITING INPUT
 
 let activeField='std';
 let currentTool='Length';
+
+let angleMode=false;
+let angleStep=0;
 
 function showPlaceholder(){
 
@@ -427,8 +439,46 @@ function selectTool(btn,name){
     btn.classList.add('active');
 
     currentTool=name;
+
+    if(name==='Angle'){
+
+        angleMode=true;
+        angleStep=0;
+
+        document.getElementById('dotBtn').innerText='°';
+
+    }else{
+
+        angleMode=false;
+
+        document.getElementById('dotBtn').innerText='.';
+    }
 }
 
+function angleChar(){
+
+    if(angleStep===0){
+
+        num('°');
+        angleStep=1;
+        document.getElementById('dotBtn').innerText="'";
+
+    }else if(angleStep===1){
+
+        num("'");
+        angleStep=2;
+        document.getElementById('dotBtn').innerText='"';
+
+    }else if(angleStep===2){
+
+        num('"');
+        angleStep=3;
+        document.getElementById('dotBtn').innerText=' ';
+
+    }
+
+}
+  
 function saveResult(){
 
 let std=
