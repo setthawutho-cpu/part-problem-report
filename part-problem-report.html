@@ -1117,7 +1117,9 @@ textarea{
             <input type="number" id="partNgQty">
         </div>
 
-<div style="grid-column:1 / span 3; display:flex; align-items:center; gap:10px;">
+<div id="reworkResultArea"
+     style="grid-column:1 / span 3; display:none; align-items:center; gap:10px;">
+
     <label id="lblReworkResult" style="margin:0;width:120px;">
 ผลการ Rework
 </label>
@@ -2381,6 +2383,31 @@ function changeLanguage(){
 localStorage.setItem("language","1");
 
 changeLanguage();
+
+const partNgBox =
+document.getElementById("partNg");
+
+const reworkResultArea =
+document.getElementById("reworkResultArea");
+
+function checkPartNg(){
+
+    if(partNgBox.value === "Rework"){
+
+        reworkResultArea.style.display = "flex";
+
+    }else{
+
+        reworkResultArea.style.display = "none";
+
+        document.getElementById("reworkResult").value = "";
+    }
+
+}
+
+partNgBox.addEventListener("change", checkPartNg);
+
+checkPartNg();
 
 const reworkBox =
 document.getElementById("rework");
