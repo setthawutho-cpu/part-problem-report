@@ -1072,16 +1072,19 @@ textarea{
 <label id="lblRework">Rework</label>
 <textarea id="rework"></textarea>
 
-<label id="lblResult">Result</label>
-<select id="containmentResult">
-<option></option>
-<option>-</option>
-<option>Rework OK</option>
-<option>Wait Rework</option>
-<option>เปลี่ยนชิ้นงานใน Stock</option>
-<option>Reject</option>
-<option>Defect</option>
-</select>
+<div id="resultArea" style="display:none;">
+    <label id="lblResult">Result</label>
+
+    <select id="containmentResult">
+        <option></option>
+        <option>-</option>
+        <option>Rework OK</option>
+        <option>Wait Rework</option>
+        <option>เปลี่ยนชิ้นงานใน Stock</option>
+        <option>Reject</option>
+        <option>Defect</option>
+    </select>
+</div>
 
 <div class="inspection-box">
 
@@ -2378,6 +2381,26 @@ function changeLanguage(){
 localStorage.setItem("language","1");
 
 changeLanguage();
+
+const reworkBox =
+document.getElementById("rework");
+
+const resultArea =
+document.getElementById("resultArea");
+
+function checkRework(){
+
+    if(reworkBox.value.trim() !== ""){
+        resultArea.style.display = "block";
+    }else{
+        resultArea.style.display = "none";
+        document.getElementById("containmentResult").value = "";
+    }
+}
+
+reworkBox.addEventListener("input", checkRework);
+
+checkRework();
 
 document
 .getElementById("reportOverlay")
