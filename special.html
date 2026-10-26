@@ -174,22 +174,22 @@ outline:none;
 
 <div class="toolGrid">
 
-<button class="toolBtn active">
+<button class="toolBtn active" onclick="selectTool(this,'Length')">
 <div class="icon">📏</div>
 <div>Length</div>
 </button>
 
-<button class="toolBtn">
+<button class="toolBtn" onclick="selectTool(this,'Diameter')">
 <div class="icon">⭕</div>
 <div>Diameter</div>
 </button>
 
-<button class="toolBtn">
+<button class="toolBtn" onclick="selectTool(this,'Angle')">
 <div class="icon">📐</div>
 <div>Angle</div>
 </button>
 
-<button class="toolBtn">
+<button class="toolBtn" onclick="selectTool(this,'Welding')">
 <div class="icon">🔥</div>
 <div>Welding</div>
 </button>
@@ -254,6 +254,7 @@ WAITING INPUT
 <script>
 
 let activeField='std';
+let currentTool='Length';
 
 function showPlaceholder(){
 
@@ -417,6 +418,17 @@ diff.toFixed(2) +
 
 }
 
+function selectTool(btn,name){
+
+    document
+    .querySelectorAll('.toolBtn')
+    .forEach(b=>b.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    currentTool=name;
+}
+
 function saveResult(){
 
 let std=
@@ -429,7 +441,7 @@ let result=
 document.getElementById('result').innerText;
 
 let text=
-'Length '+
+currentTool+' '+
 std+
 ' '+
 tol+
