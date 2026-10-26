@@ -143,14 +143,9 @@ transition:.1s;
 
 .keypad button:active{
 transform:scale(.92);
-background:#e3f2fd;
+background:#2196f3;
+color:#fff;
 box-shadow:0 1px 2px rgba(0,0,0,.15);
-}
-
-.keypad button.press{
-background:#2196f3 !important;
-color:#fff !important;
-transform:scale(.92);
 }
 
 .saveBtn{
@@ -353,18 +348,8 @@ document.getElementById('actBox').classList.add('active');
 document.getElementById('stdBox').classList.remove('active');
 
 };
-
+  
 function num(n){
-
-if(event && event.target){
-
-    event.target.classList.add('press');
-
-    setTimeout(()=>{
-        event.target.classList.remove('press');
-    },150);
-
-}
 
 let box=
 activeField==='std'
