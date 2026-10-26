@@ -591,7 +591,20 @@ function selectTool(btn,name){
 
     btn.classList.add('active');
 
-    currentTool=name;
+currentTool=name;
+
+document.getElementById('stdBox').innerText='STD.';
+document.getElementById('actBox').innerText='ACT.';
+
+document.getElementById('stdBox').classList.add('placeholder');
+document.getElementById('actBox').classList.add('placeholder');
+
+document.getElementById('result').innerHTML='WAITING INPUT';
+document.getElementById('result').style.color='#999';
+
+activeField='std';
+document.getElementById('stdBox').classList.add('active');
+document.getElementById('actBox').classList.remove('active');
 
 if(name==='Angle'){
 
