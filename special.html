@@ -307,6 +307,11 @@ document.getElementById('actBox').classList.add('placeholder');
 
 activeField='std';
 
+if(angleMode){
+    angleStep=0;
+    document.getElementById('dotBtn').innerText='°';
+}
+
 if(document.getElementById('stdBox').innerText==='STD.'){
 document.getElementById('stdBox').innerText='';
 document.getElementById('stdBox').classList.remove('placeholder');
@@ -327,6 +332,11 @@ document.getElementById('stdBox').classList.add('placeholder');
 }
 
 activeField='act';
+
+if(angleMode){
+    angleStep=0;
+    document.getElementById('dotBtn').innerText='°';
+}
 
 if(document.getElementById('actBox').innerText==='ACT.'){
 document.getElementById('actBox').innerText='';
