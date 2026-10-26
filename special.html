@@ -294,11 +294,14 @@ actBox.classList.add('placeholder');
 
 window.onload=()=>{
 
+activeField='std';
+
 document.getElementById('stdBox').classList.add('active');
 
-document.getElementById('stdBox').innerText='';
+document.getElementById('stdBox').innerText='STD.';
 document.getElementById('actBox').innerText='ACT.';
 
+document.getElementById('stdBox').classList.add('placeholder');
 document.getElementById('actBox').classList.add('placeholder');
 
 };
