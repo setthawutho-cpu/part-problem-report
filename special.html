@@ -518,25 +518,30 @@ return d*3600+m*60+s;
 
 function secToAngle(sec){
 
-const sign=
-sec>=0
-?'+'
-:'-';
+const sign =
+sec >= 0 ? '+' : '-';
 
-sec=Math.abs(sec);
+sec = Math.abs(sec);
 
-const d=Math.floor(sec/3600);
+const d = Math.floor(sec/3600);
 
-sec%=3600;
+sec %= 3600;
 
-const m=Math.floor(sec/60);
+const m = Math.floor(sec/60);
 
-const s=sec%60;
+const s = sec % 60;
 
-return sign+
-String(d).padStart(2,'0')+'°'+
-String(m).padStart(2,'0')+"'" +
-String(s).padStart(2,'0')+'"';
+let txt = sign + d + '°';
+
+if(m > 0 || s > 0){
+    txt += String(m).padStart(2,'0') + "'";
+}
+
+if(s > 0){
+    txt += String(s).padStart(2,'0') + '"';
+}
+
+return txt;
 
 }
 
@@ -647,9 +652,8 @@ currentTool+' '+
 std+
 ' '+
 tol+
-' mm. '+
-result.replace(/^OK/,'OK Act.')
-      .replace(/^NG/,'NG Act.')+
+' '+
+result+
 '.';
 
 window.parent.receiveSpecial(text);
