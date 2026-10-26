@@ -1827,11 +1827,13 @@ text += `Supplier : ${supplier.value}\n`;
 if(unitno.value)
 text += `Serial Number : ${unitno.value}\n`;
 
-if(issueDoc && issueDoc !== "-")
-text += `Issue Doc : ${issueDoc}\n`;
+text += `Issue Doc : ${issueDoc || "-"}\n`;
 
-if(linestop.value)
-text += `Line Stop : ${linestop.value} Sec\n`;
+if(linestop.value !== ""){
+    text += `Line Stop : ${linestop.value} Sec\n`;
+}else{
+    text += `Line Stop : -\n`;
+}
 
 if(problem.value)
 text += `\nProblem\n${problem.value}\n`;
