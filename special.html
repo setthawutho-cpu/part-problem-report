@@ -419,24 +419,27 @@ diff.toFixed(2) +
 
 function saveResult(){
 
-    let std=
-    document.getElementById('stdBox').innerText;
+let std=
+document.getElementById('stdBox').innerText;
 
-    let tol=
-    document.getElementById('tol').value;
+let tol=
+document.getElementById('tol').value;
 
-    let result=
-    document.getElementById('result').innerText;
+let result=
+document.getElementById('result').innerText;
 
-    let text=
-    'Length '+
-    std+
-    ' '+
-    tol+
-    ' mm. '+
-    result;
+let text=
+'Length '+
+std+
+' '+
+tol+
+' mm. '+
+result.replace(/^OK/,'OK Act.')
+      .replace(/^NG/,'NG Act.')+
+'.';
 
-    window.parent.receiveSpecial(text);
+window.parent.receiveSpecial(text);
+
 }
 
 calculate();
