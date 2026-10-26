@@ -379,6 +379,20 @@ calculate();
 
 function calculate(){
 
+    if(currentTool==='Angle'){
+
+        calculateAngle();
+
+    }else{
+
+        calculateNormal();
+
+    }
+
+}
+
+function calculateNormal(){
+
 let std=parseFloat(
 document.getElementById('stdBox').innerText
 .replace('STD.','')
@@ -414,12 +428,10 @@ Math.abs(diff)<=tol
 ? 'OK'
 : 'NG';
 
-let color=
+document.getElementById('result').style.color=
 status==='OK'
 ? 'green'
 : 'red';
-
-document.getElementById('result').style.color=color;
 
 document.getElementById('result').innerHTML=
 status +
@@ -427,6 +439,70 @@ status +
 (diff>0?'+':'') +
 diff.toFixed(2) +
 ' mm';
+
+}
+
+function calculateAngle(){
+
+const std=
+document.getElementById('stdBox').innerText;
+
+const act=
+document.getElementById('actBox').innerText;
+
+if(
+std==='' ||
+act==='' ||
+std==='STD.' ||
+act==='ACT.'
+){
+document.getElementById('result').style.color='#999';
+document.getElementById('result').innerHTML='WAITING INPUT';
+return;
+}
+
+if(std!==act){
+
+    document.getElementById('result').style.color='red';
+    document.getElementById('result').innerHTML='NG';
+
+}else{
+
+    document.getElementById('result').style.color='green';
+    document.getElementById('result').innerHTML='OK';
+
+}
+
+}
+
+function setNormalTol(){
+
+document.getElementById('tol').innerHTML=`
+<option>±0.10</option>
+<option>±0.20</option>
+<option>±0.30</option>
+<option>±0.40</option>
+<option selected>±0.50</option>
+<option>±0.70</option>
+<option>±1.00</option>
+<option>±1.50</option>
+<option>±2.00</option>
+<option>±2.50</option>
+<option>±3.00</option>
+`;
+
+}
+
+function setAngleTol(){
+
+document.getElementById('tol').innerHTML=`
+<option>±0°00'10"</option>
+<option selected>±0°00'30"</option>
+<option>±0°01'00"</option>
+<option>±0°02'00"</option>
+<option>±0°05'00"</option>
+<option>±0°10'00"</option>
+`;
 
 }
 
@@ -440,19 +516,23 @@ function selectTool(btn,name){
 
     currentTool=name;
 
-    if(name==='Angle'){
+if(name==='Angle'){
 
-        angleMode=true;
-        angleStep=0;
+    angleMode=true;
+    angleStep=0;
 
-        document.getElementById('dotBtn').innerText='°';
+    document.getElementById('dotBtn').innerText='°';
 
-    }else{
+    setAngleTol();
 
-        angleMode=false;
+}else{
 
-        document.getElementById('dotBtn').innerText='.';
-    }
+    angleMode=false;
+
+    document.getElementById('dotBtn').innerText='.';
+
+    setNormalTol();
+      }
 }
 
 function angleChar(){
