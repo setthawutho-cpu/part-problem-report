@@ -1599,9 +1599,6 @@ function createPartFields(){
 
     for(let i=1;i<=count;i++){
 
-        const unit =
-        i === 1 ? "Pc." : "Pcs.";
-
         area.innerHTML += `
         <div class="part-box">
 
@@ -1629,17 +1626,30 @@ function createPartFields(){
 
             <label>Qty.</label>
             <div style="display:flex;align-items:center;gap:8px;">
-                <input
-                    type="number"
-                    id="partQty${i}"
-                    style="flex:1;"
-                >
-                <span>(${unit})</span>
+<input
+    type="number"
+    id="partQty${i}"
+    style="flex:1;"
+    oninput="updateUnit(${i})"
+>
+                <span id="unit${i}">(Pcs.)</span>
             </div>
 
         </div>
         `;
     }
+}
+
+function updateUnit(index){
+
+    const qty =
+    Number(
+        document.getElementById(`partQty${index}`).value || 0
+    );
+
+    document.getElementById(`unit${index}`).innerText =
+    qty <= 1 ? "(Pc.)" : "(Pcs.)";
+
 }
 
 function fillSubPart(index){
