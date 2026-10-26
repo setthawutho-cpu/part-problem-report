@@ -444,34 +444,89 @@ diff.toFixed(2) +
 
 function calculateAngle(){
 
-const std=
+const stdText=
 document.getElementById('stdBox').innerText;
 
-const act=
+const actText=
 document.getElementById('actBox').innerText;
 
 if(
-std==='' ||
-act==='' ||
-std==='STD.' ||
-act==='ACT.'
+stdText==='' ||
+actText==='' ||
+stdText==='STD.' ||
+actText==='ACT.'
 ){
 document.getElementById('result').style.color='#999';
 document.getElementById('result').innerHTML='WAITING INPUT';
 return;
 }
 
-if(std!==act){
+const stdSec=angleToSec(stdText);
 
-    document.getElementById('result').style.color='red';
-    document.getElementById('result').innerHTML='NG';
+const actSec=angleToSec(actText);
 
-}else{
+const tolSec=angleToSec(
+document.getElementById('tol').value.replace('±','')
+);
 
-    document.getElementById('result').style.color='green';
-    document.getElementById('result').innerHTML='OK';
+const diff=actSec-stdSec;
+
+const status=
+Math.abs(diff)<=tolSec
+?'OK'
+:'NG';
+
+document.getElementById('result').style.color=
+status==='OK'
+?'green'
+:'red';
+
+document.getElementById('result').innerHTML=
+status+
+' Act. '+
+secToAngle(diff);
 
 }
+
+function angleToSec(text){
+
+let d=0;
+let m=0;
+let s=0;
+
+const deg=text.match(/(\d+)°/);
+const min=text.match(/(\d+)'/);
+const sec=text.match(/(\d+)"/);
+
+if(deg)d=parseInt(deg[1]);
+if(min)m=parseInt(min[1]);
+if(sec)s=parseInt(sec[1]);
+
+return d*3600+m*60+s;
+
+}
+
+function secToAngle(sec){
+
+const sign=
+sec>=0
+?'+'
+:'-';
+
+sec=Math.abs(sec);
+
+const d=Math.floor(sec/3600);
+
+sec%=3600;
+
+const m=Math.floor(sec/60);
+
+const s=sec%60;
+
+return sign+
+String(d).padStart(2,'0')+'°'+
+String(m).padStart(2,'0')+"'" +
+String(s).padStart(2,'0')+'"';
 
 }
 
