@@ -1,7 +1,102 @@
-<button onclick="location.href='part-loan.html'">
-    🔄 Part Loan & Return
-</button>
+<div class="menu-container">
 
-<button onclick="location.href='defect.html'">
-    ⚠️ Defect
-</button>
+    <button class="menu-btn loan-btn"
+        onclick="location.href='part-loan.html'">
+        <span class="icon">🔄</span>
+        <div>
+            <div class="title">Part Loan & Return</div>
+            <div class="subtitle">Borrow and Return Parts</div>
+        </div>
+    </button>
+
+    <button class="menu-btn defect-btn"
+        onclick="location.href='defect.html'">
+        <span class="icon">⚠️</span>
+        <div>
+            <div class="title">Defect</div>
+            <div class="subtitle">Defect Report Management</div>
+        </div>
+    </button>
+
+</div>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+}
+
+.menu-container{
+    max-width:700px;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu-btn{
+    width:100%;
+    border:none;
+    border-radius:16px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    cursor:pointer;
+    color:white;
+    text-align:left;
+    transition:0.2s;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.menu-btn:hover{
+    transform:translateY(-3px);
+}
+
+.menu-btn:active{
+    transform:scale(0.98);
+}
+
+.loan-btn{
+    background:linear-gradient(135deg,#2196F3,#1565C0);
+}
+
+.defect-btn{
+    background:linear-gradient(135deg,#FF9800,#E65100);
+}
+
+.icon{
+    font-size:40px;
+    min-width:55px;
+}
+
+.title{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.subtitle{
+    font-size:14px;
+    opacity:0.9;
+}
+
+@media (max-width:600px){
+    .menu-btn{
+        padding:15px;
+    }
+
+    .icon{
+        font-size:32px;
+    }
+
+    .title{
+        font-size:18px;
+    }
+
+    .subtitle{
+        font-size:12px;
+    }
+}
+</style>
