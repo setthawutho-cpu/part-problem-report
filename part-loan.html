@@ -1,1 +1,895 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+<title>PART BORROWING FROM PL</title>
+
+<meta name="theme-color" content="#dfeaf3">
+
+<link rel="stylesheet" href="bottom-nav.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+
+body{
+    margin:0;
+    padding:10px;
+    background:#dfeaf3;
+    font-family:Segoe UI,sans-serif;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    background:#c7d9ea;
+    padding:15px;
+    border-radius:8px;
+    padding-bottom:140px;
+}
+
+.title{
+    text-align:center;
+    font-size:clamp(16px,4vw,20px);
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.top-row{
+    display:flex;
+    gap:20px;
+}
+
+.top-row>div{
+    flex:1;
+}
+
+.top-row{
+    display:flex;
+    gap:20px;
+}
+
+.top-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.top-row > div:nth-child(1){
+    flex:1.2;   /* Date */
+}
+
+.top-row > div:nth-child(2){
+    flex:1.3;   /* Detail */
+}
+
+.top-row > div:nth-child(3){
+    flex:1.5;   /* Location */
+}
+
+.label-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+input,
+select{
+    width:100%;
+    height:34px;
+    padding:4px 6px;
+    margin:2px 0 6px;
+    box-sizing:border-box;
+    font-size:14px;
+}
+
+#date,
+#detail,
+#borrowLocation{
+    height:34px !important;
+    min-height:34px !important;
+    line-height:34px;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    padding-top:0;
+    padding-bottom:0;
+}
+
+#photos{
+    background:#fff;
+    border:1px solid #999;
+}
+
+.manual-btn{
+    width:70px !important;
+    height:24px !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    background:#d9d9d9;
+    color:#000;
+
+    border:1px solid #666 !important;
+
+    box-shadow:
+        inset 1px 1px 0 #ffffff,
+        inset -1px -1px 0 #888,
+        2px 2px 3px rgba(0,0,0,0.25);
+
+    font-size:13px !important;
+    font-weight:normal !important;
+
+    cursor:pointer;
+}
+
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+input,
+select,
+textarea,
+button{
+    border-radius:0 !important;
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
+    border:1px solid #999;
+    background:#fff;
+    color:#000 !important;
+    touch-action:manipulation;
+}
+
+#date,
+#detail,
+#borrowLocation{
+    color:#000 !important;
+}
+
+.manual-btn:active{
+    transform:translateY(1px);
+
+    box-shadow:
+        inset -1px -1px 0 #ffffff,
+        inset 1px 1px 0 #888;
+}
+
+.review,
+.copy,
+.line,
+.save{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+.report{
+    margin-top:10px;
+    background:white;
+    padding:10px;
+    border:1px solid #ccc;
+    white-space:pre-wrap;
+    line-height:1.2;
+
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+#qty{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
+    display:flex;
+    align-items:center;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+}
+
+.container{
+    padding-top:50px;
+}
+
+.top-nav span{
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.qty-photo-row{
+    display:flex;
+    gap:10px;
+    margin-top:5px;
+    align-items:flex-start;
+}
+
+.qty-photo-row > div:first-child{
+    flex:3;
+}
+
+.qty-photo-row > div:last-child{
+    flex:7;
+}
+
+#qty{
+    height:34px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+#photos{
+    height:34px;
+    font-size:12px;
+}
+
+.photo-head{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:4px;
+}
+
+#photoCount{
+    color:#0066cc;
+    font-weight:bold;
+    margin:0;
+    flex:1;
+}
+
+.photo-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.photo-input-row #photos{
+    flex:1;
+}
+
+#clearPhoto{
+    width:40px !important;
+    min-width:40px !important;
+    height:40px !important;
+
+    padding:0 !important;
+    margin:0 !important;
+
+    background:transparent;
+    border:none !important;
+
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+    flex:none;
+}
+
+@media (max-width:500px){
+
+    #date,
+    #detail,
+    #borrowLocation{
+        font-size:13px !important;
+    }
+
+    .top-row{
+        gap:6px;
+    }
+
+}
+
+.bottom-nav button,
+.bottom-nav button span{
+    font-weight:400 !important;
+}
+      
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+
+    <span onclick="backToMenu()">
+        ❮ กลับ
+    </span>
+
+</div>
+
+<div class="container">
+
+<div class="title">
+🚨 PART BORROWING FROM PL 🚨
+</div>
+
+<div class="top-row">
+
+    <div>
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
+
+    <div>
+        <label>Detail</label>
+        <select id="detail">
+            <option value=""></option>
+            <option>ยืมชิ้นส่วน</option>
+            <option>คืนชิ้นส่วน</option>
+            <option>Defect</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Location</label>
+        <select id="borrowLocation">
+            <option value=""></option>
+            <option>Box</option>
+            <option>Rack</option>
+            <option>Set Packing</option>
+        </select>
+    </div>
+
+</div>
+
+<label>Part No.</label>
+<input type="text" id="partno" list="partList" autocomplete="off">
+
+<datalist id="partList"></datalist>
+
+<div class="label-row">
+<label>Part Name</label>
+<button type="button" id="partnameBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="partname" readonly>
+
+<div class="label-row">
+<label>Model</label>
+<button type="button" id="modelBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="model" readonly>
+
+<div class="label-row">
+<label>Supplier</label>
+<button type="button" id="supplierBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="supplier" readonly>
+
+<div class="qty-photo-row">
+
+<div>
+
+    <div class="photo-head">
+        <label>Qty</label>
+        <span>&nbsp;</span>
+    </div>
+
+    <input type="number" id="qty">
+
+</div>
+
+<div>
+
+    <div class="photo-head">
+        <label>Photo</label>
+
+        <span id="photoCount">
+            เลือกแล้ว 0 รูป
+        </span>
+    </div>
+
+    <div class="photo-input-row">
+
+<input type="file"
+       id="photos"
+       multiple
+       accept="image/*">
+
+        <button type="button"
+                id="clearPhoto"
+                onclick="clearPhotos()">
+            🗑️
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<button class="review" onclick="reviewReport()">
+🔍 Review
+</button>
+
+<button class="copy" onclick="copyReport()">
+📋 Copy Report
+</button>
+
+<button class="line" onclick="sendLine()">
+📤 Send LINE
+</button>
+
+<button class="save" onclick="saveData()">
+💾 Save Data
+</button>
+
+<div id="report" class="report"></div>
+
+</div>
+
+<script>
+
+date.value =
+new Date().toISOString().split("T")[0];
+
+const borrowLocation =
+document.getElementById("borrowLocation");
+
+let partMaster = {};
+let allPartNo = [];
+
+async function loadExcel(){
+
+try{
+
+const response =
+await fetch("ข้อมูล Excel.xlsx");
+
+const data =
+await response.arrayBuffer();
+
+const wb =
+XLSX.read(data,{type:"array"});
+
+const sheet =
+wb.Sheets[wb.SheetNames[0]];
+
+const rows =
+XLSX.utils.sheet_to_json(sheet);
+
+rows.forEach(row=>{
+
+const partNo =
+String(row.PartNo || "").trim();
+
+if(partNo){
+
+    if(!allPartNo.includes(partNo)){
+        allPartNo.push(partNo);
+    }
+
+    partMaster[partNo]={
+        partName:row.PartName || "",
+        model:row.Model || "",
+        supplier:row.Supplier || ""
+    };
+
+}
+
+});
+
+}catch(e){
+console.log(e);
+}
+
+}
+
+loadExcel();
+
+let partnameManual = false;
+let modelManual = false;
+let supplierManual = false;
+
+/* PART NAME */
+partnameBtn.onclick = function(){
+
+    partnameManual = !partnameManual;
+
+if(partnameManual){
+
+    partname.readOnly = false;
+    partname.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
+
+}else{
+
+    partname.readOnly = true;
+
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
+
+    fillPartData(partno.value);
+
+}
+
+};
+
+/* MODEL */
+modelBtn.onclick = function(){
+
+    modelManual = !modelManual;
+
+if(modelManual){
+
+    model.readOnly = false;
+    model.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
+
+}else{
+
+    model.readOnly = true;
+
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
+
+    fillPartData(partno.value);
+
+}
+
+};
+
+/* SUPPLIER */
+supplierBtn.onclick = function(){
+
+    supplierManual = !supplierManual;
+
+if(supplierManual){
+
+    supplier.readOnly = false;
+    supplier.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
+
+}else{
+
+    supplier.readOnly = true;
+
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
+
+    fillPartData(partno.value);
+
+}
+
+};
+
+partno.addEventListener("input", function(){
+
+    const keyword = this.value.trim();
+
+    if(keyword === ""){
+
+        if(!partnameManual) partname.value = "";
+        if(!modelManual) model.value = "";
+        if(!supplierManual) supplier.value = "";
+
+        partList.innerHTML = "";
+        return;
+    }
+
+    if(partMaster[keyword]){
+
+        fillPartData(keyword);
+        return;
+    }
+
+    if(keyword.length < 3){
+
+        partList.innerHTML = "";
+        return;
+    }
+
+    const result =
+    allPartNo
+    .filter(x => x.includes(keyword))
+    .slice(0,10);
+
+    partList.innerHTML =
+    result
+    .map(x => `<option value="${x}"></option>`)
+    .join("");
+
+});
+
+function fillPartData(partNo){
+
+    if(!partMaster[partNo]) return;
+
+    if(!partnameManual){
+        partname.value =
+        partMaster[partNo].partName || "";
+    }
+
+    if(!modelManual){
+        model.value =
+        partMaster[partNo].model || "";
+    }
+
+    if(!supplierManual){
+        supplier.value =
+        partMaster[partNo].supplier || "";
+    }
+
+}
+
+let selectedPhotos = [];
+
+photos.addEventListener("change",()=>{
+
+    selectedPhotos.push(...photos.files);
+
+    photoCount.innerText =
+    `เลือกแล้ว ${selectedPhotos.length} รูป`;
+
+    photos.value = "";
+
+    reviewReport();
+
+});
+
+function clearPhotos(){
+
+    if(!confirm("ลบรูปทั้งหมด ?")) return;
+
+    selectedPhotos = [];
+
+    photos.value = "";
+
+    photoCount.innerText =
+    "เลือกแล้ว 0 รูป";
+
+    reviewReport();
+
+}
+
+function reviewReport(){
+
+let text = "";
+
+if(detail.value === "ยืมชิ้นส่วน"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
+`;
+}else if(detail.value === "คืนชิ้นส่วน"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""}
+`;
+}else if(detail.value === "Defect"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value} ` : ""}ไป Defect
+`;
+}
+
+if(date.value)
+    text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
+
+if(partno.value)
+    text += `Part No. : ${partno.value}\n`;
+
+if(partname.value)
+    text += `Part Name : ${partname.value}\n`;
+
+if(model.value)
+    text += `Model : ${model.value}\n`;
+
+if(supplier.value)
+    text += `Supplier : ${supplier.value}\n`;
+
+if(qty.value){
+    const qtyUnit = Number(qty.value) === 1 ? "Pc." : "Pcs.";
+    text += `Qty : ${qty.value} ${qtyUnit}\n`;
+}
+
+text += "━━━━━━━━━━━━━━\n";
+text += "📷 Photo : Attached";
+
+report.style.display = "block";
+report.innerText = text;
+
+}
+
+function copyReport(){
+
+if(!report.innerText){
+
+reviewReport();
+
+}
+
+navigator.clipboard.writeText(
+report.innerText
+);
+
+alert("Copy สำเร็จ");
+
+}
+
+async function sendLine(){
+
+    if(!report.innerText){
+        reviewReport();
+    }
+
+    try{
+
+console.log(
+    "Photo Count =",
+    selectedPhotos.length
+);
+
+        const files = selectedPhotos;
+
+        if(files.length > 0 && navigator.canShare){
+
+            await navigator.share({
+                text: report.innerText,
+                files: files
+            });
+
+        }else{
+
+            location.href =
+            "https://line.me/R/share?text=" +
+            encodeURIComponent(report.innerText);
+
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+
+}
+
+function saveData(){
+
+    const data={
+        date:date.value,
+        detail:detail.value,
+        location:borrowLocation.value,
+        partNo:partno.value,
+        partName:partname.value,
+        model:model.value,
+        supplier:supplier.value,
+        qty:qty.value
+    };
+
+    localStorage.setItem(
+        "borrowPLData",
+        JSON.stringify(data)
+    );
+
+    alert("บันทึกสำเร็จ");
+
+    localStorage.removeItem("borrowPLData");
+
+}
+
+function backToMenu(){
+    location.href = "home.html";
+}
+
+window.onload = ()=>{
+
+    localStorage.removeItem("borrowPLData");
+
+    date.value =
+    new Date().toISOString().split("T")[0];
+
+    detail.value = "";
+    borrowLocation.value = "";
+    partno.value = "";
+    partname.value = "";
+    model.value = "";
+    supplier.value = "";
+    qty.value = "";
+
+};
+
+</script>
+
+<script src="bottom-nav.js"></script>
+
+</body>
+</html>
