@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
 <meta charset="UTF-8">
 
@@ -15,10 +16,10 @@ content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <style>
 
 :root{
-    --primary:#1565C0;
-    --primary-light:#42A5F5;
+    --blue:#1565C0;
+    --blue2:#42A5F5;
     --orange:#FB8C00;
-    --orange-dark:#EF6C00;
+    --orange2:#EF6C00;
     --bg:#F4F6F9;
 }
 
@@ -37,54 +38,49 @@ body{
     padding-bottom:90px;
 }
 
-/* HEADER */
+/* Header */
 
 .header{
-    background:linear-gradient(
-        135deg,
-        var(--primary),
-        var(--primary-light)
-    );
-    color:white;
+    background:linear-gradient(135deg,var(--blue),var(--blue2));
+    color:#fff;
     text-align:center;
     padding:25px 20px;
     border-radius:0 0 25px 25px;
-    box-shadow:0 4px 15px rgba(0,0,0,.15);
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
 .header h1{
     font-size:30px;
-    margin-bottom:6px;
+    margin-bottom:5px;
 }
 
 .header p{
-    font-size:14px;
-    opacity:.95;
+    font-size:13px;
+    opacity:.9;
 }
 
-.today{
+#todayDate{
     margin-top:8px;
     font-size:14px;
 }
 
-/* CARD */
+/* Card */
 
 .card{
+    background:#fff;
     margin:15px;
-    background:white;
+    padding:15px;
     border-radius:18px;
-    padding:16px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
-/* DATE */
-
-.date-label{
-    font-weight:700;
-    margin-bottom:10px;
+.card label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
-.date-input{
+.card input{
     width:100%;
     padding:12px;
     border:1px solid #ddd;
@@ -92,7 +88,7 @@ body{
     font-size:16px;
 }
 
-/* SUMMARY */
+/* Summary */
 
 .summary{
     display:grid;
@@ -101,40 +97,32 @@ body{
     margin:15px;
 }
 
-.stat-card{
-    border-radius:18px;
-    color:white;
+.summary-box{
+    color:#fff;
     text-align:center;
+    border-radius:18px;
     padding:20px;
 }
 
 .loan{
-    background:linear-gradient(
-        135deg,
-        #2196F3,
-        #1565C0
-    );
+    background:linear-gradient(135deg,#2196F3,#1565C0);
 }
 
 .defect{
-    background:linear-gradient(
-        135deg,
-        #FFA000,
-        #F57C00
-    );
+    background:linear-gradient(135deg,#FFA000,#F57C00);
 }
 
-.count{
-    font-size:34px;
+.summary-count{
+    font-size:36px;
     font-weight:bold;
 }
 
-.label{
+.summary-title{
     margin-top:5px;
     font-size:14px;
 }
 
-/* BUTTONS */
+/* Menu */
 
 .menu-container{
     margin:15px;
@@ -146,13 +134,13 @@ body{
 .menu-btn{
     border:none;
     border-radius:18px;
-    padding:20px;
+    padding:18px;
     display:flex;
     align-items:center;
     gap:15px;
     color:white;
-    cursor:pointer;
     text-align:left;
+    cursor:pointer;
     box-shadow:0 3px 12px rgba(0,0,0,.15);
 }
 
@@ -161,23 +149,16 @@ body{
 }
 
 .loan-btn{
-    background:linear-gradient(
-        135deg,
-        #2196F3,
-        #1565C0
-    );
+    background:linear-gradient(135deg,#2196F3,#1565C0);
 }
 
 .defect-btn{
-    background:linear-gradient(
-        135deg,
-        #FFA000,
-        #EF6C00
-    );
+    background:linear-gradient(135deg,#FFA000,#EF6C00);
 }
 
 .icon{
     font-size:42px;
+    min-width:50px;
 }
 
 .title{
@@ -185,28 +166,35 @@ body{
     font-weight:bold;
 }
 
-.subtitle{
+.sub{
     font-size:13px;
-    opacity:.95;
 }
 
-/* ACTIVITY */
+/* Activity */
 
 .activity{
+    background:#fff;
     margin:15px;
-    background:white;
     border-radius:18px;
-    padding:16px;
+    padding:15px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
 .activity h3{
-    margin-bottom:12px;
+    margin-bottom:10px;
+}
+
+.item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.item:last-child{
+    border-bottom:none;
 }
 
 .no-data{
     color:#999;
-    padding:10px 0;
 }
 
 @media(max-width:600px){
@@ -219,97 +207,106 @@ body{
         font-size:34px;
     }
 
-    .count{
+    .summary-count{
         font-size:28px;
     }
 
 }
 
 </style>
-</head>
-<body>
 
-<!-- HEADER -->
+</head>
+
+<body>
 
 <div class="header">
 
-    <h1 id="pageTitle"></h1>
+    <h1 id="title">
+        📦 ระบบจัดการ PL
+    </h1>
 
-    <p id="pageSubtitle"></p>
+    <p id="subTitle">
+        Part Loan & Defect Management
+    </p>
 
-    <div class="today" id="todayDate"></div>
+    <div id="todayDate"></div>
 
 </div>
-
-<!-- DATE -->
 
 <div class="card">
 
-    <div class="date-label" id="dateLabel"></div>
+    <label id="lblDate">
+        📅 เลือกวันที่
+    </label>
 
-    <input
-        type="date"
-        id="viewDate"
-        class="date-input">
+    <input type="date" id="viewDate">
 
 </div>
-
-<!-- SUMMARY -->
 
 <div class="summary">
 
-    <div class="stat-card loan">
+    <div class="summary-box loan">
 
-        <div class="count" id="loanCount">0</div>
+        <div class="summary-count"
+        id="loanCount">0</div>
 
-        <div class="label" id="loanLabel"></div>
+        <div class="summary-title"
+        id="loanLabel">
+            รายการยืม-คืน
+        </div>
 
     </div>
 
-    <div class="stat-card defect">
+    <div class="summary-box defect">
 
-        <div class="count" id="defectCount">0</div>
+        <div class="summary-count"
+        id="defectCount">0</div>
 
-        <div class="label" id="defectLabel"></div>
+        <div class="summary-title"
+        id="defectLabel">
+            รายการ Defect
+        </div>
 
     </div>
 
 </div>
 
-<!-- MENU -->
-
 <div class="menu-container">
 
-    <button
-        class="menu-btn loan-btn"
-        onclick="location.href='part-loan.html'">
+    <button class="menu-btn loan-btn"
+    onclick="location.href='part-loan.html'">
 
         <div class="icon">🔄</div>
 
         <div>
 
-            <div class="title" id="loanBtn"></div>
+            <div class="title"
+            id="loanBtnText">
+            ยืม - คืนชิ้นส่วน
+            </div>
 
-            <div class="subtitle">
-                Part Loan & Return
+            <div class="sub">
+            Part Loan & Return
             </div>
 
         </div>
 
     </button>
 
-    <button
-        class="menu-btn defect-btn"
-        onclick="location.href='defect.html'">
+    <button class="menu-btn defect-btn"
+    onclick="location.href='defect.html'">
 
         <div class="icon">⚠️</div>
 
         <div>
 
-            <div class="title" id="defectBtn"></div>
+            <div class="title"
+            id="defectBtnText">
+            Defect
+            </div>
 
-            <div class="subtitle">
-                Defect Report Management
+            <div class="sub">
+            Defect Report Management
             </div>
 
         </div>
@@ -318,166 +315,159 @@ body{
 
 </div>
 
-<!-- ACTIVITY -->
-
 <div class="activity">
 
-    <h3 id="activityTitle"></h3>
+    <h3 id="activityTitle">
+        📋 รายการประจำวัน
+    </h3>
 
-    <div id="activityList"></div>
+    <div id="activityList">
+        <div class="no-data">
+            ยังไม่มีข้อมูล
+        </div>
+    </div>
 
 </div>
 
-<!-- BOTTOM NAV -->
-
 <div id="bottomNav"></div>
+
 <script src="bottom-nav.js"></script>
 
 <script>
 
-/* ---------- LANGUAGE ---------- */
+/* Language */
+
+if(!localStorage.getItem("language")){
+    localStorage.setItem("language","th");
+}
 
 const lang =
-localStorage.getItem("language") || "th";
+localStorage.getItem("language");
 
-const text = {
+const TXT = {
 
-    th:{
-        title:"📦 ระบบจัดการ PL",
-        sub:"ระบบยืม-คืนอะไหล่ และ Defect",
-        date:"📅 เลือกวันที่",
-        loan:"รายการยืม-คืน",
-        defect:"รายการ Defect",
-        loanBtn:"ยืม - คืนอะไหล่",
-        defectBtn:"บันทึก Defect",
-        activity:"📋 รายการประจำวัน",
-        nodata:"ยังไม่มีข้อมูล"
-    },
+th:{
+title:"📦 ระบบจัดการ PL",
+sub:"Part Loan & Defect Management",
+date:"📅 เลือกวันที่",
+loan:"รายการยืม-คืน",
+defect:"รายการ Defect",
+loanBtn:"ยืม - คืนชิ้นส่วน",
+defectBtn:"Defect",
+activity:"📋 รายการประจำวัน",
+nodata:"ยังไม่มีข้อมูล"
+},
 
-    en:{
-        title:"📦 PL Dashboard",
-        sub:"Part Loan & Defect Management",
-        date:"📅 Select Date",
-        loan:"Loan Records",
-        defect:"Defect Records",
-        loanBtn:"Part Loan & Return",
-        defectBtn:"Defect Management",
-        activity:"📋 Daily Activity",
-        nodata:"No Data Available"
-    }
+en:{
+title:"📦 PL Dashboard",
+sub:"Part Loan & Defect Management",
+date:"📅 Select Date",
+loan:"Loan Records",
+defect:"Defect Records",
+loanBtn:"Part Loan & Return",
+defectBtn:"Defect Management",
+activity:"📋 Daily Activity",
+nodata:"No Data Available"
+}
 
 };
 
-const t = text[lang];
+const t = TXT[lang] || TXT.th;
 
-document.getElementById("pageTitle").textContent=t.title;
-document.getElementById("pageSubtitle").textContent=t.sub;
-document.getElementById("dateLabel").textContent=t.date;
-document.getElementById("loanLabel").textContent=t.loan;
-document.getElementById("defectLabel").textContent=t.defect;
-document.getElementById("loanBtn").textContent=t.loanBtn;
-document.getElementById("defectBtn").textContent=t.defectBtn;
-document.getElementById("activityTitle").textContent=t.activity;
+/* Text */
 
-/* ---------- DATE ---------- */
+title.innerText = t.title;
+subTitle.innerText = t.sub;
+lblDate.innerText = t.date;
+loanLabel.innerText = t.loan;
+defectLabel.innerText = t.defect;
+loanBtnText.innerText = t.loanBtn;
+defectBtnText.innerText = t.defectBtn;
+activityTitle.innerText = t.activity;
+
+/* Date */
 
 const today = new Date();
 
-if(lang === "th"){
+if(lang==="th"){
 
-    document.getElementById("todayDate")
-    .textContent = today.toLocaleDateString(
-        "th-TH",
-        {
-            weekday:"long",
-            day:"numeric",
-            month:"long",
-            year:"numeric"
-        }
-    );
+todayDate.innerText =
+today.toLocaleDateString(
+"th-TH",
+{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+});
 
 }else{
 
-    document.getElementById("todayDate")
-    .textContent = today.toLocaleDateString(
-        "en-GB",
-        {
-            weekday:"long",
-            day:"numeric",
-            month:"long",
-            year:"numeric"
-        }
-    );
+todayDate.innerText =
+today.toLocaleDateString(
+"en-GB",
+{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+});
 
 }
 
-document.getElementById("viewDate").value =
-today.toISOString().split("T")[0];
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth()+1).padStart(2,"0");
+const dd = String(today.getDate()).padStart(2,"0");
 
-/* ---------- DATA ---------- */
+viewDate.value = `${yyyy}-${mm}-${dd}`;
 
-/* ดึงข้อมูลจริงจาก localStorage ภายหลังได้ */
+/* Data */
 
 const loanRecords =
-JSON.parse(localStorage.getItem("loanRecords") || "[]");
+JSON.parse(
+localStorage.getItem("loanRecords") || "[]"
+);
 
 const defectRecords =
-JSON.parse(localStorage.getItem("defectRecords") || "[]");
+JSON.parse(
+localStorage.getItem("defectRecords") || "[]"
+);
 
-document.getElementById("loanCount").textContent =
+loanCount.innerText =
 loanRecords.length;
 
-document.getElementById("defectCount").textContent =
+defectCount.innerText =
 defectRecords.length;
 
-/* ---------- ACTIVITY ---------- */
+/* Activity */
 
-const activityList =
-document.getElementById("activityList");
+activityList.innerHTML="";
 
 if(
-    loanRecords.length===0 &&
-    defectRecords.length===0
+loanRecords.length===0 &&
+defectRecords.length===0
 ){
 
-    activityList.innerHTML =
-    `<div class="no-data">${t.nodata}</div>`;
-
-}else{
-
-    activityList.innerHTML="";
-
-    loanRecords.slice(-5).reverse().forEach(item=>{
-
-        activityList.innerHTML +=
-        `<div>🔄 ${item.part || "-"}</div>`;
-
-    });
-
-    defectRecords.slice(-5).reverse().forEach(item=>{
-
-        activityList.innerHTML +=
-        `<div>⚠️ ${item.part || "-"}</div>`;
-
-    });
+activityList.innerHTML=
+`<div class="no-data">${t.nodata}</div>`;
 
 }
 
-/* ---------- LOCK ZOOM ---------- */
+/* Lock Double Tap Zoom */
 
 let lastTouchEnd = 0;
 
 document.addEventListener(
-'touchend',
+"touchend",
 function(e){
 
-    const now = Date.now();
+const now = Date.now();
 
-    if(now-lastTouchEnd<=300){
-        e.preventDefault();
-    }
+if(now-lastTouchEnd<=300){
+e.preventDefault();
+}
 
-    lastTouchEnd = now;
+lastTouchEnd = now;
 
 },
 {passive:false}
