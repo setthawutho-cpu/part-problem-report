@@ -2,254 +2,706 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-
-<title>Inspection Part</title>
-
-<link rel="stylesheet" href="bottom-nav.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part Borrowing From PL</title>
 
 <style>
-html,body{
-    touch-action:manipulation;
-    overscroll-behavior:none;
-}
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-    background:#f5f7fa;
-    min-height:100vh;
-    padding-bottom:80px;
+background:
+linear-gradient(135deg,#edf4ff,#e8eef7);
+min-height:100vh;
+color:#16315b;
+padding-bottom:120px;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+
 .header{
-    background:#dfeaf3;
-    color:#fff;
-    padding:12px 15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:999;
+background:linear-gradient(135deg,#6d97ff,#3467ff);
+padding:20px;
+border-radius:0 0 30px 30px;
+color:#fff;
+position:relative;
+overflow:hidden;
 }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:10px;
+.header::before{
+content:'';
+position:absolute;
+width:300px;
+height:300px;
+background:rgba(255,255,255,.08);
+border-radius:50%;
+right:-100px;
+top:-100px;
+}
+
+.header-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+}
+
+.back-btn{
+width:58px;
+height:58px;
+border:none;
+border-radius:18px;
+background:#ffffffee;
+font-size:28px;
+cursor:pointer;
+color:#234fba;
+}
+
+.title-wrap{
+display:flex;
+align-items:center;
+gap:16px;
+flex:1;
 }
 
 .logo{
-    width:40px;
-    height:40px;
-    object-fit:contain;
+font-size:60px;
 }
 
-#appTitle{
-    font-size:20px;
-    font-weight:bold;
+.title-wrap h1{
+font-size:22px;
 }
 
-.lang-btn{
-    border:none;
-    background:#fff;
-    color:#333;
-    padding:8px 14px;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
+.title-wrap p{
+font-size:14px;
+opacity:.9;
 }
 
-/* MENU */
-.menu-grid{
-    padding:15px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
+.datetime{
+background:rgba(255,255,255,.2);
+backdrop-filter:blur(15px);
+padding:12px 18px;
+border-radius:20px;
+text-align:center;
+font-weight:600;
 }
 
-.menu-card{
-    height:100px;
-    background:#fff;
-    border:1px solid #999;
-    border-radius:8px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:5px;
-    cursor:pointer;
-    transition:.2s;
+/* ================= LAYOUT ================= */
+
+.container{
+padding:18px;
+max-width:1200px;
+margin:auto;
 }
 
-.menu-card:hover{
-    transform:translateY(-3px);
+.card{
+background:rgba(255,255,255,.65);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.7);
+border-radius:24px;
+box-shadow:
+0 8px 20px rgba(0,0,0,.05);
+padding:20px;
+margin-bottom:16px;
 }
 
-.icon{
-    font-size:28px;
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
 }
 
-.menu-card span{
-    text-align:center;
-    font-size:14px;
-    padding:0 8px;
+.info-card{
+padding:18px;
+border-radius:22px;
+background:rgba(255,255,255,.45);
 }
 
-@media(max-width:768px){
-
-    .menu-grid{
-        grid-template-columns:repeat(4,1fr);
-        gap:6px;
-    }
-
-    .menu-card{
-        height:85px;
-    }
-
-    .icon{
-        font-size:24px;
-    }
-
-    .menu-card span{
-        font-size:9px;
-        line-height:1.1;
-        padding:0 2px;
-    }
-
-    .logo{
-        width:30px;
-        height:30px;
-    }
-
-    #appTitle{
-        font-size:16px;
-    }
-
-    .lang-btn{
-        font-size:12px;
-        padding:6px 10px;
-    }
+.info-card h4{
+margin-bottom:12px;
+font-size:18px;
 }
 
-/* กัน Bottom Nav โดน CSS ทับ */
-.bottom-nav button,
-.bottom-nav button span{
-    font-weight:400 !important;
+.input{
+width:100%;
+height:52px;
+border:none;
+outline:none;
+border-radius:16px;
+padding:0 16px;
+font-size:18px;
+background:#fff;
+box-shadow:inset 0 0 0 1px #dce7f6;
+}
+
+select.input{
+cursor:pointer;
+}
+
+/* ================= SEARCH ================= */
+
+.search-row{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.search-row .input{
+flex:1;
+}
+
+.search-btn{
+height:56px;
+padding:0 30px;
+border:none;
+cursor:pointer;
+border-radius:16px;
+background:linear-gradient(135deg,#01a9ff,#1668ff);
+color:#fff;
+font-size:18px;
+font-weight:700;
+}
+
+/* ================= PART INFO ================= */
+
+.section-title{
+font-size:24px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.info-grid{
+display:grid;
+grid-template-columns:150px 1fr 190px;
+gap:15px;
+align-items:center;
+margin-bottom:14px;
+}
+
+.label{
+font-size:20px;
+font-weight:600;
+}
+
+.toggle{
+display:flex;
+background:#eef2f7;
+border-radius:14px;
+overflow:hidden;
+}
+
+.toggle button{
+flex:1;
+height:50px;
+border:none;
+cursor:pointer;
+background:transparent;
+font-size:18px;
+}
+
+.toggle button.active{
+background:linear-gradient(135deg,#4ca5ff,#1d71ff);
+color:#fff;
+}
+
+/* ================= QTY + PHOTO ================= */
+
+.flex{
+display:grid;
+grid-template-columns:1fr 1.4fr;
+gap:16px;
+}
+
+.qty-box{
+display:flex;
+height:92px;
+overflow:hidden;
+border-radius:18px;
+background:#fff;
+box-shadow:inset 0 0 0 1px #dbe5f2;
+}
+
+.qty-btn{
+width:90px;
+border:none;
+font-size:45px;
+cursor:pointer;
+background:#fff;
+}
+
+.qty-value{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:56px;
+font-weight:700;
+}
+
+.photo-area{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.upload-box{
+width:95px;
+height:95px;
+border-radius:18px;
+background:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+font-size:42px;
+border:2px dashed #90bfff;
+}
+
+.photo{
+width:95px;
+height:95px;
+object-fit:cover;
+border-radius:16px;
+}
+
+/* ================= REPORT ================= */
+
+textarea{
+width:100%;
+height:250px;
+resize:none;
+border:none;
+outline:none;
+border-radius:16px;
+padding:15px;
+font-size:18px;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-top:15px;
+}
+
+.action-btn{
+border:none;
+height:82px;
+border-radius:24px;
+font-size:24px;
+font-weight:700;
+color:#fff;
+cursor:pointer;
+}
+
+.review{
+background:linear-gradient(135deg,#1f8fff,#0e5de8);
+}
+
+.line{
+background:linear-gradient(135deg,#10d95a,#01a83e);
+}
+
+.save{
+background:linear-gradient(135deg,#ffb01c,#ff7a00);
+}
+
+/* ================= BOTTOM NAV ================= */
+
+.bottom-nav{
+position:fixed;
+left:18px;
+right:18px;
+bottom:15px;
+
+background:rgba(255,255,255,.75);
+backdrop-filter:blur(20px);
+
+border-radius:28px;
+
+display:flex;
+justify-content:space-around;
+padding:15px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+}
+
+.nav-item{
+text-align:center;
+font-size:15px;
+color:#5b6d8d;
+}
+
+.nav-item div{
+font-size:30px;
+margin-bottom:5px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+.grid3{
+grid-template-columns:1fr;
+}
+
+.flex{
+grid-template-columns:1fr;
+}
+
+.info-grid{
+grid-template-columns:1fr;
+}
+
+.actions{
+grid-template-columns:1fr;
+}
+
+.title-wrap h1{
+font-size:18px;
+}
 }
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="header">
+<header class="header">
 
-    <div class="logo-area">
-        <img src="icon-192.png" class="logo">
-        <div id="appTitle">Inspection Part</div>
-    </div>
+<div class="header-top">
 
-    <button class="lang-btn"
-        onclick="changeLanguage()">
-        TH / EN
-    </button>
+<button class="back-btn">←</button>
+
+<div class="title-wrap">
+<div class="logo">📦</div>
+
+<div>
+<h1>PART BORROWING FROM PL</h1>
+<p>Part Loan / Return / Defect</p>
+</div>
+</div>
+
+<div class="datetime" id="datetime"></div>
 
 </div>
 
-<div class="menu-grid">
+</header>
 
-    <div class="menu-card"
-         onclick="location.href='part-problem-report.html'">
-        <div class="icon">📋</div>
-        <span id="reportText">PART PROBLEM REPORT</span>
-    </div>
+<div class="container">
 
-    <div class="menu-card"
-         onclick="location.href='part-problem-newmodel.html'">
-        <div class="icon">📦</div>
-        <span id="newModelText">PART PROBLEM NEW MODEL</span>
-    </div>
+<!-- TOP CARDS -->
 
-    <div class="menu-card"
-         onclick="location.href='part-borrowing-pl.html'">
-        <div class="icon">📨</div>
-        <span id="borrowText">PART BORROWING FROM PL</span>
-    </div>
+<div class="card">
 
-    <div class="menu-card"
-         onclick="location.href='assembly-trial.html'">
-        <div class="icon">🧪</div>
-        <span id="trialText">ASSEMBLY TRIAL</span>
-    </div>
+<div class="grid3">
 
-    <div class="menu-card"
-         onclick="location.href='washing-room.html'">
-        <div class="icon">🔬</div>
-        <span id="washText">WASHING ROOM</span>
-    </div>
+<div class="info-card">
+<h4>📄 Transaction Type</h4>
 
-    <div class="menu-card"
-         onclick="location.href='dashboard.html'">
-        <div class="icon">📊</div>
-        <span id="dashboardText">DASHBOARD</span>
-    </div>
+<select class="input">
+<option>Borrow Part</option>
+<option>Return Part</option>
+<option>Defect Part</option>
+</select>
+</div>
 
-    <div class="menu-card"
-         onclick="location.href='document.html'">
-        <div class="icon">📄</div>
-        <span id="documentText">DOCUMENT</span>
-    </div>
+<div class="info-card">
+<h4>📅 Date</h4>
+<input type="date" class="input">
+</div>
 
-    <div class="menu-card"
-         onclick="location.href='standard.html'">
-        <div class="icon">📏</div>
-        <span id="standardText">STANDARD</span>
-    </div>
+<div class="info-card">
+<h4>📍 Location</h4>
+
+<select class="input">
+<option>Rack</option>
+<option>Warehouse</option>
+<option>Production</option>
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="card">
+
+<div class="search-row">
+
+<label style="font-size:28px;font-weight:700;">
+🔍 Part No.
+</label>
+
+<input
+class="input"
+placeholder="123456-AB">
+
+<button class="search-btn">
+ค้นหา
+</button>
+
+</div>
+
+</div>
+
+<!-- PART INFO -->
+
+<div class="card">
+
+<div class="section-title">
+📄 Part Information
+</div>
+
+<div class="info-grid">
+
+<div class="label">Part Name</div>
+
+<input class="input" value="COVER ASSY">
+
+<div class="toggle">
+<button>Auto</button>
+<button class="active">Manual</button>
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="label">Model</div>
+
+<input class="input" value="ABC-123">
+
+<div class="toggle">
+<button>Auto</button>
+<button class="active">Manual</button>
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="label">Supplier</div>
+
+<input class="input" value="DENSO">
+
+<div class="toggle">
+<button>Auto</button>
+<button class="active">Manual</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- QTY + PHOTO -->
+
+<div class="flex">
+
+<div class="card">
+
+<div class="section-title">
+# Qty
+</div>
+
+<div class="qty-box">
+
+<button class="qty-btn" onclick="qty(-1)">
+−
+</button>
+
+<div id="qtyValue" class="qty-value">
+10
+</div>
+
+<button class="qty-btn" onclick="qty(1)">
++
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="section-title">
+📷 Photo
+</div>
+
+<div class="photo-area">
+
+<label class="upload-box">
++
+<input
+type="file"
+multiple
+accept="image/*"
+hidden
+onchange="preview(event)">
+</label>
+
+<div id="preview"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- REVIEW REPORT -->
+
+<div class="card">
+
+<div class="section-title">
+📄 Review Report
+</div>
+
+<textarea id="report">
+แจ้ง PL
+
+Date : 15/11/2024
+Part No. : 123456-AB
+Part Name : COVER ASSY
+Model : ABC-123
+Supplier : DENSO
+Qty : 10 PCS
+</textarea>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="actions">
+
+<button class="action-btn review">
+🔎 Review
+</button>
+
+<button class="action-btn line">
+LINE Send
+</button>
+
+<button class="action-btn save">
+💾 Save Data
+</button>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-item">
+<div>🏠</div>
+Home
+</div>
+
+<div class="nav-item">
+<div>📊</div>
+Dashboard
+</div>
+
+<div class="nav-item">
+<div>☰</div>
+Menu
+</div>
+
+<div class="nav-item">
+<div>🧮</div>
+CALC
+</div>
+
+<div class="nav-item">
+<div>⚙️</div>
+Setting
+</div>
 
 </div>
 
 <script>
-let thai=false;
 
-function changeLanguage(){
+function qty(change){
 
-    thai=!thai;
+let el=document.getElementById('qtyValue');
 
-    if(thai){
+let value=parseInt(el.innerText);
 
-        document.getElementById("reportText").innerText="แจ้งปัญหาชิ้นส่วน";
-        document.getElementById("newModelText").innerText="ชิ้นส่วนรุ่นใหม่";
-        document.getElementById("borrowText").innerText="ยืมชิ้นส่วนจาก PL";
-        document.getElementById("trialText").innerText="ทดลองประกอบ";
-        document.getElementById("washText").innerText="ห้องล้างชิ้นงาน";
-        document.getElementById("dashboardText").innerText="แดชบอร์ด";
-        document.getElementById("documentText").innerText="เอกสาร";
-        document.getElementById("standardText").innerText="มาตรฐาน";
+value += change;
 
-    }else{
+if(value<1) value=1;
 
-        document.getElementById("reportText").innerText="PART PROBLEM REPORT";
-        document.getElementById("newModelText").innerText="PART PROBLEM NEW MODEL";
-        document.getElementById("borrowText").innerText="PART BORROWING FROM PL";
-        document.getElementById("trialText").innerText="ASSEMBLY TRIAL";
-        document.getElementById("washText").innerText="WASHING ROOM";
-        document.getElementById("dashboardText").innerText="DASHBOARD";
-        document.getElementById("documentText").innerText="DOCUMENT";
-        document.getElementById("standardText").innerText="STANDARD";
-    }
+el.innerText=value;
+
 }
-</script>
 
-<script src="bottom-nav.js"></script>
+function preview(e){
+
+let preview=document.getElementById('preview');
+
+preview.innerHTML='';
+
+Array.from(e.target.files).forEach(file=>{
+
+let img=document.createElement('img');
+
+img.className='photo';
+
+img.src=URL.createObjectURL(file);
+
+preview.appendChild(img);
+
+});
+
+}
+
+function updateClock(){
+
+let d=new Date();
+
+document.getElementById('datetime').innerHTML=
+d.toLocaleDateString()+
+'<br>'+
+d.toLocaleTimeString();
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+document
+.querySelectorAll('.toggle')
+.forEach(t=>{
+
+let buttons=t.querySelectorAll('button');
+
+buttons.forEach(btn=>{
+
+btn.onclick=function(){
+
+buttons.forEach(b=>
+b.classList.remove('active'));
+
+this.classList.add('active');
+
+};
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
