@@ -259,7 +259,7 @@ body{
 <script>
 
 const langIndex =
-Number(localStorage.getItem("language"));
+Number(localStorage.getItem("language") || 1);
 
 if(langIndex === 0){
 
