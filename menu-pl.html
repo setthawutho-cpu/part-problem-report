@@ -79,19 +79,26 @@ body{
     margin-bottom:8px;
 }
 
-.card input{
-    display:block;
-    width:calc(100% - 10px);
-    margin:0 auto;
-    height:52px;
-    padding:0 15px;
+.date-select-box{
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#fff;
     border:1px solid #d9d9d9;
-    border-radius:14px;
+    border-radius:16px;
+    color:#1565C0;
     font-size:18px;
     font-weight:600;
-    text-align:center;
-    background:#fff;
-    color:#1565C0;
+    cursor:pointer;
+    position:relative;
+}
+
+#viewDate{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
 }
 
 /* Summary */
@@ -245,7 +252,15 @@ body{
         📅 เลือกวันที่
     </label>
 
+    <div class="date-select-box" onclick="openDatePicker()">
+
+    <span>📅</span>
+
+    <span id="dateText"></span>
+
     <input type="date" id="viewDate">
+
+</div>
 
 </div>
 
@@ -426,6 +441,45 @@ const mm = String(today.getMonth()+1).padStart(2,"0");
 const dd = String(today.getDate()).padStart(2,"0");
 
 viewDate.value = `${yyyy}-${mm}-${dd}`;
+
+function updateDateText(){
+
+    const d = new Date(viewDate.value);
+
+    if(lang==="th"){
+
+        dateText.innerText =
+        d.toLocaleDateString(
+            "th-TH",
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+    }else{
+
+        dateText.innerText =
+        d.toLocaleDateString(
+            "en-GB",
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+    }
+
+}
+
+viewDate.addEventListener(
+    "change",
+    updateDateText
+);
+
+updateDateText();
 
 /* Data */
 
