@@ -10,6 +10,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale
 <link rel="stylesheet" href="bottom-nav.css">
 
 <style>
+
 html,body{
     touch-action:manipulation;
     overscroll-behavior:none;
@@ -24,193 +25,231 @@ html,body{
 }
 
 body{
-    background:#f5f7fa;
+    background:#eef3f8;
     min-height:100vh;
-    padding-bottom:80px;
-}
-
-/* HEADER */
-.header{
-    background:#dfeaf3;
-    color:#fff;
-    padding:12px 15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:999;
-}
-
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.logo{
-    width:40px;
-    height:40px;
-    object-fit:contain;
-}
-
-#appTitle{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.lang-btn{
-    border:none;
-    background:#fff;
-    color:#333;
-    padding:8px 14px;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* MENU */
-.menu-grid{
     padding:15px;
+    padding-bottom:90px;
+}
+
+/* MENU GRID */
+
+.menu-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    grid-template-columns:repeat(4,1fr);
     gap:15px;
 }
 
+/* CARD */
+
 .menu-card{
-    height:100px;
-    background:#fff;
-    border:1px solid #999;
-    border-radius:8px;
+    position:relative;
+    overflow:hidden;
+
+    min-height:155px;
+    border-radius:24px;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:5px;
+
     cursor:pointer;
-    transition:.2s;
+
+    transition:0.25s;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.12);
 }
 
 .menu-card:hover{
-    transform:translateY(-3px);
+    transform:translateY(-4px);
 }
+
+.menu-card:active{
+    transform:scale(.97);
+}
+
+/* LIGHT EFFECT */
+
+.menu-card::before{
+    content:"";
+    position:absolute;
+
+    width:140px;
+    height:140px;
+
+    right:-40px;
+    top:-40px;
+
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+}
+
+.menu-card::after{
+    content:"";
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    right:-100px;
+    bottom:-120px;
+
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+}
+
+/* ICON */
 
 .icon{
-    font-size:28px;
+    font-size:52px;
+    margin-bottom:14px;
+    z-index:2;
 }
 
+/* TEXT */
+
 .menu-card span{
+    z-index:2;
+    color:#fff;
     text-align:center;
-    font-size:14px;
-    padding:0 8px;
+    font-size:15px;
+    font-weight:bold;
+    padding:0 10px;
+    line-height:1.25;
 }
+
+/* COLORS */
+
+.report-card{
+    background:linear-gradient(135deg,#1488ff,#00c6ff);
+}
+
+.newmodel-card{
+    background:linear-gradient(135deg,#3ddc84,#00d4aa);
+}
+
+.pl-card{
+    background:linear-gradient(135deg,#ffb347,#ff8c37);
+}
+
+.trial-card{
+    background:linear-gradient(135deg,#6a5cff,#8577ff);
+}
+
+.wash-card{
+    background:linear-gradient(135deg,#00c9d8,#28d8e3);
+}
+
+.dashboard-card{
+    background:linear-gradient(135deg,#ff6b88,#ff7b54);
+}
+
+.document-card{
+    background:linear-gradient(135deg,#7f66ff,#5d54ff);
+}
+
+.standard-card{
+    background:linear-gradient(135deg,#ffd54f,#ffb300);
+}
+
+/* MOBILE */
 
 @media(max-width:768px){
 
     .menu-grid{
-        grid-template-columns:repeat(4,1fr);
-        gap:6px;
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
     }
 
     .menu-card{
-        height:85px;
+        min-height:135px;
     }
 
     .icon{
-        font-size:24px;
+        font-size:44px;
     }
 
     .menu-card span{
-        font-size:9px;
-        line-height:1.1;
-        padding:0 2px;
-    }
-
-    .logo{
-        width:30px;
-        height:30px;
-    }
-
-    #appTitle{
-        font-size:16px;
-    }
-
-    .lang-btn{
-        font-size:12px;
-        padding:6px 10px;
+        font-size:13px;
     }
 }
 
-/* กัน Bottom Nav โดน CSS ทับ */
+/* SMALL MOBILE */
+
+@media(max-width:420px){
+
+    .menu-card{
+        min-height:120px;
+    }
+
+    .icon{
+        font-size:38px;
+    }
+
+    .menu-card span{
+        font-size:12px;
+    }
+}
+
+/* Bottom Nav */
+
 .bottom-nav button,
 .bottom-nav button span{
     font-weight:400 !important;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="header">
-
-    <div class="logo-area">
-        <img src="icon-192.png" class="logo">
-        <div id="appTitle">Inspection Part</div>
-    </div>
-
-    <button class="lang-btn"
-        onclick="changeLanguage()">
-        TH / EN
-    </button>
-
-</div>
-
 <div class="menu-grid">
 
-    <div class="menu-card"
-         onclick="location.href='part-problem-report.html'">
+    <div class="menu-card report-card"
+        onclick="location.href='part-problem-report.html'">
         <div class="icon">📋</div>
         <span id="reportText">PART PROBLEM REPORT</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='part-problem-newmodel.html'">
+    <div class="menu-card newmodel-card"
+        onclick="location.href='part-problem-newmodel.html'">
         <div class="icon">🆕</div>
         <span id="newModelText">PART PROBLEM NEW MODEL</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='menu-pl.html'">
+    <div class="menu-card pl-card"
+        onclick="location.href='menu-pl.html'">
         <div class="icon">📦</div>
         <span id="borrowText">PART BORROWING FROM PL</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='assembly-trial.html'">
-        <div class="icon">🧪</div>
+    <div class="menu-card trial-card"
+        onclick="location.href='assembly-trial.html'">
+        <div class="icon">⚙️</div>
         <span id="trialText">ASSEMBLY TRIAL</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='washing-room.html'">
-        <div class="icon">🔬</div>
+    <div class="menu-card wash-card"
+        onclick="location.href='washing-room.html'">
+        <div class="icon">🧪</div>
         <span id="washText">WASHING ROOM</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='dashboard.html'">
+    <div class="menu-card dashboard-card"
+        onclick="location.href='dashboard.html'">
         <div class="icon">📊</div>
         <span id="dashboardText">DASHBOARD</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='document.html'">
+    <div class="menu-card document-card"
+        onclick="location.href='document.html'">
         <div class="icon">📄</div>
         <span id="documentText">DOCUMENT</span>
     </div>
 
-    <div class="menu-card"
-         onclick="location.href='standard.html'">
+    <div class="menu-card standard-card"
+        onclick="location.href='standard.html'">
         <div class="icon">📏</div>
         <span id="standardText">STANDARD</span>
     </div>
@@ -218,35 +257,39 @@ body{
 </div>
 
 <script>
-let thai=false;
 
-function changeLanguage(){
+/* ใช้ภาษาจากหน้า Setting */
 
-    thai=!thai;
+const language =
+localStorage.getItem("language") || "th";
 
-    if(thai){
+if(language === "th"){
 
-        document.getElementById("reportText").innerText="แจ้งปัญหาชิ้นส่วน";
-        document.getElementById("newModelText").innerText="ชิ้นส่วนรุ่นใหม่";
-        document.getElementById("borrowText").innerText="ยืมชิ้นส่วนจาก PL";
-        document.getElementById("trialText").innerText="ทดลองประกอบ";
-        document.getElementById("washText").innerText="ห้องล้างชิ้นงาน";
-        document.getElementById("dashboardText").innerText="แดชบอร์ด";
-        document.getElementById("documentText").innerText="เอกสาร";
-        document.getElementById("standardText").innerText="มาตรฐาน";
+    document.getElementById("reportText").innerText =
+    "แจ้งปัญหาชิ้นส่วน";
 
-    }else{
+    document.getElementById("newModelText").innerText =
+    "ชิ้นส่วนรุ่นใหม่";
 
-        document.getElementById("reportText").innerText="PART PROBLEM REPORT";
-        document.getElementById("newModelText").innerText="PART PROBLEM NEW MODEL";
-        document.getElementById("borrowText").innerText="PART BORROWING FROM PL";
-        document.getElementById("trialText").innerText="ASSEMBLY TRIAL";
-        document.getElementById("washText").innerText="WASHING ROOM";
-        document.getElementById("dashboardText").innerText="DASHBOARD";
-        document.getElementById("documentText").innerText="DOCUMENT";
-        document.getElementById("standardText").innerText="STANDARD";
-    }
+    document.getElementById("borrowText").innerText =
+    "ยืมชิ้นส่วนจาก PL";
+
+    document.getElementById("trialText").innerText =
+    "ทดลองประกอบ";
+
+    document.getElementById("washText").innerText =
+    "ห้องล้างชิ้นงาน";
+
+    document.getElementById("dashboardText").innerText =
+    "แดชบอร์ด";
+
+    document.getElementById("documentText").innerText =
+    "เอกสาร";
+
+    document.getElementById("standardText").innerText =
+    "มาตรฐาน";
 }
+
 </script>
 
 <script src="bottom-nav.js"></script>
