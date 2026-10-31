@@ -259,7 +259,9 @@ body{
 <script>
 
 const langIndex =
-Number(localStorage.getItem("language")) || 0;
+Number(localStorage.getItem("language"));
+
+alert("Language = " + langIndex);
 
 if(langIndex === 0){
 
