@@ -258,12 +258,37 @@ body{
 
 <script>
 
-/* ใช้ภาษาจากหน้า Setting */
+const langIndex =
+Number(localStorage.getItem("language")) || 0;
 
-const language =
-localStorage.getItem("language") || "th";
+if(langIndex === 0){
 
-if(language === "th"){
+    document.getElementById("reportText").innerText =
+    "PART PROBLEM REPORT";
+
+    document.getElementById("newModelText").innerText =
+    "PART PROBLEM NEW MODEL";
+
+    document.getElementById("borrowText").innerText =
+    "PART BORROWING FROM PL";
+
+    document.getElementById("trialText").innerText =
+    "ASSEMBLY TRIAL";
+
+    document.getElementById("washText").innerText =
+    "WASHING ROOM";
+
+    document.getElementById("dashboardText").innerText =
+    "DASHBOARD";
+
+    document.getElementById("documentText").innerText =
+    "DOCUMENT";
+
+    document.getElementById("standardText").innerText =
+    "STANDARD";
+
+}
+else if(langIndex === 1){
 
     document.getElementById("reportText").innerText =
     "แจ้งปัญหาชิ้นส่วน";
@@ -288,6 +313,33 @@ if(language === "th"){
 
     document.getElementById("standardText").innerText =
     "มาตรฐาน";
+
+}
+else{
+
+    document.getElementById("reportText").innerText =
+    "部品不具合報告";
+
+    document.getElementById("newModelText").innerText =
+    "新機種部品";
+
+    document.getElementById("borrowText").innerText =
+    "PL部品貸出";
+
+    document.getElementById("trialText").innerText =
+    "組立評価";
+
+    document.getElementById("washText").innerText =
+    "洗浄室";
+
+    document.getElementById("dashboardText").innerText =
+    "ダッシュボード";
+
+    document.getElementById("documentText").innerText =
+    "ドキュメント";
+
+    document.getElementById("standardText").innerText =
+    "標準";
 }
 
 </script>
