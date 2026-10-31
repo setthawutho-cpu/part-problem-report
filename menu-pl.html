@@ -1,36 +1,115 @@
-<div class="menu-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 
-    <button class="menu-btn loan-btn"
-        onclick="location.href='part-loan.html'">
-        <span class="icon">🔄</span>
-        <div>
-            <div class="title">Part Loan & Return</div>
-            <div class="subtitle">Borrow and Return Parts</div>
-        </div>
-    </button>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <button class="menu-btn defect-btn"
-        onclick="location.href='defect.html'">
-        <span class="icon">⚠️</span>
-        <div>
-            <div class="title">Defect</div>
-            <div class="subtitle">Defect Report Management</div>
-        </div>
-    </button>
+<title>PL Dashboard</title>
 
-</div>
+<link rel="stylesheet" href="bottom-nav.css">
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f9;
+
+*{
+    box-sizing:border-box;
     margin:0;
-    padding:20px;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
 }
 
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    color:#333;
+    padding-bottom:90px;
+}
+
+/* HEADER */
+
+.header{
+    background:linear-gradient(135deg,#1976d2,#42a5f5);
+    color:#fff;
+    padding:25px 20px;
+    border-radius:0 0 25px 25px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.header h1{
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+.today{
+    font-size:14px;
+    opacity:.9;
+}
+
+/* FILTER */
+
+.filter-card{
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.filter-card label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+.filter-card input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+}
+
+/* SUMMARY */
+
+.summary{
+    margin:15px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.summary-card{
+    color:#fff;
+    padding:18px;
+    border-radius:18px;
+    text-align:center;
+}
+
+.loan-card{
+    background:linear-gradient(135deg,#2196F3,#1565C0);
+}
+
+.defect-card{
+    background:linear-gradient(135deg,#FF9800,#E65100);
+}
+
+.summary-number{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.summary-label{
+    margin-top:5px;
+    font-size:14px;
+}
+
+/* MENU */
+
 .menu-container{
-    max-width:700px;
-    margin:auto;
+    padding:0 15px;
     display:flex;
     flex-direction:column;
     gap:15px;
@@ -39,24 +118,19 @@ body{
 .menu-btn{
     width:100%;
     border:none;
-    border-radius:16px;
+    border-radius:18px;
     padding:18px;
     display:flex;
     align-items:center;
     gap:15px;
-    cursor:pointer;
-    color:white;
+    color:#fff;
     text-align:left;
-    transition:0.2s;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-.menu-btn:hover{
-    transform:translateY(-3px);
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
 .menu-btn:active{
-    transform:scale(0.98);
+    transform:scale(.98);
 }
 
 .loan-btn{
@@ -68,7 +142,7 @@ body{
 }
 
 .icon{
-    font-size:40px;
+    font-size:42px;
     min-width:55px;
 }
 
@@ -78,25 +152,167 @@ body{
 }
 
 .subtitle{
-    font-size:14px;
-    opacity:0.9;
+    font-size:13px;
+    opacity:.9;
 }
 
-@media (max-width:600px){
-    .menu-btn{
-        padding:15px;
-    }
+/* LIST */
 
-    .icon{
-        font-size:32px;
-    }
-
-    .title{
-        font-size:18px;
-    }
-
-    .subtitle{
-        font-size:12px;
-    }
+.history{
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
+
+.history h3{
+    margin-bottom:10px;
+}
+
+.history-item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.history-item:last-child{
+    border-bottom:none;
+}
+
+@media(max-width:600px){
+
+.title{
+    font-size:18px;
+}
+
+.icon{
+    font-size:34px;
+}
+
+.summary-number{
+    font-size:26px;
+}
+
+}
+
 </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>📦 PL Dashboard</h1>
+
+    <div class="today" id="todayDate"></div>
+
+</div>
+
+<div class="filter-card">
+
+    <label>Select Date</label>
+
+    <input type="date" id="viewDate">
+
+</div>
+
+<div class="summary">
+
+    <div class="summary-card loan-card">
+        <div class="summary-number" id="loanCount">0</div>
+        <div class="summary-label">Loan Records</div>
+    </div>
+
+    <div class="summary-card defect-card">
+        <div class="summary-number" id="defectCount">0</div>
+        <div class="summary-label">Defect Records</div>
+    </div>
+
+</div>
+
+<div class="menu-container">
+
+    <button class="menu-btn loan-btn"
+        onclick="location.href='part-loan.html'">
+
+        <span class="icon">🔄</span>
+
+        <div>
+            <div class="title">Part Loan & Return</div>
+            <div class="subtitle">Borrow and Return Parts</div>
+        </div>
+
+    </button>
+
+    <button class="menu-btn defect-btn"
+        onclick="location.href='defect.html'">
+
+        <span class="icon">⚠️</span>
+
+        <div>
+            <div class="title">Defect</div>
+            <div class="subtitle">Defect Report Management</div>
+        </div>
+
+    </button>
+
+</div>
+
+<div class="history">
+
+    <h3>📋 Daily Activity</h3>
+
+    <div id="activityList">
+
+        <div class="history-item">
+            No data available
+        </div>
+
+    </div>
+
+</div>
+
+<div id="bottomNav"></div>
+
+<script src="bottom-nav.js"></script>
+
+<script>
+
+const today = new Date();
+
+document.getElementById("todayDate").textContent =
+today.toLocaleDateString("en-GB",{
+    weekday:"long",
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+});
+
+document.getElementById("viewDate").value =
+today.toISOString().split("T")[0];
+
+/* ตัวอย่างข้อมูล */
+
+document.getElementById("loanCount").textContent = 12;
+document.getElementById("defectCount").textContent = 3;
+
+/* ป้องกัน Double Tap Zoom */
+
+let lastTouchEnd = 0;
+
+document.addEventListener("touchend",function(e){
+
+    const now = new Date().getTime();
+
+    if(now - lastTouchEnd <= 300){
+        e.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+},{passive:false});
+
+</script>
+
+</body>
+</html>
