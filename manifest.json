@@ -1,7 +1,7 @@
 {
   "name": "Inspection Part",
   "short_name": "Inspection",
-  "start_url": "./menu.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#dfeaf3",
   "theme_color": "#dfeaf3",
