@@ -97,8 +97,8 @@ body{
 
 #viewDate{
     position:absolute;
+    inset:0;
     opacity:0;
-    pointer-events:none;
 }
 
 /* Summary */
@@ -441,6 +441,16 @@ const mm = String(today.getMonth()+1).padStart(2,"0");
 const dd = String(today.getDate()).padStart(2,"0");
 
 viewDate.value = `${yyyy}-${mm}-${dd}`;
+
+function openDatePicker(){
+
+    if(viewDate.showPicker){
+        viewDate.showPicker();
+    }else{
+        viewDate.click();
+    }
+
+}
 
 function updateDateText(){
 
