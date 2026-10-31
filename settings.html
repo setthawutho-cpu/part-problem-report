@@ -169,7 +169,9 @@ function changeLanguage(){
         langIndex = 0;
     }
 
-    localStorage.setItem("language", langIndex);
+    localStorage.setItem("language", String(langIndex));
+
+console.log("saved =", localStorage.getItem("language"));
 
     applyLanguage();
 }
