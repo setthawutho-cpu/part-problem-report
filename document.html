@@ -103,7 +103,7 @@ font-weight:600;
 /* ================= LAYOUT ================= */
 
 .container{
-padding:18px;
+padding:12px;
 max-width:1200px;
 margin:auto;
 }
@@ -359,7 +359,32 @@ background:linear-gradient(135deg,#ffb01c,#ff7a00);
 @media(max-width:900px){
 
 .grid3{
-grid-template-columns:1fr;
+grid-template-columns:1.3fr 1fr 1fr;
+gap:8px;
+}
+
+.info-card{
+padding:10px;
+min-height:105px;
+}
+
+.card-header{
+gap:6px;
+}
+
+.card-icon{
+font-size:20px;
+width:auto;
+}
+
+.card-title{
+font-size:12px;
+}
+
+.info-card .input{
+height:40px;
+font-size:13px;
+padding:0 10px;
 }
 
 .flex{
@@ -367,7 +392,8 @@ grid-template-columns:1fr;
 }
 
 .info-grid{
-grid-template-columns:1fr;
+grid-template-columns:80px 1fr 110px;
+gap:8px;
 }
 
 .actions{
@@ -375,7 +401,16 @@ grid-template-columns:1fr;
 }
 
 .title-wrap h1{
-font-size:18px;
+font-size:16px;
+}
+
+.title-wrap p{
+font-size:12px;
+}
+
+.datetime{
+font-size:12px;
+padding:8px 10px;
 }
 }
 </style>
