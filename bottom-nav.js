@@ -19,7 +19,7 @@ document.body.insertAdjacentHTML(
 
       <button class="${page==='menu.html' ? 'active' : ''}"
           onclick="location.href='menu.html'">
-          📋
+          ☰
           <span>Menu</span>
       </button>
 
