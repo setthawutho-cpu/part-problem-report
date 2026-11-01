@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Part Borrowing From PL</title>
 
+<link rel="stylesheet" href="bottom-nav.css">
+
 <style>
 *{
 margin:0;
@@ -346,40 +348,6 @@ background:linear-gradient(135deg,#10d95a,#01a83e);
 background:linear-gradient(135deg,#ffb01c,#ff7a00);
 }
 
-/* ================= BOTTOM NAV ================= */
-
-.bottom-nav{
-position:fixed;
-left:18px;
-right:18px;
-bottom:15px;
-
-background:rgba(255,255,255,.75);
-backdrop-filter:blur(20px);
-
-border-radius:28px;
-
-display:flex;
-justify-content:space-around;
-padding:15px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.08);
-}
-
-.nav-item{
-text-align:center;
-font-size:15px;
-color:#5b6d8d;
-}
-
-.nav-item div{
-font-size:30px;
-margin-bottom:5px;
-}
-
-/* ================= MOBILE ================= */
-
 @media(max-width:900px){
 
 .grid3{
@@ -653,37 +621,6 @@ LINE Send
 
 </div>
 
-<!-- BOTTOM NAV -->
-
-<div class="bottom-nav">
-
-<div class="nav-item">
-<div>🏠</div>
-Home
-</div>
-
-<div class="nav-item">
-<div>📊</div>
-Dashboard
-</div>
-
-<div class="nav-item">
-<div>☰</div>
-Menu
-</div>
-
-<div class="nav-item">
-<div>🧮</div>
-CALC
-</div>
-
-<div class="nav-item">
-<div>⚙️</div>
-Setting
-</div>
-
-</div>
-
 <script>
 
 function qty(change){
@@ -757,6 +694,8 @@ this.classList.add('active');
 });
 
 </script>
+
+<script src="bottom-nav.js"></script>
 
 </body>
 </html>
