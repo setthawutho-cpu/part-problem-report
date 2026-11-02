@@ -1046,7 +1046,7 @@ textarea{
         <label id="lblLineStop">Line Stop</label>
         <div class="line-stop-box">
             <input type="number" id="linestop">
-            <span>sec</span>
+            <span>min</span>
         </div>
     </div>
 
@@ -1844,7 +1844,7 @@ text += `Serial Number : ${unitno.value}\n`;
 text += `Issue Doc : ${issueDoc || "-"}\n`;
 
 if(linestop.value !== ""){
-    text += `Line Stop : ${linestop.value} Sec\n`;
+    text += `Line Stop : ${linestop.value} min\n`;
 }else{
     text += `Line Stop : -\n`;
 }
