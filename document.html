@@ -305,7 +305,14 @@ font-weight:700;
 .photo-list{
 display:flex;
 gap:8px;
+
+width:100%;
+max-width:100%;
+
 overflow-x:auto;
+overflow-y:hidden;
+
+white-space:nowrap;
 }
 
 .photo-list::-webkit-scrollbar{
@@ -315,15 +322,6 @@ height:4px;
 .photo-list::-webkit-scrollbar-thumb{
 background:#b8c7dd;
 border-radius:999px;
-}
-
-width:100%;
-max-width:100%;
-
-overflow-x:auto;
-overflow-y:hidden;
-
-white-space:nowrap;
 }
 
 .photo-item{
@@ -631,17 +629,29 @@ overflow:hidden;
 display:flex;
 gap:8px;
 align-items:center;
+
+width:100%;
+max-width:100%;
+height:52px;
+
 overflow-x:auto;
 overflow-y:hidden;
-width:100%;
-height:52px;
+
 flex-wrap:nowrap;
+white-space:nowrap;
+
 margin-top:auto;
 margin-bottom:auto;
+
+cursor:grab;
 }
 
 .photo-list::-webkit-scrollbar{
 display:none;
+}
+
+.photo-list:active{
+cursor:grabbing;
 }
 
 /* Report */
@@ -1201,6 +1211,42 @@ document
 .classList.add("show");
 
 }
+
+const slider =
+document.getElementById("photoList");
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener("mousedown",function(e){
+
+isDown = true;
+startX = e.pageX - slider.offsetLeft;
+scrollLeft = slider.scrollLeft;
+
+});
+
+slider.addEventListener("mouseleave",function(){
+isDown = false;
+});
+
+slider.addEventListener("mouseup",function(){
+isDown = false;
+});
+
+slider.addEventListener("mousemove",function(e){
+
+if(!isDown) return;
+
+e.preventDefault();
+
+const x = e.pageX - slider.offsetLeft;
+const walk = (x - startX) * 2;
+
+slider.scrollLeft = scrollLeft - walk;
+
+});
 
 function closeActionSheet(){
 
