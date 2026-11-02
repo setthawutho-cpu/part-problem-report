@@ -869,16 +869,29 @@ Photo
 
 <input
 type="file"
-id="photoInput"
+id="cameraInput"
 accept="image/*"
 capture="environment"
+multiple
+hidden>
+
+<input
+type="file"
+id="galleryInput"
+accept="image/*"
+multiple
+hidden>
+
+<input
+type="file"
+id="fileInput"
 multiple
 hidden>
 
 <div class="photo-list" id="photoList">
 
 <div class="photo-item add-photo"
-onclick="document.getElementById('photoInput').click()">
+onclick="selectPhotoSource()">
 +
 </div>
 
@@ -1076,7 +1089,29 @@ document.getElementById("reportOverlay").addEventListener("click", function(e){
 
 });
 
-document.getElementById("photoInput").addEventListener("change", function(){
+function selectPhotoSource(){
+
+const choice = prompt(
+"เลือก\n1 = ถ่ายรูป\n2 = เลือกรูป\n3 = เลือกไฟล์"
+);
+
+if(choice === "1"){
+document.getElementById("cameraInput").click();
+}
+
+if(choice === "2"){
+document.getElementById("galleryInput").click();
+}
+
+if(choice === "3"){
+document.getElementById("fileInput").click();
+}
+
+}
+
+["cameraInput","galleryInput","fileInput"].forEach(id=>{
+
+document.getElementById(id).addEventListener("change", function(){
 
 const photoList =
 document.getElementById("photoList");
@@ -1102,6 +1137,8 @@ photoList.appendChild(div);
 reader.readAsDataURL(file);
 
 }
+
+});
 
 });
 
