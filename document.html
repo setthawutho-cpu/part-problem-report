@@ -738,6 +738,48 @@ color:#fff;
 font-size:20px;
 }
 
+.action-sheet-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(3px);
+
+display:none;
+align-items:flex-end;
+justify-content:center;
+
+z-index:999999;
+}
+
+.action-sheet-overlay.show{
+display:flex;
+}
+
+.action-sheet{
+width:95%;
+max-width:500px;
+padding:10px;
+}
+
+.action-sheet button{
+width:100%;
+height:56px;
+border:none;
+margin-bottom:8px;
+background:#fff;
+font-size:18px;
+border-radius:14px;
+}
+
+.action-sheet .danger{
+color:#ff3b30;
+font-weight:700;
+}
+
+.action-sheet .cancel{
+font-weight:700;
+}
+
 </style>
 </head>
 <body>
@@ -1104,7 +1146,129 @@ reader.readAsDataURL(file);
 
 });
 
+let selectedPhoto = null;
+
+let pressTimer;
+
+document.addEventListener("touchstart",function(e){
+
+const img =
+e.target.closest(".photo-item img");
+
+if(!img) return;
+
+pressTimer = setTimeout(()=>{
+
+selectedPhoto =
+img.closest(".photo-item");
+
+document
+.getElementById("actionSheet")
+.classList.add("show");
+
+},600);
+
+});
+
+document.addEventListener("touchend",function(){
+
+clearTimeout(pressTimer);
+
+});
+
+function closeActionSheet(){
+
+document
+.getElementById("actionSheet")
+.classList.remove("show");
+
+}
+
+function openPhoto(){
+
+const img =
+selectedPhoto.querySelector("img");
+
+window.open(img.src,"_blank");
+
+closeActionSheet();
+
+}
+
+function deletePhoto(){
+
+if(selectedPhoto){
+
+selectedPhoto.remove();
+
+}
+
+closeActionSheet();
+
+}
+
+function replacePhoto(){
+
+document
+.getElementById("replaceInput")
+.click();
+
+}
+
+document
+.getElementById("replaceInput")
+.addEventListener("change",function(){
+
+const file = this.files[0];
+
+if(!file || !selectedPhoto) return;
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+selectedPhoto.innerHTML =
+`${e.target.result}`;
+
+};
+
+reader.readAsDataURL(file);
+
+closeActionSheet();
+
+});
+
 </script>
+
+<div id="actionSheet" class="action-sheet-overlay">
+
+<div class="action-sheet">
+
+<button onclick="openPhoto()">
+เปิด
+</button>
+
+<button onclick="replacePhoto()">
+เปลี่ยนรูป
+</button>
+
+<button class="danger" onclick="deletePhoto()">
+ลบรูป
+</button>
+
+<button class="cancel" onclick="closeActionSheet()">
+ยกเลิก
+</button>
+
+</div>
+
+</div>
+
+<input
+type="file"
+id="replaceInput"
+accept="image/*"
+hidden>
 
 </body>
 </html>
