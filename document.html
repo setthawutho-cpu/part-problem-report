@@ -1145,7 +1145,7 @@ document.createElement("div");
 div.className = "photo-item";
 
 div.innerHTML =
-`<img src="${e.target.result}">`;
+`<img src="${e.target.result}" onclick="showPhotoMenu(this)">`;
 
 photoList.appendChild(div);
 
@@ -1159,16 +1159,12 @@ reader.readAsDataURL(file);
 
 let selectedPhoto = null;
 
-let pressTimer;
-
-document.addEventListener("touchstart",function(e){
+document.addEventListener("click",function(e){
 
 const img =
 e.target.closest(".photo-item img");
 
 if(!img) return;
-
-pressTimer = setTimeout(()=>{
 
 selectedPhoto =
 img.closest(".photo-item");
@@ -1177,15 +1173,34 @@ document
 .getElementById("actionSheet")
 .classList.add("show");
 
-},600);
+});
+
+document.addEventListener("click",function(e){
+
+const img =
+e.target.closest(".photo-item img");
+
+if(!img) return;
+
+selectedPhoto =
+img.closest(".photo-item");
+
+document
+.getElementById("actionSheet")
+.classList.add("show");
 
 });
 
-document.addEventListener("touchend",function(){
+function showPhotoMenu(img){
 
-clearTimeout(pressTimer);
+selectedPhoto =
+img.closest(".photo-item");
 
-});
+document
+.getElementById("actionSheet")
+.classList.add("show");
+
+}
 
 function closeActionSheet(){
 
