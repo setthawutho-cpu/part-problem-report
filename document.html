@@ -801,6 +801,20 @@ font-weight:700;
 font-weight:700;
 }
 
+.preview-card{
+margin-top:16px;
+padding:12px;
+display:none;
+}
+
+.preview-card img{
+width:100%;
+max-height:400px;
+object-fit:contain;
+border-radius:16px;
+cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -947,6 +961,12 @@ onclick="document.getElementById('photoInput').click()">
 </div>
 
 </div>
+
+</div>
+
+<div class="card preview-card" id="previewCard">
+
+    <img id="previewImage">
 
 </div>
 
@@ -1155,7 +1175,7 @@ document.createElement("div");
 div.className = "photo-item";
 
 div.innerHTML =
-`<img src="${e.target.result}" onclick="showPhotoMenu(this)">`;
+`<img src="${e.target.result}" onclick="showPreview(this)">`;
 
 photoList.appendChild(div);
 
@@ -1201,14 +1221,16 @@ document
 
 });
 
-function showPhotoMenu(img){
+function showPreview(img){
 
-selectedPhoto =
-img.closest(".photo-item");
+const preview =
+document.getElementById("previewImage");
+
+preview.src = img.src;
 
 document
-.getElementById("actionSheet")
-.classList.add("show");
+.getElementById("previewCard")
+.style.display = "block";
 
 }
 
@@ -1245,6 +1267,14 @@ const x = e.pageX - slider.offsetLeft;
 const walk = (x - startX) * 2;
 
 slider.scrollLeft = scrollLeft - walk;
+
+});
+
+document
+.getElementById("previewImage")
+.addEventListener("click",function(){
+
+window.open(this.src,"_blank");
 
 });
 
