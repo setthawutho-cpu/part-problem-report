@@ -603,9 +603,12 @@ position:fixed;
 inset:0;
 background:rgba(0,0,0,.35);
 display:none;
-align-items:flex-start;
+
+align-items:center;
 justify-content:center;
-padding-top:40px;
+
+padding:20px;
+
 z-index:99999;
 backdrop-filter:blur(3px);
 }
@@ -616,22 +619,34 @@ display:flex;
 
 .report-sheet{
 position:relative;
-width:95%;
-max-width:700px;
-max-height:90vh;
+
+width:100%;
+max-width:600px;
+
+height:90vh;
+
 background:#fff;
+
 border-radius:24px;
+
 overflow:hidden;
+
 display:flex;
 flex-direction:column;
 }
 
 .report-content{
 flex:1;
-overflow:auto;
+
+overflow-y:auto;
+-webkit-overflow-scrolling:touch;
+
 padding:20px;
+
 white-space:pre-wrap;
+
 line-height:1.5;
+
 color:#000;
 }
 
