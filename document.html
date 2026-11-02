@@ -586,13 +586,14 @@ padding:12px;
 min-height:0;
 }
 
-.qty-card{
-height:110px;
-}
-
+.qty-card,
 .photo-card{
+padding:12px;
 height:120px;
 overflow:hidden;
+
+display:flex;
+flex-direction:column;
 }
 
 .qty-box{
@@ -890,7 +891,7 @@ Part Information
 <div class="card qty-card">
 
 <div class="section-title">
-#
+<i class="fa-solid fa-hashtag"></i>
 Qty
 </div>
 
