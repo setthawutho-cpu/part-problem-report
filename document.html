@@ -835,10 +835,7 @@ cursor:pointer;
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div class="date-box">
-15 Nov 2024<br>
-10:24
-</div>
+<div class="date-box" id="dateBox"></div>
 
 </header>
 
@@ -1523,6 +1520,35 @@ document
     }
 
 });
+
+</script>
+
+<script>
+
+function updateDateTime(){
+
+    const now = new Date();
+
+    const date =
+    now.toLocaleDateString("en-GB",{
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+    });
+
+    const time =
+    now.toLocaleTimeString("en-GB",{
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
+    document.getElementById("dateBox").innerHTML =
+    date + "<br>" + time;
+}
+
+updateDateTime();
+
+setInterval(updateDateTime,1000);
 
 </script>
 
