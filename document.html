@@ -876,18 +876,6 @@ document
 
 }
 
-document
-.getElementById("reportOverlay")
-.addEventListener("click",function(e){
-
-if(e.target===this){
-
-this.classList.remove("show");
-
-}
-
-});
-
 function toggleEditReport(){
 
 const report=
@@ -969,46 +957,56 @@ window.open(
 
 <div id="reportOverlay" class="report-overlay">
 
-<div class="report-sheet">
+    <div class="report-sheet">
 
-<button
-id="editBtn"
-class="add-btn"
-onclick="toggleEditReport()">
-📝
-</button>
+        <button
+        id="editBtn"
+        class="add-btn"
+        onclick="toggleEditReport()">
+        📝
+        </button>
 
-<div
-id="report"
-class="report-content"
-contenteditable="false">
+        <div
+        id="report"
+        class="report-content"
+        contenteditable="false">
+        </div>
+
+        <div class="report-actions">
+
+            <button
+            class="btn-save"
+            onclick="saveReport()">
+            💾 Save
+            </button>
+
+            <button
+            class="btn-copy"
+            onclick="copyReport()">
+            📋 Copy
+            </button>
+
+            <button
+            class="btn-line"
+            onclick="sendLine()">
+            📤 LINE
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="report-actions">
+<script>
+document.getElementById("reportOverlay").addEventListener("click", function(e){
 
-<button
-class="btn-save"
-onclick="saveReport()">
-💾 Save
-</button>
+    if(e.target === this){
+        this.classList.remove("show");
+    }
 
-<button
-class="btn-copy"
-onclick="copyReport()">
-📋 Copy
-</button>
-
-<button
-class="btn-line"
-onclick="sendLine()">
-📤 LINE
-</button>
-
-</div>
-
-</div>
-
-</div>
+});
+</script>
 
 </body>
 </html>
