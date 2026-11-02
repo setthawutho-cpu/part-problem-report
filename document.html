@@ -806,6 +806,29 @@ font-weight:700;
 font-weight:700;
 }
 
+.image-viewer{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:1000000;
+}
+
+.image-viewer.show{
+display:flex;
+}
+
+.image-viewer img{
+width:80%;
+max-width:800px;
+max-height:80vh;
+object-fit:contain;
+border-radius:16px;
+background:#fff;
+}
+
 </style>
 </head>
 <body>
@@ -1267,7 +1290,11 @@ function openPhoto(){
 const img =
 selectedPhoto.querySelector("img");
 
-window.open(img.src,"_blank");
+document.getElementById("viewerImage").src =
+img.src;
+
+document.getElementById("imageViewer")
+.classList.add("show");
 
 closeActionSheet();
 
@@ -1325,6 +1352,14 @@ closeActionSheet();
 
 });
 
+document
+.getElementById("imageViewer")
+.addEventListener("click",function(){
+
+this.classList.remove("show");
+
+});
+
 </script>
 
 <div id="actionSheet" class="action-sheet-overlay">
@@ -1356,6 +1391,10 @@ type="file"
 id="replaceInput"
 accept="image/*"
 hidden>
+
+<div id="imageViewer" class="image-viewer">
+    <img id="viewerImage">
+</div>
 
 <script>
 
