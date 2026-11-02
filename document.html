@@ -9,6 +9,9 @@ content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <style>
 
 *{
@@ -873,8 +876,12 @@ cursor:pointer;
 </div>
 
 <input
+id="partno"
 class="search-input"
-value="123456-AB">
+list="partList"
+placeholder="Part No.">
+
+<datalist id="partList"></datalist>
 
 <button class="search-btn">
 ค้นหา
@@ -891,7 +898,10 @@ Part Information
 
 <div class="info-row">
 <div class="label">Part Name</div>
-<input class="input" value="COVER ASSY">
+<input
+id="partname"
+class="input"
+readonly>
 <div class="mode">
 <button class="auto">Auto</button>
 <button class="manual">Manual</button>
@@ -900,7 +910,10 @@ Part Information
 
 <div class="info-row">
 <div class="label">Model</div>
-<input class="input" value="ABC-123">
+<input
+id="model"
+class="input"
+readonly>
 <div class="mode">
 <button class="auto">Auto</button>
 <button class="manual">Manual</button>
@@ -909,7 +922,10 @@ Part Information
 
 <div class="info-row">
 <div class="label">Supplier</div>
-<input class="input" value="DENSO">
+<input
+id="supplier"
+class="input"
+readonly>
 <div class="mode">
 <button class="auto">Auto</button>
 <button class="manual">Manual</button>
@@ -1373,6 +1389,142 @@ type="file"
 id="replaceInput"
 accept="image/*"
 hidden>
+
+<script>
+
+let partMaster = {};
+let allPartNo = [];
+
+async function loadExcel(){
+
+    const response =
+    await fetch("ข้อมูล Excel.xlsx");
+
+    const data =
+    await response.arrayBuffer();
+
+    const workbook =
+    XLSX.read(data,{type:"array"});
+
+    const sheet =
+    workbook.Sheets[
+        workbook.SheetNames[0]
+    ];
+
+    const rows =
+    XLSX.utils.sheet_to_json(sheet);
+
+    rows.forEach(row=>{
+
+        const partNo =
+        String(row.PartNo || "").trim();
+
+        if(!partNo) return;
+
+        if(!allPartNo.includes(partNo)){
+            allPartNo.push(partNo);
+        }
+
+        partMaster[partNo] = {
+
+            partName:
+            row.PartName || "",
+
+            supplier:
+            row.Supplier || "",
+
+            model:
+            row.Model || ""
+
+        };
+
+    });
+
+}
+
+loadExcel();
+
+function fillPartData(partNo){
+
+    if(!partMaster[partNo]) return;
+
+    document.getElementById("partname").value =
+    partMaster[partNo].partName || "";
+
+    document.getElementById("model").value =
+    partMaster[partNo].model || "";
+
+    document.getElementById("supplier").value =
+    partMaster[partNo].supplier || "";
+
+}
+
+document
+.getElementById("partno")
+.addEventListener("input",function(){
+
+    const keyword =
+    this.value.trim();
+
+    const list =
+    document.getElementById("partList");
+
+    if(keyword === ""){
+
+        partname.value = "";
+        model.value = "";
+        supplier.value = "";
+
+        list.innerHTML = "";
+        return;
+    }
+
+    if(partMaster[keyword]){
+
+        fillPartData(keyword);
+
+        list.innerHTML = "";
+
+        return;
+    }
+
+    if(keyword.length < 4){
+
+        list.innerHTML = "";
+        return;
+    }
+
+    const result =
+    allPartNo
+    .filter(p=>
+
+        p.startsWith(keyword) ||
+
+        p.includes("-" + keyword)
+
+    )
+    .slice(0,10);
+
+    list.innerHTML =
+    result.map(p =>
+    `<option value="${p}"></option>`)
+    .join("");
+
+});
+
+document
+.getElementById("partno")
+.addEventListener("change",function(){
+
+    if(partMaster[this.value]){
+
+        fillPartData(this.value);
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
