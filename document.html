@@ -262,6 +262,21 @@ linear-gradient(
 color:white;
 }
 
+.mode button.active{
+background:
+linear-gradient(
+135deg,
+#45b0ff,
+#3178ff
+);
+color:white;
+}
+
+.mode button:not(.active){
+background:#e5edf7;
+color:#333;
+}
+
 .bottom-grid{
 display:grid;
 grid-template-columns:
@@ -915,8 +930,19 @@ id="partname"
 class="input"
 readonly>
 <div class="mode">
-<button class="auto">Auto</button>
-<button class="manual">Manual</button>
+
+<button
+class="auto"
+onclick="setMode('partname',false)">
+Auto
+</button>
+
+<button
+class="manual"
+onclick="setMode('partname',true)">
+Manual
+</button>
+
 </div>
 </div>
 
@@ -927,8 +953,19 @@ id="model"
 class="input"
 readonly>
 <div class="mode">
-<button class="auto">Auto</button>
-<button class="manual">Manual</button>
+
+<button
+class="auto"
+onclick="setMode('model',false)">
+Auto
+</button>
+
+<button
+class="manual"
+onclick="setMode('model',true)">
+Manual
+</button>
+
 </div>
 </div>
 
@@ -939,8 +976,19 @@ id="supplier"
 class="input"
 readonly>
 <div class="mode">
-<button class="auto">Auto</button>
-<button class="manual">Manual</button>
+
+<button
+class="auto"
+onclick="setMode('supplier',false)">
+Auto
+</button>
+
+<button
+class="manual"
+onclick="setMode('supplier',true)">
+Manual
+</button>
+
 </div>
 </div>
 
@@ -1449,6 +1497,16 @@ async function loadExcel(){
 
 loadExcel();
 
+window.onload = function(){
+
+    document
+    .querySelectorAll(".auto")
+    .forEach(btn =>
+        btn.classList.add("active")
+    );
+
+};
+
 function fillPartData(partNo){
 
     if(!partMaster[partNo]) return;
@@ -1461,6 +1519,47 @@ function fillPartData(partNo){
 
     document.getElementById("supplier").value =
     partMaster[partNo].supplier || "";
+
+}
+
+function setMode(id,isManual){
+
+    const input =
+    document.getElementById(id);
+
+    const partNo =
+    document.getElementById("partno").value;
+
+    if(isManual){
+
+        input.readOnly = false;
+        input.value = "";
+        input.focus();
+
+    }else{
+
+        input.readOnly = true;
+
+        if(partMaster[partNo]){
+
+            if(id==="partname"){
+                input.value =
+                partMaster[partNo].partName || "";
+            }
+
+            if(id==="model"){
+                input.value =
+                partMaster[partNo].model || "";
+            }
+
+            if(id==="supplier"){
+                input.value =
+                partMaster[partNo].supplier || "";
+            }
+
+        }
+
+    }
 
 }
 
