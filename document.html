@@ -272,6 +272,7 @@ margin-top:16px;
 .qty-card,
 .photo-card{
 padding:20px;
+overflow:hidden;
 }
 
 .qty-box{
@@ -305,6 +306,24 @@ font-weight:700;
 display:flex;
 gap:8px;
 overflow-x:auto;
+}
+
+.photo-list::-webkit-scrollbar{
+height:4px;
+}
+
+.photo-list::-webkit-scrollbar-thumb{
+background:#b8c7dd;
+border-radius:999px;
+}
+
+width:100%;
+max-width:100%;
+
+overflow-x:auto;
+overflow-y:hidden;
+
+white-space:nowrap;
 }
 
 .photo-item{
