@@ -1335,7 +1335,7 @@ const reader = new FileReader();
 reader.onload = function(e){
 
 selectedPhoto.innerHTML =
-`${e.target.result}`;
+`<img src="${e.target.result}">`;
 
 };
 
@@ -1351,14 +1351,6 @@ document.getElementById("actionSheet")
 if(e.target === this){
 closeActionSheet();
 }
-
-});
-
-document
-.getElementById("imageViewer")
-.addEventListener("click",function(){
-
-this.classList.remove("show");
 
 });
 
@@ -1394,8 +1386,13 @@ id="replaceInput"
 accept="image/*"
 hidden>
 
-<div id="imageViewer" class="image-viewer">
+<div
+id="imageViewer"
+class="image-viewer"
+onclick="this.classList.remove('show')">
+
     <img id="viewerImage">
+
 </div>
 
 <script>
