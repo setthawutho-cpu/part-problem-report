@@ -126,10 +126,12 @@ overflow:hidden;
 
 #headerDate{
 position:absolute;
-width:1px;
-height:1px;
+inset:0;
+width:100%;
+height:100%;
 opacity:0;
-pointer-events:none;
+cursor:pointer;
+z-index:10;
 }
 
 .top-grid{
@@ -873,7 +875,7 @@ onclick="window.location.href='menu-pl.html'">
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div class="date-box" onclick="document.getElementById('headerDate').showPicker()">
+<div class="date-box">
 
 <div id="dateBox"></div>
 
@@ -1705,17 +1707,6 @@ headerDate.addEventListener("change",function(){
 
         updateDateTime();
 
-    }
-
-});
-
-document.querySelector(".date-box")
-.addEventListener("click",function(){
-
-    if(headerDate.showPicker){
-        headerDate.showPicker();
-    }else{
-        headerDate.click();
     }
 
 });
