@@ -1186,7 +1186,16 @@ Number(qty.textContent);
 
 text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
 
-text += "\n━━━━━━━━━━━━━━\n";
+const remark =
+document.getElementById("remark")?.value || "";
+
+if(remark){
+
+text += `Remark : ${remark}\n`;
+
+}
+
+text += "━━━━━━━━━━━━━━\n";
 text += "📷 Photo : Attached";
 
 document.getElementById("report").innerText =
