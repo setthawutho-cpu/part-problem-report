@@ -1370,13 +1370,6 @@ for(const img of imgs){
     ));
 }
 
-alert(
-`มีรูป ${allFiles.length} รูป
-LINE จะเปิด ${Math.ceil(allFiles.length/10)} ครั้ง`
-);
-
-for(let i=0;i<allFiles.length;i+=10){
-
     const chunk =
     allFiles.slice(i,i+10);
 
