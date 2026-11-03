@@ -864,13 +864,15 @@ onclick="window.location.href='menu-pl.html'">
 <div
 class="date-box"
 id="dateBox"
-onclick="document.getElementById('headerDate').showPicker()">
+onclick="openHeaderDate()">
 </div>
 
 <input
 type="date"
 id="headerDate"
-hidden>
+style="
+position:absolute;
+left:-9999px;">
 
 </header>
 
@@ -1660,6 +1662,24 @@ document
 </script>
 
 <script>
+
+function openHeaderDate(){
+
+    const picker =
+    document.getElementById("headerDate");
+
+    if(picker.showPicker){
+
+        picker.showPicker();
+
+    }else{
+
+        picker.focus();
+        picker.click();
+
+    }
+
+}
 
 let selectedDate = new Date();
 
