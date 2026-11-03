@@ -329,9 +329,20 @@ background:white;
 
 .qty-number{
 width:120px;
+height:80px;
+border:none;
+outline:none;
+background:white;
 text-align:center;
 font-size:54px;
 font-weight:700;
+appearance:textfield;
+}
+
+.qty-number::-webkit-inner-spin-button,
+.qty-number::-webkit-outer-spin-button{
+-webkit-appearance:none;
+margin:0;
 }
 
 .photo-list{
@@ -645,6 +656,11 @@ font-size:18px;
 
 .qty-number{
 width:50px;
+height:40px;
+border:none;
+outline:none;
+background:white;
+text-align:center;
 font-size:26px;
 font-weight:700;
 }
@@ -1033,7 +1049,12 @@ Qty
 
 <div class="qty-box">
 <button id="minus">-</button>
-<div class="qty-number" id="qty">1</div>
+<input
+type="number"
+id="qty"
+class="qty-number"
+value="1"
+min="1">
 <button id="plus">+</button>
 </div>
 
@@ -1084,15 +1105,15 @@ const qty=document.getElementById('qty');
 
 document.getElementById('plus')
 .onclick=()=>{
-qty.textContent=
-Number(qty.textContent)+1;
+qty.value=
+Number(qty.value)+1;
 };
 
 document.getElementById('minus')
 .onclick=()=>{
-if(Number(qty.textContent)>1){
-qty.textContent=
-Number(qty.textContent)-1;
+if(Number(qty.value)>1){
+qty.value=
+Number(qty.value)-1;
 }
 };
 
@@ -1182,7 +1203,7 @@ if(supplier.value)
 text += `Supplier : ${supplier.value}\n`;
 
 const qtyValue =
-Number(qty.textContent);
+Number(qty.value);
 
 text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
 
