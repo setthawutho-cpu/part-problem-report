@@ -1123,8 +1123,25 @@ document.getElementById("qty");
 
 if(detail.value === "ยืมชิ้นส่วน"){
 
+const setPackingNo =
+document.querySelector('input[placeholder="00001"]').value;
+
+let locationText = "";
+
+if(borrowLocation.value === "Set Packing"){
+
+locationText =
+`จาก Set Packing No. ${setPackingNo}`;
+
+}else if(borrowLocation.value){
+
+locationText =
+`จาก ${borrowLocation.value}`;
+
+}
+
 text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
+Ins. นำชิ้นส่วน${locationText} ไปตรวจสอบ
 `;
 
 }else if(detail.value === "คืนชิ้นส่วน"){
