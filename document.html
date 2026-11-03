@@ -1333,17 +1333,68 @@ alert("Copy แล้ว");
 
 }
 
-function sendLine(){
+async function sendLine(){
 
-const text=
-encodeURIComponent(
-document.getElementById("report").innerText
+const text =
+document.getElementById("report").innerText;
+
+const imgs =
+document.querySelectorAll("#photoList img");
+
+if(imgs.length === 0){
+
+    window.open(
+    "https://line.me/R/share?text=" +
+    encodeURIComponent(text),
+    "_blank"
+    );
+
+    return;
+}
+
+const allFiles = [];
+
+for(const img of imgs){
+
+    const response =
+    await fetch(img.src);
+
+    const blob =
+    await response.blob();
+
+    allFiles.push(
+    new File(
+    [blob],
+    `photo_${allFiles.length+1}.jpg`,
+    {type:blob.type}
+    ));
+}
+
+alert(
+`มีรูป ${allFiles.length} รูป
+LINE จะเปิด ${Math.ceil(allFiles.length/10)} ครั้ง`
 );
 
-window.open(
-"https://line.me/R/share?text="+text,
-"_blank"
-);
+for(let i=0;i<allFiles.length;i+=10){
+
+    const chunk =
+    allFiles.slice(i,i+10);
+
+    if(
+        navigator.canShare &&
+        navigator.canShare({files:chunk})
+    ){
+
+        await navigator.share({
+
+            text:i===0 ? text : "",
+            files:chunk
+
+        });
+
+    }
+
+}
 
 }
 
