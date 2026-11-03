@@ -1530,13 +1530,29 @@ function setMode(id,isManual){
     const partNo =
     document.getElementById("partno").value;
 
+    const modeBox =
+    input.parentElement.querySelector(".mode");
+
+    const autoBtn =
+    modeBox.querySelector(".auto");
+
+    const manualBtn =
+    modeBox.querySelector(".manual");
+
+    autoBtn.classList.remove("active");
+    manualBtn.classList.remove("active");
+
     if(isManual){
+
+        manualBtn.classList.add("active");
 
         input.readOnly = false;
         input.value = "";
         input.focus();
 
     }else{
+
+        autoBtn.classList.add("active");
 
         input.readOnly = true;
 
