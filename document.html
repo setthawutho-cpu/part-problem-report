@@ -114,11 +114,14 @@ font-size:clamp(13px,1.5vw,20px);
 }
 
 .date-box{
+position:relative;
 padding:12px 18px;
 background:rgba(255,255,255,.85);
 border-radius:22px;
 color:#173c83;
 font-weight:600;
+cursor:pointer;
+overflow:hidden;
 }
 
 .top-grid{
@@ -861,18 +864,20 @@ onclick="window.location.href='menu-pl.html'">
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div
-class="date-box"
-id="dateBox"
-onclick="openHeaderDate()">
-</div>
+<div class="date-box" id="dateBox">
 
 <input
 type="date"
 id="headerDate"
 style="
 position:absolute;
-left:-9999px;">
+inset:0;
+opacity:0;
+width:100%;
+height:100%;
+cursor:pointer;">
+
+</div>
 
 </header>
 
@@ -1662,24 +1667,6 @@ document
 </script>
 
 <script>
-
-function openHeaderDate(){
-
-    const picker =
-    document.getElementById("headerDate");
-
-    if(picker.showPicker){
-
-        picker.showPicker();
-
-    }else{
-
-        picker.focus();
-        picker.click();
-
-    }
-
-}
 
 let selectedDate = new Date();
 
