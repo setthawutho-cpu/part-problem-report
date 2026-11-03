@@ -1069,7 +1069,8 @@ onclick="document.getElementById('photoInput').click()">
 <div class="actions">
 
 <button
-class="action-btn review">
+class="action-btn save"
+onclick="openRemark()">
 Remark
 </button>
 
@@ -1790,6 +1791,48 @@ headerDate.addEventListener("change",function(){
 updateDateTime();
 
 setInterval(updateDateTime,1000);
+
+</script>
+
+<div id="remarkPopup" class="report-overlay">
+
+    <div class="report-sheet" style="max-width:500px;">
+
+        <div class="report-content">
+
+            <h3>Remark</h3>
+
+            <textarea
+            id="remark"
+            placeholder="พิมพ์หมายเหตุ..."></textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function openRemark(){
+
+document
+.getElementById("remarkPopup")
+.classList.add("show");
+
+}
+
+document
+.getElementById("remarkPopup")
+.addEventListener("click",function(e){
+
+if(e.target === this){
+
+this.classList.remove("show");
+
+}
+
+});
 
 </script>
 
