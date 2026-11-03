@@ -1,1999 +1,895 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<title>Part Borrowing From PL</title>
+<title>PART BORROWING FROM PL</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta name="theme-color" content="#dfeaf3">
+
+<link rel="stylesheet" href="bottom-nav.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-:root{
---blue:#1f8fff;
---blue2:#386bff;
---white:#ffffff;
---text:#0e2d68;
---radius:24px;
-}
-
-html,
 body{
-width:100%;
-height:100%;
-overflow:hidden;
-touch-action:manipulation;
-}
-
-body{
-font-family:"Segoe UI",sans-serif;
-background:
-linear-gradient(
-180deg,
-#eaf3ff,
-#dfe9f6
-);
-height:100vh;
-overflow:hidden;
-color:var(--text);
+    margin:0;
+    padding:10px;
+    background:#dfeaf3;
+    font-family:Segoe UI,sans-serif;
 }
 
 .container{
-max-width:1100px;
-margin:auto;
-padding:8px 16px;
+    max-width:500px;
+    margin:auto;
+    background:#c7d9ea;
+    padding:15px;
+    border-radius:8px;
+    padding-bottom:140px;
 }
 
-.card{
-background:
-rgba(255,255,255,.70);
-
-backdrop-filter:blur(18px);
-
-border:1px solid
-rgba(255,255,255,.8);
-
-box-shadow:
-0 8px 30px
-rgba(0,0,0,.08);
-
-border-radius:26px;
+.title{
+    text-align:center;
+    font-size:clamp(16px,4vw,20px);
+    font-weight:bold;
+    margin-bottom:20px;
 }
 
-.header{
-background:
-linear-gradient(
-135deg,
-#79beff,
-#5270ff,
-#6572ff
-);
-
-border-radius:0 0 34px 34px;
-
-padding:12px 20px;
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-
-color:white;
+.top-row{
+    display:flex;
+    gap:20px;
 }
 
-.back-btn{
-width:60px;
-height:60px;
-
-border:none;
-border-radius:50%;
-
-background:white;
-
-font-size:26px;
-color:#5270ff;
+.top-row>div{
+    flex:1;
 }
 
-.header-title{
-flex:1;
+.top-row{
+    display:flex;
+    gap:20px;
 }
 
-.header-title h1{
-font-size:clamp(20px,4vw,48px);
+.top-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
 }
 
-.header-title p{
-font-size:clamp(13px,1.5vw,20px);
+.top-row > div:nth-child(1){
+    flex:1.2;   /* Date */
 }
 
-.date-box{
-position:relative;
-padding:12px 18px;
-background:rgba(255,255,255,.85);
-border-radius:22px;
-color:#173c83;
-font-weight:600;
-cursor:pointer;
-overflow:hidden;
+.top-row > div:nth-child(2){
+    flex:1.3;   /* Detail */
 }
 
-#headerDate{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-opacity:0;
-cursor:pointer;
-z-index:10;
+.top-row > div:nth-child(3){
+    flex:1.5;   /* Location */
 }
 
-.top-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-margin-top:18px;
+.label-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.info-card{
-padding:12px;
-}
-
-.info-card h3{
-margin-bottom:8px;
-font-size:16px;
-text-align:center;
-}
-
-.select{
-width:100%;
-height:54px;
-border:none;
-outline:none;
-padding:0 16px;
-border-radius:16px;
-font-size:18px;
-
-background:#fff;
-color:#000;
-
--webkit-appearance:none;
-appearance:none;
-}
-
-.search-card{
-margin-top:12px;
-padding:14px;
-    
-display:grid;
-grid-template-columns:
-80px
-1fr
-170px;
-
-gap:15px;
-align-items:center;
-}
-
-.search-icon{
-font-size:48px;
-color:#1672ff;
-text-align:center;
-}
-
-.search-input{
-height:60px;
-border:none;
-background:white;
-border-radius:16px;
-padding:0 20px;
-font-size:22px;
-}
-
-.search-btn{
-height:52px;
-border:none;
-border-radius:16px;
-
-background:
-linear-gradient(
-135deg,
-#2ddd66,
-#0bad43
-);
-
-color:white;
-font-size:20px;
-font-weight:700;
-}
-
-.part-card{
-margin-top:12px;
-padding:16px;
-}
-
-.section-title{
-display:flex;
-align-items:center;
-gap:10px;
-
-font-size:18px;
-font-weight:700;
-margin-bottom:12px;
-}
-
-.info-row{
-display:grid;
-grid-template-columns:
-120px
-1fr
-180px;
-
-gap:12px;
-align-items:center;
-margin-bottom:10px;
-}
-
-.label{
-font-size:16px;
-font-weight:600;
-}
-
-.input{
-height:56px;
-background:white;
-border-radius:16px;
-border:none;
-padding:0 18px;
-font-size:16px;
-}
-
-.mode{
-display:grid;
-grid-template-columns:1fr;
-gap:2px;
-}
-
-.mode button{
-flex:1;
-height:42px;
-border:none;
-border-radius:12px;
-font-size:16px;
-}
-
-.auto{
-background:#e5edf7;
-}
-
-.manual{
-background:
-linear-gradient(
-135deg,
-#45b0ff,
-#3178ff
-);
-color:white;
-}
-
-.mode button.active{
-background:
-linear-gradient(
-135deg,
-#45b0ff,
-#3178ff
-);
-color:white;
-}
-
-.mode button:not(.active){
-background:#e5edf7;
-color:#333;
-}
-
-.bottom-grid{
-display:grid;
-grid-template-columns:
-280px
-1fr;
-
-gap:16px;
-margin-top:16px;
-}
-
-.qty-card,
-.photo-card{
-padding:14px;
-overflow:hidden;
-}
-
-.qty-box{
-margin-top:18px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:white;
-border-radius:18px;
-overflow:hidden;
-}
-
-.qty-box button{
-width:70px;
-height:80px;
-border:none;
-font-size:36px;
-background:white;
-}
-
-.qty-number{
-width:120px;
-height:80px;
-border:none;
-outline:none;
-background:white;
-text-align:center;
-font-size:54px;
-font-weight:700;
-appearance:textfield;
-}
-
-.qty-number::-webkit-inner-spin-button,
-.qty-number::-webkit-outer-spin-button{
--webkit-appearance:none;
-margin:0;
-}
-
-.photo-list{
-display:flex;
-gap:8px;
-
-width:100%;
-max-width:100%;
-
-overflow-x:auto;
-overflow-y:hidden;
-
-white-space:nowrap;
-}
-
-.photo-list::-webkit-scrollbar{
-height:4px;
-}
-
-.photo-list::-webkit-scrollbar-thumb{
-background:#b8c7dd;
-border-radius:999px;
-}
-
-.photo-item{
-width:70px;
-height:70px;
-flex:0 0 70px;
-border-radius:12px;
-overflow:hidden;
-background:#fff;
-}
-
-.add-photo{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
-color:#1f8fff;
-cursor:pointer;
-}
-
-.photo-item img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.photo-item img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.report-card{
-margin-top:16px;
-padding:22px;
-}
-
-textarea{
-width:100%;
-height:120px;
-border:none;
-background:white;
-border-radius:18px;
-padding:16px;
-font-size:16px;
-resize:none;
-}
-
-.actions{
-display:grid;
-grid-template-columns:
-repeat(3,1fr);
-gap:16px;
-margin-top:16px;
-}
-
-.action-btn{
-height:70px;
-border:none;
-border-radius:24px;
-color:white;
-font-size:20px;
-font-weight:700;
-}
-
-.review{
-background:
-linear-gradient(
-135deg,
-#2ddd66,
-#0bad43
-);
+.copy{
+    background:#9c27b0;
+    color:white;
 }
 
 .line{
-background:
-linear-gradient(
-135deg,
-#2ddd66,
-#0bad43
-);
+    background:#06C755;
+    color:white;
 }
 
 .save{
-background:
-linear-gradient(
-135deg,
-#ffb025,
-#ff7a00
-);
+    background:#ff9800;
+    color:white;
 }
 
-.bottom-nav{
-margin-top:18px;
-
-background:
-rgba(255,255,255,.8);
-
-backdrop-filter:blur(12px);
-
-border-radius:30px;
-
-display:flex;
-justify-content:space-around;
-
-padding:18px;
+input,
+select{
+    width:100%;
+    height:34px;
+    padding:4px 6px;
+    margin:2px 0 6px;
+    box-sizing:border-box;
+    font-size:14px;
 }
 
-.nav-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:8px;
-font-size:18px;
-color:#5a719e;
+#date,
+#detail,
+#borrowLocation{
+    height:34px !important;
+    min-height:34px !important;
+    line-height:34px;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    padding-top:0;
+    padding-bottom:0;
 }
 
-.nav-item i{
-font-size:28px;
+#photos{
+    background:#fff;
+    border:1px solid #999;
 }
 
-@media(max-width:1024px){
+.manual-btn{
+    width:70px !important;
+    height:24px !important;
 
-.top-grid{
-grid-template-columns:
-1fr 1fr;
+    margin:0 !important;
+    padding:0 !important;
+
+    background:#d9d9d9;
+    color:#000;
+
+    border:1px solid #666 !important;
+
+    box-shadow:
+        inset 1px 1px 0 #ffffff,
+        inset -1px -1px 0 #888,
+        2px 2px 3px rgba(0,0,0,0.25);
+
+    font-size:13px !important;
+    font-weight:normal !important;
+
+    cursor:pointer;
 }
 
-.bottom-grid{
-grid-template-columns:
-40% 60%;
+.review{
+    background:#2196f3;
+    color:white;
 }
 
-.info-row{
-grid-template-columns:
-120px 1fr 170px;
+.copy{
+    background:#9c27b0;
+    color:white;
 }
 
+.line{
+    background:#06C755;
+    color:white;
 }
 
-@media(max-width:768px){
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+input,
+select,
+textarea,
+button{
+    border-radius:0 !important;
+}
+
+input,
+select,
+textarea{
+    font-size:16px !important;
+    border:1px solid #999;
+    background:#fff;
+    color:#000 !important;
+    touch-action:manipulation;
+}
+
+#date,
+#detail,
+#borrowLocation{
+    color:#000 !important;
+}
+
+.manual-btn:active{
+    transform:translateY(1px);
+
+    box-shadow:
+        inset -1px -1px 0 #ffffff,
+        inset 1px 1px 0 #888;
+}
+
+.review,
+.copy,
+.line,
+.save{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.review{
+    background:#2196f3;
+    color:white;
+}
+
+.copy{
+    background:#9c27b0;
+    color:white;
+}
+
+.line{
+    background:#06C755;
+    color:white;
+}
+
+.save{
+    background:#ff9800;
+    color:white;
+}
+
+.report{
+    margin-top:10px;
+    background:white;
+    padding:10px;
+    border:1px solid #ccc;
+    white-space:pre-wrap;
+    line-height:1.2;
+
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+    word-break:break-word;
+
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+#qty{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:9999;
+    background:#dfeaf3;
+    padding:8px 12px;
+    box-sizing:border-box;
+
+    display:flex;
+    align-items:center;
+}
+
+.top-nav span{
+    color:#000;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    user-select:none;
+}
 
 .container{
-padding:10px;
+    padding-top:50px;
 }
 
-/* Header */
-
-.header{
-padding:12px;
-gap:8px;
-}
-
-.back-btn{
-width:40px;
-height:40px;
-font-size:16px;
-}
-
-.header-title h1{
-font-size:14px;
-line-height:1.1;
-}
-
-.header-title p{
-font-size:10px;
-}
-
-.date-box{
-padding:6px 8px;
-font-size:10px;
-}
-
-/* Transaction */
-
-.top-grid{
-grid-template-columns:
-1fr 1fr;
-gap:8px;
-}
-
-.info-card{
-padding:7px;
-}
-
-.info-card h3{
-font-size:11px;
-margin-bottom:6px;
-text-align:center;
-}
-
-.select{
-height:32px;
-font-size:10px;
-
-background:#fff;
-color:#000;
-
--webkit-appearance:none;
-appearance:none;
-}
-
-/* Search */
-
-.search-card{
-padding:12px;
-display:grid;
-grid-template-columns:
-40px 1fr 90px;
-gap:8px;
-}
-
-.search-icon{
-font-size:24px;
-}
-
-.search-input{
-height:38px;
-font-size:12px;
-}
-
-.search-btn{
-height:38px;
-font-size:12px;
-}
-
-/* Part Information */
-
-.part-card{
-padding:14px;
-}
-
-.section-title{
-font-size:15px;
-margin-bottom:12px;
-}
-
-.info-row{
-display:grid;
-grid-template-columns:
-55px 1fr 55px;
-gap:6px;
-margin-bottom:8px;
-}
-
-.label{
-font-size:11px;
-}
-
-.input{
-height:34px;
-font-size:11px;
-}
-
-.mode{
-display:grid;
-grid-template-columns:1fr;
-gap:2px;
-}
-
-.mode button{
-height:16px;
-font-size:7px;
-padding:0;
-}
-
-/* Qty + Photo */
-
-.bottom-grid{
-display:grid;
-grid-template-columns:
-1fr 1.9fr;
-gap:10px;
-}
-
-.qty-card,
-.photo-card{
-padding:12px;
-height:120px;
-overflow:hidden;
-
-display:flex;
-flex-direction:column;
-}
-
-.qty-box{
-margin-top:12px;
-}
-
-.qty-box button{
-width:32px;
-height:40px;
-font-size:18px;
-}
-
-.qty-number{
-width:50px;
-height:40px;
-border:none;
-outline:none;
-background:white;
-text-align:center;
-font-size:26px;
-font-weight:700;
-}
-
-.photo-item{
-width:52px;
-height:52px;
-flex:0 0 52px;
-border-radius:10px;
-overflow:hidden;
-}
-
-.photo-list{
-display:flex;
-gap:8px;
-align-items:center;
-
-width:100%;
-max-width:100%;
-height:52px;
-
-overflow-x:auto;
-overflow-y:hidden;
-
-flex-wrap:nowrap;
-white-space:nowrap;
-
-margin-top:auto;
-margin-bottom:auto;
-
-cursor:grab;
-}
-
-.photo-list::-webkit-scrollbar{
-display:none;
-}
-
-.photo-list:active{
-cursor:grabbing;
-}
-
-/* Report */
-
-.report-card{
-padding:14px;
-}
-
-textarea{
-height:180px;
-font-size:13px;
-}
-
-/* Buttons */
-
-.actions{
-display:grid;
-grid-template-columns:
-repeat(3,1fr);
-gap:10px;
-}
-
-.action-btn{
-height:54px;
-font-size:11px;
-}
-
-}
-
-.report-overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.35);
-display:none;
-align-items:flex-start;
-justify-content:center;
-padding-top:40px;
-z-index:99999;
-backdrop-filter:blur(3px);
-}
-
-.report-overlay.show{
-display:flex;
-}
-
-.report-sheet{
-position:relative;
-width:95%;
-max-width:700px;
-max-height:90vh;
-background:#fff;
-border-radius:24px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-}
-
-.report-content{
-flex:1;
-overflow:auto;
-padding:20px;
-white-space:pre-wrap;
-line-height:1.5;
-color:#000;
-}
-
-.report-actions{
-display:flex;
-gap:8px;
-padding:12px;
-border-top:1px solid #ddd;
-}
-
-.report-actions button{
-flex:1;
-height:46px;
-border:none;
-border-radius:12px;
-color:#fff;
-font-weight:700;
-}
-
-.btn-save{
-background:#4caf50;
-}
-
-.btn-copy{
-background:#9c27b0;
-}
-
-.btn-line{
-background:#06C755;
-}
-
-.add-btn{
-position:absolute;
-top:10px;
-right:10px;
-width:42px;
-height:42px;
-border:none;
-border-radius:50%;
-background:#2196f3;
-color:#fff;
-font-size:20px;
-}
-
-.action-sheet-overlay{
-position:fixed;
-inset:0;
-display:none;
-background:rgba(0,0,0,.15);
-z-index:999999;
-}
-
-.action-sheet-overlay.show{
-display:block;
-}
-
-.action-sheet{
-position:fixed;
-width:180px;
-background:#fff;
-border-radius:16px;
-padding:8px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-
-left:50%;
-top:45%;
-transform:translate(-50%,-50%);
-}
-
-.action-sheet button{
-width:100%;
-height:44px;
-border:none;
-background:#fff;
-font-size:16px;
-border-radius:10px;
-margin-bottom:4px;
-}
-
-.action-sheet .danger{
-color:#ff3b30;
-font-weight:700;
-}
-
-.action-sheet .cancel{
-font-weight:700;
-}
-
-.image-viewer{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1000000;
-}
-
-.image-viewer.show{
-display:flex;
-}
-
-.image-viewer img{
-width:80%;
-max-width:800px;
-max-height:80vh;
-object-fit:contain;
-border-radius:16px;
-background:#fff;
-}
-
-#remarkPopup .report-sheet{
-max-width:500px;
-height:auto;
-min-height:180px;
-}
-
-#remarkPopup .report-content{
-flex:none;
-padding:20px;
-overflow:visible;
-}
-
-#remarkPopup h3{
-margin-bottom:8px;
-}
-
-#remarkPopup textarea{
-height:80px;
-margin-top:8px;
+.top-nav span{
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-</style>
-</head>
-<body>
-
-<header class="header">
-
-<button
-class="back-btn"
-onclick="window.location.href='menu-pl.html'">
-<i class="fa-solid fa-arrow-left"></i>
-</button>
-
-<div class="header-title">
-<h1>PART BORROWING FROM PL</h1>
-<p>Part Loan / Return / Defect</p>
-</div>
-
-<div class="date-box" id="dateBoxWrap">
-
-<div id="dateBox"></div>
-
-<input
-type="date"
-id="headerDate">
-
-</div>
-
-</header>
-
-<div class="container">
-
-<div class="top-grid">
-
-<div class="card info-card">
-<h3>Detail</h3>
-<select class="select">
-<option></option>
-<option>ยืมชิ้นส่วน</option>
-<option>คืนชิ้นส่วน</option>
-<option>Defect</option>
-</select>
-</div>
-
-<div class="card info-card">
-<h3>Location</h3>
-<select class="select">
-<option></option>
-<option>Box</option>
-<option>Rack</option>
-<option>Set Packing</option>
-</select>
-</div>
-
-<div
-class="card info-card"
-id="setPackingCard"
-style="display:none;">
-
-<h3>Set Packing No.</h3>
-
-<input
-class="select"
-placeholder="00001">
-
-</div>
-
-</div>
-
-<div class="card search-card">
-
-<div class="search-icon">
-<i class="fa-solid fa-magnifying-glass"></i>
-</div>
-
-<input
-id="partno"
-class="search-input"
-list="partList"
-placeholder="Part No.">
-
-<datalist id="partList"></datalist>
-
-<button
-class="search-btn"
-onclick="reviewReport()">
-Review
-</button>
-
-</div>
-
-<div class="card part-card">
-
-<div class="section-title">
-<i class="fa-solid fa-file-lines"></i>
-Part Information
-</div>
-
-<div class="info-row">
-<div class="label">Part Name</div>
-<input
-id="partname"
-class="input"
-readonly>
-<div class="mode">
-
-<button
-class="auto"
-onclick="setMode('partname',false)">
-Auto
-</button>
-
-<button
-class="manual"
-onclick="setMode('partname',true)">
-Manual
-</button>
-
-</div>
-</div>
-
-<div class="info-row">
-<div class="label">Model</div>
-<input
-id="model"
-class="input"
-readonly>
-<div class="mode">
-
-<button
-class="auto"
-onclick="setMode('model',false)">
-Auto
-</button>
-
-<button
-class="manual"
-onclick="setMode('model',true)">
-Manual
-</button>
-
-</div>
-</div>
-
-<div class="info-row">
-<div class="label">Supplier</div>
-<input
-id="supplier"
-class="input"
-readonly>
-<div class="mode">
-
-<button
-class="auto"
-onclick="setMode('supplier',false)">
-Auto
-</button>
-
-<button
-class="manual"
-onclick="setMode('supplier',true)">
-Manual
-</button>
-
-</div>
-</div>
-
-</div>
-
-<div class="bottom-grid">
-
-<div class="card qty-card">
-
-<div class="section-title">
-<i class="fa-solid fa-hashtag"></i>
-Qty
-</div>
-
-<div class="qty-box">
-<button id="minus">-</button>
-<input
-type="number"
-id="qty"
-class="qty-number"
-value="1"
-min="1">
-<button id="plus">+</button>
-</div>
-
-</div>
-
-<div class="card photo-card">
-
-<div class="section-title">
-<i class="fa-solid fa-camera"></i>
-Photo
-</div>
-
-<input
-type="file"
-id="photoInput"
-accept="image/*"
-multiple
-hidden>
-
-<div class="photo-list" id="photoList">
-
-<div class="photo-item add-photo"
-onclick="document.getElementById('photoInput').click()">
-+
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="actions">
-
-<button
-class="action-btn save"
-onclick="openRemark()">
-Remark
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-const qty=document.getElementById('qty');
-
-document.getElementById('plus')
-.onclick=()=>{
-qty.value=
-Number(qty.value)+1;
-};
-
-document.getElementById('minus')
-.onclick=()=>{
-if(Number(qty.value)>1){
-qty.value=
-Number(qty.value)-1;
-}
-};
-
-let reportEditMode=false;
-
-function reviewReport(){
-
-let text = "";
-
-const detail =
-document.querySelectorAll(".top-grid select")[0];
-
-const borrowLocation =
-document.querySelectorAll(".top-grid select")[1];
-
-const partno =
-document.getElementById("partno");
-
-const partname =
-document.getElementById("partname");
-
-const model =
-document.getElementById("model");
-
-const supplier =
-document.getElementById("supplier");
-
-const qty =
-document.getElementById("qty");
-
-if(detail.value === "ยืมชิ้นส่วน"){
-
-const setPackingNo =
-document.querySelector('input[placeholder="00001"]').value;
-
-let locationText = "";
-
-if(borrowLocation.value === "Set Packing"){
-
-locationText =
-`จาก Set Packing No. ${setPackingNo}`;
-
-}else if(borrowLocation.value){
-
-locationText =
-`จาก ${borrowLocation.value}`;
-
+.qty-photo-row{
+    display:flex;
+    gap:10px;
+    margin-top:5px;
+    align-items:flex-start;
 }
-
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วน${locationText} ไปตรวจสอบ
-`;
-
-}else if(detail.value === "คืนชิ้นส่วน"){
 
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ที่ ${borrowLocation.value}` : ""}
-`;
-
-}else if(detail.value === "Defect"){
-
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""} ไป Defect
-`;
-
+.qty-photo-row > div:first-child{
+    flex:3;
 }
-
-const dateOnly =
-selectedDate.toLocaleDateString("en-GB",{
-day:"2-digit",
-month:"short",
-year:"numeric"
-});
-
-text += `Date : ${dateOnly}\n`;
-
-if(partno.value)
-text += `Part No : ${partno.value}\n`;
-
-if(partname.value)
-text += `Part Name : ${partname.value}\n`;
-
-if(model.value)
-text += `Model : ${model.value}\n`;
 
-if(supplier.value)
-text += `Supplier : ${supplier.value}\n`;
-
-const qtyValue =
-Number(qty.value);
-
-text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
-
-const remarkElement =
-document.getElementById("remark");
-
-if(remarkElement && remarkElement.value.trim() !== ""){
-
-text += `Remark : ${remarkElement.value.trim()}\n`;
-
+.qty-photo-row > div:last-child{
+    flex:7;
 }
-
-text += "━━━━━━━━━━━━━━\n";
-text += "📷 Photo : Attached";
-
-document.getElementById("report").innerText =
-text;
 
-document
-.getElementById("reportOverlay")
-.classList.add("show");
-
+#qty{
+    height:34px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
 }
-
-function toggleEditReport(){
-
-const report=
-document.getElementById("report");
-
-const btn=
-document.getElementById("editBtn");
-
-if(!reportEditMode){
-
-report.contentEditable="true";
-
-btn.innerHTML="💾";
-
-btn.style.background="#4caf50";
 
-reportEditMode=true;
-
-}else{
-
-report.contentEditable="false";
-
-btn.innerHTML="📝";
-
-btn.style.background="#2196f3";
-
-reportEditMode=false;
-
+#photos{
+    height:34px;
+    font-size:12px;
 }
 
+.photo-head{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:4px;
 }
-
-function saveReport(){
-
-const text=
-document.getElementById("report").innerText;
 
-const blob=
-new Blob([text],{type:"text/plain"});
-
-const a=
-document.createElement("a");
-
-a.href=
-URL.createObjectURL(blob);
-
-a.download=
-"Borrowing_Report.txt";
-
-a.click();
-
+#photoCount{
+    color:#0066cc;
+    font-weight:bold;
+    margin:0;
+    flex:1;
 }
-
-function copyReport(){
-
-navigator.clipboard.writeText(
-document.getElementById("report").innerText
-);
-
-alert("Copy แล้ว");
 
+.photo-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
-async function sendLine(){
-
-const text =
-document.getElementById("report").innerText;
-
-const imgs =
-document.querySelectorAll("#photoList img");
-
-if(imgs.length === 0){
-
-    window.open(
-        "https://line.me/R/share?text=" +
-        encodeURIComponent(text),
-        "_blank"
-    );
-
-    return;
+.photo-input-row #photos{
+    flex:1;
 }
-
-const allFiles = [];
 
-for(const img of imgs){
+#clearPhoto{
+    width:40px !important;
+    min-width:40px !important;
+    height:40px !important;
 
-    const response =
-    await fetch(img.src);
+    padding:0 !important;
+    margin:0 !important;
 
-    const blob =
-    await response.blob();
+    background:transparent;
+    border:none !important;
 
-    allFiles.push(
-        new File(
-            [blob],
-            `photo_${allFiles.length+1}.jpg`,
-            {type:blob.type}
-        )
-    );
-
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+    flex:none;
 }
-
-for(let i=0;i<allFiles.length;i+=10){
-
-    const chunk =
-    allFiles.slice(i,i+10);
 
-    if(
-        navigator.canShare &&
-        navigator.canShare({files:chunk})
-    ){
+@media (max-width:500px){
 
-        await navigator.share({
-            files:chunk
-        });
+    #date,
+    #detail,
+    #borrowLocation{
+        font-size:13px !important;
+    }
 
+    .top-row{
+        gap:6px;
     }
 
 }
 
+.bottom-nav button,
+.bottom-nav button span{
+    font-weight:400 !important;
 }
+      
+</style>
+</head>
+<body>
 
-</script>
+<div class="top-nav">
 
-<div id="reportOverlay" class="report-overlay">
+    <span onclick="backToMenu()">
+        ❮ กลับ
+    </span>
 
-    <div class="report-sheet">
+</div>
 
-        <button
-        id="editBtn"
-        class="add-btn"
-        onclick="toggleEditReport()">
-        📝
+<div class="container">
+
+<div class="title">
+🚨 PART BORROWING FROM PL 🚨
+</div>
+
+<div class="top-row">
+
+    <div>
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
+
+    <div>
+        <label>Detail</label>
+        <select id="detail">
+            <option value=""></option>
+            <option>ยืมชิ้นส่วน</option>
+            <option>คืนชิ้นส่วน</option>
+            <option>Defect</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Location</label>
+        <select id="borrowLocation">
+            <option value=""></option>
+            <option>Box</option>
+            <option>Rack</option>
+            <option>Set Packing</option>
+        </select>
+    </div>
+
+</div>
+
+<label>Part No.</label>
+<input type="text" id="partno" list="partList" autocomplete="off">
+
+<datalist id="partList"></datalist>
+
+<div class="label-row">
+<label>Part Name</label>
+<button type="button" id="partnameBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="partname" readonly>
+
+<div class="label-row">
+<label>Model</label>
+<button type="button" id="modelBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="model" readonly>
+
+<div class="label-row">
+<label>Supplier</label>
+<button type="button" id="supplierBtn" class="manual-btn">
+Manual
+</button>
+</div>
+
+<input type="text" id="supplier" readonly>
+
+<div class="qty-photo-row">
+
+<div>
+
+    <div class="photo-head">
+        <label>Qty</label>
+        <span>&nbsp;</span>
+    </div>
+
+    <input type="number" id="qty">
+
+</div>
+
+<div>
+
+    <div class="photo-head">
+        <label>Photo</label>
+
+        <span id="photoCount">
+            เลือกแล้ว 0 รูป
+        </span>
+    </div>
+
+    <div class="photo-input-row">
+
+<input type="file"
+       id="photos"
+       multiple
+       accept="image/*">
+
+        <button type="button"
+                id="clearPhoto"
+                onclick="clearPhotos()">
+            🗑️
         </button>
-
-        <div
-        id="report"
-        class="report-content"
-        contenteditable="false">
-        </div>
-
-        <div class="report-actions">
-
-            <button
-            class="btn-save"
-            onclick="saveReport()">
-            💾 Save
-            </button>
-
-            <button
-            class="btn-copy"
-            onclick="copyReport()">
-            📋 Copy
-            </button>
-
-            <button
-            class="btn-line"
-            onclick="sendLine()">
-            📤 LINE
-            </button>
-
-        </div>
 
     </div>
 
 </div>
 
-<script>
-document.getElementById("reportOverlay").addEventListener("click", function(e){
-
-    if(e.target === this){
-        this.classList.remove("show");
-    }
-
-});
-
-document.getElementById("photoInput").addEventListener("change", function(){
-
-const photoList =
-document.getElementById("photoList");
-
-for(const file of this.files){
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
-const div =
-document.createElement("div");
-
-div.className = "photo-item";
-
-div.innerHTML =
-`<img src="${e.target.result}">`;
-
-photoList.appendChild(div);
-
-};
-
-reader.readAsDataURL(file);
-
-}
-
-});
-
-let selectedPhoto = null;
-
-document.addEventListener("click",function(e){
-
-const img = e.target.closest(".photo-item img");
-
-if(!img) return;
-
-selectedPhoto = img.closest(".photo-item");
-
-const overlay =
-document.getElementById("actionSheet");
-
-const menu =
-document.querySelector(".action-sheet");
-
-menu.style.left = "50%";
-menu.style.top = "45%";
-menu.style.transform =
-"translate(-50%,-50%)";
-
-overlay.classList.add("show");
-
-});
-
-function showPreview(img){
-
-selectedPhoto = img.closest(".photo-item");
-
-const overlay =
-document.getElementById("actionSheet");
-
-overlay.classList.add("show");
-
-}
-
-const slider =
-document.getElementById("photoList");
-
-let isDown = false;
-let startX;
-let scrollLeft;
-
-slider.addEventListener("mousedown",function(e){
-
-isDown = true;
-startX = e.pageX - slider.offsetLeft;
-scrollLeft = slider.scrollLeft;
-
-});
-
-slider.addEventListener("mouseleave",function(){
-isDown = false;
-});
-
-slider.addEventListener("mouseup",function(){
-isDown = false;
-});
-
-slider.addEventListener("mousemove",function(e){
-
-if(!isDown) return;
-
-e.preventDefault();
-
-const x = e.pageX - slider.offsetLeft;
-const walk = (x - startX) * 2;
-
-slider.scrollLeft = scrollLeft - walk;
-
-});
-
-function closeActionSheet(){
-
-document
-.getElementById("actionSheet")
-.classList.remove("show");
-
-}
-
-function openPhoto(){
-
-const img =
-selectedPhoto.querySelector("img");
-
-document.getElementById("viewerImage").src =
-img.src;
-
-document.getElementById("imageViewer")
-.classList.add("show");
-
-closeActionSheet();
-
-}
-
-function deletePhoto(){
-
-if(selectedPhoto){
-
-selectedPhoto.remove();
-
-}
-
-closeActionSheet();
-
-}
-
-function replacePhoto(){
-
-document
-.getElementById("replaceInput")
-.click();
-
-}
-
-document
-.getElementById("replaceInput")
-.addEventListener("change",function(){
-
-const file = this.files[0];
-
-if(!file || !selectedPhoto) return;
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
-selectedPhoto.innerHTML =
-`<img src="${e.target.result}">`;
-
-};
-
-reader.readAsDataURL(file);
-
-closeActionSheet();
-
-});
-
-document.getElementById("actionSheet")
-.addEventListener("click",function(e){
-
-if(e.target === this){
-closeActionSheet();
-}
-
-});
-
-</script>
-
-<div id="actionSheet" class="action-sheet-overlay">
-
-<div class="action-sheet">
-
-<button onclick="openPhoto()">
-เปิด
-</button>
-
-<button onclick="replacePhoto()">
-เปลี่ยนรูป
-</button>
-
-<button class="danger" onclick="deletePhoto()">
-ลบรูป
-</button>
-
-<button class="cancel" onclick="closeActionSheet()">
-ยกเลิก
-</button>
-
 </div>
 
-</div>
+<button class="review" onclick="reviewReport()">
+🔍 Review
+</button>
 
-<input
-type="file"
-id="replaceInput"
-accept="image/*"
-hidden>
+<button class="copy" onclick="copyReport()">
+📋 Copy Report
+</button>
 
-<div
-id="imageViewer"
-class="image-viewer"
-onclick="this.classList.remove('show')">
+<button class="line" onclick="sendLine()">
+📤 Send LINE
+</button>
 
-    <img id="viewerImage">
+<button class="save" onclick="saveData()">
+💾 Save Data
+</button>
+
+<div id="report" class="report"></div>
 
 </div>
 
 <script>
+
+date.value =
+new Date().toISOString().split("T")[0];
+
+const borrowLocation =
+document.getElementById("borrowLocation");
 
 let partMaster = {};
 let allPartNo = [];
 
 async function loadExcel(){
 
-    const response =
-    await fetch("ข้อมูล Excel.xlsx");
+try{
 
-    const data =
-    await response.arrayBuffer();
+const response =
+await fetch("ข้อมูล Excel.xlsx");
 
-    const workbook =
-    XLSX.read(data,{type:"array"});
+const data =
+await response.arrayBuffer();
 
-    const sheet =
-    workbook.Sheets[
-        workbook.SheetNames[0]
-    ];
+const wb =
+XLSX.read(data,{type:"array"});
 
-    const rows =
-    XLSX.utils.sheet_to_json(sheet);
+const sheet =
+wb.Sheets[wb.SheetNames[0]];
 
-    rows.forEach(row=>{
+const rows =
+XLSX.utils.sheet_to_json(sheet);
 
-        const partNo =
-        String(row.PartNo || "").trim();
+rows.forEach(row=>{
 
-        if(!partNo) return;
+const partNo =
+String(row.PartNo || "").trim();
 
-        if(!allPartNo.includes(partNo)){
-            allPartNo.push(partNo);
-        }
+if(partNo){
 
-        partMaster[partNo] = {
+    if(!allPartNo.includes(partNo)){
+        allPartNo.push(partNo);
+    }
 
-            partName:
-            row.PartName || "",
+    partMaster[partNo]={
+        partName:row.PartName || "",
+        model:row.Model || "",
+        supplier:row.Supplier || ""
+    };
 
-            supplier:
-            row.Supplier || "",
+}
 
-            model:
-            row.Model || ""
+});
 
-        };
-
-    });
+}catch(e){
+console.log(e);
+}
 
 }
 
 loadExcel();
 
-window.onload = function(){
+let partnameManual = false;
+let modelManual = false;
+let supplierManual = false;
 
-    document
-    .querySelectorAll(".auto")
-    .forEach(btn =>
-        btn.classList.add("active")
-    );
+/* PART NAME */
+partnameBtn.onclick = function(){
+
+    partnameManual = !partnameManual;
+
+if(partnameManual){
+
+    partname.readOnly = false;
+    partname.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
+
+}else{
+
+    partname.readOnly = true;
+
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
+
+    fillPartData(partno.value);
+
+}
 
 };
 
-function fillPartData(partNo){
+/* MODEL */
+modelBtn.onclick = function(){
 
-    if(!partMaster[partNo]) return;
+    modelManual = !modelManual;
 
-    document.getElementById("partname").value =
-    partMaster[partNo].partName || "";
+if(modelManual){
 
-    document.getElementById("model").value =
-    partMaster[partNo].model || "";
+    model.readOnly = false;
+    model.value = "";
 
-    document.getElementById("supplier").value =
-    partMaster[partNo].supplier || "";
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
 
-}
+}else{
 
-function setMode(id,isManual){
+    model.readOnly = true;
 
-    const input =
-    document.getElementById(id);
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
 
-    const partNo =
-    document.getElementById("partno").value;
-
-    const modeBox =
-    input.parentElement.querySelector(".mode");
-
-    const autoBtn =
-    modeBox.querySelector(".auto");
-
-    const manualBtn =
-    modeBox.querySelector(".manual");
-
-    autoBtn.classList.remove("active");
-    manualBtn.classList.remove("active");
-
-    if(isManual){
-
-        manualBtn.classList.add("active");
-
-        input.readOnly = false;
-        input.value = "";
-        input.focus();
-
-    }else{
-
-        autoBtn.classList.add("active");
-
-        input.readOnly = true;
-
-        if(partMaster[partNo]){
-
-            if(id==="partname"){
-                input.value =
-                partMaster[partNo].partName || "";
-            }
-
-            if(id==="model"){
-                input.value =
-                partMaster[partNo].model || "";
-            }
-
-            if(id==="supplier"){
-                input.value =
-                partMaster[partNo].supplier || "";
-            }
-
-        }
-
-    }
+    fillPartData(partno.value);
 
 }
 
-document
-.getElementById("partno")
-.addEventListener("input",function(){
+};
 
-    const keyword =
-    this.value.trim();
+/* SUPPLIER */
+supplierBtn.onclick = function(){
 
-    const list =
-    document.getElementById("partList");
+    supplierManual = !supplierManual;
+
+if(supplierManual){
+
+    supplier.readOnly = false;
+    supplier.value = "";
+
+    this.innerText = "Auto";
+    this.style.background = "#06C755";
+    this.style.color = "#fff";
+
+}else{
+
+    supplier.readOnly = true;
+
+    this.innerText = "Manual";
+    this.style.background = "#d9d9d9";
+    this.style.color = "#000";
+
+    fillPartData(partno.value);
+
+}
+
+};
+
+partno.addEventListener("input", function(){
+
+    const keyword = this.value.trim();
 
     if(keyword === ""){
 
-        partname.value = "";
-        model.value = "";
-        supplier.value = "";
+        if(!partnameManual) partname.value = "";
+        if(!modelManual) model.value = "";
+        if(!supplierManual) supplier.value = "";
 
-        list.innerHTML = "";
+        partList.innerHTML = "";
         return;
     }
 
     if(partMaster[keyword]){
 
         fillPartData(keyword);
-
-        list.innerHTML = "";
-
         return;
     }
 
-    if(keyword.length < 4){
+    if(keyword.length < 3){
 
-        list.innerHTML = "";
+        partList.innerHTML = "";
         return;
     }
 
     const result =
     allPartNo
-    .filter(p=>
-
-        p.startsWith(keyword) ||
-
-        p.includes("-" + keyword)
-
-    )
+    .filter(x => x.includes(keyword))
     .slice(0,10);
 
-    list.innerHTML =
-    result.map(p =>
-    `<option value="${p}"></option>`)
+    partList.innerHTML =
+    result
+    .map(x => `<option value="${x}"></option>`)
     .join("");
 
 });
 
-document
-.getElementById("partno")
-.addEventListener("change",function(){
+function fillPartData(partNo){
 
-    if(partMaster[this.value]){
+    if(!partMaster[partNo]) return;
 
-        fillPartData(this.value);
-
+    if(!partnameManual){
+        partname.value =
+        partMaster[partNo].partName || "";
     }
 
-});
-
-</script>
-
-<script>
-
-let selectedDate = new Date();
-
-function updateDateTime(){
-
-    const date =
-    selectedDate.toLocaleDateString("en-GB",{
-        day:"2-digit",
-        month:"short",
-        year:"numeric"
-    });
-
-    const time =
-    new Date().toLocaleTimeString("en-GB",{
-        hour:"2-digit",
-        minute:"2-digit"
-    });
-
-    document.getElementById("dateBox").innerHTML =
-    date + "<br>" + time;
-}
-
-const headerDate =
-document.getElementById("headerDate");
-
-headerDate.addEventListener("change",function(){
-
-    if(this.value){
-
-        selectedDate =
-        new Date(this.value);
-
-        updateDateTime();
-
+    if(!modelManual){
+        model.value =
+        partMaster[partNo].model || "";
     }
 
-});
-
-document
-.getElementById("dateBoxWrap")
-.addEventListener("click",function(){
-
-document
-.getElementById("headerDate")
-.showPicker();
-
-});
-
-updateDateTime();
-
-setInterval(updateDateTime,1000);
-
-</script>
-
-<div id="remarkPopup" class="report-overlay">
-
-    <div class="report-sheet" style="max-width:500px;">
-
-        <div class="report-content">
-
-            <h3>Remark</h3>
-
-            <textarea
-            id="remark"
-            placeholder="พิมพ์หมายเหตุ..."></textarea>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-function openRemark(){
-
-document
-.getElementById("remarkPopup")
-.classList.add("show");
+    if(!supplierManual){
+        supplier.value =
+        partMaster[partNo].supplier || "";
+    }
 
 }
 
-document
-.getElementById("remarkPopup")
-.addEventListener("click",function(e){
+let selectedPhotos = [];
 
-if(e.target === this){
+photos.addEventListener("change",()=>{
 
-this.classList.remove("show");
+    selectedPhotos.push(...photos.files);
 
-}
+    photoCount.innerText =
+    `เลือกแล้ว ${selectedPhotos.length} รูป`;
 
-});
+    photos.value = "";
 
-</script>
-
-<script>
-
-const locationSelect =
-document.querySelectorAll(".top-grid select")[1];
-
-const setPackingCard =
-document.getElementById("setPackingCard");
-
-locationSelect.addEventListener("change",function(){
-
-if(this.value === "Set Packing"){
-
-setPackingCard.style.display = "block";
-
-document.querySelector(".top-grid")
-.style.gridTemplateColumns =
-"1fr 1fr 1fr";
-
-}else{
-
-setPackingCard.style.display = "none";
-
-document.querySelector(".top-grid")
-.style.gridTemplateColumns =
-"1fr 1fr";
-
-}
+    reviewReport();
 
 });
 
+function clearPhotos(){
+
+    if(!confirm("ลบรูปทั้งหมด ?")) return;
+
+    selectedPhotos = [];
+
+    photos.value = "";
+
+    photoCount.innerText =
+    "เลือกแล้ว 0 รูป";
+
+    reviewReport();
+
+}
+
+function reviewReport(){
+
+let text = "";
+
+if(detail.value === "ยืมชิ้นส่วน"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
+`;
+}else if(detail.value === "คืนชิ้นส่วน"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""}
+`;
+}else if(detail.value === "Defect"){
+    text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value} ` : ""}ไป Defect
+`;
+}
+
+if(date.value)
+    text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
+
+if(partno.value)
+    text += `Part No. : ${partno.value}\n`;
+
+if(partname.value)
+    text += `Part Name : ${partname.value}\n`;
+
+if(model.value)
+    text += `Model : ${model.value}\n`;
+
+if(supplier.value)
+    text += `Supplier : ${supplier.value}\n`;
+
+if(qty.value){
+    const qtyUnit = Number(qty.value) === 1 ? "Pc." : "Pcs.";
+    text += `Qty : ${qty.value} ${qtyUnit}\n`;
+}
+
+text += "━━━━━━━━━━━━━━\n";
+text += "📷 Photo : Attached";
+
+report.style.display = "block";
+report.innerText = text;
+
+}
+
+function copyReport(){
+
+if(!report.innerText){
+
+reviewReport();
+
+}
+
+navigator.clipboard.writeText(
+report.innerText
+);
+
+alert("Copy สำเร็จ");
+
+}
+
+async function sendLine(){
+
+    if(!report.innerText){
+        reviewReport();
+    }
+
+    try{
+
+console.log(
+    "Photo Count =",
+    selectedPhotos.length
+);
+
+        const files = selectedPhotos;
+
+        if(files.length > 0 && navigator.canShare){
+
+            await navigator.share({
+                text: report.innerText,
+                files: files
+            });
+
+        }else{
+
+            location.href =
+            "https://line.me/R/share?text=" +
+            encodeURIComponent(report.innerText);
+
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+
+}
+
+function saveData(){
+
+    const data={
+        date:date.value,
+        detail:detail.value,
+        location:borrowLocation.value,
+        partNo:partno.value,
+        partName:partname.value,
+        model:model.value,
+        supplier:supplier.value,
+        qty:qty.value
+    };
+
+    localStorage.setItem(
+        "borrowPLData",
+        JSON.stringify(data)
+    );
+
+    alert("บันทึกสำเร็จ");
+
+    localStorage.removeItem("borrowPLData");
+
+}
+
+function backToMenu(){
+    location.href = "home.html";
+}
+
+window.onload = ()=>{
+
+    localStorage.removeItem("borrowPLData");
+
+    date.value =
+    new Date().toISOString().split("T")[0];
+
+    detail.value = "";
+    borrowLocation.value = "";
+    partno.value = "";
+    partname.value = "";
+    model.value = "";
+    supplier.value = "";
+    qty.value = "";
+
+};
+
 </script>
+
+<script src="bottom-nav.js"></script>
 
 </body>
 </html>
