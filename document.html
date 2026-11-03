@@ -130,8 +130,7 @@ inset:0;
 width:100%;
 height:100%;
 opacity:0;
-cursor:pointer;
-z-index:10;
+pointer-events:none;
 }
 
 .top-grid{
@@ -891,7 +890,9 @@ onclick="window.location.href='menu-pl.html'">
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div class="date-box">
+<div
+class="date-box"
+onclick="document.getElementById('headerDate').showPicker?.()">
 
 <div id="dateBox"></div>
 
