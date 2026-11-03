@@ -891,7 +891,7 @@ onclick="window.location.href='menu-pl.html'">
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div class="date-box">
+<div class="date-box" id="dateBoxWrap">
 
 <div id="dateBox"></div>
 
@@ -1815,6 +1815,16 @@ headerDate.addEventListener("change",function(){
         updateDateTime();
 
     }
+
+});
+
+document
+.getElementById("dateBoxWrap")
+.addEventListener("click",function(){
+
+document
+.getElementById("headerDate")
+.showPicker();
 
 });
 
