@@ -861,7 +861,16 @@ onclick="window.location.href='menu-pl.html'">
 <p>Part Loan / Return / Defect</p>
 </div>
 
-<div class="date-box" id="dateBox"></div>
+<div
+class="date-box"
+id="dateBox"
+onclick="document.getElementById('headerDate').showPicker()">
+</div>
+
+<input
+type="date"
+id="headerDate"
+hidden>
 
 </header>
 
@@ -1652,19 +1661,19 @@ document
 
 <script>
 
+let selectedDate = new Date();
+
 function updateDateTime(){
 
-    const now = new Date();
-
     const date =
-    now.toLocaleDateString("en-GB",{
+    selectedDate.toLocaleDateString("en-GB",{
         day:"2-digit",
         month:"short",
         year:"numeric"
     });
 
     const time =
-    now.toLocaleTimeString("en-GB",{
+    new Date().toLocaleTimeString("en-GB",{
         hour:"2-digit",
         minute:"2-digit"
     });
@@ -1672,6 +1681,21 @@ function updateDateTime(){
     document.getElementById("dateBox").innerHTML =
     date + "<br>" + time;
 }
+
+document
+.getElementById("headerDate")
+.addEventListener("change",function(){
+
+    if(this.value){
+
+        selectedDate =
+        new Date(this.value);
+
+        updateDateTime();
+
+    }
+
+});
 
 updateDateTime();
 
