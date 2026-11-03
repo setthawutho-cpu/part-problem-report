@@ -140,8 +140,7 @@ z-index:10;
 
 .top-grid{
 display:grid;
-grid-template-columns:
-1.4fr .9fr 1fr;
+grid-template-columns:1fr 1fr;
 gap:16px;
 margin-top:18px;
 }
@@ -966,7 +965,11 @@ id="headerDate">
 </select>
 </div>
 
-<div class="card info-card">
+<div
+class="card info-card"
+id="setPackingCard"
+style="display:none;">
+
 <h3>Set Packing No.</h3>
 
 <input
@@ -1908,6 +1911,38 @@ document
 if(e.target === this){
 
 this.classList.remove("show");
+
+}
+
+});
+
+</script>
+
+<script>
+
+const locationSelect =
+document.querySelectorAll(".top-grid select")[1];
+
+const setPackingCard =
+document.getElementById("setPackingCard");
+
+locationSelect.addEventListener("change",function(){
+
+if(this.value === "Set Packing"){
+
+setPackingCard.style.display = "block";
+
+document.querySelector(".top-grid")
+.style.gridTemplateColumns =
+"1fr 1fr 1fr";
+
+}else{
+
+setPackingCard.style.display = "none";
+
+document.querySelector(".top-grid")
+.style.gridTemplateColumns =
+"1fr 1fr";
 
 }
 
