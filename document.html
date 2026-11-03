@@ -1098,22 +1098,76 @@ let reportEditMode=false;
 
 function reviewReport(){
 
-const qtyText =
-document.getElementById("qty").textContent;
+let text = "";
 
-document.getElementById("report").innerText=
-`PART BORROWING REPORT
+const detail =
+document.querySelectorAll(".top-grid select")[0];
 
-Date : 15-11-2024
+const borrowLocation =
+document.querySelectorAll(".top-grid select")[1];
 
-Part No : 123456-AB
-Part Name : COVER ASSY
-Model : ABC-123
-Supplier : DENSO
+const partno =
+document.getElementById("partno");
 
-Qty : ${qtyText} PCS
+const partname =
+document.getElementById("partname");
 
-Photo : Attached`;
+const model =
+document.getElementById("model");
+
+const supplier =
+document.getElementById("supplier");
+
+const qty =
+document.getElementById("qty");
+
+if(detail.value === "ยืมชิ้นส่วน"){
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
+
+`;
+
+}else if(detail.value === "คืนชิ้นส่วน"){
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ที่ ${borrowLocation.value}` : ""}
+
+`;
+
+}else if(detail.value === "Defect"){
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""} ไป Defect
+
+`;
+
+}
+
+text += `Date : ${document.getElementById("dateBox").innerText.replace("\n"," ")}\n`;
+
+if(partno.value)
+text += `Part No : ${partno.value}\n`;
+
+if(partname.value)
+text += `Part Name : ${partname.value}\n`;
+
+if(model.value)
+text += `Model : ${model.value}\n`;
+
+if(supplier.value)
+text += `Supplier : ${supplier.value}\n`;
+
+const qtyValue =
+Number(qty.textContent);
+
+text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
+
+text += "\n━━━━━━━━━━━━━━\n";
+text += "📷 Photo : Attached";
+
+document.getElementById("report").innerText =
+text;
 
 document
 .getElementById("reportOverlay")
