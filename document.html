@@ -1363,12 +1363,16 @@ for(const img of imgs){
     await response.blob();
 
     allFiles.push(
-    new File(
-    [blob],
-    `photo_${allFiles.length+1}.jpg`,
-    {type:blob.type}
-    ));
+        new File(
+            [blob],
+            `photo_${allFiles.length+1}.jpg`,
+            {type:blob.type}
+        )
+    );
+
 }
+
+for(let i=0;i<allFiles.length;i+=10){
 
     const chunk =
     allFiles.slice(i,i+10);
@@ -1379,15 +1383,10 @@ for(const img of imgs){
     ){
 
         await navigator.share({
-
-            text:i===0 ? text : "",
             files:chunk
-
         });
 
     }
-
-}
 
 }
 
