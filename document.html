@@ -1125,26 +1125,30 @@ if(detail.value === "ยืมชิ้นส่วน"){
 
 text = `🚨 แจ้ง PL 🚨
 Ins. นำชิ้นส่วน${borrowLocation.value ? `จาก ${borrowLocation.value}` : ""} ไปตรวจสอบ
-
 `;
 
 }else if(detail.value === "คืนชิ้นส่วน"){
 
 text = `🚨 แจ้ง PL 🚨
 Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ที่ ${borrowLocation.value}` : ""}
-
 `;
 
 }else if(detail.value === "Defect"){
 
 text = `🚨 แจ้ง PL 🚨
 Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""} ไป Defect
-
 `;
 
 }
 
-text += `Date : ${document.getElementById("dateBox").innerText.replace("\n"," ")}\n`;
+const dateOnly =
+selectedDate.toLocaleDateString("en-GB",{
+day:"2-digit",
+month:"short",
+year:"numeric"
+});
+
+text += `Date : ${dateOnly}\n`;
 
 if(partno.value)
 text += `Part No : ${partno.value}\n`;
