@@ -1207,12 +1207,12 @@ Number(qty.value);
 
 text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
 
-const remark =
-document.getElementById("remark")?.value || "";
+const remarkElement =
+document.getElementById("remark");
 
-if(remark){
+if(remarkElement && remarkElement.value.trim() !== ""){
 
-text += `Remark : ${remark}\n`;
+text += `Remark : ${remarkElement.value.trim()}\n`;
 
 }
 
