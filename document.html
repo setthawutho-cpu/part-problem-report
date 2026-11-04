@@ -721,7 +721,68 @@ async function loadExcel(){
 
 }
 
-loadExcel();
+async function loadExcel(){
+
+try{
+
+    const response =
+    await fetch("ข้อมูล Excel.xlsx");
+
+    console.log("Status =",response.status);
+
+    const data =
+    await response.arrayBuffer();
+
+    const workbook =
+    XLSX.read(data,{type:"array"});
+
+    const sheet =
+    workbook.Sheets[
+        workbook.SheetNames[0]
+    ];
+
+    const rows =
+    XLSX.utils.sheet_to_json(sheet);
+
+    console.log(rows);
+
+    rows.forEach(row=>{
+
+        console.log(row);
+
+        const partNo =
+        String(row.PartNo || "").trim();
+
+        if(!partNo) return;
+
+        if(!allPartNo.includes(partNo)){
+            allPartNo.push(partNo);
+        }
+
+        partMaster[partNo] = {
+
+            partName:
+            row.PartName || "",
+
+            supplier:
+            row.Supplier || "",
+
+            model:
+            row.Model || ""
+
+        };
+
+    });
+
+    console.log(partMaster);
+
+}catch(err){
+
+    console.error(err);
+
+}
+
+}
 
 function fillPartData(partNo){
 
