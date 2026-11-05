@@ -123,8 +123,7 @@ flex:1;
 
 .header-title{
 
-font-size:
-clamp(18px,3vw,30px);
+font-size:28px;
 
 font-weight:700;
 
@@ -134,8 +133,7 @@ font-weight:700;
 
 opacity:.9;
 
-font-size:
-clamp(12px,2vw,15px);
+font-size:15px;
 
 }
 
@@ -177,8 +175,7 @@ overflow:hidden;
 
 .card-title{
 
-font-size:
-clamp(16px,2vw,22px);
+font-size:18px;
 
 font-weight:700;
 
@@ -190,14 +187,13 @@ margin-bottom:14px;
 
 .label{
 
-font-size:
-clamp(12px,1.5vw,14px);
+font-size:15px;
+
+font-weight:700;
 
 margin-bottom:6px;
 
 color:#64748b;
-
-font-weight:600;
 
 }
 
@@ -208,7 +204,6 @@ select,
 textarea{
 
 width:100%;
-
 max-width:100%;
 
 border:none;
@@ -221,8 +216,7 @@ border-radius:14px;
 
 padding:14px;
 
-font-size:
-clamp(14px,1.5vw,16px);
+font-size:16px;
 
 }
 
@@ -359,8 +353,7 @@ color:#fff;
 
 font-weight:700;
 
-font-size:
-clamp(18px,2vw,24px);
+font-size:22px;
 
 background:
 linear-gradient(
@@ -420,25 +413,58 @@ background:#ff9800;
 
 @media(max-width:768px){
 
+.header{
+height:68px;
+padding:0 10px;
+}
+
+.back-btn{
+width:40px;
+height:40px;
+font-size:16px;
+}
+
+.header-title{
+font-size:16px;
+}
+
+.header-sub{
+font-size:10px;
+}
+
+.card-title{
+font-size:16px;
+}
+
+.label{
+font-size:11px;
+}
+
+input,
+select{
+height:42px;
+font-size:12px;
+}
+
+textarea{
+font-size:12px;
+}
+
+.review-btn{
+font-size:14px;
+height:50px;
+}
+
 .grid-3{
-
-grid-template-columns:
-1fr;
-
+grid-template-columns:1fr;
 }
 
 .inspection-grid{
-
-grid-template-columns:
-1fr 1fr;
-
+grid-template-columns:1fr 1fr;
 }
 
 .bottom-actions{
-
-grid-template-columns:
-1fr 1fr;
-
+grid-template-columns:1fr 1fr;
 }
 
 }
