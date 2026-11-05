@@ -432,49 +432,6 @@ margin-bottom:10px;
 
 }
 
-.bottom-actions{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:8px;
-
-}
-
-.bottom-actions button{
-
-height:56px;
-
-border:none;
-
-border-radius:16px;
-
-color:#fff;
-
-font-weight:700;
-
-font-size:15px;
-
-}
-
-.save{
-background:#243b6b;
-}
-
-.copy{
-background:#7c3aed;
-}
-
-.line{
-background:#06C755;
-}
-
-.new{
-background:#ff9800;
-}
-
 /* REVIEW POPUP */
 
 .report-overlay{
@@ -1437,15 +1394,19 @@ const text =
 document.getElementById("report")
 .innerText;
 
+function sendLine(){
+
+const text =
+document.getElementById("report")
+.innerText;
+
 window.open(
-
 "https://line.me/R/share?text=" +
-
 encodeURIComponent(text),
-
 "_blank"
-
 );
+
+}
 
 }
 
