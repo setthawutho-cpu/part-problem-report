@@ -972,6 +972,7 @@ NG Qty
 
 <input
 class="damage-partno"
+list="partList"
 placeholder="Part No."
 oninput="damagePartSearch(this)">
 
@@ -1498,6 +1499,7 @@ row.innerHTML = `
 
 <input
 class="damage-partno"
+list="partList"
 placeholder="Part No."
 oninput="damagePartSearch(this)">
 
@@ -1558,7 +1560,7 @@ p
 .replace(/[^A-Za-z0-9]/g,"")
 .toUpperCase()
 
-=== cleanKey
+.includes(cleanKey)
 
 );
 
