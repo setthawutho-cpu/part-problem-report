@@ -189,7 +189,7 @@ flex:0 0 160px;
 }
 
 .detail-card{
-flex:1;
+flex:0 0 180px;
 display:flex;
 flex-direction:column;
 }
@@ -200,21 +200,41 @@ flex:1;
 
 /* BUTTON */
 
+.action-group{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.add-btn,
 .review-btn{
+width:100%;
 height:65px;
 border:none;
 border-radius:22px;
+color:#fff;
+font-weight:700;
+cursor:pointer;
+}
 
+.add-btn{
+background:
+linear-gradient(
+135deg,
+#ffb300,
+#ff7800
+);
+font-size:32px;
+}
+
+.review-btn{
 background:
 linear-gradient(
 135deg,
 #2ddd66,
 #0bad43
 );
-
-color:#fff;
 font-size:22px;
-font-weight:700;
 }
 
 /* REVIEW POPUP */
@@ -347,8 +367,16 @@ font-size:11px;
 gap:6px;
 }
 
+.add-btn,
 .review-btn{
 height:50px;
+}
+
+.add-btn{
+font-size:24px;
+}
+
+.review-btn{
 font-size:14px;
 }
 
@@ -456,11 +484,21 @@ placeholder="พิมพ์รายละเอียด..."></textarea>
 
 </div>
 
+<div class="action-group">
+
+<button
+class="add-btn"
+onclick="addDocument()">
++
+</button>
+
 <button
 class="review-btn"
 onclick="reviewDocument()">
 Review Document
 </button>
+
+</div>
 
 </div>
 
@@ -553,7 +591,16 @@ document
 
 updateDate();
 
-function reviewDocument(){
+function addDocument(){
+
+document.getElementById("docTitle").value="";
+document.getElementById("partNo").value="";
+document.getElementById("partName").value="";
+document.getElementById("model").value="";
+document.getElementById("supplier").value="";
+document.getElementById("detail").value="";
+
+}
 
 let text="";
 
