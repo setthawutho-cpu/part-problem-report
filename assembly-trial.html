@@ -1,1 +1,813 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
+<title>PART PROBLEM INFORM</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--blue:#1f8fff;
+--blue2:#386bff;
+
+--green:#16c65c;
+
+--orange:#ff9800;
+
+--bg:#eef4fb;
+
+--card:#ffffff;
+
+--text:#1d3557;
+
+}
+
+html,
+body{
+width:100%;
+overflow-x:hidden;
+}
+
+body{
+
+background:var(--bg);
+
+font-family:
+"Segoe UI",
+sans-serif;
+
+color:var(--text);
+
+}
+
+/* ---------- PAGE ---------- */
+
+.container{
+
+width:100%;
+
+max-width:900px;
+
+margin:auto;
+
+padding:10px;
+
+}
+
+/* ---------- HEADER ---------- */
+
+.header{
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+var(--blue2)
+);
+
+border-radius:
+0 0 28px 28px;
+
+padding:20px;
+
+margin-bottom:12px;
+
+color:#fff;
+
+}
+
+.header-top{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+.back-btn{
+
+width:46px;
+height:46px;
+
+border:none;
+
+border-radius:50%;
+
+background:#fff;
+
+color:var(--blue2);
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+.header-center{
+
+flex:1;
+
+}
+
+.header-title{
+
+font-size:
+clamp(18px,3vw,30px);
+
+font-weight:700;
+
+}
+
+.header-sub{
+
+opacity:.9;
+
+font-size:
+clamp(12px,2vw,15px);
+
+}
+
+.date-box{
+
+background:#fff;
+
+color:var(--blue2);
+
+padding:10px 15px;
+
+border-radius:14px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+
+background:#fff;
+
+border-radius:24px;
+
+padding:16px;
+
+margin-bottom:12px;
+
+box-shadow:
+0 4px 20px
+rgba(0,0,0,.06);
+
+overflow:hidden;
+
+}
+
+.card-title{
+
+font-size:
+clamp(16px,2vw,22px);
+
+font-weight:700;
+
+margin-bottom:14px;
+
+}
+
+/* ---------- LABEL ---------- */
+
+.label{
+
+font-size:
+clamp(12px,1.5vw,14px);
+
+margin-bottom:6px;
+
+color:#64748b;
+
+font-weight:600;
+
+}
+
+/* ---------- INPUT ---------- */
+
+input,
+select,
+textarea{
+
+width:100%;
+
+max-width:100%;
+
+border:none;
+
+outline:none;
+
+background:#f5f7fb;
+
+border-radius:14px;
+
+padding:14px;
+
+font-size:
+clamp(14px,1.5vw,16px);
+
+}
+
+input,
+select{
+
+height:52px;
+
+}
+
+textarea{
+
+resize:none;
+
+min-height:120px;
+
+}
+
+/* ---------- GRID ---------- */
+
+.grid-3{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
+gap:10px;
+
+}
+
+.part-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:10px;
+
+}
+
+.inspection-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
+gap:10px;
+
+}
+
+/* ---------- OK MARK ---------- */
+
+.okmark{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+}
+
+.circle{
+
+width:34px;
+height:34px;
+
+border-radius:50%;
+
+}
+
+.green{
+background:#22c55e;
+}
+
+.yellow{
+background:#facc15;
+}
+
+.pink{
+background:#ff8cb3;
+}
+
+.blue{
+background:#3b82f6;
+}
+
+.white{
+
+background:#fff;
+
+border:1px solid #ccc;
+
+}
+
+/* ---------- PART DAMAGE ---------- */
+
+.damage-item{
+
+display:grid;
+
+grid-template-columns:
+2fr 2fr 70px;
+
+gap:10px;
+
+padding:12px 0;
+
+border-bottom:
+1px solid #e5e7eb;
+
+}
+
+.damage-item:last-child{
+border:none;
+}
+
+/* ---------- BUTTON ---------- */
+
+.review-btn{
+
+width:100%;
+
+height:64px;
+
+border:none;
+
+border-radius:22px;
+
+color:#fff;
+
+font-weight:700;
+
+font-size:
+clamp(18px,2vw,24px);
+
+background:
+linear-gradient(
+135deg,
+#2b93ff,
+#0057ff
+);
+
+margin-bottom:10px;
+
+}
+
+.bottom-actions{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:8px;
+
+}
+
+.bottom-actions button{
+
+height:56px;
+
+border:none;
+
+border-radius:16px;
+
+color:#fff;
+
+font-weight:700;
+
+font-size:15px;
+
+}
+
+.save{
+background:#243b6b;
+}
+
+.copy{
+background:#7c3aed;
+}
+
+.line{
+background:#06C755;
+}
+
+.new{
+background:#ff9800;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:768px){
+
+.grid-3{
+
+grid-template-columns:
+1fr;
+
+}
+
+.inspection-grid{
+
+grid-template-columns:
+1fr 1fr;
+
+}
+
+.bottom-actions{
+
+grid-template-columns:
+1fr 1fr;
+
+}
+
+}
+
+/* ---------- SMALL MOBILE ---------- */
+
+@media(max-width:500px){
+
+.part-grid{
+
+grid-template-columns:
+1fr 1fr;
+
+}
+
+.inspection-grid{
+
+grid-template-columns:
+1fr;
+
+}
+
+.damage-item{
+
+grid-template-columns:
+1fr;
+
+}
+
+.card{
+
+padding:12px;
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="header-top">
+
+<button class="back-btn">
+❮
+</button>
+
+<div class="header-center">
+
+<div class="header-title">
+PART PROBLEM INFORM
+</div>
+
+<div class="header-sub">
+Supplier Quality Report
+</div>
+
+</div>
+
+<div class="date-box">
+05 Nov 2026
+</div>
+
+</div>
+
+</div>
+
+<!-- BASIC -->
+
+<div class="card">
+
+<div class="card-title">
+📋 Basic Information
+</div>
+
+<div class="grid-3">
+
+<div>
+<div class="label">Date</div>
+<input>
+</div>
+
+<div>
+<div class="label">Type</div>
+<select></select>
+</div>
+
+<div>
+<div class="label">Product</div>
+<select></select>
+</div>
+
+</div>
+
+</div>
+
+<!-- PART -->
+
+<div class="card">
+
+<div class="card-title">
+📦 Part Information
+</div>
+
+<div class="part-grid">
+
+<div>
+<div class="label">
+Part No.
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Part Name
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Model
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Supplier
+</div>
+<input>
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCTION -->
+
+<div class="card">
+
+<div class="card-title">
+🏭 Production Information
+</div>
+
+<div class="grid-3">
+
+<div>
+<div class="label">
+Serial Number
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Issue Doc
+</div>
+<select></select>
+</div>
+
+<div>
+<div class="label">
+Line Stop
+</div>
+<input>
+</div>
+
+</div>
+
+</div>
+
+<!-- PROBLEM -->
+
+<div class="card">
+
+<div class="card-title">
+⚠ Problem Detail
+</div>
+
+<div class="label">
+Problem
+</div>
+
+<textarea></textarea>
+
+<br><br>
+
+<div class="label">
+Detail
+</div>
+
+<textarea></textarea>
+
+</div>
+
+<!-- CONTAINMENT -->
+
+<div class="card">
+
+<div class="card-title">
+🟡 Containment Action
+</div>
+
+<div class="label">
+Rework
+</div>
+
+<textarea></textarea>
+
+<br><br>
+
+<div class="label">
+Result
+</div>
+
+<select></select>
+
+</div>
+
+<!-- INSPECTION -->
+
+<div class="card">
+
+<div class="card-title">
+📊 Inspection Result
+</div>
+
+<div class="inspection-grid">
+
+<div>
+<div class="label">
+SKC NG
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Part NG
+</div>
+<select></select>
+</div>
+
+<div>
+<div class="label">
+Qty
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+Stock
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+OK Qty
+</div>
+<input>
+</div>
+
+<div>
+<div class="label">
+NG Qty
+</div>
+<input>
+</div>
+
+</div>
+
+</div>
+
+<!-- OK MARK -->
+
+<div class="card">
+
+<div class="card-title">
+✅ OK Mark
+</div>
+
+<div class="okmark">
+
+<div class="circle green"></div>
+<div class="circle yellow"></div>
+<div class="circle pink"></div>
+<div class="circle blue"></div>
+<div class="circle white"></div>
+
+</div>
+
+</div>
+
+<!-- REMARK -->
+
+<div class="card">
+
+<div class="card-title">
+📝 Remark
+</div>
+
+<textarea></textarea>
+
+</div>
+
+<!-- PART DAMAGE -->
+
+<div class="card">
+
+<div class="card-title">
+📦 Part Damage
+</div>
+
+<div class="damage-item">
+
+<div>
+Part No.
+</div>
+
+<div>
+Part Name
+</div>
+
+<div>
+Qty
+</div>
+
+</div>
+
+</div>
+
+<button class="review-btn">
+
+🔍 Review Report
+
+</button>
+
+<div class="bottom-actions">
+
+<button class="save">
+💾 Save
+</button>
+
+<button class="copy">
+📋 Copy
+</button>
+
+<button class="line">
+LINE
+</button>
+
+<button class="new">
+➕ New
+</button>
+
+</div>
+
+</div>
+
+</body>
+</html>
