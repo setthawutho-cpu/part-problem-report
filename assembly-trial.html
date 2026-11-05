@@ -685,12 +685,22 @@ Supplier Quality Report
 
 <div>
 <div class="label">Type / ประเภท</div>
-<select></select>
+<select id="type">
+<option value=""></option>
+<option>New</option>
+<option>Repeat</option>
+</select>
 </div>
 
 <div>
 <div class="label">Product / ผลิตภัณฑ์</div>
-<select></select>
+<select id="product">
+<option value=""></option>
+<option>Combine</option>
+<option>Combine Welding</option>
+<option>SH</option>
+<option>SH Welding</option>
+</select>
 </div>
 
 </div>
@@ -781,7 +791,13 @@ Serial Number
 <div class="label">
 Issue Doc
 </div>
-<select></select>
+
+<select id="issueDoc">
+<option value=""></option>
+<option>-</option>
+<option>UAR</option>
+<option>PAR</option>
+</select>
 </div>
 
 <div>
@@ -845,7 +861,15 @@ Rework / การแก้ไข
 Result / ผลลัพธ์
 </div>
 
-<select></select>
+<select id="containmentResult">
+<option value=""></option>
+<option>-</option>
+<option>Rework OK</option>
+<option>Wait Rework</option>
+<option>เปลี่ยนชิ้นงานใน Stock</option>
+<option>Reject</option>
+<option>Defect</option>
+</select>
 
 </div>
 
