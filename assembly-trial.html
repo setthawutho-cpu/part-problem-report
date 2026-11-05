@@ -971,9 +971,12 @@ NG Qty
 <div class="damage-item">
 
 <input
-placeholder="Part No.">
+class="damage-partno"
+placeholder="Part No."
+oninput="damagePartSearch(this)">
 
 <input
+class="damage-partname"
 placeholder="Part Name">
 
 <input
@@ -1494,9 +1497,12 @@ row.className =
 row.innerHTML = `
 
 <input
-placeholder="Part No.">
+class="damage-partno"
+placeholder="Part No."
+oninput="damagePartSearch(this)">
 
 <input
+class="damage-partname"
 placeholder="Part Name">
 
 <input
@@ -1513,6 +1519,57 @@ onclick="this.parentElement.remove()">
 document
 .getElementById("damageList")
 .appendChild(row);
+
+}
+
+</script>
+
+<script>
+
+function damagePartSearch(input){
+
+const row =
+input.closest(".damage-item");
+
+const partNameBox =
+row.querySelector(".damage-partname");
+
+const partNo =
+input.value.trim();
+
+if(partMaster[partNo]){
+
+partNameBox.value =
+partMaster[partNo].partName || "";
+
+return;
+
+}
+
+const cleanKey =
+partNo
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const found =
+allPartNo.find(p=>
+
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase()
+
+=== cleanKey
+
+);
+
+if(found){
+
+input.value = found;
+
+partNameBox.value =
+partMaster[found].partName || "";
+
+}
 
 }
 
