@@ -449,7 +449,8 @@ placeholder="Part No.">
 <input
 id="partName"
 class="input"
-readonly>
+readonly
+onclick="openEditPopup('partName')">
 </div>
 
 <div>
@@ -457,7 +458,8 @@ readonly>
 <input
 id="model"
 class="input"
-readonly>
+readonly
+onclick="openEditPopup('model')">
 </div>
 
 <div>
@@ -465,7 +467,8 @@ readonly>
 <input
 id="supplier"
 class="input"
-readonly>
+readonly
+onclick="openEditPopup('supplier')">
 </div>
 
 </div>
@@ -507,6 +510,47 @@ Review Document
 <div
 id="reportOverlay"
 class="report-overlay">
+
+<!-- EDIT POPUP -->
+
+<div
+id="editOverlay"
+class="report-overlay">
+
+<div class="report-sheet" style="max-width:400px;">
+
+<div class="report-content">
+
+<h3 style="margin-bottom:10px;">
+แก้ไขข้อมูล
+</h3>
+
+<div style="color:#666;">
+ข้อมูลนี้ถูกดึงจาก Auto<br>
+ต้องการแก้ไขหรือไม่ ?
+</div>
+
+</div>
+
+<div class="report-actions">
+
+<button
+class="btn-save"
+onclick="confirmEdit()">
+แก้ไข
+</button>
+
+<button
+class="btn-copy"
+onclick="closeEditPopup()">
+ยกเลิก
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <div class="report-sheet">
 
@@ -716,6 +760,20 @@ this.classList.remove("show");
 
 });
 
+document
+.getElementById("editOverlay")
+.addEventListener(
+"click",
+function(e){
+
+if(e.target===this){
+
+this.classList.remove("show");
+
+}
+
+});
+
 </script>
 
 <script>
@@ -834,6 +892,43 @@ try{
 }
 
 loadExcel();
+
+let editTarget = null;
+
+function openEditPopup(id){
+
+editTarget = id;
+
+document
+.getElementById("editOverlay")
+.classList.add("show");
+
+}
+
+function closeEditPopup(){
+
+document
+.getElementById("editOverlay")
+.classList.remove("show");
+
+}
+
+function confirmEdit(){
+
+if(editTarget){
+
+const el =
+document.getElementById(editTarget);
+
+el.removeAttribute("readonly");
+
+el.focus();
+
+}
+
+closeEditPopup();
+
+}
 
 function fillPartData(partNo){
 
