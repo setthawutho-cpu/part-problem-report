@@ -949,7 +949,13 @@ p
 .toUpperCase();
 
 return (
+
+p.toUpperCase().startsWith(keyword.toUpperCase()) ||
+
+p.toUpperCase().includes(keyword.toUpperCase()) ||
+
 cleanPart.includes(cleanKeyword)
+
 );
 
 })
