@@ -451,7 +451,8 @@ placeholder="Part No.">
 id="partName"
 class="input"
 readonly
-onclick="editField(this)">
+onclick="editField(this)"
+onblur="restoreAuto(this)">
 </div>
 
 <div>
@@ -460,7 +461,8 @@ onclick="editField(this)">
 id="model"
 class="input"
 readonly
-onclick="editField(this)">
+onclick="editField(this)"
+onblur="restoreAuto(this)">
 </div>
 
 <div>
@@ -469,7 +471,8 @@ onclick="editField(this)">
 id="supplier"
 class="input"
 readonly
-onclick="editField(this)">
+onclick="editField(this)"
+onblur="restoreAuto(this)">
 </div>
 
 </div>
@@ -843,6 +846,8 @@ function editField(el){
 
 if(el.hasAttribute("readonly")){
 
+el.dataset.autoValue = el.value;
+
 el.removeAttribute("readonly");
 
 el.value="";
@@ -852,6 +857,16 @@ setTimeout(()=>{
 el.focus();
 
 },50);
+
+}
+
+}
+
+function restoreAuto(el){
+
+if(el.value.trim()===""){
+
+el.value = el.dataset.autoValue || "";
 
 }
 
