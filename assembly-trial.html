@@ -866,44 +866,58 @@ Result / ผลลัพธ์
 <div class="label">
 SKC-A MFG พบ NG
 </div>
-<input>
+<input type="number" id="skcaNg">
 </div>
 
 <div>
 <div class="label">
 Part NG
 </div>
-<select></select>
+<select id="partNg">
+<option></option>
+<option>Rework</option>
+<option>Rework OK</option>
+<option>Wait Rework</option>
+<option>Reject</option>
+<option>Defect</option>
+</select>
 </div>
 
 <div>
 <div class="label">
 Qty
 </div>
-<input>
+<input type="number" id="partNgQty">
 </div>
 
 <div>
 <div class="label">
 Check Stock
 </div>
-<input>
+<input type="number" id="stockNg">
 </div>
 
 <div>
 <div class="label">
 OK Qty
 </div>
-<input>
+<input type="number" id="okQty">
 </div>
 
 <div>
 <div class="label">
 NG Qty
 </div>
-<input>
+<input type="number" id="ngQty" readonly>
 </div>
 
+</div>
+
+<br>
+
+<div>
+<div class="label">Total NG</div>
+<input type="number" id="totalNg" readonly>
 </div>
 
 </div>
@@ -1551,6 +1565,42 @@ partMaster[found].partName || "";
 }
 
 }
+
+</script>
+
+<script>
+
+function calculateNG(){
+
+let stock =
+Number(document.getElementById("stockNg").value || 0);
+
+let ok =
+Number(document.getElementById("okQty").value || 0);
+
+let part =
+Number(document.getElementById("partNgQty").value || 0);
+
+let ng = stock - ok;
+
+if(ng < 0){
+ng = 0;
+}
+
+document.getElementById("ngQty").value =
+ng === 0 ? "" : ng;
+
+let total = ng + part;
+
+document.getElementById("totalNg").value =
+total === 0 ? "" : total;
+
+}
+
+document.addEventListener(
+"input",
+calculateNG
+);
 
 </script>
 
