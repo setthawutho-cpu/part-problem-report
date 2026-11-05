@@ -8,6 +8,8 @@ content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <title>PART PROBLEM INFORM</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <style>
 
 *{
@@ -665,31 +667,60 @@ Supplier Quality Report
 <div class="part-grid">
 
 <div>
+
 <div class="label">
 Part No.
 </div>
-<input>
+
+<input
+id="partNo"
+list="partList"
+placeholder="Part No.">
+
+<datalist id="partList"></datalist>
+
 </div>
 
 <div>
+
 <div class="label">
 Part Name
 </div>
-<input>
+
+<input
+id="partName"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 <div>
+
 <div class="label">
 Model
 </div>
-<input>
+
+<input
+id="model"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 <div>
+
 <div class="label">
 Supplier
 </div>
-<input>
+
+<input
+id="supplier"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 </div>
@@ -975,6 +1006,243 @@ document
 };
 
 updateDate();
+
+</script>
+
+<script>
+
+let partMaster = {};
+let allPartNo = [];
+
+async function loadExcel(){
+
+try{
+
+    const response =
+    await fetch("ข้อมูล Excel.xlsx");
+
+    const data =
+    await response.arrayBuffer();
+
+    const workbook =
+    XLSX.read(data,{type:"array"});
+
+    const sheet =
+    workbook.Sheets[
+        workbook.SheetNames[0]
+    ];
+
+    const rows =
+    XLSX.utils.sheet_to_json(sheet);
+
+    rows.forEach(row=>{
+
+        const partNo =
+        String(row.PartNo || "").trim();
+
+        if(!partNo) return;
+
+        if(!allPartNo.includes(partNo)){
+            allPartNo.push(partNo);
+        }
+
+        partMaster[partNo] = {
+
+            partName:
+            row.PartName || "",
+
+            supplier:
+            row.Supplier || "",
+
+            model:
+            row.Model || ""
+
+        };
+
+    });
+
+}catch(err){
+
+    console.error(err);
+
+}
+
+}
+
+loadExcel();
+
+function editField(el){
+
+if(el.hasAttribute("readonly")){
+
+    el.dataset.autoValue = el.value;
+
+    el.removeAttribute("readonly");
+
+    el.value="";
+
+    setTimeout(()=>{
+
+        el.focus();
+
+    },50);
+
+}
+
+}
+
+function restoreAuto(el){
+
+if(el.value.trim()===""){
+
+    el.value = el.dataset.autoValue || "";
+
+}
+
+}
+
+function fillPartData(partNo){
+
+if(!partMaster[partNo]) return;
+
+const partName =
+document.getElementById("partName");
+
+const model =
+document.getElementById("model");
+
+const supplier =
+document.getElementById("supplier");
+
+partName.setAttribute("readonly",true);
+model.setAttribute("readonly",true);
+supplier.setAttribute("readonly",true);
+
+partName.value =
+partMaster[partNo].partName || "";
+
+model.value =
+partMaster[partNo].model || "";
+
+supplier.value =
+partMaster[partNo].supplier || "";
+
+}
+
+document
+.getElementById("partNo")
+.addEventListener("input",function(){
+
+const keyword =
+this.value.trim();
+
+const list =
+document.getElementById("partList");
+
+if(keyword===""){
+
+document.getElementById("partName").value="";
+document.getElementById("model").value="";
+document.getElementById("supplier").value="";
+
+list.innerHTML="";
+return;
+
+}
+
+if(partMaster[keyword]){
+
+fillPartData(keyword);
+
+list.innerHTML="";
+return;
+
+}
+
+if(keyword.length < 4){
+
+list.innerHTML="";
+return;
+
+}
+
+const cleanKeyword =
+keyword
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const result =
+allPartNo
+.filter(p=>{
+
+const cleanPart =
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+return (
+
+p.toUpperCase().startsWith(keyword.toUpperCase())
+
+||
+
+p.toUpperCase().includes(keyword.toUpperCase())
+
+||
+
+cleanPart.includes(cleanKeyword)
+
+);
+
+})
+.slice(0,50);
+
+list.innerHTML =
+result.map(p=>
+`<option value="${p}"></option>`
+).join("");
+
+});
+
+document
+.getElementById("partNo")
+.addEventListener("change",function(){
+
+const key =
+this.value.trim();
+
+if(partMaster[key]){
+
+fillPartData(key);
+return;
+
+}
+
+const cleanKey =
+key
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const found =
+allPartNo.find(p=>
+
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase()
+
+=== cleanKey
+
+);
+
+if(found){
+
+this.value = found;
+
+fillPartData(found);
+
+}
+
+});
 
 </script>
 
