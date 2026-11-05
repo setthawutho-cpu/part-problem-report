@@ -32,7 +32,7 @@ html,
 body{
 width:100%;
 height:100%;
-overflow:hidden;
+overflow:auto;
 touch-action:manipulation;
 }
 
@@ -115,7 +115,7 @@ cursor:pointer;
 /* PAGE */
 
 .container{
-height:calc(100vh - 80px);
+min-height:calc(100vh - 80px);
 
 padding:12px;
 
@@ -451,7 +451,7 @@ placeholder="Part No.">
 id="partName"
 class="input"
 readonly
-ondblclick="openEditPopup('partName')">
+onclick="editField(this)">
 </div>
 
 <div>
@@ -460,7 +460,7 @@ ondblclick="openEditPopup('partName')">
 id="model"
 class="input"
 readonly
-onclick="openEditPopup('model')">
+onclick="editField(this)">
 </div>
 
 <div>
@@ -469,7 +469,7 @@ onclick="openEditPopup('model')">
 id="supplier"
 class="input"
 readonly
-onclick="openEditPopup('supplier')">
+onclick="editField(this)">
 </div>
 
 </div>
@@ -537,65 +537,6 @@ onclick="copyReport()">
 class="btn-line"
 onclick="sendLine()">
 📤 LINE
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- EDIT POPUP -->
-
-<div
-id="editOverlay"
-class="report-overlay">
-
-<div
-class="report-sheet"
-style="
-width:100%;
-max-width:420px;
-border-radius:24px 24px 0 0;
-margin-bottom:0;
-">
-
-<div
-class="report-content"
-style="padding:20px;">
-
-<h3 style="
-margin-bottom:8px;
-font-size:18px;
-text-align:center;
-">
-แก้ไขข้อมูล
-</h3>
-
-<div style="
-color:#666;
-font-size:14px;
-text-align:center;
-line-height:1.5;
-">
-ข้อมูลนี้ถูกดึงจาก Auto<br>
-ต้องการแก้ไขหรือไม่?
-</div>
-
-</div>
-
-<div class="report-actions">
-
-<button
-class="btn-save"
-onclick="confirmEdit()">
-แก้ไข
-</button>
-
-<button
-class="btn-copy"
-onclick="closeEditPopup()">
-ยกเลิก
 </button>
 
 </div>
@@ -779,20 +720,6 @@ this.classList.remove("show");
 
 });
 
-document
-.getElementById("editOverlay")
-.addEventListener(
-"click",
-function(e){
-
-if(e.target===this){
-
-this.classList.remove("show");
-
-}
-
-});
-
 </script>
 
 <script>
@@ -912,51 +839,21 @@ try{
 
 loadExcel();
 
-let editTarget = null;
+function editField(el){
 
-function openEditPopup(id){
-
-editTarget = id;
-
-document
-.getElementById("editOverlay")
-.classList.add("show");
-
-}
-
-function closeEditPopup(){
-
-document
-.getElementById("editOverlay")
-.classList.remove("show");
-
-}
-
-function confirmEdit(){
-
-if(!editTarget) return;
-
-const el =
-document.getElementById(editTarget);
+if(el.hasAttribute("readonly")){
 
 el.removeAttribute("readonly");
 
-el.value = "";
-
-closeEditPopup();
+el.value="";
 
 setTimeout(()=>{
 
 el.focus();
 
-try{
-el.setSelectionRange(
-el.value.length,
-el.value.length
-);
-}catch(e){}
+},50);
 
-},100);
+}
 
 }
 
