@@ -457,7 +457,7 @@ placeholder="Part No.">
 id="partName"
 class="input"
 readonly
-onclick="openEditPopup('partName')">
+ondblclick="openEditPopup('partName')"
 </div>
 
 <div>
@@ -565,6 +565,10 @@ max-width:420px;
 border-radius:24px 24px 0 0;
 margin-bottom:0;
 ">
+
+<div
+class="report-content"
+style="padding:20px;">
 
 <h3 style="
 margin-bottom:8px;
@@ -936,14 +940,13 @@ document
 
 function confirmEdit(){
 
-if(editTarget){
+if(!editTarget) return;
 
 const el =
 document.getElementById(editTarget);
 
 el.removeAttribute("readonly");
 
-/* ล้างข้อความ Auto ออกเลย */
 el.value = "";
 
 closeEditPopup();
@@ -952,11 +955,14 @@ setTimeout(()=>{
 
 el.focus();
 
-el.click();
+try{
+el.setSelectionRange(
+el.value.length,
+el.value.length
+);
+}catch(e){}
 
-},200);
-
-}
+},100);
 
 }
 
