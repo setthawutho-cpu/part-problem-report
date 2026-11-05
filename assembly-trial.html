@@ -222,13 +222,15 @@ overflow:hidden;
 
 }
 
-.card-title{
+.th-title{
 
-font-size:18px;
+font-size:13px;
 
-font-weight:700;
+font-weight:500;
 
-margin-bottom:14px;
+color:#8aa2c8;
+
+margin-left:6px;
 
 }
 
@@ -683,12 +685,12 @@ Supplier Quality Report
 <div class="grid-2">
 
 <div>
-<div class="label">Type</div>
+<div class="label">Type / ประเภท</div>
 <select></select>
 </div>
 
 <div>
-<div class="label">Product</div>
+<div class="label">Product / ผลิตภัณฑ์</div>
 <select></select>
 </div>
 
@@ -800,10 +802,13 @@ Line Stop
 
 <div class="card-title">
 ⚠ Problem Detail
+<span class="th-title">
+รายละเอียดปัญหา
+</span>
 </div>
 
 <div class="label">
-Problem
+Problem / ปัญหา
 </div>
 
 <textarea></textarea>
@@ -811,7 +816,7 @@ Problem
 <br><br>
 
 <div class="label">
-Detail
+Detail / รายละเอียด
 </div>
 
 <textarea></textarea>
@@ -824,6 +829,9 @@ Detail
 
 <div class="card-title">
 🟡 Containment Action
+<span class="th-title">
+การแก้ไขเบื้องต้น
+</span>
 </div>
 
 <div class="label">
@@ -848,6 +856,9 @@ Result
 
 <div class="card-title">
 📊 Inspection Result
+<span class="th-title">
+ผลการตรวจสอบ
+</span>
 </div>
 
 <div class="inspection-grid">
@@ -904,6 +915,9 @@ NG Qty
 
 <div class="card-title">
 ✅ OK Mark
+<span class="th-title">
+สัญลักษณ์ OK
+</span>
 </div>
 
 <div class="okmark">
@@ -924,6 +938,9 @@ NG Qty
 
 <div class="card-title">
 📝 Remark
+<span class="th-title">
+หมายเหตุ
+</span>
 </div>
 
 <textarea></textarea>
@@ -936,6 +953,9 @@ NG Qty
 
 <div class="card-title">
 📦 Part Damage
+<span class="th-title">
+ชิ้นส่วนเสียหายร่วม
+</span>
 </div>
 
 <div class="damage-item">
@@ -1394,7 +1414,13 @@ const text =
 document.getElementById("report")
 .innerText;
 
-function sendLine(){
+window.open(
+"https://line.me/R/share?text=" +
+encodeURIComponent(text),
+"_blank"
+);
+
+}
 
 const text =
 document.getElementById("report")
