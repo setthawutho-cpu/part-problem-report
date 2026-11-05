@@ -176,6 +176,28 @@ font-weight:600;
 
 color:#173c83;
 
+cursor:pointer;
+
+position:relative;
+
+text-align:center;
+
+}
+
+#headerDate{
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+opacity:0;
+
+cursor:pointer;
+
 }
 
 /* ---------- CARD ---------- */
@@ -602,8 +624,14 @@ Supplier Quality Report
 
 </div>
 
-<div class="date-box">
-05 Nov 2026
+<div class="date-box" id="dateBoxWrap">
+
+    <div id="dateBox"></div>
+
+    <input
+    type="date"
+    id="headerDate">
+
 </div>
 
 </div>
@@ -888,6 +916,67 @@ LINE
 </div>
 
 </div>
+
+<script>
+
+let selectedDate = new Date();
+
+function updateDate(){
+
+    const date =
+    selectedDate.toLocaleDateString(
+    "en-GB",
+    {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+    });
+
+    document.getElementById(
+    "dateBox"
+    ).innerHTML = date;
+
+}
+
+document
+.getElementById("headerDate")
+.addEventListener(
+"change",
+function(){
+
+    if(this.value){
+
+        selectedDate =
+        new Date(this.value);
+
+        updateDate();
+
+    }
+
+});
+
+document
+.getElementById("dateBoxWrap")
+.onclick = () => {
+
+    const picker =
+    document.getElementById("headerDate");
+
+    if(picker.showPicker){
+
+        picker.showPicker();
+
+    }else{
+
+        picker.click();
+
+    }
+
+};
+
+updateDate();
+
+</script>
 
 </body>
 </html>
