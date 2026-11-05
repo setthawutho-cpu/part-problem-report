@@ -392,6 +392,23 @@ display:grid;
 grid-template-columns:
 2fr 2fr 80px 50px;
 
+gap:10px;
+
+padding:12px 0;
+
+border-bottom:1px solid #e5e7eb;
+
+}
+
+gap:10px;
+
+padding:12px 0;
+
+border-bottom:
+1px solid #e5e7eb;
+
+}
+
 .damage-item:last-child{
 border:none;
 }
@@ -955,7 +972,6 @@ NG Qty
 
 <input
 class="damage-partno"
-list="partList"
 placeholder="Part No."
 oninput="damagePartSearch(this)">
 
@@ -1482,7 +1498,6 @@ row.innerHTML = `
 
 <input
 class="damage-partno"
-list="partList"
 placeholder="Part No."
 oninput="damagePartSearch(this)">
 
@@ -1543,7 +1558,7 @@ p
 .replace(/[^A-Za-z0-9]/g,"")
 .toUpperCase()
 
-.includes(cleanKey)
+=== cleanKey
 
 );
 
