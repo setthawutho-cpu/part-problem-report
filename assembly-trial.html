@@ -1556,42 +1556,65 @@ input.closest(".damage-item");
 const partNameBox =
 row.querySelector(".damage-partname");
 
-const partNo =
+const keyword =
 input.value.trim();
 
-if(partMaster[partNo]){
+const list =
+document.getElementById("partList");
 
-partNameBox.value =
-partMaster[partNo].partName || "";
+if(keyword===""){
 
+partNameBox.value="";
+list.innerHTML="";
 return;
 
 }
 
-const cleanKey =
-partNo
+if(partMaster[keyword]){
+
+partNameBox.value =
+partMaster[keyword].partName || "";
+
+list.innerHTML="";
+return;
+
+}
+
+const cleanKeyword =
+keyword
 .replace(/[^A-Za-z0-9]/g,"")
 .toUpperCase();
 
-const found =
-allPartNo.find(p=>
+const result =
+allPartNo
+.filter(p=>{
 
+const cleanPart =
 p
 .replace(/[^A-Za-z0-9]/g,"")
-.toUpperCase()
+.toUpperCase();
 
-=== cleanKey
+return(
+
+p.toUpperCase().startsWith(keyword.toUpperCase())
+
+||
+
+p.toUpperCase().includes(keyword.toUpperCase())
+
+||
+
+cleanPart.includes(cleanKeyword)
 
 );
 
-if(found){
+})
+.slice(0,50);
 
-input.value = found;
-
-partNameBox.value =
-partMaster[found].partName || "";
-
-}
+list.innerHTML =
+result.map(p=>
+`<option value="${p}"></option>`
+).join("");
 
 }
 
