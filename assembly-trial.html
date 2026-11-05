@@ -277,6 +277,17 @@ margin:auto;
 
 }
 
+.grid-3{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
+gap:10px;
+
+}
+
 .part-grid{
 
 display:grid;
@@ -503,7 +514,8 @@ height:50px;
 }
 
 .grid-3{
-grid-template-columns:1fr;
+grid-template-columns:
+repeat(3,minmax(0,1fr));
 }
 
 .inspection-grid{
