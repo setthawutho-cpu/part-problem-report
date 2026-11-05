@@ -511,13 +511,48 @@ Review Document
 id="reportOverlay"
 class="report-overlay">
 
+<div class="report-sheet">
+
+<div
+id="report"
+class="report-content">
+</div>
+
+<div class="report-actions">
+
+<button
+class="btn-save"
+onclick="saveReport()">
+💾 Save
+</button>
+
+<button
+class="btn-copy"
+onclick="copyReport()">
+📋 Copy
+</button>
+
+<button
+class="btn-line"
+onclick="sendLine()">
+📤 LINE
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <!-- EDIT POPUP -->
 
 <div
 id="editOverlay"
 class="report-overlay">
 
-<div class="report-sheet" style="max-width:400px;">
+<div
+class="report-sheet"
+style="max-width:400px;">
 
 <div class="report-content">
 
@@ -544,39 +579,6 @@ onclick="confirmEdit()">
 class="btn-copy"
 onclick="closeEditPopup()">
 ยกเลิก
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="report-sheet">
-
-<div
-id="report"
-class="report-content">
-</div>
-
-<div class="report-actions">
-
-<button
-class="btn-save"
-onclick="saveReport()">
-💾 Save
-</button>
-
-<button
-class="btn-copy"
-onclick="copyReport()">
-📋 Copy
-</button>
-
-<button
-class="btn-line"
-onclick="sendLine()">
-📤 LINE
 </button>
 
 </div>
@@ -932,16 +934,29 @@ closeEditPopup();
 
 function fillPartData(partNo){
 
-    if(!partMaster[partNo]) return;
+if(!partMaster[partNo]) return;
 
-    document.getElementById("partName").value =
-    partMaster[partNo].partName || "";
+const partName =
+document.getElementById("partName");
 
-    document.getElementById("model").value =
-    partMaster[partNo].model || "";
+const model =
+document.getElementById("model");
 
-    document.getElementById("supplier").value =
-    partMaster[partNo].supplier || "";
+const supplier =
+document.getElementById("supplier");
+
+partName.setAttribute("readonly",true);
+model.setAttribute("readonly",true);
+supplier.setAttribute("readonly",true);
+
+partName.value =
+partMaster[partNo].partName || "";
+
+model.value =
+partMaster[partNo].model || "";
+
+supplier.value =
+partMaster[partNo].supplier || "";
 
 }
 
