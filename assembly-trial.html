@@ -916,9 +916,37 @@ NG Qty
 
 <br>
 
+<div class="inspection-grid">
+
+<div>
+<div class="label">Part NG</div>
+<select id="partNgShow">
+<option value=""></option>
+<option>Rework</option>
+<option>Rework OK</option>
+<option>Wait Rework</option>
+<option>แลกเปลี่ยน</option>
+<option>Reject</option>
+<option>Defect</option>
+</select>
+</div>
+
 <div>
 <div class="label">Total NG</div>
-<input type="number" id="totalNg" readonly>
+<input
+type="number"
+id="totalNg"
+readonly>
+</div>
+
+<div>
+<div class="label">% Defect</div>
+<input
+type="number"
+id="defectPercent"
+readonly>
+</div>
+
 </div>
 
 </div>
@@ -1611,6 +1639,41 @@ let total = ngQty + partQty;
 
 document.getElementById("totalNg").value =
 total === 0 ? "" : total;
+
+/* Part NG */
+
+document.getElementById("partNgShow").value =
+document.getElementById("partNg").value;
+
+/* % Defect */
+
+let totalCheck = ok + total;
+
+let defect = 0;
+
+if(totalCheck > 0){
+
+defect =
+((total / totalCheck) * 100).toFixed(2);
+
+}
+
+document.getElementById("defectPercent").value =
+defect === 0 ? "" : defect;
+
+const partNgShow =
+document.getElementById("partNgShow");
+
+if(total > 0){
+
+partNgShow.value =
+document.getElementById("partNg").value;
+
+}else{
+
+partNgShow.value = "";
+
+}
 
 }
 
