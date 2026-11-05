@@ -1346,15 +1346,14 @@ fillPartData(found);
 
 <script>
 
-function reviewReport(){
-
 let text = "";
 
-text +=
-"PART PROBLEM INFORM\n\n";
+text += "📋 PART PROBLEM INFORM\n";
+text += "รายงานปัญหาชิ้นส่วน\n\n";
+
+text += "📅 Date / วันที่\n";
 
 text +=
-"Date : " +
 selectedDate.toLocaleDateString(
 "en-GB",
 {
@@ -1362,32 +1361,30 @@ day:"2-digit",
 month:"short",
 year:"numeric"
 }
-)
-+ "\n\n";
+);
 
-text +=
-"Part No : " +
-document.getElementById("partNo").value +
-"\n";
+text += "\n\n";
 
-text +=
-"Part Name : " +
-document.getElementById("partName").value +
-"\n";
+text += "━━━━━━━━━━━━━━\n\n";
 
-text +=
-"Model : " +
-document.getElementById("model").value +
-"\n";
+text += "📦 Part Information / ข้อมูลชิ้นส่วน\n\n";
 
-text +=
-"Supplier : " +
-document.getElementById("supplier").value +
-"\n";
+text += "Part No.\n";
+text += document.getElementById("partNo").value + "\n\n";
 
-document
-.getElementById("report")
-.innerText = text;
+text += "Part Name\n";
+text += document.getElementById("partName").value + "\n\n";
+
+text += "Model\n";
+text += document.getElementById("model").value + "\n\n";
+
+text += "Supplier\n";
+text += document.getElementById("supplier").value + "\n\n";
+
+text += "━━━━━━━━━━━━━━\n\n";
+
+text += "Supplier Quality Report\n";
+text += "Quality Drives Tomorrow";
 
 document
 .getElementById("reportOverlay")
