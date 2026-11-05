@@ -245,10 +245,8 @@ position:fixed;
 inset:0;
 
 display:none;
-align-items:flex-end;
+align-items:center;
 justify-content:center;
-
-padding:20px;
 
 background:
 rgba(0,0,0,.4);
@@ -258,11 +256,6 @@ z-index:9999;
 
 .report-overlay.show{
 display:flex;
-}
-
-#editOverlay.show{
-display:flex;
-align-items:flex-end;
 }
 
 .report-sheet{
@@ -458,7 +451,7 @@ placeholder="Part No.">
 id="partName"
 class="input"
 readonly
-ondblclick="openEditPopup('partName')"
+ondblclick="openEditPopup('partName')">
 </div>
 
 <div>
