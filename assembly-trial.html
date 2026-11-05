@@ -92,7 +92,11 @@ display:flex;
 
 align-items:center;
 
-gap:10px;
+gap:8px;
+
+width:100%;
+
+overflow:hidden;
 
 }
 
@@ -119,6 +123,10 @@ font-weight:bold;
 
 flex:1;
 
+min-width:0;
+
+overflow:hidden;
+
 }
 
 .header-title{
@@ -126,6 +134,12 @@ flex:1;
 font-size:28px;
 
 font-weight:700;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
 
 }
 
@@ -424,14 +438,25 @@ background:#ff9800;
 @media(max-width:768px){
 
 .header{
-height:68px;
-padding:0 10px;
+height:auto;
+padding:12px;
+
 }
 
 .back-btn{
 width:40px;
 height:40px;
 font-size:16px;
+}
+
+.header-top{
+flex-wrap:wrap;
+
+}
+
+.date-box{
+margin-left:auto;
+
 }
 
 .header-title{
@@ -443,11 +468,8 @@ font-size:10px;
 }
 
 .date-box{
-
 height:30px;
-
 padding:0 6px;
-
 font-size:9px;
 
 }
