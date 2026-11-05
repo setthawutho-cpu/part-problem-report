@@ -475,6 +475,85 @@ background:#06C755;
 background:#ff9800;
 }
 
+/* REVIEW POPUP */
+
+.report-overlay{
+position:fixed;
+inset:0;
+
+display:none;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.4);
+
+z-index:9999;
+}
+
+.report-overlay.show{
+display:flex;
+}
+
+.report-sheet{
+width:95%;
+max-width:700px;
+max-height:90vh;
+
+background:#fff;
+
+border-radius:24px;
+
+overflow:hidden;
+
+display:flex;
+flex-direction:column;
+}
+
+.report-content{
+padding:20px;
+
+white-space:pre-wrap;
+overflow:auto;
+
+line-height:1.5;
+color:#000;
+}
+
+.report-actions{
+display:flex;
+gap:8px;
+
+padding:12px;
+
+border-top:1px solid #ddd;
+}
+
+.report-actions button{
+flex:1;
+
+height:50px;
+
+border:none;
+
+border-radius:14px;
+
+color:#fff;
+font-weight:700;
+font-size:16px;
+}
+
+.btn-save{
+background:#4caf50;
+}
+
+.btn-copy{
+background:#9c27b0;
+}
+
+.btn-line{
+background:#06C755;
+}
+
 /* ---------- MOBILE ---------- */
 
 @media(max-width:768px){
@@ -920,29 +999,48 @@ Qty
 
 </div>
 
-<button class="review-btn">
+<button
+class="review-btn"
+onclick="reviewReport()">
 
 🔍 Review Report
 
 </button>
 
-<div class="bottom-actions">
+<div
+id="reportOverlay"
+class="report-overlay">
 
-<button class="save">
-💾 Save
-</button>
+    <div class="report-sheet">
 
-<button class="copy">
-📋 Copy
-</button>
+        <div
+        id="report"
+        class="report-content">
+        </div>
 
-<button class="line">
-LINE
-</button>
+        <div class="report-actions">
 
-<button class="new">
-➕ New
-</button>
+            <button
+            class="btn-save"
+            onclick="saveReport()">
+            💾 Save
+            </button>
+
+            <button
+            class="btn-copy"
+            onclick="copyReport()">
+            📋 Copy
+            </button>
+
+            <button
+            class="btn-line"
+            onclick="sendLine()">
+            📤 LINE
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -1239,6 +1337,127 @@ if(found){
 this.value = found;
 
 fillPartData(found);
+
+}
+
+});
+
+</script>
+
+<script>
+
+function reviewReport(){
+
+let text = "";
+
+text +=
+"PART PROBLEM INFORM\n\n";
+
+text +=
+"Date : " +
+selectedDate.toLocaleDateString(
+"en-GB",
+{
+day:"2-digit",
+month:"short",
+year:"numeric"
+}
+)
++ "\n\n";
+
+text +=
+"Part No : " +
+document.getElementById("partNo").value +
+"\n";
+
+text +=
+"Part Name : " +
+document.getElementById("partName").value +
+"\n";
+
+text +=
+"Model : " +
+document.getElementById("model").value +
+"\n";
+
+text +=
+"Supplier : " +
+document.getElementById("supplier").value +
+"\n";
+
+document
+.getElementById("report")
+.innerText = text;
+
+document
+.getElementById("reportOverlay")
+.classList.add("show");
+
+}
+
+function copyReport(){
+
+navigator.clipboard.writeText(
+
+document.getElementById("report")
+.innerText
+
+);
+
+alert("Copy แล้ว");
+
+}
+
+function saveReport(){
+
+const text =
+document.getElementById("report")
+.innerText;
+
+const blob =
+new Blob([text],
+{type:"text/plain"});
+
+const a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download =
+"PART_PROBLEM_INFORM.txt";
+
+a.click();
+
+}
+
+function sendLine(){
+
+const text =
+document.getElementById("report")
+.innerText;
+
+window.open(
+
+"https://line.me/R/share?text=" +
+
+encodeURIComponent(text),
+
+"_blank"
+
+);
+
+}
+
+document
+.getElementById("reportOverlay")
+.addEventListener(
+"click",
+function(e){
+
+if(e.target===this){
+
+this.classList.remove("show");
 
 }
 
