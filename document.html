@@ -934,16 +934,26 @@ document
         return;
     }
 
-    const result =
-    allPartNo
-    .filter(p=>
+const cleanKeyword =
+keyword
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
 
-        p.startsWith(keyword) ||
+const result =
+allPartNo
+.filter(p=>{
 
-        p.includes("-"+keyword)
+const cleanPart =
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
 
-    )
-    .slice(0,10);
+return (
+cleanPart.includes(cleanKeyword)
+);
+
+})
+.slice(0,10);
 
     list.innerHTML =
     result.map(p=>
@@ -956,11 +966,39 @@ document
 .getElementById("partNo")
 .addEventListener("change",function(){
 
-    if(partMaster[this.value]){
+const key =
+this.value.trim();
 
-        fillPartData(this.value);
+if(partMaster[key]){
 
-    }
+fillPartData(key);
+return;
+
+}
+
+const cleanKey =
+key
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const found =
+allPartNo.find(p=>
+
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase()
+
+=== cleanKey
+
+);
+
+if(found){
+
+this.value = found;
+
+fillPartData(found);
+
+}
 
 });
 
