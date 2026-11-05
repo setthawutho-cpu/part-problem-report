@@ -390,7 +390,15 @@ border:1px solid #ccc;
 display:grid;
 
 grid-template-columns:
-2fr 2fr 70px;
+2fr 2fr 80px 50px;
+
+gap:10px;
+
+padding:12px 0;
+
+border-bottom:1px solid #e5e7eb;
+
+}
 
 gap:10px;
 
@@ -958,21 +966,42 @@ NG Qty
 </span>
 </div>
 
+<div id="damageList">
+
 <div class="damage-item">
 
-<div>
-Part No.
+<input
+placeholder="Part No.">
+
+<input
+placeholder="Part Name">
+
+<input
+placeholder="Qty">
+
+<button
+type="button"
+onclick="this.parentElement.remove()">
+❌
+</button>
+
 </div>
 
-<div>
-Part Name
 </div>
 
-<div>
-Qty
-</div>
+<button
+type="button"
+class="review-btn"
+style="
+height:50px;
+font-size:14px;
+background:linear-gradient(135deg,#ffb300,#ff7800);
+margin-top:10px;"
+onclick="addDamageRow()">
 
-</div>
+➕ Add Part Damage
+
+</button>
 
 </div>
 
@@ -1449,6 +1478,43 @@ this.classList.remove("show");
 }
 
 });
+
+</script>
+
+<script>
+
+function addDamageRow(){
+
+const row =
+document.createElement("div");
+
+row.className =
+"damage-item";
+
+row.innerHTML = `
+
+<input
+placeholder="Part No.">
+
+<input
+placeholder="Part Name">
+
+<input
+placeholder="Qty">
+
+<button
+type="button"
+onclick="this.parentElement.remove()">
+❌
+</button>
+
+`;
+
+document
+.getElementById("damageList")
+.appendChild(row);
+
+}
 
 </script>
 
