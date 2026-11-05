@@ -1572,35 +1572,57 @@ partMaster[found].partName || "";
 
 function calculateNG(){
 
+let lineNg =
+Number(document.getElementById("skcaNg").value || 0);
+
+document.getElementById("partNgQty").value =
+lineNg === 0 ? "" : lineNg;
+
 let stock =
 Number(document.getElementById("stockNg").value || 0);
 
 let ok =
 Number(document.getElementById("okQty").value || 0);
 
-let part =
+let partQty =
 Number(document.getElementById("partNgQty").value || 0);
 
-let ng = stock - ok;
+let ngQty = stock - ok;
 
-if(ng < 0){
-ng = 0;
+if(ngQty < 0){
+ngQty = 0;
 }
 
-document.getElementById("ngQty").value =
-ng === 0 ? "" : ng;
+if(
+document.getElementById("stockNg").value === "" &&
+document.getElementById("okQty").value === ""
+){
 
-let total = ng + part;
+document.getElementById("ngQty").value = "";
+
+}else{
+
+document.getElementById("ngQty").value = ngQty;
+
+}
+
+let total = ngQty + partQty;
 
 document.getElementById("totalNg").value =
 total === 0 ? "" : total;
 
 }
 
-document.addEventListener(
-"input",
-calculateNG
-);
+document.getElementById("skcaNg")
+.addEventListener("input",calculateNG);
+
+document.getElementById("stockNg")
+.addEventListener("input",calculateNG);
+
+document.getElementById("okQty")
+.addEventListener("input",calculateNG);
+
+calculateNG();
 
 </script>
 
