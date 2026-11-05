@@ -503,7 +503,7 @@ font-size:11px;
 input,
 select{
 height:42px;
-font-size:12px;
+font-size:11px;
 }
 
 textarea{
@@ -521,7 +521,9 @@ repeat(3,minmax(0,1fr));
 }
 
 .inspection-grid{
-grid-template-columns:1fr 1fr;
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
 }
 
 .bottom-actions{
@@ -552,7 +554,7 @@ grid-template-columns:
 .inspection-grid{
 
 grid-template-columns:
-1fr;
+repeat(3,minmax(0,1fr));
 
 }
 
