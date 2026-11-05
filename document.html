@@ -244,8 +244,10 @@ position:fixed;
 inset:0;
 
 display:none;
-align-items:center;
+align-items:flex-end;
 justify-content:center;
+
+padding:20px;
 
 background:
 rgba(0,0,0,.4);
@@ -255,6 +257,11 @@ z-index:9999;
 
 .report-overlay.show{
 display:flex;
+}
+
+#editOverlay.show{
+display:flex;
+align-items:flex-end;
 }
 
 .report-sheet{
@@ -553,8 +560,10 @@ class="report-overlay">
 <div
 class="report-sheet"
 style="
-max-width:280px;
-border-radius:20px;
+width:100%;
+max-width:420px;
+border-radius:24px 24px 0 0;
+margin-bottom:0;
 ">
 
 <div
@@ -940,11 +949,20 @@ document.getElementById(editTarget);
 
 el.removeAttribute("readonly");
 
-el.focus();
-
-}
+/* ล้างข้อความ Auto ออกเลย */
+el.value = "";
 
 closeEditPopup();
+
+setTimeout(()=>{
+
+el.focus();
+
+el.click();
+
+},200);
+
+}
 
 }
 
