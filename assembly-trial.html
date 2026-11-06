@@ -1559,7 +1559,6 @@ year:"numeric"
 + "\n";
 
 /* BASIC */
-
 if(document.getElementById("type").value)
 text +=
 "Type : " +
@@ -1597,11 +1596,8 @@ document.getElementById("supplier").value +
 "\n";
 
 /* PRODUCTION */
-
 const productionInputs =
-document.querySelectorAll(
-'.grid-3 input'
-);
+document.querySelectorAll('.grid-3 input');
 
 if(productionInputs[0]?.value)
 text +=
@@ -1622,7 +1618,6 @@ productionInputs[1].value +
 " min\n";
 
 /* PROBLEM */
-
 const textareas =
 document.querySelectorAll("textarea");
 
@@ -1649,7 +1644,6 @@ textareas[1].value +
 }
 
 /* CONTAINMENT */
-
 if(
 document.getElementById("reworkText").value.trim()
 ||
@@ -1682,7 +1676,6 @@ document.getElementById("containmentResult").value +
 }
 
 /* INSPECTION */
-
 const skca =
 document.getElementById("skcaNg").value;
 
@@ -1765,7 +1758,6 @@ defect +
 }
 
 /* OK MARK */
-
 if(document.getElementById("okMarkValue").value){
 
 text +=
@@ -1787,7 +1779,6 @@ document.getElementById("okMarkDetail").value +
 }
 
 /* REMARK */
-
 const remarkBox =
 textareas[textareas.length - 1];
 
@@ -1809,7 +1800,6 @@ remarkBox.value +
 }
 
 /* PART DAMAGE */
-
 const rows =
 document.querySelectorAll(".damage-item");
 
@@ -1854,7 +1844,6 @@ damageText;
 }
 
 /* ACTION REQUEST */
-
 if(
 document.getElementById("supplier").value
 ){
