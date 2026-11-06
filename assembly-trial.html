@@ -346,23 +346,33 @@ gap:10px;
 
 /* ---------- OK MARK ---------- */
 
-.okmark{
-
+.okmark-select{
 display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+}
 
-flex-wrap:wrap;
-
-gap:12px;
-
+.mark-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+cursor:pointer;
+position:relative;
+flex:1;
 }
 
 .circle{
-
-width:34px;
-height:34px;
-
+width:48px;
+height:48px;
 border-radius:50%;
+transition:.2s;
+}
 
+.mark-item span{
+margin-top:8px;
+font-size:13px;
+font-weight:600;
 }
 
 .green{
@@ -382,11 +392,36 @@ background:#3b82f6;
 }
 
 .white{
-
 background:#fff;
+border:2px solid #d1d5db;
+}
 
-border:1px solid #ccc;
+.mark-item.active .circle{
+box-shadow:0 0 0 4px rgba(37,99,235,.25);
+}
 
+.mark-item.active::after{
+content:"✓";
+position:absolute;
+top:14px;
+left:50%;
+transform:translateX(-50%);
+width:18px;
+height:18px;
+border-radius:50%;
+background:#2563eb;
+color:#fff;
+font-size:11px;
+font-weight:bold;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+#okMarkBox{
+margin-top:15px;
+padding-top:15px;
+border-top:1px solid #e5e7eb;
 }
 
 /* ---------- PART DAMAGE ---------- */
@@ -1019,13 +1054,46 @@ readonly>
 </span>
 </div>
 
-<div class="okmark">
+<div class="okmark-select">
 
-<div class="circle green"></div>
-<div class="circle yellow"></div>
-<div class="circle pink"></div>
-<div class="circle blue"></div>
-<div class="circle white"></div>
+    <div class="mark-item" onclick="selectMark(this,'Green')">
+        <div class="circle green"></div>
+        <span>Green</span>
+    </div>
+
+    <div class="mark-item" onclick="selectMark(this,'Yellow')">
+        <div class="circle yellow"></div>
+        <span>Yellow</span>
+    </div>
+
+    <div class="mark-item" onclick="selectMark(this,'Pink')">
+        <div class="circle pink"></div>
+        <span>Pink</span>
+    </div>
+
+    <div class="mark-item" onclick="selectMark(this,'Blue')">
+        <div class="circle blue"></div>
+        <span>Blue</span>
+    </div>
+
+    <div class="mark-item" onclick="selectMark(this,'White')">
+        <div class="circle white"></div>
+        <span>White</span>
+    </div>
+
+</div>
+
+<input type="hidden" id="okMarkValue">
+
+<div id="okMarkBox" style="display:none;margin-top:15px;">
+
+    <div class="label">
+        รายละเอียด OK Mark
+    </div>
+
+    <textarea
+    id="okMarkDetail"
+    placeholder="กรอกรายละเอียด"></textarea>
 
 </div>
 
@@ -1799,6 +1867,58 @@ checkRework
 );
 
 checkRework();
+
+</script>
+
+<script>
+
+function selectMark(el,color){
+
+    document
+    .querySelectorAll(".mark-item")
+    .forEach(item=>item.classList.remove("active"));
+
+    el.classList.add("active");
+
+    document.getElementById("okMarkValue").value = color;
+
+    document.getElementById("okMarkBox").style.display = "block";
+
+    const detail =
+    document.getElementById("okMarkDetail");
+
+    if(detail.value===""){
+
+        switch(color){
+
+            case "Green":
+                detail.value =
+                "OK Part";
+                break;
+
+            case "Yellow":
+                detail.value =
+                "Repair Completed";
+                break;
+
+            case "Pink":
+                detail.value =
+                "Monitoring Required";
+                break;
+
+            case "Blue":
+                detail.value =
+                "Special Control";
+                break;
+
+            case "White":
+                detail.value =
+                "No Mark";
+                break;
+        }
+    }
+
+}
 
 </script>
 
