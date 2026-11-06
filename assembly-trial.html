@@ -1545,7 +1545,6 @@ function reviewReport(){
 let text = "PART PROBLEM INFORM\n\n";
 
 /* DATE */
-
 text +=
 "Date : " +
 selectedDate.toLocaleDateString(
@@ -1555,67 +1554,39 @@ day:"2-digit",
 month:"short",
 year:"numeric"
 }
-)
-+ "\n";
+) + "\n";
 
 /* BASIC */
 if(document.getElementById("type").value)
-text +=
-"Type : " +
-document.getElementById("type").value +
-"\n";
+text += "Type : " + document.getElementById("type").value + "\n";
 
 if(document.getElementById("product").value)
-text +=
-"Product : " +
-document.getElementById("product").value +
-"\n";
+text += "Product : " + document.getElementById("product").value + "\n";
 
 if(document.getElementById("partNo").value)
-text +=
-"Part No. : " +
-document.getElementById("partNo").value +
-"\n";
+text += "Part No. : " + document.getElementById("partNo").value + "\n";
 
 if(document.getElementById("partName").value)
-text +=
-"Part Name : " +
-document.getElementById("partName").value +
-"\n";
+text += "Part Name : " + document.getElementById("partName").value + "\n";
 
 if(document.getElementById("model").value)
-text +=
-"Model : " +
-document.getElementById("model").value +
-"\n";
+text += "Model : " + document.getElementById("model").value + "\n";
 
 if(document.getElementById("supplier").value)
-text +=
-"Supplier : " +
-document.getElementById("supplier").value +
-"\n";
+text += "Supplier : " + document.getElementById("supplier").value + "\n";
 
 /* PRODUCTION */
 const productionInputs =
-document.querySelectorAll('.grid-3 input');
+document.querySelectorAll(".grid-3 input");
 
 if(productionInputs[0]?.value)
-text +=
-"Serial Number : " +
-productionInputs[0].value +
-"\n";
+text += "Serial Number : " + productionInputs[0].value + "\n";
 
 if(document.getElementById("issueDoc").value)
-text +=
-"Issue Doc : " +
-document.getElementById("issueDoc").value +
-"\n";
+text += "Issue Doc : " + document.getElementById("issueDoc").value + "\n";
 
 if(productionInputs[1]?.value)
-text +=
-"Line Stop : " +
-productionInputs[1].value +
-" min\n";
+text += "Line Stop : " + productionInputs[1].value + " min\n";
 
 /* PROBLEM */
 const textareas =
@@ -1623,55 +1594,39 @@ document.querySelectorAll("textarea");
 
 if(textareas[0]?.value.trim()){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-text +=
-"PROBLEM\n";
-text +=
-textareas[0].value +
-"\n";
+text += "\n━━━━━━━━━━━━━━\n";
+text += "PROBLEM\n";
+text += textareas[0].value + "\n";
 
 }
 
 if(textareas[1]?.value.trim()){
 
-text +=
-"Detail\n";
-text +=
-textareas[1].value +
-"\n";
+text += "Detail\n";
+text += textareas[1].value + "\n";
 
 }
 
 /* CONTAINMENT */
 if(
-document.getElementById("reworkText").value.trim()
-||
+document.getElementById("reworkText").value.trim() ||
 document.getElementById("containmentResult").value.trim()
 ){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-text +=
-"CONTAINMENT ACTION\n";
+text += "\n━━━━━━━━━━━━━━\n";
+text += "CONTAINMENT ACTION\n";
 
-if(document.getElementById("reworkText").value.trim()){
-
+if(document.getElementById("reworkText").value.trim())
 text +=
 "Rework : " +
 document.getElementById("reworkText").value +
 "\n";
 
-}
-
-if(document.getElementById("containmentResult").value){
-
+if(document.getElementById("containmentResult").value)
 text +=
 "Result : " +
 document.getElementById("containmentResult").value +
 "\n";
-
-}
 
 }
 
@@ -1700,22 +1655,13 @@ document.getElementById("totalNg").value;
 const defect =
 document.getElementById("defectPercent").value;
 
-if(
-skca || partQty ||
-stock || ok ||
-ng || total
-){
+if(skca || partQty || stock || ok || ng || total){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-text +=
-"INSPECTION RESULT\n";
+text += "\n━━━━━━━━━━━━━━\n";
+text += "INSPECTION RESULT\n";
 
 if(skca)
-text +=
-"SKC-A MFG พบ NG : " +
-skca +
-"\n";
+text += "SKC-A MFG พบ NG : " + skca + "\n";
 
 if(partQty)
 text +=
@@ -1726,42 +1672,26 @@ partQty +
 "\n";
 
 if(stock)
-text +=
-"Check Stock : " +
-stock +
-"\n";
+text += "Check Stock : " + stock + "\n";
 
 if(ok)
-text +=
-"OK Qty : " +
-ok +
-"\n";
+text += "OK Qty : " + ok + "\n";
 
 if(ng)
-text +=
-"NG Qty : " +
-ng +
-"\n";
+text += "NG Qty : " + ng + "\n";
 
 if(total)
-text +=
-"Total NG : " +
-total +
-"\n";
+text += "Total NG : " + total + "\n";
 
 if(defect)
-text +=
-"% Defect : " +
-defect +
-"%\n";
+text += "% Defect : " + defect + "%\n";
 
 }
 
 /* OK MARK */
 if(document.getElementById("okMarkValue").value){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
+text += "\n━━━━━━━━━━━━━━\n";
 
 text +=
 "OK Mark : " +
@@ -1782,20 +1712,11 @@ document.getElementById("okMarkDetail").value +
 const remarkBox =
 textareas[textareas.length - 1];
 
-if(
-remarkBox &&
-remarkBox.value.trim()
-){
+if(remarkBox && remarkBox.value.trim()){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-
-text +=
-"Remark\n";
-
-text +=
-remarkBox.value +
-"\n";
+text += "\n━━━━━━━━━━━━━━\n";
+text += "Remark\n";
+text += remarkBox.value + "\n";
 
 }
 
@@ -1810,14 +1731,9 @@ rows.forEach(row=>{
 const inputs =
 row.querySelectorAll("input");
 
-const no =
-inputs[0]?.value || "";
-
-const name =
-inputs[1]?.value || "";
-
-const qty =
-inputs[2]?.value || "";
+const no = inputs[0]?.value || "";
+const name = inputs[1]?.value || "";
+const qty = inputs[2]?.value || "";
 
 if(no || name || qty){
 
@@ -1832,21 +1748,14 @@ Qty : ${qty}\n`;
 
 if(damageText){
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-
-text +=
-"Part Damage\n";
-
-text +=
-damageText;
+text += "\n━━━━━━━━━━━━━━\n";
+text += "Part Damage\n";
+text += damageText;
 
 }
 
 /* ACTION REQUEST */
-if(
-document.getElementById("supplier").value
-){
+if(document.getElementById("supplier").value){
 
 text +=
 "\n━━━━━━━━━━━━━━\n";
@@ -1864,14 +1773,7 @@ Supplier : ${document.getElementById("supplier").value}
 
 }
 
-text +=
-"\n━━━━━━━━━━━━━━\n";
-text +=
-"Photo : Attached";
-
-document
-.getElementById("report")
-.innerText =
+document.getElementById("report").innerText =
 text.trim();
 
 document
