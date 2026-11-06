@@ -996,7 +996,7 @@ NG Qty
 
 <div class="inspection-grid">
 
-<div>
+<div id="partNgShowBox">
 <div class="label">Part NG</div>
 <select id="partNgShow">
 <option value=""></option>
@@ -1009,7 +1009,7 @@ NG Qty
 </select>
 </div>
 
-<div>
+<div id="totalNgBox">
 <div class="label">Total NG</div>
 <input
 type="number"
@@ -1017,7 +1017,7 @@ id="totalNg"
 readonly>
 </div>
 
-<div>
+<div id="defectBox">
 <div class="label">% Defect</div>
 <input
 type="number"
@@ -1795,17 +1795,51 @@ defect =
 document.getElementById("defectPercent").value =
 defect === 0 ? "" : defect;
 
+const partNgValue =
+document.getElementById("partNg").value;
+
 const partNgShow =
 document.getElementById("partNgShow");
 
-if(total > 0){
+/* Part NG */
 
-partNgShow.value =
-document.getElementById("partNg").value;
+if(ngQty > 0){
+
+    document.getElementById("partNgShowBox").style.display = "block";
+
+    partNgShow.value = partNgValue;
 
 }else{
 
-partNgShow.value = "";
+    document.getElementById("partNgShowBox").style.display = "none";
+
+    partNgShow.value = "";
+
+}
+
+/* Total NG */
+
+if(partQty > 0 || ngQty > 0){
+
+    document.getElementById("totalNgBox").style.display = "block";
+
+}else{
+
+    document.getElementById("totalNgBox").style.display = "none";
+
+}
+
+/* % Defect */
+
+if(
+document.getElementById("partNg").value === "Defect"
+){
+
+    document.getElementById("defectBox").style.display = "block";
+
+}else{
+
+    document.getElementById("defectBox").style.display = "none";
 
 }
 
@@ -1819,6 +1853,13 @@ document.getElementById("stockNg")
 
 document.getElementById("okQty")
 .addEventListener("input",calculateNG);
+
+document.getElementById("partNg")
+.addEventListener("change",calculateNG);
+
+document.getElementById("partNgShowBox").style.display="none";
+document.getElementById("totalNgBox").style.display="none";
+document.getElementById("defectBox").style.display="none";
 
 calculateNG();
 
