@@ -510,6 +510,34 @@ display:flex;
 flex-direction:column;
 }
 
+.report-sheet{
+position:relative;
+}
+
+.add-btn{
+position:absolute;
+top:12px;
+right:12px;
+
+width:40px;
+height:40px;
+
+border:none;
+border-radius:50% !important;
+
+background:#2196f3;
+color:#fff;
+
+font-size:20px;
+cursor:pointer;
+z-index:10;
+}
+
+.report-content[contenteditable="true"]{
+background:#fffef0;
+outline:2px solid #2196f3;
+}
+
 .report-content{
 padding:20px;
 
@@ -1166,36 +1194,44 @@ onclick="reviewReport()">
 id="reportOverlay"
 class="report-overlay">
 
-    <div class="report-sheet">
+<div class="report-sheet">
 
-        <div
-        id="report"
-        class="report-content">
-        </div>
+<button
+id="editBtn"
+class="add-btn"
+onclick="toggleEditReport()">
+📝
+</button>
 
-        <div class="report-actions">
+<div
+id="report"
+class="report-content"
+contenteditable="false">
+</div>
 
-            <button
-            class="btn-save"
-            onclick="saveReport()">
-            💾 Save
-            </button>
+<div class="report-actions">
 
-            <button
-            class="btn-copy"
-            onclick="copyReport()">
-            📋 Copy
-            </button>
+<button
+class="btn-save"
+onclick="saveReport()">
+💾 Save
+</button>
 
-            <button
-            class="btn-line"
-            onclick="sendLine()">
-            📤 LINE
-            </button>
+<button
+class="btn-copy"
+onclick="copyReport()">
+📋 Copy
+</button>
 
-        </div>
+<button
+class="btn-line"
+onclick="sendLine()">
+📤 LINE
+</button>
 
-    </div>
+</div>
+
+</div>
 
 </div>
 
@@ -1501,12 +1537,13 @@ fillPartData(found);
 
 <script>
 
+let reportEditMode = false;
+
 function reviewReport(){
 
-let text="";
+let text = "PART PROBLEM INFORM\n\n";
 
-text +=
-"PART PROBLEM INFORM\n\n";
+/* DATE */
 
 text +=
 "Date : " +
@@ -1518,85 +1555,340 @@ month:"short",
 year:"numeric"
 }
 )
-+ "\n\n";
++ "\n";
 
+/* BASIC */
+
+if(document.getElementById("type").value)
 text +=
-"Part No : " +
+"Type : " +
+document.getElementById("type").value +
+"\n";
+
+if(document.getElementById("product").value)
+text +=
+"Product : " +
+document.getElementById("product").value +
+"\n";
+
+if(document.getElementById("partNo").value)
+text +=
+"Part No. : " +
 document.getElementById("partNo").value +
 "\n";
 
+if(document.getElementById("partName").value)
 text +=
 "Part Name : " +
 document.getElementById("partName").value +
 "\n";
 
+if(document.getElementById("model").value)
 text +=
 "Model : " +
 document.getElementById("model").value +
 "\n";
 
+if(document.getElementById("supplier").value)
 text +=
 "Supplier : " +
 document.getElementById("supplier").value +
 "\n";
 
+/* PRODUCTION */
+
+const productionInputs =
+document.querySelectorAll(
+'.grid-3 input'
+);
+
+if(productionInputs[0]?.value)
+text +=
+"Serial Number : " +
+productionInputs[0].value +
+"\n";
+
+if(document.getElementById("issueDoc").value)
+text +=
+"Issue Doc : " +
+document.getElementById("issueDoc").value +
+"\n";
+
+if(productionInputs[1]?.value)
+text +=
+"Line Stop : " +
+productionInputs[1].value +
+" min\n";
+
+/* PROBLEM */
+
+const textareas =
+document.querySelectorAll("textarea");
+
+if(textareas[0]?.value.trim()){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+text +=
+"PROBLEM\n";
+text +=
+textareas[0].value +
+"\n";
+
+}
+
+if(textareas[1]?.value.trim()){
+
+text +=
+"Detail\n";
+text +=
+textareas[1].value +
+"\n";
+
+}
+
+/* CONTAINMENT */
+
+if(
+document.getElementById("reworkText").value.trim()
+||
+document.getElementById("containmentResult").value.trim()
+){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+text +=
+"CONTAINMENT ACTION\n";
+
+if(document.getElementById("reworkText").value.trim()){
+
+text +=
+"Rework : " +
+document.getElementById("reworkText").value +
+"\n";
+
+}
+
+if(document.getElementById("containmentResult").value){
+
+text +=
+"Result : " +
+document.getElementById("containmentResult").value +
+"\n";
+
+}
+
+}
+
+/* INSPECTION */
+
+const skca =
+document.getElementById("skcaNg").value;
+
+const partNg =
+document.getElementById("partNg").value;
+
+const partQty =
+document.getElementById("partNgQty").value;
+
+const stock =
+document.getElementById("stockNg").value;
+
+const ok =
+document.getElementById("okQty").value;
+
+const ng =
+document.getElementById("ngQty").value;
+
+const total =
+document.getElementById("totalNg").value;
+
+const defect =
+document.getElementById("defectPercent").value;
+
+if(
+skca || partQty ||
+stock || ok ||
+ng || total
+){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+text +=
+"INSPECTION RESULT\n";
+
+if(skca)
+text +=
+"SKC-A MFG พบ NG : " +
+skca +
+"\n";
+
+if(partQty)
+text +=
+"Part NG" +
+(partNg ? ` (${partNg})` : "") +
+" : " +
+partQty +
+"\n";
+
+if(stock)
+text +=
+"Check Stock : " +
+stock +
+"\n";
+
+if(ok)
+text +=
+"OK Qty : " +
+ok +
+"\n";
+
+if(ng)
+text +=
+"NG Qty : " +
+ng +
+"\n";
+
+if(total)
+text +=
+"Total NG : " +
+total +
+"\n";
+
+if(defect)
+text +=
+"% Defect : " +
+defect +
+"%\n";
+
+}
+
+/* OK MARK */
+
+if(document.getElementById("okMarkValue").value){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+
+text +=
+"OK Mark : " +
+document.getElementById("okMarkValue").value +
+"\n";
+
+if(document.getElementById("okMarkDetail").value.trim()){
+
+text +=
+document.getElementById("okMarkDetail").value +
+"\n";
+
+}
+
+}
+
+/* REMARK */
+
+const remarkBox =
+textareas[textareas.length - 1];
+
+if(
+remarkBox &&
+remarkBox.value.trim()
+){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+
+text +=
+"Remark\n";
+
+text +=
+remarkBox.value +
+"\n";
+
+}
+
+/* PART DAMAGE */
+
+const rows =
+document.querySelectorAll(".damage-item");
+
+let damageText = "";
+
+rows.forEach(row=>{
+
+const inputs =
+row.querySelectorAll("input");
+
+const no =
+inputs[0]?.value || "";
+
+const name =
+inputs[1]?.value || "";
+
+const qty =
+inputs[2]?.value || "";
+
+if(no || name || qty){
+
+damageText +=
+`\nPart No : ${no}
+Part Name : ${name}
+Qty : ${qty}\n`;
+
+}
+
+});
+
+if(damageText){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+
+text +=
+"Part Damage\n";
+
+text +=
+damageText;
+
+}
+
+/* ACTION REQUEST */
+
+if(
+document.getElementById("supplier").value
+){
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+
+text +=
+`ACTION REQUEST
+Supplier : ${document.getElementById("supplier").value}
+1. ตรวจสอบ Stock คงเหลือทั้งหมด
+2. แจ้งจำนวน OK / NG
+3. แนบรูป Mark Check
+4. ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
+5. ขยายผลไปยัง Spare Part (ถ้ามี)
+
+`;
+
+}
+
+text +=
+"\n━━━━━━━━━━━━━━\n";
+text +=
+"Photo : Attached";
+
 document
 .getElementById("report")
-.innerText=text;
+.innerText =
+text.trim();
 
 document
 .getElementById("reportOverlay")
 .classList.add("show");
 
-}
-
-function copyReport(){
-
-navigator.clipboard.writeText(
-
-document.getElementById("report")
-.innerText
-
-);
-
-alert("Copy แล้ว");
-
-}
-
-function saveReport(){
-
-const text =
-document.getElementById("report")
-.innerText;
-
-const blob =
-new Blob([text],
-{type:"text/plain"});
-
-const a =
-document.createElement("a");
-
-a.href =
-URL.createObjectURL(blob);
-
-a.download =
-"PART_PROBLEM_INFORM.txt";
-
-a.click();
-
-}
-
-function sendLine(){
-
-const text =
-document.getElementById("report")
-.innerText;
-
-window.open(
-"https://line.me/R/share?text=" +
-encodeURIComponent(text),
-"_blank"
-);
+document.body.style.overflow = "hidden";
 
 }
 
@@ -1609,6 +1901,8 @@ function(e){
 if(e.target===this){
 
 this.classList.remove("show");
+
+document.body.style.overflow = "";
 
 }
 
@@ -1922,6 +2216,100 @@ function selectMark(el,color){
     document.getElementById("okMarkValue").value = color;
 
     document.getElementById("okMarkBox").style.display = "block";
+
+}
+
+</script>
+
+<script>
+
+function toggleEditReport(){
+
+const report =
+document.getElementById("report");
+
+const btn =
+document.getElementById("editBtn");
+
+if(!reportEditMode){
+
+    report.contentEditable = "true";
+
+    report.focus();
+
+    btn.innerHTML = "💾";
+
+    btn.style.background = "#4caf50";
+
+    reportEditMode = true;
+
+}else{
+
+    report.contentEditable = "false";
+
+    btn.innerHTML = "📝";
+
+    btn.style.background = "#2196f3";
+
+    reportEditMode = false;
+
+}
+
+}
+
+function saveReport(){
+
+const text =
+document.getElementById("report").innerText;
+
+const blob =
+new Blob([text],{
+type:"text/plain"
+});
+
+const a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download =
+"PART_PROBLEM_INFORM.txt";
+
+a.click();
+
+}
+
+function copyReport(){
+
+navigator.clipboard.writeText(
+
+document.getElementById("report")
+.innerText
+
+);
+
+alert("📋 Copy Report สำเร็จ");
+
+}
+
+function sendLine(){
+
+const text =
+document.getElementById("report")
+.innerText.trim();
+
+if(!text){
+
+alert("กรุณากด Review Report ก่อน");
+
+return;
+
+}
+
+location.href =
+"https://line.me/R/share?text=" +
+encodeURIComponent(text);
 
 }
 
