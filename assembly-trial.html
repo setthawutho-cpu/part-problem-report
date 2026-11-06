@@ -401,21 +401,7 @@ box-shadow:0 0 0 4px rgba(37,99,235,.25);
 }
 
 .mark-item.active::after{
-content:"✓";
-position:absolute;
-top:6px;
-left:50%;
-transform:translateX(-50%);
-width:14px;
-height:14px;
-border-radius:50%;
-background:#2563eb;
-color:#fff;
-font-size:9px;
-font-weight:bold;
-display:flex;
-align-items:center;
-justify-content:center;
+display:none;
 }
 
 #okMarkBox{
@@ -1873,6 +1859,18 @@ checkRework();
 <script>
 
 function selectMark(el,color){
+
+    if(el.classList.contains("active")){
+
+        el.classList.remove("active");
+
+        document.getElementById("okMarkValue").value = "";
+
+        document.getElementById("okMarkBox").style.display = "none";
+
+        return;
+
+    }
 
     document
     .querySelectorAll(".mark-item")
