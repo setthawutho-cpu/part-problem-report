@@ -882,23 +882,25 @@ Detail / รายละเอียด
 Rework / การแก้ไข
 </div>
 
-<textarea></textarea>
+<textarea id="reworkText"></textarea>
 
 <br><br>
 
-<div class="label">
-Result / ผลลัพธ์
-</div>
+<div id="resultSection">
 
-<select id="containmentResult">
-<option value=""></option>
-<option>-</option>
-<option>Rework OK</option>
-<option>Wait Rework</option>
-<option>เปลี่ยนชิ้นงานใน Stock</option>
-<option>Reject</option>
-<option>Defect</option>
-</select>
+    <div class="label">
+    Result / ผลลัพธ์
+    </div>
+
+    <select id="containmentResult">
+        <option value=""></option>
+        <option>-</option>
+        <option>Rework OK</option>
+        <option>Wait Rework</option>
+        <option>เปลี่ยนชิ้นงานใน Stock</option>
+        <option>Reject</option>
+        <option>Defect</option>
+    </select>
 
 </div>
 
@@ -1763,6 +1765,38 @@ document.getElementById("okQty")
 .addEventListener("input",calculateNG);
 
 calculateNG();
+
+</script>
+
+<script>
+
+const reworkText =
+document.getElementById("reworkText");
+
+const resultSection =
+document.getElementById("resultSection");
+
+function checkRework(){
+
+    if(reworkText.value.trim() === ""){
+
+        resultSection.style.display = "none";
+        document.getElementById("containmentResult").value = "";
+
+    }else{
+
+        resultSection.style.display = "block";
+
+    }
+
+}
+
+reworkText.addEventListener(
+"input",
+checkRework
+);
+
+checkRework();
 
 </script>
 
