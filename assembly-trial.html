@@ -548,12 +548,14 @@ outline:2px solid #2196f3;
 }
 
 .report-content{
-padding:20px;
+padding:12px;
 
 white-space:pre-wrap;
 overflow:auto;
 
-line-height:1.5;
+line-height:1.25;
+font-size:12px;
+
 color:#000;
 }
 
@@ -1893,6 +1895,33 @@ unitPc(defectQty) +
 
 }
 
+/* OK MARK */
+
+const okMark =
+document.getElementById("okMarkValue").value;
+
+const okMarkDetail =
+document.getElementById("okMarkDetail").value.trim();
+
+if(okMark){
+
+    text += "━━━━━━━━━━━━━━\n";
+
+    text +=
+    "OK Mark : " +
+    okMark +
+    "\n";
+
+    if(okMarkDetail){
+
+        text +=
+        okMarkDetail +
+        "\n";
+
+    }
+
+}
+
 /* REMARK */
 
 const remarkBox =
@@ -1923,14 +1952,17 @@ const qty  = inputs[2]?.value.trim() || "";
 
 if(no || name || qty){
 
+    if(damageText){
+        damageText += "\n";
+    }
+
     damageText += `Part No : ${no}\n`;
     damageText += `Part Name : ${name}\n`;
 
     if(qty){
-        damageText += `Qty : ${qty} ${unitPc(qty)}\n`;
+        damageText += `Qty : ${qty} ${unitPc(qty)}`;
     }
 
-    damageText += "\n";
 }
 
 });
