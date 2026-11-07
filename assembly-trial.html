@@ -969,7 +969,7 @@ onblur="restoreAuto(this)">
 <div class="label">
 Serial Number
 </div>
-<input>
+<input id="serialNumber">
 </div>
 
 <div>
@@ -989,7 +989,7 @@ Issue Doc
 <div class="label">
 Line Stop
 </div>
-<input>
+<input id="lineStop">
 </div>
 
 </div>
@@ -1669,14 +1669,14 @@ String(selectedDate.getDate()).padStart(2,"0") + "-" +
 String(selectedDate.getMonth()+1).padStart(2,"0") + "-" +
 selectedDate.getFullYear();
 
-const productionInputs =
-document.querySelectorAll(".grid-3 input");
+const serialNumber =
+document.getElementById("serialNumber").value;
 
 const issueDoc =
 document.getElementById("issueDoc").value;
 
 const lineStop =
-productionInputs[1]?.value || "";
+document.getElementById("lineStop").value;
 
 const issueDocValue =
 (issueDoc && issueDoc !== "-")
