@@ -1841,7 +1841,7 @@ unitPc(stockCheck) +
 if(stockOk){
 
 text +=
-"OK Qty : " +
+"OK : " +
 stockOk +
 " " +
 unitPc(stockOk) +
@@ -1852,7 +1852,7 @@ unitPc(stockOk) +
 if(stockNg){
 
 text +=
-"NG Qty : " +
+"NG (Defect) : " +
 stockNg +
 " " +
 unitPc(stockNg) +
@@ -1870,29 +1870,7 @@ unitPc(totalNg) +
 "\n";
 
 }
-
-if(reworkQty){
-
-text +=
-"Rework Qty : " +
-reworkQty +
-" " +
-unitPc(reworkQty) +
-"\n";
-
-}
-
-if(defectQty){
-
-text +=
-"Defect Qty : " +
-defectQty +
-" " +
-unitPc(defectQty) +
-"\n";
-
-}
-
+    
 }
 
 /* OK MARK */
