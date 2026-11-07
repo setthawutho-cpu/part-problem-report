@@ -2197,17 +2197,19 @@ defectQty === 0 ? "" : defectQty;
 
 /* DEFECT % */
 
+let totalChecked = mfgCheck + stockCheck;
+
 let defectPercent = 0;
 
-if(totalNg > 0){
+if(totalChecked > 0){
 
     defectPercent =
-    ((defectQty / totalNg) * 100).toFixed(2);
+    ((defectQty / totalChecked) * 100).toFixed(2);
 
 }
 
 document.getElementById("defectPercent").value =
-defectPercent === 0 ? "" : defectPercent;
+defectPercent == 0 ? "" : defectPercent;
 
 
 /* OK MARK */
