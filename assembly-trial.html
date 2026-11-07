@@ -1540,23 +1540,44 @@ fillPartData(found);
 
 let reportEditMode = false;
 
+function unitPc(qty){
+  return Number(qty) === 1 ? "Pc." : "Pcs.";
+}
+
 function reviewReport(){
 
-let text = "PART PROBLEM INFORM\n\n";
+let text = "";
 
 /* DATE */
-text +=
-"Date : " +
-selectedDate.toLocaleDateString(
-"en-GB",
-{
-day:"2-digit",
-month:"short",
-year:"numeric"
-}
-) + "\n";
+const reportDate =
+String(selectedDate.getDate()).padStart(2,"0") + "-" +
+String(selectedDate.getMonth()+1).padStart(2,"0") + "-" +
+selectedDate.getFullYear();
 
-/* BASIC */
+const productionInputs =
+document.querySelectorAll(".grid-3 input");
+
+const issueDoc =
+document.getElementById("issueDoc").value;
+
+const lineStop =
+productionInputs[1]?.value || "";
+
+const issueDocValue =
+(issueDoc && issueDoc !== "-")
+? issueDoc
+: "-";
+
+const lineStopValue =
+(lineStop && lineStop.trim() !== "")
+? lineStop + " min"
+: "-";
+
+/* HEADER */
+
+text += "PART PROBLEM INFORM\n";
+text += "Date : " + reportDate + "\n";
+
 if(document.getElementById("type").value)
 text += "Type : " + document.getElementById("type").value + "\n";
 
@@ -1575,26 +1596,19 @@ text += "Model : " + document.getElementById("model").value + "\n";
 if(document.getElementById("supplier").value)
 text += "Supplier : " + document.getElementById("supplier").value + "\n";
 
-/* PRODUCTION */
-const productionInputs =
-document.querySelectorAll(".grid-3 input");
-
 if(productionInputs[0]?.value)
 text += "Serial Number : " + productionInputs[0].value + "\n";
 
-if(document.getElementById("issueDoc").value)
-text += "Issue Doc : " + document.getElementById("issueDoc").value + "\n";
-
-if(productionInputs[1]?.value)
-text += "Line Stop : " + productionInputs[1].value + " min\n";
+text += "Issue Doc : " + issueDocValue + "\n";
+text += "Line Stop : " + lineStopValue + "\n\n";
 
 /* PROBLEM */
+
 const textareas =
 document.querySelectorAll("textarea");
 
 if(textareas[0]?.value.trim()){
 
-text += "\n━━━━━━━━━━━━━━\n";
 text += "PROBLEM\n";
 text += textareas[0].value + "\n";
 
@@ -1608,21 +1622,26 @@ text += textareas[1].value + "\n";
 }
 
 /* CONTAINMENT */
+
 if(
 document.getElementById("reworkText").value.trim() ||
 document.getElementById("containmentResult").value.trim()
 ){
 
-text += "\n━━━━━━━━━━━━━━\n";
+text += "━━━━━━━━━━━━━━\n";
 text += "CONTAINMENT ACTION\n";
 
-if(document.getElementById("reworkText").value.trim())
+if(document.getElementById("reworkText").value.trim()){
+
 text +=
 "Rework : " +
 document.getElementById("reworkText").value +
 "\n";
 
-if(document.getElementById("containmentResult").value)
+}
+
+if(document.getElementById("containmentResult").value){
+
 text +=
 "Result : " +
 document.getElementById("containmentResult").value +
@@ -1630,12 +1649,15 @@ document.getElementById("containmentResult").value +
 
 }
 
+}
+
 /* INSPECTION */
+
 const skca =
 document.getElementById("skcaNg").value;
 
 const partNg =
-document.getElementById("partNg").value;
+document.getElementById("partNgShow").value;
 
 const partQty =
 document.getElementById("partNgQty").value;
@@ -1652,46 +1674,56 @@ document.getElementById("ngQty").value;
 const total =
 document.getElementById("totalNg").value;
 
-const defect =
-document.getElementById("defectPercent").value;
-
 if(skca || partQty || stock || ok || ng || total){
 
-text += "\n━━━━━━━━━━━━━━\n";
+text += "━━━━━━━━━━━━━━\n";
 text += "INSPECTION RESULT\n";
 
 if(skca)
-text += "SKC-A MFG พบ NG : " + skca + "\n";
+text +=
+"SKC-A MFG พบ NG : " +
+skca + " " +
+unitPc(skca) + "\n";
 
 if(partQty)
 text +=
 "Part NG" +
-(partNg ? ` (${partNg})` : "") +
+(partNg ? " (" + partNg + ")" : "") +
 " : " +
-partQty +
-"\n";
+partQty + " " +
+unitPc(partQty) + "\n";
 
 if(stock)
-text += "Check Stock : " + stock + "\n";
+text +=
+"Check Stock : " +
+stock + " " +
+unitPc(stock) + "\n";
 
 if(ok)
-text += "OK Qty : " + ok + "\n";
+text +=
+"OK Qty : " +
+ok + " " +
+unitPc(ok) + "\n";
 
 if(ng)
-text += "NG Qty : " + ng + "\n";
+text +=
+"NG Qty : " +
+ng + " " +
+unitPc(ng) + "\n";
 
 if(total)
-text += "Total NG : " + total + "\n";
-
-if(defect)
-text += "% Defect : " + defect + "%\n";
+text +=
+"Total NG (Defect) : " +
+total + " " +
+unitPc(total) + "\n";
 
 }
 
 /* OK MARK */
+
 if(document.getElementById("okMarkValue").value){
 
-text += "\n━━━━━━━━━━━━━━\n";
+text += "━━━━━━━━━━━━━━\n";
 
 text +=
 "OK Mark : " +
@@ -1709,18 +1741,20 @@ document.getElementById("okMarkDetail").value +
 }
 
 /* REMARK */
+
 const remarkBox =
 textareas[textareas.length - 1];
 
 if(remarkBox && remarkBox.value.trim()){
 
-text += "\n━━━━━━━━━━━━━━\n";
+text += "━━━━━━━━━━━━━━\n";
 text += "Remark\n";
 text += remarkBox.value + "\n";
 
 }
 
 /* PART DAMAGE */
+
 const rows =
 document.querySelectorAll(".damage-item");
 
@@ -1740,7 +1774,8 @@ if(no || name || qty){
 damageText +=
 `\nPart No : ${no}
 Part Name : ${name}
-Qty : ${qty}\n`;
+Qty : ${qty} ${unitPc(qty)}
+`;
 
 }
 
@@ -1748,27 +1783,25 @@ Qty : ${qty}\n`;
 
 if(damageText){
 
-text += "\n━━━━━━━━━━━━━━\n";
+text += "━━━━━━━━━━━━━━\n";
 text += "Part Damage\n";
 text += damageText;
 
 }
 
 /* ACTION REQUEST */
+
 if(document.getElementById("supplier").value){
 
 text +=
-"\n━━━━━━━━━━━━━━\n";
-
-text +=
-`ACTION REQUEST
+`━━━━━━━━━━━━━━
+ACTION REQUEST
 Supplier : ${document.getElementById("supplier").value}
 1. ตรวจสอบ Stock คงเหลือทั้งหมด
 2. แจ้งจำนวน OK / NG
 3. แนบรูป Mark Check
 4. ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
 5. ขยายผลไปยัง Spare Part (ถ้ามี)
-
 `;
 
 }
