@@ -1768,75 +1768,94 @@ document.getElementById("containmentResult").value +
 
 /* INSPECTION */
 
-const skca =
-document.getElementById("skcaNg").value;
+/* INSPECTION */
 
-const partNg =
-document.getElementById("partNg").value;
+const mfgCheck =
+document.getElementById("mfgNgQty").value;
 
-const partQty =
-document.getElementById("partNgQty").value;
+const mfgOk =
+document.getElementById("mfgOkQty").value;
 
-const stock =
-document.getElementById("stockNg").value;
+const mfgNg =
+document.getElementById("mfgNgQtyResult").value;
 
-const ok =
-document.getElementById("okQty").value;
+const mfgResult =
+document.getElementById("mfgResult").value;
 
-const ng =
-document.getElementById("ngQty").value;
+const stockCheck =
+document.getElementById("stockCheck").value;
 
-const total =
+const stockOk =
+document.getElementById("stockOkQty").value;
+
+const stockNg =
+document.getElementById("stockNgQty").value;
+
+const stockResult =
+document.getElementById("stockResult").value;
+
+const totalNg =
 document.getElementById("totalNg").value;
 
-if(skca || partQty || stock || ok || ng || total){
+const reworkQty =
+document.getElementById("reworkQty").value;
+
+const defectQty =
+document.getElementById("defectQty").value;
+
+const defectPercent =
+document.getElementById("defectPercent").value;
+
+if(
+mfgCheck ||
+stockCheck ||
+totalNg
+){
 
 text += "━━━━━━━━━━━━━━\n";
 text += "INSPECTION RESULT\n";
 
-if(skca)
-text +=
-"SKC-A MFG พบ NG : " +
-skca + " " +
-unitPc(skca) + "\n";
+text += "\n[MFG]\n";
 
-if(partQty)
-text +=
-"Part NG" +
-(partNg ? " (" + partNg + ")" : "") +
-" : " +
-partQty + " " +
-unitPc(partQty) + "\n";
+if(mfgCheck)
+text += "MFG NG Qty : " + mfgCheck + "\n";
 
-if(stock)
-text +=
-"Check Stock : " +
-stock + " " +
-unitPc(stock) + "\n";
+if(mfgOk)
+text += "OK Qty : " + mfgOk + "\n";
 
-if(ok)
-text +=
-"OK Qty : " +
-ok + " " +
-unitPc(ok) + "\n";
+if(mfgNg)
+text += "NG Qty : " + mfgNg + "\n";
 
-if(ng)
-text +=
-"NG Qty : " +
-ng + " " +
-unitPc(ng) + "\n";
+if(mfgResult)
+text += "Result : " + mfgResult + "\n";
 
-const totalNgType =
-document.getElementById("partNgShow").value;
+text += "\n[STOCK]\n";
 
-if(total)
-text +=
-"Total NG" +
-(totalNgType ? " (" + totalNgType + ")" : "") +
-" : " +
-total + " " +
-unitPc(total) +
-"\n";
+if(stockCheck)
+text += "Check Stock : " + stockCheck + "\n";
+
+if(stockOk)
+text += "OK Qty : " + stockOk + "\n";
+
+if(stockNg)
+text += "NG Qty : " + stockNg + "\n";
+
+if(stockResult)
+text += "Result : " + stockResult + "\n";
+
+text += "\n[SUMMARY]\n";
+
+if(totalNg)
+text += "Total NG : " + totalNg + "\n";
+
+if(reworkQty)
+text += "Rework Qty : " + reworkQty + "\n";
+
+if(defectQty)
+text += "Defect Qty : " + defectQty + "\n";
+
+if(defectPercent)
+text += "Defect % : " + defectPercent + "%\n";
 
 }
 
@@ -2080,132 +2099,133 @@ result.map(p=>
 
 function calculateNG(){
 
-let lineNg =
-Number(document.getElementById("skcaNg").value || 0);
+/* MFG */
 
-document.getElementById("partNgQty").value =
-lineNg === 0 ? "" : lineNg;
+let mfgCheck =
+Number(document.getElementById("mfgNgQty").value || 0);
 
-let stock =
-Number(document.getElementById("stockNg").value || 0);
+let mfgOk =
+Number(document.getElementById("mfgOkQty").value || 0);
 
-let ok =
-Number(document.getElementById("okQty").value || 0);
+let mfgNg = mfgCheck - mfgOk;
 
-let partQty =
-Number(document.getElementById("partNgQty").value || 0);
-
-let ngQty = stock - ok;
-
-if(ngQty < 0){
-ngQty = 0;
+if(mfgNg < 0){
+    mfgNg = 0;
 }
 
-if(
-document.getElementById("stockNg").value === "" &&
-document.getElementById("okQty").value === ""
-){
+document.getElementById("mfgNgQtyResult").value =
+mfgCheck === 0 ? "" : mfgNg;
 
-document.getElementById("ngQty").value = "";
 
-}else{
+/* STOCK */
 
-document.getElementById("ngQty").value = ngQty;
+let stockCheck =
+Number(document.getElementById("stockCheck").value || 0);
 
+let stockOk =
+Number(document.getElementById("stockOkQty").value || 0);
+
+let stockNg = stockCheck - stockOk;
+
+if(stockNg < 0){
+    stockNg = 0;
 }
 
-let total = ngQty + partQty;
+document.getElementById("stockNgQty").value =
+stockCheck === 0 ? "" : stockNg;
+
+
+/* TOTAL NG */
+
+let totalNg =
+mfgNg + stockNg;
 
 document.getElementById("totalNg").value =
-total === 0 ? "" : total;
+totalNg === 0 ? "" : totalNg;
 
-/* % Defect */
 
-let totalCheck = ok + total;
+/* REWORK / DEFECT */
 
-let defect = 0;
+let reworkQty = 0;
+let defectQty = 0;
 
-if(totalCheck > 0){
+if(document.getElementById("mfgResult").value === "Rework"){
+    reworkQty += mfgNg;
+}
 
-defect =
-((total / totalCheck) * 100).toFixed(2);
+if(document.getElementById("stockResult").value === "Rework"){
+    reworkQty += stockNg;
+}
+
+if(document.getElementById("mfgResult").value === "Defect"){
+    defectQty += mfgNg;
+}
+
+if(document.getElementById("stockResult").value === "Defect"){
+    defectQty += stockNg;
+}
+
+document.getElementById("reworkQty").value =
+reworkQty === 0 ? "" : reworkQty;
+
+document.getElementById("defectQty").value =
+defectQty === 0 ? "" : defectQty;
+
+
+/* DEFECT % */
+
+let defectPercent = 0;
+
+if(totalNg > 0){
+
+    defectPercent =
+    ((defectQty / totalNg) * 100).toFixed(2);
 
 }
 
 document.getElementById("defectPercent").value =
-defect === 0 ? "" : defect;
+defectPercent === 0 ? "" : defectPercent;
 
-/* Part NG */
-
-if(ngQty > 0){
-
-    document.getElementById("partNgShowBox").style.display = "block";
-
-}else{
-
-    document.getElementById("partNgShowBox").style.display = "none";
-
-}
-
-/* Total NG */
-
-if(partQty > 0 || ngQty > 0){
-
-    document.getElementById("totalNgBox").style.display = "block";
-
-}else{
-
-    document.getElementById("totalNgBox").style.display = "none";
-
-}
-
-/* % Defect */
-
-if(
-document.getElementById("partNg").value === "Defect"
-){
-
-    document.getElementById("defectBox").style.display = "block";
-
-}else{
-
-    document.getElementById("defectBox").style.display = "none";
-
-}
 
 /* OK MARK */
 
-const okQty =
-Number(document.getElementById("okQty").value || 0);
+if(stockOk > 0 || mfgOk > 0){
 
-if(okQty > 0){
-
-    document.getElementById("okMarkCard").style.display = "block";
+    document.getElementById("okMarkCard").style.display =
+    "block";
 
 }else{
 
-    document.getElementById("okMarkCard").style.display = "none";
+    document.getElementById("okMarkCard").style.display =
+    "none";
 
 }
 
 }
 
-document.getElementById("skcaNg")
-.addEventListener("input",calculateNG);
 
-document.getElementById("stockNg")
-.addEventListener("input",calculateNG);
+/* EVENT */
 
-document.getElementById("okQty")
-.addEventListener("input",calculateNG);
+document.getElementById("mfgNgQty")
+.addEventListener("input", calculateNG);
 
-document.getElementById("partNg")
-.addEventListener("change",calculateNG);
+document.getElementById("mfgOkQty")
+.addEventListener("input", calculateNG);
 
-document.getElementById("partNgShowBox").style.display="none";
-document.getElementById("totalNgBox").style.display="none";
-document.getElementById("defectBox").style.display="none";
-document.getElementById("okMarkCard").style.display="none";
+document.getElementById("stockCheck")
+.addEventListener("input", calculateNG);
+
+document.getElementById("stockOkQty")
+.addEventListener("input", calculateNG);
+
+document.getElementById("mfgResult")
+.addEventListener("change", calculateNG);
+
+document.getElementById("stockResult")
+.addEventListener("change", calculateNG);
+
+document.getElementById("okMarkCard").style.display =
+"none";
 
 calculateNG();
 
