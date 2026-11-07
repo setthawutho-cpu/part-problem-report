@@ -1818,9 +1818,14 @@ text +=
 ng + " " +
 unitPc(ng) + "\n";
 
+const totalNgType =
+document.getElementById("partNgShow").value;
+
 if(total)
 text +=
-"Total NG (Defect) : " +
+"Total NG" +
+(totalNgType ? " (" + totalNgType + ")" : "") +
+" : " +
 total + " " +
 unitPc(total) +
 "\n";
