@@ -1771,12 +1771,6 @@ document.getElementById("containmentResult").value +
 const mfgCheck =
 document.getElementById("mfgNgQty").value;
 
-const mfgOk =
-document.getElementById("mfgOkQty").value;
-
-const mfgNg =
-document.getElementById("mfgNgQtyResult").value;
-
 const mfgResult =
 document.getElementById("mfgResult").value;
 
@@ -1789,9 +1783,6 @@ document.getElementById("stockOkQty").value;
 const stockNg =
 document.getElementById("stockNgQty").value;
 
-const stockResult =
-document.getElementById("stockResult").value;
-
 const totalNg =
 document.getElementById("totalNg").value;
 
@@ -1800,9 +1791,6 @@ document.getElementById("reworkQty").value;
 
 const defectQty =
 document.getElementById("defectQty").value;
-
-const defectPercent =
-document.getElementById("defectPercent").value;
 
 if(
 mfgCheck ||
@@ -1813,65 +1801,92 @@ totalNg
 text += "━━━━━━━━━━━━━━\n";
 text += "INSPECTION RESULT\n";
 
-text += "\n[MFG]\n";
+if(mfgCheck){
 
-if(mfgCheck)
-text += "MFG NG Qty : " + mfgCheck + "\n";
-
-if(mfgOk)
-text += "OK Qty : " + mfgOk + "\n";
-
-if(mfgNg)
-text += "NG Qty : " + mfgNg + "\n";
-
-if(mfgResult)
-text += "Result : " + mfgResult + "\n";
-
-text += "\n[STOCK]\n";
-
-if(stockCheck)
-text += "Check Stock : " + stockCheck + "\n";
-
-if(stockOk)
-text += "OK Qty : " + stockOk + "\n";
-
-if(stockNg)
-text += "NG Qty : " + stockNg + "\n";
-
-if(stockResult)
-text += "Result : " + stockResult + "\n";
-
-text += "\n[SUMMARY]\n";
-
-if(totalNg)
-text += "Total NG : " + totalNg + "\n";
-
-if(reworkQty)
-text += "Rework Qty : " + reworkQty + "\n";
-
-if(defectQty)
-text += "Defect Qty : " + defectQty + "\n";
-
-if(defectPercent)
-text += "Defect % : " + defectPercent + "%\n";
+text +=
+"SKC-A MFG พบ NG : " +
+mfgCheck +
+" " +
+unitPc(mfgCheck) +
+"\n";
 
 }
 
-/* OK MARK */
-
-if(document.getElementById("okMarkValue").value){
-
-text += "━━━━━━━━━━━━━━\n";
+if(mfgCheck){
 
 text +=
-"OK Mark : " +
-document.getElementById("okMarkValue").value +
+"Part NG" +
+(mfgResult ? " (" + mfgResult + ")" : "") +
+" : " +
+mfgCheck +
+" " +
+unitPc(mfgCheck) +
 "\n";
 
-if(document.getElementById("okMarkDetail").value.trim()){
+}
+
+if(stockCheck){
 
 text +=
-document.getElementById("okMarkDetail").value +
+"Check Stock : " +
+stockCheck +
+" " +
+unitPc(stockCheck) +
+"\n";
+
+}
+
+if(stockOk){
+
+text +=
+"OK Qty : " +
+stockOk +
+" " +
+unitPc(stockOk) +
+"\n";
+
+}
+
+if(stockNg){
+
+text +=
+"NG Qty : " +
+stockNg +
+" " +
+unitPc(stockNg) +
+"\n";
+
+}
+
+if(totalNg){
+
+text +=
+"Total NG : " +
+totalNg +
+" " +
+unitPc(totalNg) +
+"\n";
+
+}
+
+if(reworkQty){
+
+text +=
+"Rework Qty : " +
+reworkQty +
+" " +
+unitPc(reworkQty) +
+"\n";
+
+}
+
+if(defectQty){
+
+text +=
+"Defect Qty : " +
+defectQty +
+" " +
+unitPc(defectQty) +
 "\n";
 
 }
