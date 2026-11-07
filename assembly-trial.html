@@ -1238,23 +1238,26 @@ Rework / การแก้ไข
 
 <!-- REMARK -->
 
-<div class="card" onclick="openRemark()">
-
-    <div class="card-title">
-        📝 Remark
-        <span class="th-title">
-            หมายเหตุ (แตะเพื่อเพิ่ม)
-        </span>
-    </div>
+<div class="card">
 
     <div
-    id="remarkBox"
-    style="display:none;margin-top:10px;">
+    class="card-title"
+    onclick="openRemark()"
+    style="cursor:pointer;">
+
+        📝 Remark
+
+        <span class="th-title">
+            หมายเหตุ (คลิกเพื่อเพิ่ม)
+        </span>
+
+    </div>
+
+    <div id="remarkBox">
 
         <textarea
         id="remarkText"
-        placeholder="กรอกหมายเหตุ"
-        onclick="event.stopPropagation()">
+        placeholder="กรอกหมายเหตุ">
         </textarea>
 
     </div>
@@ -2605,7 +2608,11 @@ function openRemark(){
 const box =
 document.getElementById("remarkBox");
 
-if(box.style.display === "none"){
+if(
+box.style.display === "none"
+||
+box.style.display === ""
+){
 
     box.style.display = "block";
 
