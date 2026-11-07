@@ -419,6 +419,11 @@ padding-top:15px;
 border-top:1px solid #e5e7eb;
 }
 
+#remarkBox{
+display:none;
+margin-top:10px;
+}
+
 /* ---------- PART DAMAGE ---------- */
 
 .damage-item{
@@ -1233,9 +1238,12 @@ Rework / การแก้ไข
 
 <!-- REMARK -->
 
-<div class="card" onclick="openRemark()">
+<div class="card">
 
-<div class="card-title">
+<div
+class="card-title"
+onclick="openRemark()"
+style="cursor:pointer;">
 📝 Remark
 <span class="th-title">
 หมายเหตุ (แตะเพื่อเพิ่ม)
@@ -1251,12 +1259,6 @@ id="remarkText"
 placeholder="กรอกหมายเหตุ"
 onclick="event.stopPropagation()">
 </textarea>
-
-</div>
-
-</div>
-
-<textarea></textarea>
 
 </div>
 
@@ -2605,8 +2607,18 @@ closeHistory();
 
 function openRemark(){
 
-document.getElementById("remarkBox").style.display =
-"block";
+const box =
+document.getElementById("remarkBox");
+
+if(box.style.display === "none"){
+
+    box.style.display = "block";
+
+}else{
+
+    box.style.display = "none";
+
+}
 
 }
 
