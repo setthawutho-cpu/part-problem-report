@@ -713,10 +713,105 @@ padding:12px;
 
 }
 
+/* ---------- HISTORY MENU ---------- */
+
+.history-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:9998;
+}
+
+.history-overlay.show{
+display:block;
+}
+
+.history-panel{
+position:fixed;
+top:0;
+left:-60vw;
+
+width:60vw;
+max-width:350px;
+height:100vh;
+
+background:#fff;
+
+transition:.25s ease;
+
+z-index:9999;
+
+display:flex;
+flex-direction:column;
+
+box-shadow:4px 0 20px rgba(0,0,0,.15);
+}
+
+.history-panel.show{
+left:0;
+}
+
+.history-header{
+padding:18px;
+font-weight:700;
+font-size:18px;
+border-bottom:1px solid #eee;
+}
+
+.history-list{
+flex:1;
+overflow-y:auto;
+}
+
+.history-item{
+padding:12px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}
+
+.history-item-title{
+font-size:13px;
+font-weight:600;
+}
+
+.history-item-time{
+font-size:11px;
+color:#888;
+margin-top:4px;
+}
+
+.history-delete{
+margin-top:6px;
+color:#e53935;
+font-size:11px;
+}
+
 </style>
 </head>
 
 <body>
+
+<div
+id="historyOverlay"
+class="history-overlay"
+onclick="closeHistory()">
+</div>
+
+<div
+id="historyPanel"
+class="history-panel">
+
+<div class="history-header">
+🕘 Report History
+</div>
+
+<div
+id="historyList"
+class="history-list">
+</div>
+
+</div>
 
 <div class="container">
 
@@ -1806,8 +1901,12 @@ Supplier : ${document.getElementById("supplier").value}
 
 }
 
+const finalText = text.trim();
+
 document.getElementById("report").innerText =
-text.trim();
+finalText;
+
+saveHistory(finalText);
 
 document
 .getElementById("reportOverlay")
@@ -2239,6 +2338,169 @@ encodeURIComponent(text);
 }
 
 </script>
+
+let reportHistory =
+JSON.parse(
+localStorage.getItem("reportHistory") || "[]"
+);
+
+function saveHistory(text){
+
+const item = {
+
+id: Date.now(),
+
+date:
+new Date().toLocaleString(),
+
+content:text
+
+};
+
+reportHistory.unshift(item);
+
+if(reportHistory.length > 50){
+reportHistory = reportHistory.slice(0,50);
+}
+
+localStorage.setItem(
+"reportHistory",
+JSON.stringify(reportHistory)
+);
+
+renderHistory();
+
+}
+
+function renderHistory(){
+
+const box =
+document.getElementById("historyList");
+
+box.innerHTML = "";
+
+reportHistory.forEach(item=>{
+
+box.innerHTML += `
+<div class="history-item"
+onclick="loadHistory(${item.id})">
+
+<div class="history-item-title">
+${item.content.split("\n")[0]}
+</div>
+
+<div class="history-item-time">
+${item.date}
+</div>
+
+<div
+class="history-delete"
+onclick="event.stopPropagation();deleteHistory(${item.id})">
+🗑 ลบ
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+function deleteHistory(id){
+
+reportHistory =
+reportHistory.filter(x=>x.id!==id);
+
+localStorage.setItem(
+"reportHistory",
+JSON.stringify(reportHistory)
+);
+
+renderHistory();
+
+}
+
+function loadHistory(id){
+
+const found =
+reportHistory.find(x=>x.id===id);
+
+if(!found) return;
+
+document.getElementById("report").innerText =
+found.content;
+
+document
+.getElementById("reportOverlay")
+.classList.add("show");
+
+closeHistory();
+
+}
+
+function openHistory(){
+
+document
+.getElementById("historyPanel")
+.classList.add("show");
+
+document
+.getElementById("historyOverlay")
+.classList.add("show");
+
+}
+
+function closeHistory(){
+
+document
+.getElementById("historyPanel")
+.classList.remove("show");
+
+document
+.getElementById("historyOverlay")
+.classList.remove("show");
+
+}
+
+renderHistory();
+
+let startX = 0;
+
+document.addEventListener(
+"touchstart",
+e=>{
+startX = e.touches[0].clientX;
+}
+);
+
+document.addEventListener(
+"touchend",
+e=>{
+
+const endX =
+e.changedTouches[0].clientX;
+
+const diff =
+endX - startX;
+
+/* ปัดจากซ้ายไปขวา */
+
+if(startX < 40 && diff > 80){
+
+openHistory();
+
+}
+
+/* ปิด */
+
+if(diff < -80){
+
+closeHistory();
+
+}
+
+}
+);
 
 </body>
 </html>
