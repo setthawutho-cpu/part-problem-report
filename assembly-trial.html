@@ -822,6 +822,15 @@ class="history-list">
 <div class="header-top">
 
 <button class="back-btn" onclick="location.href='home.html'">
+
+<button
+class="back-btn"
+onclick="openHistory()">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+</button>
+
 <i class="fa-solid fa-arrow-left"></i>
 </button>
 
@@ -2485,17 +2494,19 @@ e.changedTouches[0].clientX;
 const diff =
 endX - startX;
 
-/* ปัดจากซ้ายไปขวา */
+/* เปิด History */
+/* ปัดจากขวา -> ซ้าย */
 
-if(startX < 40 && diff > 80){
+if(startX > window.innerWidth - 40 && diff < -80){
 
 openHistory();
 
 }
 
-/* ปิด */
+/* ปิด History */
+/* ปัดจากซ้าย -> ขวา */
 
-if(diff < -80){
+if(diff > 80){
 
 closeHistory();
 
@@ -2503,7 +2514,7 @@ closeHistory();
 
 }
 );
-
+    
 </script>
 
 </body>
