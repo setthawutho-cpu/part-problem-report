@@ -347,7 +347,7 @@ gap:10px;
 display:grid;
 
 grid-template-columns:
-repeat(3,minmax(0,1fr));
+repeat(4,minmax(0,1fr));
 
 gap:10px;
 
@@ -665,8 +665,7 @@ repeat(3,minmax(0,1fr));
 
 .inspection-grid{
 grid-template-columns:
-repeat(3,minmax(0,1fr));
-
+repeat(4,minmax(0,1fr));
 }
 
 .bottom-actions{
@@ -697,7 +696,7 @@ grid-template-columns:
 .inspection-grid{
 
 grid-template-columns:
-repeat(3,minmax(0,1fr));
+repeat(4,minmax(0,1fr));
 
 }
 
@@ -1074,20 +1073,28 @@ Rework / การแก้ไข
 </span>
 </div>
 
+<!-- ROW 1 -->
+
 <div class="inspection-grid">
 
 <div>
-<div class="label">
-SKC-A MFG พบ NG
-</div>
-<input type="number" id="skcaNg">
+<div class="label">MFG NG Qty</div>
+<input type="number" id="mfgNgQty">
 </div>
 
 <div>
-<div class="label">
-Part NG
+<div class="label">OK Qty</div>
+<input type="number" id="mfgOkQty">
 </div>
-<select id="partNg">
+
+<div>
+<div class="label">NG Qty</div>
+<input type="number" id="mfgNgQtyResult" readonly>
+</div>
+
+<div>
+<div class="label">Result</div>
+<select id="mfgResult">
 <option value=""></option>
 <option>Rework</option>
 <option>Rework OK</option>
@@ -1096,45 +1103,34 @@ Part NG
 <option>Reject</option>
 <option>Defect</option>
 </select>
-</div>
-
-<div>
-<div class="label">
-Qty
-</div>
-<input type="number" id="partNgQty">
-</div>
-
-<div>
-<div class="label">
-Check Stock
-</div>
-<input type="number" id="stockNg">
-</div>
-
-<div>
-<div class="label">
-OK Qty
-</div>
-<input type="number" id="okQty">
-</div>
-
-<div>
-<div class="label">
-NG Qty
-</div>
-<input type="number" id="ngQty" readonly>
 </div>
 
 </div>
 
 <div style="height:10px;"></div>
 
+<!-- ROW 2 -->
+
 <div class="inspection-grid">
 
-<div id="partNgShowBox">
-<div class="label">Part NG</div>
-<select id="partNgShow">
+<div>
+<div class="label">Check Stock</div>
+<input type="number" id="stockCheck">
+</div>
+
+<div>
+<div class="label">OK Qty</div>
+<input type="number" id="stockOkQty">
+</div>
+
+<div>
+<div class="label">NG Qty</div>
+<input type="number" id="stockNgQty" readonly>
+</div>
+
+<div>
+<div class="label">Result</div>
+<select id="stockResult">
 <option value=""></option>
 <option>Rework</option>
 <option>Rework OK</option>
@@ -1145,20 +1141,32 @@ NG Qty
 </select>
 </div>
 
-<div id="totalNgBox">
-<div class="label">Total NG</div>
-<input
-type="number"
-id="totalNg"
-readonly>
 </div>
 
-<div id="defectBox">
-<div class="label">% Defect</div>
-<input
-type="number"
-id="defectPercent"
-readonly>
+<div style="height:10px;"></div>
+
+<!-- ROW 3 -->
+
+<div class="inspection-grid">
+
+<div>
+<div class="label">Total NG</div>
+<input type="number" id="totalNg" readonly>
+</div>
+
+<div>
+<div class="label">Rework Qty</div>
+<input type="number" id="reworkQty" readonly>
+</div>
+
+<div>
+<div class="label">Defect Qty</div>
+<input type="number" id="defectQty" readonly>
+</div>
+
+<div>
+<div class="label">Defect %</div>
+<input type="number" id="defectPercent" readonly>
 </div>
 
 </div>
