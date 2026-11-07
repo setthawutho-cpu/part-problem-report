@@ -2102,11 +2102,6 @@ let total = ngQty + partQty;
 document.getElementById("totalNg").value =
 total === 0 ? "" : total;
 
-/* Part NG */
-
-document.getElementById("partNgShow").value =
-document.getElementById("partNg").value;
-
 /* % Defect */
 
 let totalCheck = ok + total;
@@ -2123,25 +2118,15 @@ defect =
 document.getElementById("defectPercent").value =
 defect === 0 ? "" : defect;
 
-const partNgValue =
-document.getElementById("partNg").value;
-
-const partNgShow =
-document.getElementById("partNgShow");
-
 /* Part NG */
 
 if(ngQty > 0){
 
     document.getElementById("partNgShowBox").style.display = "block";
 
-    partNgShow.value = partNgValue;
-
 }else{
 
     document.getElementById("partNgShowBox").style.display = "none";
-
-    partNgShow.value = "";
 
 }
 
