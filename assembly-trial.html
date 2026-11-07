@@ -1875,21 +1875,22 @@ let damageText = "";
 
 rows.forEach(row=>{
 
-const inputs =
-row.querySelectorAll("input");
+const inputs = row.querySelectorAll("input");
 
-const no = inputs[0]?.value || "";
-const name = inputs[1]?.value || "";
-const qty = inputs[2]?.value || "";
+const no   = inputs[0]?.value.trim() || "";
+const name = inputs[1]?.value.trim() || "";
+const qty  = inputs[2]?.value.trim() || "";
 
 if(no || name || qty){
 
-damageText +=
-`Part No : ${no}
-Part Name : ${name}
-Qty : ${qty} ${unitPc(qty)}
-`;
+    damageText += `Part No : ${no}\n`;
+    damageText += `Part Name : ${name}\n`;
 
+    if(qty){
+        damageText += `Qty : ${qty} ${unitPc(qty)}\n`;
+    }
+
+    damageText += "\n";
 }
 
 });
@@ -1907,7 +1908,7 @@ text += damageText.trim();
 if(document.getElementById("supplier").value){
 
 text +=
-`━━━━━━━━━━━━━━
+`\n━━━━━━━━━━━━━━
 ACTION REQUEST
 Supplier : ${document.getElementById("supplier").value}
 1. ตรวจสอบ Stock คงเหลือทั้งหมด
