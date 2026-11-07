@@ -1785,6 +1785,9 @@ document.getElementById("stockOkQty").value;
 const stockNg =
 document.getElementById("stockNgQty").value;
 
+const stockResult =
+document.getElementById("stockResult").value;
+
 const totalNg =
 document.getElementById("totalNg").value;
 
@@ -1852,7 +1855,9 @@ unitPc(stockOk) +
 if(stockNg){
 
 text +=
-"NG (Defect) : " +
+"Part NG" +
+(stockResult ? " (" + stockResult + ")" : "") +
+" : " +
 stockNg +
 " " +
 unitPc(stockNg) +
