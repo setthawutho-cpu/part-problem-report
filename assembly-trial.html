@@ -1233,13 +1233,27 @@ Rework / การแก้ไข
 
 <!-- REMARK -->
 
-<div class="card">
+<div class="card" onclick="openRemark()">
 
 <div class="card-title">
 📝 Remark
 <span class="th-title">
-หมายเหตุ
+หมายเหตุ (แตะเพื่อเพิ่ม)
 </span>
+</div>
+
+<div
+id="remarkBox"
+style="display:none;margin-top:10px;">
+
+<textarea
+id="remarkText"
+placeholder="กรอกหมายเหตุ"
+onclick="event.stopPropagation()">
+</textarea>
+
+</div>
+
 </div>
 
 <textarea></textarea>
@@ -1907,14 +1921,17 @@ if(okMark){
 
 /* REMARK */
 
-const remarkBox =
-textareas[textareas.length - 1];
+const remarkText =
+document.getElementById("remarkText");
 
-if(remarkBox && remarkBox.value.trim()){
+if(
+remarkText &&
+remarkText.value.trim()
+){
 
 text += "━━━━━━━━━━━━━━\n";
 text += "Remark\n";
-text += remarkBox.value + "\n";
+text += remarkText.value + "\n";
 
 }
 
@@ -2584,6 +2601,15 @@ closeHistory();
 }
 );
     
+<script>
+
+function openRemark(){
+
+document.getElementById("remarkBox").style.display =
+"block";
+
+}
+
 </script>
 
 </body>
