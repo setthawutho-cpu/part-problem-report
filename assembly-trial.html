@@ -1877,7 +1877,7 @@ const qty = inputs[2]?.value || "";
 if(no || name || qty){
 
 damageText +=
-`\nPart No : ${no}
+`Part No : ${no}
 Part Name : ${name}
 Qty : ${qty} ${unitPc(qty)}
 `;
@@ -1890,7 +1890,7 @@ if(damageText){
 
 text += "━━━━━━━━━━━━━━\n";
 text += "Part Damage\n";
-text += damageText;
+text += damageText.trim();
 
 }
 
