@@ -1165,7 +1165,7 @@ readonly>
 
 <!-- OK MARK -->
 
-<div class="card">
+<div class="card" id="okMarkCard">
 
 <div class="card-title">
 ✅ OK Mark
@@ -2171,6 +2171,21 @@ document.getElementById("partNg").value === "Defect"
 
 }
 
+/* OK MARK */
+
+const okQty =
+Number(document.getElementById("okQty").value || 0);
+
+if(okQty > 0){
+
+    document.getElementById("okMarkCard").style.display = "block";
+
+}else{
+
+    document.getElementById("okMarkCard").style.display = "none";
+
+}
+
 }
 
 document.getElementById("skcaNg")
@@ -2188,6 +2203,7 @@ document.getElementById("partNg")
 document.getElementById("partNgShowBox").style.display="none";
 document.getElementById("totalNgBox").style.display="none";
 document.getElementById("defectBox").style.display="none";
+document.getElementById("okMarkCard").style.display="none";
 
 calculateNG();
 
