@@ -2581,17 +2581,11 @@ e.changedTouches[0].clientX;
 const diff =
 endX - startX;
 
-/* เปิด History */
-/* ปัดจากขวา -> ซ้าย */
-
 if(startX > window.innerWidth - 40 && diff < -80){
 
 openHistory();
 
 }
-
-/* ปิด History */
-/* ปัดจากซ้าย -> ขวา */
 
 if(diff > 80){
 
@@ -2600,7 +2594,6 @@ closeHistory();
 }
 
 }
-
 );
 
 </script>
@@ -2616,9 +2609,7 @@ if(box.style.display === "none"){
 
     box.style.display = "block";
 
-    document
-    .getElementById("remarkText")
-    .focus();
+    document.getElementById("remarkText").focus();
 
 }else{
 
