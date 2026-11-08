@@ -492,19 +492,6 @@ margin-bottom:10px;
 
 .floating-review{
 
-position:fixed;
-
-left:12px;
-right:12px;
-
-bottom:8px;
-
-height:50px !important;
-
-font-size:18px !important;
-
-border-radius:18px;
-
 z-index:9999;
 
 transition:.25s;
@@ -519,11 +506,13 @@ display:none;
 
 .floating-review{
 
-width:260px;
+position:static;
+
+width:100%;
 
 left:auto;
-right:20px;
-bottom:20px;
+right:auto;
+bottom:auto;
 
 }
 
@@ -641,6 +630,23 @@ background:#06C755;
 /* ---------- MOBILE ---------- */
 
 @media(max-width:768px){
+
+.floating-review{
+
+position:fixed;
+
+left:12px;
+right:12px;
+
+bottom:8px;
+
+height:50px !important;
+
+font-size:18px !important;
+
+border-radius:18px;
+
+}
 
 .header{
 height:auto;
@@ -2698,38 +2704,6 @@ box.style.display === ""
 }
 
 }
-
-const reviewBtn =
-document.getElementById("reviewBtn");
-
-let startY = 0;
-
-document.addEventListener("touchstart",e=>{
-
-startY = e.touches[0].clientY;
-
-});
-
-document.addEventListener("touchmove",e=>{
-
-const currentY =
-e.touches[0].clientY;
-
-if(currentY < startY){
-
-    /* ปัดขึ้น */
-
-    reviewBtn.classList.remove("hide");
-
-}else{
-
-    /* ปัดลง */
-
-    reviewBtn.classList.add("hide");
-
-}
-
-});
 
 </script>
 
