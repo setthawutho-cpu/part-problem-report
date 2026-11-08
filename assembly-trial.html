@@ -1268,12 +1268,22 @@ Rework / การแก้ไข
 
 <div class="card">
 
-<div class="card-title">
+<div
+class="card-title"
+onclick="openDamage()"
+style="cursor:pointer;">
+
 📦 Part Damage
+
 <span class="th-title">
-ชิ้นส่วนเสียหายร่วม
+ชิ้นส่วนเสียหายร่วม (คลิกเพื่อเพิ่ม)
 </span>
+
 </div>
+
+<div
+id="damageBox"
+style="display:none;">
 
 <div id="damageList">
 
@@ -1315,6 +1325,8 @@ onclick="addDamageRow()">
 ➕ Add Part Damage
 
 </button>
+
+</div>
 
 </div>
 
@@ -2617,6 +2629,27 @@ box.style.display === ""
     box.style.display = "block";
 
     document.getElementById("remarkText").focus();
+
+}else{
+
+    box.style.display = "none";
+
+}
+
+}
+
+function openDamage(){
+
+const box =
+document.getElementById("damageBox");
+
+if(
+box.style.display === "none"
+||
+box.style.display === ""
+){
+
+    box.style.display = "block";
 
 }else{
 
