@@ -2279,11 +2279,17 @@ if(mfgNg === 0 && stockNg === 0){
 let reworkQty = 0;
 let defectQty = 0;
 
-if(document.getElementById("mfgResult").value === "Rework"){
+if(
+    ["Rework","Rework OK","Wait Rework"]
+    .includes(document.getElementById("mfgResult").value)
+){
     reworkQty += mfgNg;
 }
 
-if(document.getElementById("stockResult").value === "Rework"){
+if(
+    ["Rework","Rework OK","Wait Rework"]
+    .includes(document.getElementById("stockResult").value)
+){
     reworkQty += stockNg;
 }
 
