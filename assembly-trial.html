@@ -471,7 +471,7 @@ height:64px;
 
 border:none;
 
-border-radius:22px;
+border-radius:999px;
 
 color:#fff;
 
@@ -633,20 +633,31 @@ background:#06C755;
 
 .floating-review{
 
-position:fixed;
+position:fixed !important;
 
-left:20px;
-right:20px;
+left:20px !important;
+right:20px !important;
 
-bottom:calc(env(safe-area-inset-bottom) + 10px);
+bottom:calc(env(safe-area-inset-bottom) + 20px) !important;
 
-height:56px !important;
+width:auto !important;
+
+height:58px !important;
+
+display:flex !important;
+align-items:center !important;
+justify-content:center !important;
+
+border:none !important;
+
+border-radius:999px !important;
 
 font-size:18px !important;
+font-weight:700 !important;
 
-border-radius:28px;
+box-shadow:0 8px 24px rgba(0,0,0,.18) !important;
 
-box-shadow:0 6px 20px rgba(0,0,0,.15);
+z-index:9999;
 
 }
 
@@ -710,6 +721,7 @@ min-height:60px;
 .review-btn{
 font-size:14px;
 height:50px;
+border-radius:999px;
 }
 
 .grid-3{
