@@ -2261,8 +2261,17 @@ stockCheck === 0 ? "" : stockNg;
 let totalNg =
 mfgNg + stockNg;
 
-document.getElementById("totalNg").value =
-totalNg === 0 ? "" : totalNg;
+/* ถ้า NG ทั้ง 2 ช่องยังไม่มีข้อมูล ไม่ต้องโชว์ */
+
+if(mfgNg === 0 && stockNg === 0){
+
+    document.getElementById("totalNg").value = "";
+
+}else{
+
+    document.getElementById("totalNg").value = totalNg;
+
+}
 
 
 /* REWORK / DEFECT */
@@ -2286,20 +2295,22 @@ if(document.getElementById("stockResult").value === "Defect"){
     defectQty += stockNg;
 }
 
+/* ยังไม่มีข้อมูล ไม่ต้องโชว์ */
+
 document.getElementById("reworkQty").value =
-reworkQty === 0 ? "" : reworkQty;
+reworkQty > 0 ? reworkQty : "";
 
 document.getElementById("defectQty").value =
-defectQty === 0 ? "" : defectQty;
+defectQty > 0 ? defectQty : "";
 
 
 /* DEFECT % */
 
 let totalChecked = mfgCheck + stockCheck;
 
-let defectPercent = 0;
+let defectPercent = "";
 
-if(totalChecked > 0){
+if(defectQty > 0 && totalChecked > 0){
 
     defectPercent =
     ((defectQty / totalChecked) * 100).toFixed(2);
@@ -2307,8 +2318,7 @@ if(totalChecked > 0){
 }
 
 document.getElementById("defectPercent").value =
-defectPercent == 0 ? "" : defectPercent;
-
+defectPercent;
 
 /* OK MARK */
 
