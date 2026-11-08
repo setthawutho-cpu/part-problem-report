@@ -1215,22 +1215,22 @@ Rework / การแก้ไข
 
 <div class="inspection-grid">
 
-<div>
+<div id="totalNgBox">
 <div class="label">Total NG</div>
 <input type="number" id="totalNg" readonly>
 </div>
 
-<div>
+<div id="reworkQtyBox">
 <div class="label">Rework Qty</div>
 <input type="number" id="reworkQty" readonly>
 </div>
 
-<div>
+<div id="defectQtyBox">
 <div class="label">Defect Qty</div>
 <input type="number" id="defectQty" readonly>
 </div>
 
-<div>
+<div id="defectPercentBox">
 <div class="label">Defect %</div>
 <input type="number" id="defectPercent" readonly>
 </div>
@@ -2319,6 +2319,20 @@ if(defectQty > 0 && totalChecked > 0){
 
 document.getElementById("defectPercent").value =
 defectPercent;
+
+/* SHOW / HIDE ROW 3 */
+
+document.getElementById("totalNgBox").style.display =
+totalNg > 0 ? "block" : "none";
+
+document.getElementById("reworkQtyBox").style.display =
+reworkQty > 0 ? "block" : "none";
+
+document.getElementById("defectQtyBox").style.display =
+defectQty > 0 ? "block" : "none";
+
+document.getElementById("defectPercentBox").style.display =
+defectPercent !== "" ? "block" : "none";
 
 /* OK MARK */
 
