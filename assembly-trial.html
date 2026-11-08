@@ -490,6 +490,42 @@ margin-bottom:10px;
 
 }
 
+.floating-review{
+
+position:fixed;
+
+left:12px;
+right:12px;
+bottom:12px;
+
+z-index:9999;
+
+transition:.25s;
+
+}
+
+.floating-review.hide{
+
+transform:translateY(120px);
+
+opacity:0;
+
+}
+
+@media(min-width:769px){
+
+.floating-review{
+
+width:260px;
+
+left:auto;
+right:20px;
+bottom:20px;
+
+}
+
+}
+
 /* REVIEW POPUP */
 
 .report-overlay{
@@ -1331,7 +1367,8 @@ onclick="addDamageRow()">
 </div>
 
 <button
-class="review-btn"
+id="reviewBtn"
+class="review-btn floating-review hide"
 onclick="reviewReport()">
 
 🔍 Review Report
@@ -2658,6 +2695,32 @@ box.style.display === ""
 }
 
 }
+
+let lastScroll = window.pageYOffset;
+
+window.addEventListener("scroll",()=>{
+
+const currentScroll =
+window.pageYOffset;
+
+const btn =
+document.getElementById("reviewBtn");
+
+if(!btn) return;
+
+if(currentScroll > lastScroll){
+
+    btn.classList.remove("hide");
+
+}else{
+
+    btn.classList.add("hide");
+
+}
+
+lastScroll = currentScroll;
+
+});
 
 </script>
 
