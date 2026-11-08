@@ -505,11 +505,7 @@ transition:.25s;
 }
 
 .floating-review.hide{
-
-transform:translateY(120px);
-
-opacity:0;
-
+display:none;
 }
 
 @media(min-width:769px){
@@ -2696,29 +2692,35 @@ box.style.display === ""
 
 }
 
-let lastScroll = window.pageYOffset;
-
-window.addEventListener("scroll",()=>{
-
-const currentScroll =
-window.pageYOffset;
-
-const btn =
+const reviewBtn =
 document.getElementById("reviewBtn");
 
-if(!btn) return;
+let startY = 0;
 
-if(currentScroll > lastScroll){
+document.addEventListener("touchstart",e=>{
 
-    btn.classList.remove("hide");
+startY = e.touches[0].clientY;
+
+});
+
+document.addEventListener("touchmove",e=>{
+
+const currentY =
+e.touches[0].clientY;
+
+if(currentY < startY){
+
+    /* ปัดขึ้น */
+
+    reviewBtn.classList.remove("hide");
 
 }else{
 
-    btn.classList.add("hide");
+    /* ปัดลง */
+
+    reviewBtn.classList.add("hide");
 
 }
-
-lastScroll = currentScroll;
 
 });
 
