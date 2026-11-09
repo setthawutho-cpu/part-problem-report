@@ -2649,6 +2649,8 @@ document.getElementById("historyPanel");
 const overlay =
 document.getElementById("historyOverlay");
 
+overlay.style.display = "block";
+
 panel.classList.add("show");
 overlay.classList.add("show");
 
@@ -2664,6 +2666,13 @@ document.getElementById("historyOverlay");
 
 panel.classList.remove("show");
 overlay.classList.remove("show");
+
+/* บังคับปิด Overlay */
+overlay.style.display = "none";
+
+setTimeout(()=>{
+    overlay.style.display = "";
+},50);
 
 }
 
