@@ -4,8 +4,12 @@
 <head>
 <meta charset="UTF-8">
 
-<meta name="theme-color" content="#eef4fb">
+<meta name="theme-color" content="#1f8fff">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="manifest" href="manifest.json">
 
 <meta
 name="viewport"
@@ -87,6 +91,10 @@ padding:0 10px 140px;
 
 .header{
 
+position:sticky;
+top:0;
+z-index:1000;
+
 background:
 linear-gradient(
 135deg,
@@ -94,14 +102,19 @@ var(--blue),
 var(--blue2)
 );
 
-border-radius:
-0 0 28px 28px;
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+border-radius:0 0 32px 32px;
 
 padding:20px;
 
 margin-bottom:12px;
 
 color:#fff;
+
+box-shadow:
+0 10px 30px rgba(0,87,255,.25);
 
 }
 
@@ -226,15 +239,17 @@ cursor:pointer;
 
 background:#fff;
 
-border-radius:24px;
+border-radius:30px;
 
 padding:16px;
 
-margin-bottom:12px;
+margin-bottom:14px;
+
+border:1px solid rgba(255,255,255,.5);
 
 box-shadow:
-0 4px 20px
-rgba(0,0,0,.06);
+0 8px 30px rgba(0,0,0,.06),
+0 2px 10px rgba(0,0,0,.03);
 
 overflow:hidden;
 
@@ -275,17 +290,30 @@ textarea{
 width:100%;
 max-width:100%;
 
-border:none;
-
 outline:none;
 
-background:#f5f7fb;
+background:#f7f9fc;
 
-border-radius:14px;
+border:2px solid transparent;
+
+border-radius:18px;
 
 padding:14px;
 
 font-size:16px;
+
+transition:.25s;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+border-color:#2979ff;
+
+box-shadow:
+0 0 0 4px rgba(41,121,255,.15);
 
 }
 
@@ -500,6 +528,11 @@ z-index:9999;
 
 transition:.25s;
 
+box-shadow:
+0 12px 30px rgba(0,87,255,.35);
+
+backdrop-filter:blur(10px);
+
 }
 
 .floating-review.hide{
@@ -659,7 +692,8 @@ border-radius:999px !important;
 font-size:18px !important;
 font-weight:700 !important;
 
-box-shadow:0 8px 24px rgba(0,0,0,.18) !important;
+box-shadow:
+0 12px 35px rgba(0,87,255,.35) !important;
 
 z-index:9999;
 
