@@ -794,10 +794,16 @@ inset:0;
 background:rgba(0,0,0,.35);
 display:none;
 z-index:9998;
+
+opacity:0;
+transition:opacity .25s ease;
+pointer-events:none;
 }
 
 .history-overlay.show{
 display:block !important;
+opacity:1;
+pointer-events:auto;
 }
 
 .history-panel{
@@ -2654,6 +2660,8 @@ panel.classList.add("show");
 overlay.classList.add("show");
 
 overlay.style.display = "block";
+overlay.offsetHeight;
+
 overlay.style.pointerEvents = "auto";
 
 }
@@ -2669,8 +2677,9 @@ document.getElementById("historyOverlay");
 panel.classList.remove("show");
 overlay.classList.remove("show");
 
-overlay.style.display = "none";
-overlay.style.pointerEvents = "none";
+setTimeout(()=>{
+    overlay.style.display = "none";
+},250);
 
 }
 
