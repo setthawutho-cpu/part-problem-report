@@ -797,7 +797,7 @@ z-index:9998;
 }
 
 .history-overlay.show{
-display:block;
+display:block !important;
 }
 
 .history-panel{
@@ -2655,13 +2655,17 @@ document
 
 function closeHistory(){
 
-document
-.getElementById("historyPanel")
-.classList.remove("show");
+const panel =
+document.getElementById("historyPanel");
 
-document
-.getElementById("historyOverlay")
-.classList.remove("show");
+const overlay =
+document.getElementById("historyOverlay");
+
+panel.classList.remove("show");
+overlay.classList.remove("show");
+
+/* กันจอดำค้าง */
+overlay.style.display = "";
 
 }
 
@@ -2686,16 +2690,23 @@ e.changedTouches[0].clientX;
 const diff =
 endX - startX;
 
-if(startX > window.innerWidth - 40 && diff < -80){
-
-openHistory();
-
+/* ปัดจากขวา -> ซ้าย เปิด History */
+if(
+startX > window.innerWidth - 40 &&
+diff < -80
+){
+    openHistory();
 }
 
-if(diff > 80){
-
-closeHistory();
-
+/* ปัดจากซ้าย -> ขวา ปิด History */
+if(
+document
+.getElementById("historyPanel")
+.classList.contains("show")
+&&
+diff > 80
+){
+    closeHistory();
 }
 
 }
