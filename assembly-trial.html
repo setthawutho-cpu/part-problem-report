@@ -267,6 +267,22 @@ margin-left:6px;
 
 }
 
+.card-title{
+
+display:flex;
+align-items:center;
+flex-wrap:wrap;
+gap:6px;
+
+font-size:24px;
+font-weight:700;
+
+cursor:pointer;
+
+padding-bottom:10px;
+
+}
+
 /* ---------- LABEL ---------- */
 
 .label{
@@ -2757,24 +2773,23 @@ if(diff > 80){
 
 function openRemark(){
 
-const box =
-document.getElementById("remarkBox");
+    const box =
+    document.getElementById("remarkBox");
 
-if(
-box.style.display === "none"
-||
-box.style.display === ""
-){
+    const isHidden =
+    getComputedStyle(box).display === "none";
 
-    box.style.display = "block";
+    if(isHidden){
 
-    document.getElementById("remarkText").focus();
+        box.style.display = "block";
 
-}else{
+        document.getElementById("remarkText").focus();
 
-    box.style.display = "none";
+    }else{
 
-}
+        box.style.display = "none";
+
+    }
 
 }
 
