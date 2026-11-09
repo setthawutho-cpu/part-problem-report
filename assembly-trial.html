@@ -829,7 +829,7 @@ box-shadow:-4px 0 20px rgba(0,0,0,.15);
 }
 
 .history-panel.show{
-transform:translateX(0);
+transform:none;
 }
 
 .history-header{
@@ -2650,36 +2650,21 @@ closeHistory();
 
 function openHistory(){
 
-const panel =
-document.getElementById("historyPanel");
+document.getElementById("historyPanel").style.display =
+"flex";
 
-const overlay =
-document.getElementById("historyOverlay");
-
-panel.classList.add("show");
-overlay.classList.add("show");
-
-overlay.style.display = "block";
-overlay.offsetHeight;
-
-overlay.style.pointerEvents = "auto";
+document.getElementById("historyOverlay").style.display =
+"block";
 
 }
 
 function closeHistory(){
 
-const panel =
-document.getElementById("historyPanel");
+document.getElementById("historyPanel").style.display =
+"none";
 
-const overlay =
-document.getElementById("historyOverlay");
-
-panel.classList.remove("show");
-overlay.classList.remove("show");
-
-setTimeout(()=>{
-    overlay.style.display = "none";
-},250);
+document.getElementById("historyOverlay").style.display =
+"none";
 
 }
 
@@ -2704,7 +2689,6 @@ e.changedTouches[0].clientX;
 const diff =
 endX - startX;
 
-/* ปัดจากขวา -> ซ้าย เปิด History */
 if(
 startX > window.innerWidth - 40 &&
 diff < -80
@@ -2712,14 +2696,7 @@ diff < -80
     openHistory();
 }
 
-/* ปัดจากซ้าย -> ขวา ปิด History */
-if(
-document
-.getElementById("historyPanel")
-.classList.contains("show")
-&&
-diff > 80
-){
+if(diff > 80){
     closeHistory();
 }
 
