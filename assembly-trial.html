@@ -2643,13 +2643,17 @@ closeHistory();
 
 function openHistory(){
 
-document
-.getElementById("historyPanel")
-.classList.add("show");
+const panel =
+document.getElementById("historyPanel");
 
-document
-.getElementById("historyOverlay")
-.classList.add("show");
+const overlay =
+document.getElementById("historyOverlay");
+
+panel.classList.add("show");
+overlay.classList.add("show");
+
+overlay.style.display = "block";
+overlay.style.pointerEvents = "auto";
 
 }
 
@@ -2664,8 +2668,8 @@ document.getElementById("historyOverlay");
 panel.classList.remove("show");
 overlay.classList.remove("show");
 
-/* กันจอดำค้าง */
-overlay.style.display = "";
+overlay.style.display = "none";
+overlay.style.pointerEvents = "none";
 
 }
 
