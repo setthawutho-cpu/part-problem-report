@@ -794,16 +794,10 @@ inset:0;
 background:rgba(0,0,0,.35);
 display:none;
 z-index:9998;
-
-opacity:0;
-transition:opacity .25s ease;
-pointer-events:none;
 }
 
 .history-overlay.show{
 display:block !important;
-opacity:1;
-pointer-events:auto;
 }
 
 .history-panel{
@@ -829,7 +823,7 @@ box-shadow:-4px 0 20px rgba(0,0,0,.15);
 }
 
 .history-panel.show{
-transform:none;
+transform:translateX(0);
 }
 
 .history-header{
@@ -944,9 +938,8 @@ Supplier Quality Report
 <div>
 <div class="label">Type / ประเภท</div>
 <select id="type">
-<option value=""></option>
 <option>New</option>
-<option>Repeat</option>
+<option>Reoccurred</option>
 </select>
 </div>
 
@@ -2650,21 +2643,27 @@ closeHistory();
 
 function openHistory(){
 
-document.getElementById("historyPanel").style.display =
-"flex";
+const panel =
+document.getElementById("historyPanel");
 
-document.getElementById("historyOverlay").style.display =
-"block";
+const overlay =
+document.getElementById("historyOverlay");
+
+panel.classList.add("show");
+overlay.classList.add("show");
 
 }
 
 function closeHistory(){
 
-document.getElementById("historyPanel").style.display =
-"none";
+const panel =
+document.getElementById("historyPanel");
 
-document.getElementById("historyOverlay").style.display =
-"none";
+const overlay =
+document.getElementById("historyOverlay");
+
+panel.classList.remove("show");
+overlay.classList.remove("show");
 
 }
 
