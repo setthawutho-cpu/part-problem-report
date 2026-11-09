@@ -803,7 +803,7 @@ display:block !important;
 .history-panel{
 position:fixed;
 top:0;
-right:-60vw;
+right:0;
 
 width:60vw;
 max-width:350px;
@@ -811,7 +811,8 @@ height:100vh;
 
 background:#fff;
 
-transition:.25s ease;
+transform:translateX(100%);
+transition:transform .25s ease;
 
 z-index:9999;
 
@@ -822,7 +823,7 @@ box-shadow:-4px 0 20px rgba(0,0,0,.15);
 }
 
 .history-panel.show{
-right:0;
+transform:translateX(0);
 }
 
 .history-header{
@@ -2670,7 +2671,6 @@ overlay.classList.remove("show");
 
 overlay.style.display = "none";
 overlay.style.pointerEvents = "none";
-overlay.style.background = "transparent";
 
 }
 
