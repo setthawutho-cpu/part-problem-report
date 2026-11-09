@@ -2667,8 +2667,10 @@ document.getElementById("historyOverlay");
 panel.classList.remove("show");
 overlay.classList.remove("show");
 
-/* บังคับปิด Overlay */
 overlay.style.display = "none";
+
+/* บังคับ Safari รีเฟรชหน้าจอ */
+document.body.offsetHeight;
 
 setTimeout(()=>{
     overlay.style.display = "";
