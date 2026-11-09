@@ -893,26 +893,67 @@ overflow-y:auto;
 }
 
 .history-item{
-padding:12px;
+padding:8px 10px;
 border-bottom:1px solid #eee;
 cursor:pointer;
+line-height:1.2;
 }
 
 .history-item-title{
-font-size:13px;
-font-weight:600;
+font-size:12px;
+font-weight:700;
+color:#1d3557;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-partname{
+font-size:11px;
+color:#555;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-detail{
+font-size:10px;
+color:#777;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .history-item-time{
-font-size:11px;
-color:#888;
-margin-top:4px;
+font-size:10px;
+color:#999;
+margin-top:2px;
 }
 
 .history-delete{
-margin-top:6px;
-color:#e53935;
-font-size:11px;
+
+margin-top:2px;
+
+padding:0;
+
+border:none;
+background:none;
+
+color:#999;
+
+font-size:10px;
+
+cursor:pointer;
+
+display:inline-block;
+
+}
+
+.history-delete:active{
+opacity:.6;
 }
 
 </style>
@@ -2638,23 +2679,51 @@ box.innerHTML = "";
 
 reportHistory.forEach(item=>{
 
+const lines =
+item.content.split("\n");
+
+const partNo =
+(lines.find(x=>x.startsWith("Part No.")) || "")
+.replace("Part No. : ","");
+
+const partName =
+(lines.find(x=>x.startsWith("Part Name")) || "")
+.replace("Part Name : ","");
+
+const model =
+(lines.find(x=>x.startsWith("Model")) || "")
+.replace("Model : ","");
+
+const supplier =
+(lines.find(x=>x.startsWith("Supplier")) || "")
+.replace("Supplier : ","");
+
 box.innerHTML += `
 <div class="history-item"
 onclick="loadHistory(${item.id})">
 
 <div class="history-item-title">
-${item.content.split("\n")[0]}
+${partNo}
+</div>
+
+<div class="history-partname">
+${partName}
+</div>
+
+<div class="history-detail">
+${model} • ${supplier}
 </div>
 
 <div class="history-item-time">
 ${item.date}
 </div>
 
-<div
+<button
+type="button"
 class="history-delete"
 onclick="event.stopPropagation();deleteHistory(${item.id})">
 🗑 ลบ
-</div>
+</button>
 
 </div>
 `;
@@ -2664,6 +2733,12 @@ onclick="event.stopPropagation();deleteHistory(${item.id})">
 }
 
 function deleteHistory(id){
+
+if(
+!confirm("🗑 ต้องการลบรายการนี้ใช่หรือไม่ ?")
+){
+return;
+}
 
 reportHistory =
 reportHistory.filter(x=>x.id!==id);
