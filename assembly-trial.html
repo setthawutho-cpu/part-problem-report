@@ -3315,18 +3315,20 @@ function startQr(){
 qrScanner.start(
   { facingMode:"environment" },
   {
-    fps:10
+    fps:10,
+    qrbox:{
+      width:320,
+      height:320
+    }
   },
-  (decodedText) => {
-
-    alert("QR FOUND");
-
-    alert(decodedText);
-
-    onScanSuccess(decodedText);
-
-  }
+  onScanSuccess
 )
+.catch(err=>{
+
+  console.error("QR ERROR", err);
+
+});
+    
 .catch(err=>{
 
   console.error("QR ERROR", err);
@@ -3367,18 +3369,21 @@ function onScanSuccess(decodedText){
 
   stopQr();
 
-  const partNo = decodedText.trim();
+  const partNo =
+  decodedText.substring(3,13);
 
   document.getElementById("partNo").value =
   partNo;
 
-  alert(partNo);
+  document.getElementById("partNo")
+  .dispatchEvent(
+    new Event("input")
+  );
 
   document.getElementById("partNo")
-  .dispatchEvent(new Event("input"));
-
-  document.getElementById("partNo")
-  .dispatchEvent(new Event("change"));
+  .dispatchEvent(
+    new Event("change")
+  );
 
 }
 
