@@ -303,22 +303,23 @@ color:#64748b;
 .partno-label{
 display:flex;
 align-items:center;
-gap:6px;
+justify-content:space-between;
 }
 
 .scan-btn{
 display:none;
 
-width:28px;
-height:28px;
+padding:0;
+
+width:auto;
+height:auto;
 
 border:none;
-border-radius:8px;
+background:none;
 
-background:#2563eb;
-color:#fff;
+color:#2563eb;
 
-font-size:14px;
+font-size:16px;
 
 cursor:pointer;
 }
@@ -1208,12 +1209,12 @@ Supplier Quality Report
 <div class="label partno-label">
   Part No.
 
-  <button
-    type="button"
-    id="scanQrBtn"
-    class="scan-btn">
-    📷
-  </button>
+<button
+type="button"
+id="scanQrBtn"
+class="scan-btn">
+<i class="fa-solid fa-qrcode"></i>
+</button>
 </div>
 
 <input
