@@ -3386,17 +3386,24 @@ async function(){
 
   try{
 
+    const html5QrCode =
+    new Html5Qrcode("reader");
+
     const result =
-    await Html5Qrcode.scanFile(
+    await html5QrCode.scanFile(
       file,
       true
     );
 
+    console.log(result);
+
     onScanSuccess(result);
 
-  }catch(e){
+  }catch(err){
 
-    alert("ไม่พบ QR Code");
+    console.log(err);
+
+    alert("ไม่พบ QR Code ในรูป");
 
   }
 
