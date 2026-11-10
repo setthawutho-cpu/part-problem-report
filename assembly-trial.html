@@ -3312,7 +3312,7 @@ function startQr(){
   qrScanner =
   new Html5Qrcode("reader");
 
-  qrScanner.start(
+qrScanner.start(
   { facingMode:"environment" },
   {
     fps:10,
@@ -3322,14 +3322,15 @@ function startQr(){
     }
   },
   onScanSuccess
+)
 .catch(err=>{
 
-  console.error("QR ERROR",err);
+  console.error("QR ERROR", err);
 
   alert(
     typeof err === "string"
-    ? err
-    : JSON.stringify(err)
+      ? err
+      : JSON.stringify(err)
   );
 
 });
