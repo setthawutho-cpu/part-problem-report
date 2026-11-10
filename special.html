@@ -679,23 +679,27 @@ if(angleStep===0){
   
 function saveResult(){
 
-let std=
+let std =
 document.getElementById('stdBox').innerText;
 
-let tol=
+let tol =
 document.getElementById('tol').value;
 
-let result=
+let result =
 document.getElementById('result').innerText;
 
-let text=
-currentTool+' '+
-std+
-' '+
-tol+
-' '+
-result+
-'.';
+if(result.startsWith('NG')){
+    result = 'NG Act. ' + result.replace('NG ','');
+}
+else if(result.startsWith('OK')){
+    result = 'OK Act. ' + result.replace('OK ','');
+}
+
+let text =
+currentTool + ' ' +
+std + ' ' +
+tol + ' mm. ' +
+result + '.';
 
 window.parent.receiveSpecial(text);
 
