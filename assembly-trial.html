@@ -3315,13 +3315,11 @@ function startQr(){
 qrScanner.start(
   { facingMode:"environment" },
   {
-    fps:10,
-    qrbox:{
-      width:320,
-      height:320
-    }
+    fps:10
   },
   (decodedText) => {
+
+    alert("QR FOUND");
 
     alert(decodedText);
 
