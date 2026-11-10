@@ -3382,20 +3382,21 @@ function onScanSuccess(decodedText){
 
 }
 
-async function stopQr(){
+async function onScanSuccess(decodedText){
 
-  if(qrScanner){
+  await stopQr();
 
-    await qrScanner.stop();
-    await qrScanner.clear();
+  const partNo =
+  decodedText.substring(3,13);
 
-    qrScanner = null;
+  document.getElementById("partNo").value =
+  partNo;
 
-  }
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("input"));
 
-  document
-  .getElementById("qrOverlay")
-  .classList.remove("show");
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("change"));
 
 }
 
