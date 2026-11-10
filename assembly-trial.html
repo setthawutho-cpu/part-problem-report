@@ -3187,7 +3187,10 @@ function startQr(){
     { facingMode:"environment" },
     {
       fps:10,
-      qrbox:250
+      qrbox:{
+  width:220,
+  height:220
+}
     },
     onScanSuccess
   );
