@@ -979,10 +979,10 @@ opacity:.6;
 
 .std-btn{
 
-height:36px;
-min-width:78px;
+height:28px;
+min-width:58px;
 
-padding:0 14px;
+padding:0 8px;
 
 border:none;
 outline:none;
@@ -998,24 +998,29 @@ linear-gradient(
 
 color:#fff;
 
-font-size:12px;
+font-size:10px;
 font-weight:700;
 
 display:flex;
 align-items:center;
 justify-content:center;
-gap:5px;
+gap:3px;
 
 cursor:pointer;
 
 box-shadow:
-0 4px 12px rgba(37,99,235,.25),
-0 2px 4px rgba(0,0,0,.08);
-
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
+0 2px 6px rgba(37,99,235,.20);
 
 transition:.15s;
+}
+
+.std-btn:active{
+transform:scale(.95);
+opacity:.9;
+}
+
+.std-btn i{
+font-size:9px;
 }
 
 .std-btn:active{
