@@ -3360,28 +3360,6 @@ async function toggleTorch(){
 
 }
 
-function onScanSuccess(decodedText){
-
-  stopQr();
-
-  const partNo =
-  decodedText.substring(3,13);
-
-  document.getElementById("partNo").value =
-  partNo;
-
-  document.getElementById("partNo")
-  .dispatchEvent(
-    new Event("input")
-  );
-
-  document.getElementById("partNo")
-  .dispatchEvent(
-    new Event("change")
-  );
-
-}
-
 async function onScanSuccess(decodedText){
 
   await stopQr();
@@ -3400,28 +3378,20 @@ async function onScanSuccess(decodedText){
 
 }
 
+async function stopQr(){
+
   if(qrScanner){
 
-    qrScanner.stop()
-    .then(()=>{
+    await qrScanner.stop();
+    await qrScanner.clear();
 
-      document
-      .getElementById("qrOverlay")
-      .classList.remove("show");
-
-      qrScanner.clear();
-
-      qrScanner = null;
-
-    });
-
-  }else{
-
-    document
-    .getElementById("qrOverlay")
-    .classList.remove("show");
+    qrScanner = null;
 
   }
+
+  document
+  .getElementById("qrOverlay")
+  .classList.remove("show");
 
 }
 
