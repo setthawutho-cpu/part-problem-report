@@ -3369,14 +3369,10 @@ function onScanSuccess(decodedText){
   decodedText.trim();
 
   document.getElementById("partNo")
-  .dispatchEvent(
-    new Event("input")
-  );
+  .dispatchEvent(new Event("input"));
 
   document.getElementById("partNo")
-  .dispatchEvent(
-    new Event("change")
-  );
+  .dispatchEvent(new Event("change"));
 
 }
 
