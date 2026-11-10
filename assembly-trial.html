@@ -3307,25 +3307,33 @@ document
 function startQr(){
 
   document
+  .getElementById("reader")
+  .innerHTML = "";
+
+  document
   .getElementById("qrOverlay")
   .classList.add("show");
 
-  qrScanner = new Html5Qrcode("reader");
+  qrScanner =
+  new Html5Qrcode("reader");
 
 qrScanner.start(
   { facingMode:"environment" },
   {
-fps:10,
-
-aspectRatio:1,
-
-qrbox:{
-  width:320,
-  height:320
-}
+    fps:10,
+    qrbox:{
+      width:320,
+      height:320
+    }
   },
   onScanSuccess
-);
+).catch(err=>{
+
+  console.log(err);
+
+  alert(err);
+
+});
 
 }
 
@@ -3372,49 +3380,6 @@ function onScanSuccess(decodedText){
   );
 
 }
-
-document
-.getElementById("qrFile")
-.addEventListener(
-"change",
-async function(){
-
-  const file = this.files[0];
-
-  if(!file) return;
-
-  try{
-
-if(qrScanner){
-
-  await qrScanner.stop();
-
-}
-
-const html5QrCode =
-new Html5Qrcode("reader");
-
-const result =
-await html5QrCode.scanFile(
-  file,
-  true
-);
-
-html5QrCode.clear();
-
-    console.log(result);
-
-    onScanSuccess(result);
-
-  }catch(err){
-
-    console.log(err);
-
-    alert("ไม่พบ QR Code ในรูป");
-
-  }
-
-});
 
 function stopQr(){
 
