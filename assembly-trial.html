@@ -3365,12 +3365,14 @@ async function toggleTorch(){
 
 function onScanSuccess(decodedText){
 
-  alert(decodedText);
-
   stopQr();
 
+  const partNo = decodedText.trim();
+
   document.getElementById("partNo").value =
-  decodedText.trim();
+  partNo;
+
+  alert(partNo);
 
   document.getElementById("partNo")
   .dispatchEvent(new Event("input"));
