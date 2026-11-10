@@ -3236,11 +3236,12 @@ src="special.html">
 
       🖼️
 
-      <input
-      type="file"
-      id="qrFile"
-      accept="image/*"
-      hidden>
+<input
+type="file"
+id="qrFile"
+accept="image/*"
+capture="environment"
+hidden>
 
     </label>
 
@@ -3386,14 +3387,22 @@ async function(){
 
   try{
 
-    const html5QrCode =
-    new Html5Qrcode("reader");
+if(qrScanner){
 
-    const result =
-    await html5QrCode.scanFile(
-      file,
-      true
-    );
+  await qrScanner.stop();
+
+}
+
+const html5QrCode =
+new Html5Qrcode("reader");
+
+const result =
+await html5QrCode.scanFile(
+  file,
+  true
+);
+
+html5QrCode.clear();
 
     console.log(result);
 
