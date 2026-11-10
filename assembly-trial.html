@@ -1131,6 +1131,66 @@ backdrop-filter:blur(10px);
 
 }
 
+.qr-flash{
+
+position:absolute;
+
+top:55px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:52px;
+height:52px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.45);
+
+color:#fff;
+
+font-size:24px;
+
+cursor:pointer;
+
+z-index:999999;
+
+backdrop-filter:blur(10px);
+
+}
+
+.qr-gallery{
+
+position:absolute;
+
+top:55px;
+right:20px;
+
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.45);
+
+color:#fff;
+
+font-size:24px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+
+z-index:999999;
+
+backdrop-filter:blur(10px);
+
+}
+
 #qrOverlay .std-box{
 
 position:fixed;
@@ -3165,6 +3225,25 @@ src="special.html">
       ←
     </button>
 
+    <button
+      type="button"
+      class="qr-flash"
+      onclick="toggleTorch()">
+      🔦
+    </button>
+
+    <label class="qr-gallery">
+
+      🖼️
+
+      <input
+      type="file"
+      id="qrFile"
+      accept="image/*"
+      hidden>
+
+    </label>
+
     <div id="reader"></div>
 
   </div>
@@ -3218,6 +3297,8 @@ this.classList.remove("show");
 
 let qrScanner;
 
+let torchOn = false;
+
 document
 .getElementById("scanQrBtn")
 ?.addEventListener("click", startQr);
@@ -3249,6 +3330,28 @@ qrbox:{
 
 }
 
+async function toggleTorch(){
+
+  try{
+
+    torchOn = !torchOn;
+
+    await qrScanner.applyVideoConstraints({
+      advanced:[
+        {
+          torch:torchOn
+        }
+      ]
+    });
+
+  }catch(e){
+
+    alert("มือถือไม่รองรับไฟฉาย");
+
+  }
+
+}
+
 function onScanSuccess(decodedText){
 
   stopQr();
@@ -3270,6 +3373,34 @@ function onScanSuccess(decodedText){
   );
 
 }
+
+document
+.getElementById("qrFile")
+.addEventListener(
+"change",
+async function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  try{
+
+    const result =
+    await Html5Qrcode.scanFile(
+      file,
+      true
+    );
+
+    onScanSuccess(result);
+
+  }catch(e){
+
+    alert("ไม่พบ QR Code");
+
+  }
+
+});
 
 function stopQr(){
 
