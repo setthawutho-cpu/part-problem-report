@@ -1104,24 +1104,31 @@ border:none;
 }
 
 .qr-close{
-position:absolute;
-top:10px;
-right:10px;
 
-width:36px;
-height:36px;
+position:absolute;
+
+top:55px;
+left:20px;
+
+width:52px;
+height:52px;
 
 border:none;
+
 border-radius:50%;
 
-background:#ef4444;
+background:rgba(0,0,0,.45);
+
 color:#fff;
 
-font-size:18px;
+font-size:26px;
 
 cursor:pointer;
 
 z-index:999999;
+
+backdrop-filter:blur(10px);
+
 }
 
 #qrOverlay .std-box{
@@ -1153,6 +1160,21 @@ height:100%;
 
 background:#000;
 
+}
+
+#reader__dashboard,
+#reader__header_message{
+display:none !important;
+}
+
+#reader video{
+width:100% !important;
+height:100% !important;
+object-fit:cover !important;
+}
+
+#reader__scan_region{
+margin-top:120px !important;
 }
 
 </style>
@@ -3140,7 +3162,7 @@ src="special.html">
       type="button"
       class="qr-close"
       onclick="stopQr()">
-      ✕
+      ←
     </button>
 
     <div id="reader"></div>
@@ -3208,20 +3230,22 @@ function startQr(){
 
   qrScanner = new Html5Qrcode("reader");
 
-  qrScanner.start(
-    { facingMode:"environment" },
-    {
+qrScanner.start(
+  { facingMode:"environment" },
+  {
 fps:10,
 
 aspectRatio:1,
 
+rememberLastUsedCamera:true,
+
 qrbox:{
-  width:280,
-  height:280
+  width:320,
+  height:320
 }
-    },
-    onScanSuccess
-  );
+  },
+  onScanSuccess
+);
 
 }
 
