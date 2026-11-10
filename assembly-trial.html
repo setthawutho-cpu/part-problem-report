@@ -3321,7 +3321,13 @@ qrScanner.start(
       height:320
     }
   },
-  onScanSuccess
+  (decodedText) => {
+
+    alert(decodedText);
+
+    onScanSuccess(decodedText);
+
+  }
 )
 .catch(err=>{
 
