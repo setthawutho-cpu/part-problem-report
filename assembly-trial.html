@@ -3201,8 +3201,18 @@ function onScanSuccess(decodedText){
 
   stopQr();
 
+  const partNo =
+  decodedText.substring(2,11);
+
+  alert(partNo);
+
   document.getElementById("partNo").value =
-  decodedText;
+  partNo;
+
+  document.getElementById("partNo")
+  .dispatchEvent(
+    new Event("input")
+  );
 
   document.getElementById("partNo")
   .dispatchEvent(
