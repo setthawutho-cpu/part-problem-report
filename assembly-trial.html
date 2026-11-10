@@ -1225,7 +1225,7 @@ background:#000;
 #reader video{
 width:100% !important;
 height:100% !important;
-object-fit:cover !important;
+object-fit:contain !important;
 }
 
 #reader__scan_region{
@@ -3315,11 +3315,12 @@ function startQr(){
 qrScanner.start(
   { facingMode:"environment" },
   {
-    fps:10,
+    fps:15,
     qrbox:{
-      width:320,
-      height:320
-    }
+      width:250,
+      height:250
+    },
+    aspectRatio:1.0
   },
   onScanSuccess
 )
@@ -3381,7 +3382,22 @@ function onScanSuccess(decodedText){
 
 }
 
-function stopQr(){
+async function stopQr(){
+
+  if(qrScanner){
+
+    await qrScanner.stop();
+    await qrScanner.clear();
+
+    qrScanner = null;
+
+  }
+
+  document
+  .getElementById("qrOverlay")
+  .classList.remove("show");
+
+}
 
   if(qrScanner){
 
