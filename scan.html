@@ -256,10 +256,13 @@ async function startQR(){
         qrResult.value =
         result.text;
 
-        localStorage.setItem(
-          "scannedPartNo",
-          result.text
-        );
+       localStorage.setItem(
+       "scannedPartNo",
+       result.text
+       );
+
+      location.href =
+      "part-problem-inform.html";
 
       }
 
