@@ -1343,7 +1343,8 @@ Supplier Quality Report
 <button
 type="button"
 id="scanQrBtn"
-class="scan-btn">
+class="scan-btn"
+onclick="openScanPage()">
 <i class="fa-solid fa-qrcode"></i>
 </button>
 </div>
@@ -1964,6 +1965,26 @@ try{
 }
 
 loadExcel();
+
+window.addEventListener("load",()=>{
+
+  const partNo =
+  localStorage.getItem("scannedPartNo");
+
+  if(!partNo) return;
+
+  document.getElementById("partNo").value =
+  partNo;
+
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("input"));
+
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("change"));
+
+  localStorage.removeItem("scannedPartNo");
+
+});
 
 function editField(el){
 
@@ -3209,205 +3230,11 @@ src="special.html">
 
 </div>
 
-<div id="qrOverlay" class="std-overlay">
+function openScanPage(){
 
-  <div class="std-box">
-
-    <button
-      type="button"
-      class="qr-close"
-      onclick="stopQr()">
-      ←
-    </button>
-
-    <button
-      type="button"
-      class="qr-flash"
-      onclick="toggleTorch()">
-      🔦
-    </button>
-
-    <label class="qr-gallery">
-
-      🖼️
-
-<input
-type="file"
-id="qrFile"
-accept="image/*"
-capture="environment"
-hidden>
-
-    </label>
-
-    <div id="reader"></div>
-
-  </div>
-
-</div>
-
-<script>
-
-function openSpecial(){
-
-document
-.getElementById("stdOverlay")
-.classList.add("show");
+  location.href = "scan.html";
 
 }
-
-function receiveSpecial(text){
-
-const detail =
-document.getElementById("detail");
-
-if(detail.value.trim()!==""){
-detail.value += "\n";
-}
-
-detail.value += text;
-
-document
-.getElementById("stdOverlay")
-.classList.remove("show");
-
-}
-
-document
-.getElementById("stdOverlay")
-.addEventListener(
-"click",
-function(e){
-
-if(e.target===this){
-
-this.classList.remove("show");
-
-}
-
-});
-
-</script>
-
-<script>
-
-let qrScanner;
-
-let torchOn = false;
-
-document
-.getElementById("scanQrBtn")
-?.addEventListener("click", startQr);
-
-function startQr(){
-
-  document
-  .getElementById("qrOverlay")
-  .classList.add("show");
-
-  if(qrScanner){
-    return;
-  }
-
-  qrScanner =
-  new Html5Qrcode("reader");
-
-qrScanner.start(
-  { facingMode:"environment" },
-  {
-    fps:15,
-    qrbox:{
-      width:250,
-      height:250
-    },
-    aspectRatio:1.0
-  },
-  onScanSuccess
-)
-.catch(err=>{
-
-  console.error("QR ERROR", err);
-
-  alert(
-    typeof err === "string"
-      ? err
-      : JSON.stringify(err)
-  );
-
-});
-
-}
-
-async function toggleTorch(){
-
-  try{
-
-    torchOn = !torchOn;
-
-    await qrScanner.applyVideoConstraints({
-      advanced:[
-        {
-          torch:torchOn
-        }
-      ]
-    });
-
-  }catch(e){
-
-    alert("มือถือไม่รองรับไฟฉาย");
-
-  }
-
-}
-
-async function onScanSuccess(decodedText){
-
-  await stopQr();
-
-  const partNo =
-  decodedText.substring(3,13);
-
-  document.getElementById("partNo").value =
-  partNo;
-
-  document.getElementById("partNo")
-  .dispatchEvent(new Event("input"));
-
-  document.getElementById("partNo")
-  .dispatchEvent(new Event("change"));
-
-}
-
-async function stopQr(){
-
-  if(qrScanner){
-
-    await qrScanner.stop();
-    await qrScanner.clear();
-
-    qrScanner = null;
-
-  }
-
-  document
-  .getElementById("qrOverlay")
-  .classList.remove("show");
-
-}
-
-document
-.getElementById("qrOverlay")
-?.addEventListener("click",function(e){
-
-  if(e.target===this){
-
-    stopQr();
-
-  }
-
-});
-
-</script>
 
 </body>
 </html>
