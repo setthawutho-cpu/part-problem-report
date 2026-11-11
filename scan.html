@@ -133,17 +133,6 @@ startScanner();
 
 function extractPartNo(text){
 
-  const match =
-  text.match(/5T\d{8}/);
-
-  if(match){
-    return match[0];
-  }
-
-  return text;
-
-}
-
 function startScanner(){
 
   qrScanner =
