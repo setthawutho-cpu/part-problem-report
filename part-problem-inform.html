@@ -3225,9 +3225,21 @@ box.style.display === ""
 
 </script>
 
-<div id="stdOverlay" class="std-overlay">
+<div
+id="stdOverlay"
+class="std-overlay"
+onclick="closeSpecial()">
 
-<div class="std-box">
+<div
+class="std-box"
+onclick="event.stopPropagation()">
+
+<button
+type="button"
+class="qr-close"
+onclick="closeSpecial()">
+✕
+</button>
 
 <iframe
 id="stdFrame"
@@ -3241,9 +3253,19 @@ src="special.html">
 <script>
 
 function openScanPage(){
-
   location.href = "scan.html";
+}
 
+function openSpecial(){
+  document
+    .getElementById("stdOverlay")
+    .classList.add("show");
+}
+
+function closeSpecial(){
+  document
+    .getElementById("stdOverlay")
+    .classList.remove("show");
 }
 
 </script>
