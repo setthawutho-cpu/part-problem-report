@@ -6,7 +6,7 @@
 
 <title>Scan Part</title>
 
-<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <style>
 
@@ -30,6 +30,7 @@ position:fixed;
 inset:0;
 width:100%;
 height:100%;
+background:#000;
 }
 
 #reader video{
@@ -39,9 +40,7 @@ object-fit:contain !important;
 }
 
 .topbar{
-
 position:fixed;
-
 top:20px;
 left:20px;
 right:20px;
@@ -61,11 +60,11 @@ height:52px;
 border:none;
 border-radius:50%;
 
-background:rgba(0,0,0,.5);
+background:rgba(0,0,0,.55);
 
 color:#fff;
 
-font-size:22px;
+font-size:24px;
 
 cursor:pointer;
 
@@ -93,6 +92,7 @@ z-index:9999;
 </style>
 
 </head>
+
 <body>
 
 <div class="topbar">
@@ -114,57 +114,44 @@ onclick="toggleTorch()">
 <div id="reader"></div>
 
 <div class="title">
-สแกน QR / Barcode Part No.
+สแกน QR Code
 </div>
 
 <script>
 
-let scanner;
+let scanner = null;
 let torchOn = false;
-
-alert("Html5Qrcode = " + typeof Html5Qrcode);
 
 startScanner();
 
 function startScanner(){
 
-  scanner = new Html5Qrcode("reader");
+  scanner =
+  new Html5Qrcode("reader");
 
   scanner.start(
+
     {
       facingMode:"environment"
     },
+
     {
-      fps:20,
+      fps:10,
+
       qrbox:{
-        width:300,
-        height:300
-      },
-      aspectRatio:1
+        width:320,
+        height:320
+      }
     },
 
-    function(decodedText){
+    onScanSuccess
 
-      alert("SCAN OK : " + decodedText);
-
-      onScanSuccess(decodedText);
-
-    },
-
-    function(errorMessage){
-
-      console.log(errorMessage);
-
-    }
-
-  )
-  .catch(err=>{
+  ).catch(err=>{
 
     console.error(err);
 
     alert(
-      "เปิดกล้องไม่สำเร็จ\n\n" +
-      JSON.stringify(err)
+      "ไม่สามารถเปิดกล้องได้"
     );
 
   });
@@ -172,6 +159,11 @@ function startScanner(){
 }
 
 async function onScanSuccess(decodedText){
+
+  alert(
+    "SCAN OK :\n\n" +
+    decodedText
+  );
 
   try{
 
@@ -206,7 +198,9 @@ async function toggleTorch(){
 
   }catch(err){
 
-    alert("มือถือไม่รองรับไฟฉาย");
+    alert(
+      "มือถือรุ่นนี้ไม่รองรับไฟฉายผ่าน Browser"
+    );
 
   }
 
