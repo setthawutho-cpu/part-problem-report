@@ -122,35 +122,49 @@ onclick="toggleTorch()">
 let scanner;
 let torchOn = false;
 
+alert("Html5Qrcode = " + typeof Html5Qrcode);
+
 startScanner();
 
 function startScanner(){
 
-  scanner =
-  new Html5Qrcode("reader");
+  scanner = new Html5Qrcode("reader");
 
-scanner.start(
-  { facingMode:"environment" },
-  {
-    fps:15,
+  scanner.start(
+    {
+      facingMode:"environment"
+    },
+    {
+      fps:20,
+      qrbox:{
+        width:300,
+        height:300
+      },
+      aspectRatio:1
+    },
 
-    qrbox:250,
+    function(decodedText){
 
-    formatsToSupport:[
-      Html5QrcodeSupportedFormats.QR_CODE,
-      Html5QrcodeSupportedFormats.CODE_128,
-      Html5QrcodeSupportedFormats.CODE_39,
-      Html5QrcodeSupportedFormats.EAN_13
-    ]
-  },
-  onScanSuccess
-)
+      alert("SCAN OK : " + decodedText);
+
+      onScanSuccess(decodedText);
+
+    },
+
+    function(errorMessage){
+
+      console.log(errorMessage);
+
+    }
+
+  )
   .catch(err=>{
 
     console.error(err);
 
     alert(
-      "ไม่สามารถเปิดกล้องได้"
+      "เปิดกล้องไม่สำเร็จ\n\n" +
+      JSON.stringify(err)
     );
 
   });
@@ -159,11 +173,11 @@ scanner.start(
 
 async function onScanSuccess(decodedText){
 
-  alert("SCAN OK : " + decodedText);
-
   try{
+
     await scanner.stop();
     await scanner.clear();
+
   }catch(e){}
 
   localStorage.setItem(
@@ -192,9 +206,7 @@ async function toggleTorch(){
 
   }catch(err){
 
-    alert(
-      "โทรศัพท์ไม่รองรับไฟฉาย"
-    );
+    alert("มือถือไม่รองรับไฟฉาย");
 
   }
 
