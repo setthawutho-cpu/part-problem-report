@@ -3268,6 +3268,25 @@ function closeSpecial(){
     .classList.remove("show");
 }
 
+/* รับข้อมูลจาก special.html */
+
+function receiveSpecial(text){
+
+  const detail =
+  document.getElementById("detail");
+
+  if(!detail) return;
+
+  if(detail.value.trim() !== ""){
+    detail.value += "\n";
+  }
+
+  detail.value += text;
+
+  closeSpecial();
+
+}
+
 </script>
 
 </body>
