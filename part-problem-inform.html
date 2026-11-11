@@ -1964,7 +1964,7 @@ try{
 
 loadExcel();
 
-window.addEventListener("load",()=>{
+function receiveScannedPart(){
 
   const partNo =
   localStorage.getItem("scannedPartNo");
@@ -1982,7 +1982,17 @@ window.addEventListener("load",()=>{
 
   localStorage.removeItem("scannedPartNo");
 
-});
+}
+
+window.addEventListener(
+  "load",
+  receiveScannedPart
+);
+
+window.addEventListener(
+  "pageshow",
+  receiveScannedPart
+);
 
 function editField(el){
 
