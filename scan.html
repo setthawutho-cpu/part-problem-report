@@ -35,7 +35,7 @@ height:100%;
 #reader video{
 width:100% !important;
 height:100% !important;
-object-fit:cover !important;
+object-fit:contain !important;
 }
 
 .topbar{
@@ -129,20 +129,22 @@ function startScanner(){
   scanner =
   new Html5Qrcode("reader");
 
-  scanner.start(
+scanner.start(
+  { facingMode:"environment" },
+  {
+    fps:15,
 
-    {
-      facingMode:"environment"
-    },
+    qrbox:250,
 
-    {
-      fps:15,
-      qrbox:250
-    },
-
-    onScanSuccess
-
-  )
+    formatsToSupport:[
+      Html5QrcodeSupportedFormats.QR_CODE,
+      Html5QrcodeSupportedFormats.CODE_128,
+      Html5QrcodeSupportedFormats.CODE_39,
+      Html5QrcodeSupportedFormats.EAN_13
+    ]
+  },
+  onScanSuccess
+)
   .catch(err=>{
 
     console.error(err);
