@@ -160,25 +160,30 @@ function startScanner(){
       }
     },
 
+function startScanner(){
+
+  qrScanner =
+  new Html5Qrcode("reader");
+
+  qrScanner.start(
+
+    {
+      facingMode:"environment"
+    },
+
+    {
+      fps:10,
+      qrbox:{
+        width:320,
+        height:320
+      }
+    },
+
     async function(decodedText){
-
-  document.getElementById(
-    "result"
-  ).value = decodedText;
-
-  localStorage.setItem(
-    "scannedPartNo",
-    decodedText
-  );
-
-  await qrScanner.stop();
-
-}
 
       document.getElementById(
         "result"
-      ).value =
-      decodedText;
+      ).value = decodedText;
 
       localStorage.setItem(
         "scannedPartNo",
@@ -189,6 +194,8 @@ function startScanner(){
         "อ่านได้\n\n" +
         decodedText
       );
+
+      await qrScanner.stop();
 
     }
 
