@@ -41,7 +41,7 @@ top:10px;
 left:10px;
 right:10px;
 
-display:flex;
+display:none;
 justify-content:space-between;
 
 z-index:9999;
@@ -175,6 +175,8 @@ function extractPartNo(text){
 function startScanner(){
 
   document.getElementById("startPage").style.display="none";
+
+  document.querySelector(".topbar").style.display="flex";
 
   document.getElementById("reader").style.display="block";
 
