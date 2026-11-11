@@ -200,8 +200,7 @@ function startScanner(){
 
       await qrScanner.stop();
 
-      location.href =
-      "part-problem-inform.html";
+      history.back();
 
     }
 
@@ -282,8 +281,7 @@ async function(){
       partNo
     );
 
-    location.href =
-    "part-problem-inform.html";
+    history.back();
 
   }catch(err){
 
