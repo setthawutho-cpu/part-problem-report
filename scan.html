@@ -36,7 +36,6 @@ object-fit:contain !important;
 }
 
 .topbar{
-
 position:fixed;
 top:10px;
 left:10px;
@@ -49,7 +48,6 @@ z-index:9999;
 }
 
 .btn{
-
 width:55px;
 height:55px;
 
@@ -60,24 +58,22 @@ background:rgba(0,0,0,.6);
 
 color:#fff;
 font-size:24px;
+
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .result{
-
 height:30vh;
-
 background:#fff;
-
 padding:10px;
 }
 
 textarea{
-
 width:100%;
 height:100%;
-
 padding:10px;
-
 font-size:14px;
 }
 
@@ -102,12 +98,7 @@ onclick="toggleTorch()">
 </button>
 
 <label
-class="btn"
-style="
-display:flex;
-align-items:center;
-justify-content:center;
-">
+class="btn">
 
 🖼️
 
@@ -136,9 +127,30 @@ placeholder="ผลการอ่าน QR จะขึ้นตรงนี้
 <script>
 
 let qrScanner;
-let torchOn=false;
+let torchOn = false;
 
 startScanner();
+
+function extractPartNo(text){
+
+  const match =
+  text.match(/5T\d{7}/);
+
+  if(!match){
+    return text;
+  }
+
+  const p = match[0];
+
+  return (
+    p.substring(0,5) +
+    "-" +
+    p.substring(5,9) +
+    "-" +
+    p.substring(9)
+  );
+
+}
 
 function startScanner(){
 
@@ -153,29 +165,30 @@ function startScanner(){
 
     {
       fps:10,
-
       qrbox:{
         width:320,
         height:320
       }
     },
 
-    function(decodedText){
+    async function(decodedText){
+
+      const partNo =
+      extractPartNo(decodedText);
 
       document.getElementById(
         "result"
-      ).value =
-      decodedText;
+      ).value = partNo;
 
       localStorage.setItem(
         "scannedPartNo",
-        decodedText
+        partNo
       );
 
-      alert(
-        "อ่านได้\n\n" +
-        decodedText
-      );
+      await qrScanner.stop();
+
+      location.href =
+      "part-problem-inform.html";
 
     }
 
@@ -244,14 +257,20 @@ async function(){
       true
     );
 
+    const partNo =
+    extractPartNo(result);
+
     document
     .getElementById("result")
-    .value = result;
+    .value = partNo;
 
-    alert(
-      "อ่านได้\n\n" +
-      result
+    localStorage.setItem(
+      "scannedPartNo",
+      partNo
     );
+
+    location.href =
+    "part-problem-inform.html";
 
   }catch(err){
 
