@@ -133,35 +133,7 @@ startScanner();
 
 function extractPartNo(text){
 
-  let match;
-
-  match =
-  text.match(/5T\d{8}/);
-
-  if(match){
-
-    const p = match[0];
-
-    return (
-      p.substring(0,5) +
-      "-" +
-      p.substring(5,9) +
-      "-" +
-      p.substring(9)
-    );
-
-  }
-
-  match =
-  text.match(/MT\d{8}/);
-
-  if(match){
-
-    return match[0];
-
-  }
-
-  return text;
+  return text.substring(3,13);
 
 }
 
