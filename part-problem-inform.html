@@ -1,1086 +1,1519 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#dfeaf3">
+<meta name="theme-color" content="#1f8fff">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="PART REPORT">
 
-<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
 
-<title> INFORM</title>
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<link rel="stylesheet" href="bottom-nav.css">
-      
+<title>PART PROBLEM INFORM</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--blue:#1f8fff;
+--blue2:#386bff;
+
+--green:#16c65c;
+
+--orange:#ff9800;
+
+--bg:#eef4fb;
+
+--card:#ffffff;
+
+--text:#1d3557;
+
+}
+
 html,
 body{
-    background:#dfeaf3;
-    margin:0;
-    padding:0;
-}
-
-/* พื้นหลังดำจางๆ */
-.report-overlay{
-    position:fixed;
-    inset:0;
-
-    background:rgba(0,0,0,.35);
-
-    display:none;
-    align-items:flex-start;
-    justify-content:center;
-
-    padding-top:60px;
-
-    box-sizing:border-box;
-
-    z-index:99998;
-    backdrop-filter:blur(3px);
-}
-
-.report-sheet{
-    width:100%;
-    max-width:600px;
-
-    height:auto;
-    max-height:calc(100dvh - 80px);
-
-    background:#fff;
-    color:#000;
-
-    border-radius:24px;
-    box-shadow:0 0 25px rgba(0,0,0,.25);
-
-    display:flex;
-    flex-direction:column;
-
-    overflow:hidden;
-
-    animation:slideDown .3s ease;
-}
-
-.report-header{
-    position:sticky;
-    top:0;
-    background:#fff;
-    padding:8px 0;
-}
-
-.report-handle{
-    width:50px;
-    height:5px;
-    background:#ccc;
-    border-radius:999px;
-    margin:0 auto 10px;
-}
-
-.report-content{
-    flex:1;
-
-    overflow-y:auto;
-    overscroll-behavior:contain;
-    -webkit-overflow-scrolling:touch;
-
-    padding:20px;
-    padding-bottom:60px;
-
-    box-sizing:border-box;
-}
-
-.report-actions{
-    flex-shrink:0;
-
-    display:flex;
-    gap:8px;
-
-    padding:12px;
-
-    background:#fff;
-    border-top:1px solid #ddd;
-
-    padding-bottom:
-    calc(12px + env(safe-area-inset-bottom));
-}
-
-.report-actions button{
-    flex:1;
-    height:46px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:none;
-    color:#fff;
-    font-weight:600;
-    font-size:17px;
-
-    border-radius:14px !important;
-
-    text-align:center;
-    padding:0;
-
-    gap:8px;
-}
-
-.btn-save{
-    background:#4caf50;
-}
-
-.btn-copy{
-    background:#9c27b0;
-}
-
-.btn-line{
-    background:#06C755;
-}
-
-.report{
-    border:none;
-    padding:20px;
-    margin:0;
-}
-
-@keyframes slideDown{
-    from{
-        transform:translateY(-300px);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-
-/* ตอนเปิด Report */
-.report-overlay.show{
-    display:flex;
-}
-
-#splash{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#dfeaf3;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-    visibility:visible;
-    opacity:1;
-}
-
-.splash-content{
-    text-align:center;
-}
-
-#splash img{
-    width:180px;
-    height:180px;
-    border-radius:40px;
-    animation:zoomIn .5s ease;
-}
-
-.top-row{
-    display:flex;
-    gap:15px;
-    margin-bottom:8px;
-}
-
-.top-row > div{
-    flex:1;
-}
-
-.top-row label{
-    display:block;
-    margin-bottom:3px;
-}
-
-#date,
-#type,
-#product{
-    width:100%;
-}
-
-.splash-text{
-    margin-top:15px;
-    font-size:20px;
-    font-weight:bold;
-    color:#333;
-    letter-spacing:1px;
-}
-
-.copy{
-    background:#9c27b0;
-    color:white;
-}
-
-.line{
-    background:#06C755;
-    color:white;
+width:100%;
+height:100%;
+margin:0;
+padding:0;
+overflow-x:hidden;
+overscroll-behavior:none;
+-webkit-overflow-scrolling:touch;
 }
 
 body{
-    margin:0;
-    padding:10px;
-    background:#dfeaf3;
-    font-family:Segoe UI,sans-serif;
+
+background:var(--bg);
+
+font-family:
+"Segoe UI",
+sans-serif;
+
+color:var(--text);
+
+overscroll-behavior:none;
+-webkit-overflow-scrolling:touch;
+
 }
+
+/* ---------- PAGE ---------- */
 
 .container{
-    width:100%;
-    max-width:500px;
-    margin:auto;
-    background:#c7d9ea;
-    padding:10px;
-    padding-top:50px;
-    padding-bottom:90px;
-    border-radius:8px;
-    box-sizing:border-box;
+
+width:100%;
+
+max-width:900px;
+
+margin:auto;
+
+padding:0 10px 140px;
+
 }
 
+/* ---------- HEADER ---------- */
 
-input,select,textarea{
-    width:100%;
-    padding:6px;
-    margin:3px 0;
-    box-sizing:border-box;
+.header{
+
+position:sticky;
+top:0;
+z-index:1000;
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+var(--blue2)
+);
+
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+border-radius:0 0 32px 32px;
+
+padding:20px;
+
+margin-bottom:12px;
+
+color:#fff;
+
+box-shadow:
+0 10px 30px rgba(0,87,255,.25);
+
 }
 
-.top-row{
-    display:flex;
-    gap:8px;
-    margin-bottom:10px;
+.header-top{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+width:100%;
+
+overflow:hidden;
+
 }
 
-.top-row > div{
-    flex:1;
+.back-btn{
+
+width:46px;
+height:46px;
+
+border:none;
+
+border-radius:50%;
+
+background:#fff;
+
+color:var(--blue2);
+
+font-size:20px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
 }
 
-.top-row label{
-    display:block;
-    margin-bottom:5px;
+.header-center{
+
+flex:1;
+
+min-width:0;
+
+overflow:hidden;
+
 }
 
-#date,
-#type,
-#product{
-    width:100%;
-    height:40px;
+.header-title{
+
+font-size:28px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
 }
 
-.row-info{
-    display:flex;
-    gap:10px;
-    margin-bottom:8px;
+.header-sub{
+
+opacity:.9;
+
+font-size:15px;
+
 }
 
-.row-info > div{
-    flex:1;
+.date-box{
+
+height:40px;
+
+min-width:95px;
+
+padding:0 12px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:rgba(255,255,255,.95);
+
+border-radius:14px;
+
+font-size:12px;
+
+font-weight:600;
+
+color:#173c83;
+
+cursor:pointer;
+
+position:relative;
+
+text-align:center;
+
 }
 
-.line-stop-box{
-    display:flex;
-    align-items:center;
-    gap:5px;
+#headerDate{
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+opacity:0;
+
+cursor:pointer;
+
 }
 
-.line-stop-box input{
-    flex:1;
+/* ---------- CARD ---------- */
+
+.card{
+
+background:#fff;
+
+border-radius:30px;
+
+padding:16px;
+
+margin-bottom:14px;
+
+border:1px solid rgba(255,255,255,.5);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.06),
+0 2px 10px rgba(0,0,0,.03);
+
+overflow:hidden;
+
+}
+
+.th-title{
+
+font-size:13px;
+
+font-weight:500;
+
+color:#8aa2c8;
+
+margin-left:6px;
+
+}
+
+.card-title{
+
+display:flex;
+align-items:center;
+flex-wrap:wrap;
+gap:6px;
+
+font-size:24px;
+font-weight:700;
+
+cursor:pointer;
+
+padding-bottom:10px;
+
+}
+
+/* ---------- LABEL ---------- */
+
+.label{
+
+font-size:15px;
+font-weight:700;
+
+line-height:1.5;
+
+padding-bottom:2px;
+
+margin-bottom:6px;
+
+color:#64748b;
+
+}
+
+.partno-label{
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.scan-btn{
+display:none;
+
+padding:0;
+
+width:auto;
+height:auto;
+
+border:none;
+background:none;
+
+color:#2563eb;
+
+font-size:16px;
+
+cursor:pointer;
+}
+
+/* ---------- INPUT ---------- */
+
+input,
+select,
+textarea{
+
+width:100%;
+max-width:100%;
+
+outline:none;
+
+background:#f7f9fc;
+
+border:2px solid transparent;
+
+border-radius:18px;
+
+padding:14px;
+
+font-size:16px;
+
+transition:.25s;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+border-color:#2979ff;
+
+box-shadow:
+0 0 0 4px rgba(41,121,255,.15);
+
+}
+
+input,
+select{
+
+height:52px;
+
 }
 
 textarea{
-    min-height:80px;
+
+resize:none;
+
+height:70px;
+min-height:70px;
+
 }
 
-#remarkArea textarea{
-    background:#fff;
-    border:1px solid #999;
+/* ---------- GRID ---------- */
+
+.grid-2{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:10px;
+
+width:100%;
+
+max-width:100%;
+
+margin:auto;
+
 }
 
-.title{
-    font-size:20px;
-    font-weight:bold;
-    text-align:center;
-    margin-bottom:10px;
+.grid-3{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
+gap:10px;
+
 }
 
-.section{
-    background:#f6c000;
-    padding:5px;
-    margin-top:10px;
-    font-weight:bold;
-}
+.part-grid{
 
-.inspection-box{
-    background:#b7c7d8;
-    border:1px solid #999;
-    margin-top:10px;
-}
+display:grid;
 
-.result{
-    background:#95c11f;
-    padding:8px;
-    font-weight:bold;
-    font-size:18px;
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:10px;
+
 }
 
 .inspection-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+
+display:grid;
+
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+
+gap:10px;
+
 }
 
-.inspection-grid > div{
-    padding:0;
+/* ---------- OK MARK ---------- */
+
+.okmark-select{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
 }
 
-.inspection-grid label{
-    display:block;
-    padding:3px;
-    font-weight:normal;
+.mark-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+cursor:pointer;
+position:relative;
+flex:1;
 }
 
-.inspection-grid input,
-.inspection-grid select{
-    width:100%;
-    height:42px;
-    font-size:18px;
-    margin:0;
+.circle{
+width:34px;
+height:34px;
+border-radius:50%;
+transition:.2s;
 }
 
-.total-ng-box{
-    padding:5px;
-}
-
-.total-ng-box input{
-    width:70px;
-    height:30px;
-}
-
-.review,
-.submit,
-.copy,
-.line{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.review{
-    background:#2196f3;
-    color:white;
-}
-
-.submit{
-    background:#e91e63;
-    color:white;
-}
-
-.copy{
-    background:#9c27b0;
-    color:white;
-}
-
-.report{
-    margin:0;
-    background:white;
-    border:none;
-
-    white-space:pre-wrap;
-    line-height:1.2;
-
-    overflow-wrap:break-word;
-    word-wrap:break-word;
-    word-break:break-word;
-
-    max-width:100%;
-    overflow-x:hidden;
-}
-
-#reworkResult{
-    width:100%;
-    height:30px;
-    font-size:14px;
-    box-sizing:border-box;
-}
-
-input,
-select,
-textarea,
-button{
-    border-radius:0 !important;
-}
-
-label,
-.inspection-grid label{
-    font-size:16px !important;
-    font-weight:400;
-}
-
-.report-sheet{
-    position:relative;
-}
-
-.add-btn{
-    position:absolute;
-    top:12px;
-    right:12px;
-
-    width:40px;
-    height:40px;
-
-    border:none;
-    border-radius:50% !important;
-
-    background:#2196f3;
-    color:#fff;
-
-    font-size:24px;
-    font-weight:bold;
-
-    cursor:pointer;
-    z-index:10;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.25);
-}
-
-.add-btn:active{
-    transform:scale(.95);
-}
-
-#date,
-#type,
-#product,
-#document,
-#containmentResult,
-#reworkResult,
-#partNg,
-#partNgShow{
-    background:#ffffff !important;
-    background-color:#ffffff !important;
-    color:#000000 !important;
-    opacity:1 !important;
-
-    -webkit-appearance:none;
-    appearance:none;
-
-    border:1px solid #999;
-}
-
-#skcaNg,
-#partNgQty,
-#stockNg,
-#okQty,
-#ngQty,
-#totalNg{
-    font-size:16px !important;
-}
-
-#partNg{
-    font-size:14px !important;
-}
-
-.line{
-    background:#06C755;
-    color:white;
-}
-
-#containmentResult{
-    width:60%;
-    height:30px;
-    font-size:14px;
-    box-sizing:border-box;
-}
-
-.rework-label{
-    display:flex;
-    align-items:center;
-    height:42px;
-    padding-left:10px;
-}
-
-.rework-label label{
-    margin:0;
-    padding:0;
-}
-
-.total-ng-box{
-    padding:5px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-#partArea{
-    flex-basis:100%;
-    width:100%;
-}
-
-.total-ng-box input[type="radio"]{
-    display:none;
-}
-
-.green,
-.yellow,
-.pink,
-.blue,
-.white{
-    display:inline-block;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    border:3px solid;
-    cursor:pointer;
+.mark-item span{
+margin-top:6px;
+font-size:11px;
+font-weight:600;
 }
 
 .green{
-    border-color:#22aa44;
+background:#22c55e;
 }
 
 .yellow{
-    border-color:#ffe600;
+background:#facc15;
 }
 
 .pink{
-    border-color:#ff9db6;
+background:#ff8cb3;
 }
 
 .blue{
-    border-color:#0000FF;
+background:#3b82f6;
 }
 
 .white{
-    border-color:#ffffff;
-    background:transparent;
+background:#fff;
+border:2px solid #d1d5db;
 }
 
-input[name="okmark"]:checked + .green{
-    background:#22aa44;
+.mark-item.active .circle{
+box-shadow:0 0 0 4px rgba(37,99,235,.25);
 }
 
-input[name="okmark"]:checked + .yellow{
-    background:#ffe600;
+.mark-item.active::after{
+display:none;
 }
 
-input[name="okmark"]:checked + .pink{
-    background:#ff9db6;
+#okMarkBox{
+margin-top:15px;
+padding-top:15px;
+border-top:1px solid #e5e7eb;
 }
 
-input[name="okmark"]:checked + .blue{
-    background:#0000FF;
+#remarkBox{
+display:none;
+margin-top:10px;
 }
 
-input[name="okmark"]:checked + .white{
-    background:#ffffff;
-}
+/* ---------- PART DAMAGE ---------- */
 
-#partNgShow{
-    height:30px;
-}
+.damage-item{
 
-@media (max-width:500px){
+display:grid;
 
-    .total-ng-box{
-        gap:4px;
-    }
+grid-template-columns:
+2fr 2fr 80px 50px;
 
-    .okmark-label{
-        font-size:14px;
-                margin-left:10px;
-    }
+gap:10px;
 
-    .green,
-    .yellow,
-    .pink,
-    .blue,
-    .white{
-        width:16px;
-        height:16px;
-        border-width:2px;
-    }
+padding:12px 0;
+
+border-bottom:1px solid #e5e7eb;
 
 }
 
-.part-box{
-    background:#fff;
-    border:1px solid #ccc;
-    border-radius:5px;
-    padding:10px;
-    margin-top:10px;
-    width:100%;
-    box-sizing:border-box;
+.damage-item:last-child{
+border:none;
 }
 
-.part-box label{
-    display:block;
-    margin-top:8px;
+.damage-item button{
+background:transparent !important;
+border:none !important;
+box-shadow:none !important;
+
+padding:0;
+
+width:auto;
+height:auto;
+
+color:#e53935;
+font-size:12px;
+
+cursor:pointer;
 }
 
-.part-box input{
-    display:block;
-    width:100%;
-}
+/* ---------- BUTTON ---------- */
 
-@media (max-width:500px){
+.review-btn{
 
-    .inspection-grid{
-        grid-template-columns:45% 30% 25%;
-    }
+width:100%;
 
-}
+height:64px;
 
-@media (max-width:500px){
+border:none;
 
-    label,
-    .inspection-grid label{
-        font-size:15px !important;
-    }
+border-radius:999px;
 
-}
+color:#fff;
 
-@media (max-width:500px){
+font-weight:700;
 
-    .inspection-grid{
-        grid-template-columns:45% 30% 25%;
-    }
+font-size:22px;
 
-    .inspection-grid label{
-        font-size:12px;
-    }
+background:
+linear-gradient(
+135deg,
+#2b93ff,
+#0057ff
+);
 
-    .inspection-grid input,
-    .inspection-grid select{
-        font-size:16px;
-    }
+margin-bottom:10px;
 
 }
 
-.manual-btn{
-    width:70px !important;
-    height:24px;
+.floating-review{
 
-    margin:0 !important;
-    padding:0 !important;
+z-index:9999;
 
-    background:#d9d9d9;
-    color:#000;
+transition:.25s;
 
-    border:1px solid #666 !important;
+box-shadow:
+0 12px 30px rgba(0,87,255,.35);
 
-    box-shadow:
-        inset 1px 1px 0 #ffffff,
-        inset -1px -1px 0 #888,
-        2px 2px 3px rgba(0,0,0,0.25);
+backdrop-filter:blur(10px);
 
-    font-size:13px;
-    font-weight:normal;
 }
 
-.manual-btn:active{
-    transform:translateY(1px);
-
-    box-shadow:
-        inset -1px -1px 0 #ffffff,
-        inset 1px 1px 0 #888;
+.floating-review.hide{
+display:none;
 }
 
-#splash{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#dfeaf3;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
+@media(min-width:769px){
+
+.floating-review{
+
+position:static;
+
+width:100%;
+
+left:auto;
+right:auto;
+bottom:auto;
+
 }
 
-#splash img{
-    width:180px;
-    height:180px;
-    border-radius:40px;
-    animation:zoomIn .5s ease;
 }
 
-#remarkArea textarea{
-    width:100%;
-    height:100px;
-    margin-top:5px;
-    box-sizing:border-box;
-    resize:none;
-    background:#fff;
-    border:1px solid #999;
+/* REVIEW POPUP */
+
+.report-overlay{
+position:fixed;
+inset:0;
+
+display:none;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.4);
+
+z-index:9999;
 }
 
-@keyframes zoomIn{
-    from{
-        transform:scale(.8);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
+.report-overlay.show{
+display:flex;
 }
 
-#app{
-    display:block;
+.report-sheet{
+width:95%;
+max-width:700px;
+max-height:90vh;
+
+background:#fff;
+
+border-radius:24px;
+
+overflow:hidden;
+
+display:flex;
+flex-direction:column;
 }
 
-#menuPage{
-    display:none;
-    min-height:100vh;
-    background:#dfeaf3;
-    padding:20px;
-    box-sizing:border-box;
+.report-sheet{
+position:relative;
 }
 
-.menu-title{
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:50px;
-    margin-bottom:40px;
+.add-btn{
+position:absolute;
+top:12px;
+right:12px;
+
+width:40px;
+height:40px;
+
+border:none;
+border-radius:50% !important;
+
+background:#2196f3;
+color:#fff;
+
+font-size:20px;
+cursor:pointer;
+z-index:10;
 }
 
-.menu-btn{
-    width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    color:#ffffff !important;
-    text-align:center;
+.report-content[contenteditable="true"]{
+background:#fffef0;
+outline:2px solid #2196f3;
 }
 
-.top-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:9999;
-    background:#dfeaf3;
-    padding:8px 12px;
-    box-sizing:border-box;
+.report-content{
+padding:12px;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+white-space:pre-wrap;
+overflow:auto;
+
+line-height:1.25;
+font-size:12px;
+
+color:#000;
 }
 
-.top-nav span{
-    color:#000;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    user-select:none;
+.report-actions{
+display:flex;
+gap:8px;
+
+padding:12px;
+
+border-top:1px solid #ddd;
 }
 
-.report-btn{
-    background:#2196f3;
-    color:#ffffff !important;
+.report-actions button{
+flex:1;
+
+height:50px;
+
+border:none;
+
+border-radius:14px;
+
+color:#fff;
+font-weight:700;
+font-size:16px;
 }
 
-.setting-btn{
-    background:#ff9800;
-    color:#ffffff !important;
+.btn-save{
+background:#4caf50;
 }
 
-.menu-btn{
-    width:100%;
-    max-width:400px;
-    display:block;
-    margin:15px auto;
-    padding:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    color:#ffffff !important;
-    text-align:center;
+.btn-copy{
+background:#9c27b0;
 }
 
-.report-btn{
-    background:#2196f3;
+.btn-line{
+background:#06C755;
 }
 
-.model-btn{
-    background:#4caf50;
+/* ---------- MOBILE ---------- */
+
+@media(max-width:768px){
+
+.scan-btn{
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.trial-btn{
-    background:#9c27b0;
+.floating-review{
+
+position:fixed !important;
+
+left:20px !important;
+right:20px !important;
+
+bottom:calc(env(safe-area-inset-bottom) + 20px) !important;
+
+width:auto !important;
+
+height:58px !important;
+
+display:flex !important;
+align-items:center !important;
+justify-content:center !important;
+
+border:none !important;
+
+border-radius:999px !important;
+
+font-size:18px !important;
+font-weight:700 !important;
+
+box-shadow:
+0 12px 35px rgba(0,87,255,.35) !important;
+
+z-index:9999;
+
 }
 
-.setting-btn{
-    background:#ff9800;
+.header{
+height:auto;
+padding:12px;
+
 }
 
-.borrow-btn{
-    background:#009688;
+.back-btn{
+width:40px;
+height:40px;
+font-size:16px;
+}
+
+.header-top{
+flex-wrap:wrap;
+
+}
+
+.date-box{
+margin-left:auto;
+
+}
+
+.header-title{
+font-size:16px;
+}
+
+.header-sub{
+font-size:10px;
+}
+
+.date-box{
+height:30px;
+padding:0 6px;
+font-size:9px;
+
+}
+
+.card-title{
+font-size:16px;
+}
+
+.label{
+font-size:11px;
+line-height:1.5;
+padding-bottom:2px;
 }
 
 input,
-select,
+select{
+height:42px;
+padding:0 12px;
+font-size:13px;
+}
+
 textarea{
-    font-size:16px !important;
+font-size:13px;
+height:60px;
+min-height:60px;
 }
 
-@media (max-width:500px){
+/* PART */
 
-    #date{
-        font-size:12px !important;
-    }
+#partNo,
+#partName,
+#model,
+#supplier{
+font-size:12px;
+}
 
-    #type{
-        font-size:13px !important;
-    }
+/* RESULT */
 
-    #product{
-        font-size:13px !important;
-    }
+#mfgResult,
+#stockResult{
+font-size:10px;
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none;
+background-image:none;
+padding-right:12px;
+}
 
-    .top-row > div:nth-child(1){
-        flex:1.2;
-    }
+.review-btn{
+font-size:14px;
+height:50px;
+border-radius:999px;
+}
 
-    .top-row > div:nth-child(2){
-        flex:1;
-    }
+.grid-3{
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+}
 
-    .top-row > div:nth-child(3){
-        flex:1.5;
-    }
+.inspection-grid{
+grid-template-columns:
+1fr 0.8fr 0.8fr 1.4fr;
+}
+
+.bottom-actions{
+grid-template-columns:1fr 1fr;
+}
+
+.grid-2{
+
+max-width:100%;
+
+margin:auto;
 
 }
 
-.bottom-nav button,
-.bottom-nav button span{
-    font-weight:400 !important;
 }
 
-.report[contenteditable="true"]{
-    background:#fffef0;
-    outline:2px solid #2196f3;
+/* ---------- SMALL MOBILE ---------- */
+
+@media(max-width:500px){
+
+.part-grid{
+grid-template-columns:
+1fr 1fr;
+}
+
+.inspection-grid{
+grid-template-columns:
+1fr 0.8fr 0.8fr 1.4fr;
+}
+
+.damage-item{
+grid-template-columns:
+2fr 3fr 40px 40px;
+}
+
+.damage-item input{
+font-size:9px;
+padding:6px;
+}
+
+.card{
+padding:12px;
+
+}
+
+}
+
+/* ---------- HISTORY MENU ---------- */
+
+.history-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:9998;
+}
+
+.history-overlay.show{
+display:block !important;
+}
+
+.history-panel{
+position:fixed;
+top:0;
+right:0;
+
+width:60vw;
+max-width:350px;
+height:100vh;
+
+background:#fff;
+
+transform:translateX(100%);
+transition:transform .25s ease;
+
+z-index:9999;
+
+display:flex;
+flex-direction:column;
+
+box-shadow:-4px 0 20px rgba(0,0,0,.15);
+}
+
+.history-panel.show{
+transform:translateX(0);
+}
+
+.history-header{
+padding:18px;
+font-weight:700;
+font-size:18px;
+border-bottom:1px solid #eee;
+}
+
+.history-list{
+flex:1;
+overflow-y:auto;
+}
+
+.history-item{
+padding:8px 10px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+line-height:1.2;
+}
+
+.history-item-title{
+font-size:12px;
+font-weight:700;
+color:#1d3557;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-partname{
+font-size:11px;
+color:#555;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-detail{
+font-size:10px;
+color:#777;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-item-time{
+font-size:10px;
+color:#999;
+margin-top:2px;
+}
+
+.history-delete{
+
+margin-top:2px;
+
+padding:0;
+
+border:none;
+background:none;
+
+color:#e53935;
+font-weight:700;
+
+font-size:10px;
+
+cursor:pointer;
+
+display:inline-block;
+
+}
+
+.history-delete:active{
+opacity:.6;
+}
+
+.std-btn{
+
+height:28px;
+min-width:58px;
+
+padding:0 8px;
+
+border:none;
+outline:none;
+
+border-radius:999px;
+
+background:
+linear-gradient(
+135deg,
+#3b82f6,
+#2563eb
+);
+
+color:#fff;
+
+font-size:10px;
+font-weight:700;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:3px;
+
+cursor:pointer;
+
+box-shadow:
+0 2px 6px rgba(37,99,235,.20);
+
+transition:.15s;
+}
+
+.std-btn:active{
+transform:scale(.95);
+opacity:.9;
+}
+
+.std-btn i{
+font-size:9px;
+}
+
+.std-btn:active{
+
+transform:scale(.94);
+
+box-shadow:
+0 2px 6px rgba(37,99,235,.2);
+
+opacity:.9;
+
 }
 
 .std-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.4);
+position:fixed;
+inset:0;
 
-    display:none;
-    justify-content:center;
-    align-items:center;
+background:rgba(0,0,0,.45);
 
-    z-index:999999;
+display:none;
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+
+backdrop-filter:blur(4px);
 }
 
 .std-overlay.show{
-    display:flex;
+display:flex;
 }
 
 .std-box{
-    width:90%;
-    max-width:550px;
+width:95%;
+max-width:500px;
+height:70vh;
 
-    height:80dvh;
+background:#fff;
 
-    background:#fff;
-    border-radius:20px;
-    overflow:hidden;
+border-radius:24px;
 
-    box-shadow:0 0 20px rgba(0,0,0,.3);
+overflow:hidden;
 }
 
 #stdFrame{
-    width:100%;
-    height:100%;
-    border:none;
+width:100%;
+height:100%;
+border:none;
 }
-    
-</style>
 
+.qr-close{
+
+position:absolute;
+
+top:55px;
+left:20px;
+
+width:52px;
+height:52px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.45);
+
+color:#fff;
+
+font-size:26px;
+
+cursor:pointer;
+
+z-index:999999;
+
+backdrop-filter:blur(10px);
+
+}
+
+.qr-flash{
+
+position:absolute;
+
+top:55px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:52px;
+height:52px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.45);
+
+color:#fff;
+
+font-size:24px;
+
+cursor:pointer;
+
+z-index:999999;
+
+backdrop-filter:blur(10px);
+
+}
+
+.qr-gallery{
+
+position:absolute;
+
+top:55px;
+right:20px;
+
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.45);
+
+color:#fff;
+
+font-size:24px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+
+z-index:999999;
+
+backdrop-filter:blur(10px);
+
+}
+
+#qrOverlay .std-box{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+max-width:none;
+
+border-radius:0;
+
+background:#000;
+
+}
+
+#reader{
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+height:100%;
+
+background:#000;
+
+}
+
+#reader video{
+width:100% !important;
+height:100% !important;
+object-fit:contain !important;
+}
+
+#reader__scan_region{
+margin-top:120px !important;
+}
+
+</style>
 </head>
+
 <body>
 
-<div id="app" style="display:block;">
+<div
+id="historyOverlay"
+class="history-overlay"
+onclick="closeHistory()">
+</div>
+
+<div
+id="historyPanel"
+class="history-panel">
+
+<div class="history-header">
+🕘 Report History
+</div>
+
+<div
+id="historyList"
+class="history-list">
+</div>
+
+</div>
 
 <div class="container">
 
-<div class="top-nav">
+<!-- HEADER -->
 
-    <span onclick="backToMenu()">
-        ❮ กลับ
-    </span>
+<div class="header">
 
-    <button
-        onclick="reviewReport()"
-        style="
-            background:#2196f3;
-            color:#fff;
-            border:none;
-            padding:6px 12px;
-            border-radius:4px;
-        ">
-        🔍 Review
-    </button>
+<div class="header-top">
+
+<button
+class="back-btn"
+onclick="location.href='home.html'">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<div class="header-center">
+
+<div class="header-title">
+PART PROBLEM INFORM
+</div>
+
+<div class="header-sub">
+Supplier Quality Report
+</div>
 
 </div>
 
-<div class="title">
-🚨 PART PROBLEM INFORM 🚨
-</div>
+<div class="date-box" id="dateBoxWrap">
 
-<div class="top-row">
+    <div id="dateBox"></div>
 
-    <div>
-        <label id="lblDate">Date</label>
-        <input type="date" id="date">
-    </div>
-
-    <div>
-        <label id="lblType">Type</label>
-        <select id="type">
-            <option>New</option>
-            <option>Reoccurred</option>
-        </select>
-    </div>
-
-    <div>
-        <label id="lblProduct">Product</label>
-        <select id="product">
-            <option value=""></option>
-            <option>Combine</option>
-            <option>Combine Welding</option>
-            <option>SH</option>
-            <option>SH Welding</option>
-        </select>
-    </div>
+    <input
+    type="date"
+    id="headerDate">
 
 </div>
 
-<label id="lblPartNo">Part No.</label>
-<input type="text"
-       id="partno"
-       list="partList">
+</div>
+
+</div>
+
+<!-- BASIC -->
+
+<div class="card">
+
+<div class="grid-2">
+
+<div>
+<div class="label">Type / ประเภท</div>
+<select id="type">
+<option>New</option>
+<option>Reoccurred</option>
+</select>
+</div>
+
+<div>
+<div class="label">Product / ผลิตภัณฑ์</div>
+<select id="product">
+<option value=""></option>
+<option>Combine</option>
+<option>Combine Welding</option>
+<option>SH</option>
+<option>SH Welding</option>
+</select>
+</div>
+
+</div>
+
+</div>
+
+<!-- PART -->
+
+<div class="card">
+
+<div class="part-grid">
+
+<div>
+
+<div class="label partno-label">
+  Part No.
+
+<button
+type="button"
+id="scanQrBtn"
+class="scan-btn"
+onclick="openScanPage()">
+<i class="fa-solid fa-qrcode"></i>
+</button>
+</div>
+
+<input
+id="partNo"
+list="partList"
+placeholder="Part No.">
 
 <datalist id="partList"></datalist>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label id="lblPartName">Part Name</label>
-
-    <button type="button"
-            id="partnameBtn"
-            class="manual-btn">
-        Manual
-    </button>
 </div>
 
-<input type="text" id="partname" readonly>
+<div>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label id="lblModel">Model</label>
-
-    <button type="button"
-            id="modelBtn"
-            class="manual-btn">
-        Manual
-    </button>
+<div class="label">
+Part Name
 </div>
 
-<input type="text" id="model" readonly>
+<input
+id="partName"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label id="lblSupplier">Supplier</label>
-
-    <button type="button"
-            id="supplierBtn"
-            class="manual-btn">
-        Manual
-    </button>
 </div>
 
-<input type="text" id="supplier" readonly>
+<div>
 
-<div class="row-info">
+<div class="label">
+Model
+</div>
 
-    <div>
-        <label id="lblSerial">Serial Number</label>
-        <input type="text" id="unitno">
+<input
+id="model"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
+</div>
+
+<div>
+
+<div class="label">
+Supplier
+</div>
+
+<input
+id="supplier"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCTION -->
+
+<div class="card">
+
+<div class="grid-3">
+
+<div>
+<div class="label">
+Serial Number
+</div>
+<input id="serialNumber">
+</div>
+
+<div>
+<div class="label">
+Issue Doc
+</div>
+
+<select id="issueDoc">
+<option value=""></option>
+<option>-</option>
+<option>UAR</option>
+<option>PAR</option>
+</select>
+</div>
+
+<div>
+    <div class="label">
+        Line Stop
     </div>
-
-    <div>
-        <label id="lblIssue">Issue Doc</label>
-        <select id="document">
-            <option></option>
-            <option>-</option>
-            <option>UAR</option>
-            <option>PAR</option>
-        </select>
-    </div>
-
-    <div>
-        <label id="lblLineStop">Line Stop</label>
-        <div class="line-stop-box">
-            <input type="number" id="linestop">
-            <span>min</span>
-        </div>
-    </div>
+    <input id="lineStop" type="number" placeholder="min">
+</div>
 
 </div>
 
-<label id="lblProblem">Problem</label>
+</div>
+
+<!-- PROBLEM -->
+
+<div class="card">
+
+<div class="card-title">
+⚠ Problem Detail
+<span class="th-title">
+รายละเอียดปัญหา
+</span>
+</div>
+
+<div class="label">
+Problem / ปัญหา
+</div>
+
 <textarea id="problem"></textarea>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
-    <label id="lblDetail">Detail</label>
+<div style="height:10px;"></div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+">
+
+<div class="label" style="margin:0;">
+Detail / รายละเอียด
+</div>
 
 <button
-    type="button"
-    id="specialBtn"
-    class="manual-btn"
-    onclick="openSpecial()">
-    📚 STD
+type="button"
+class="std-btn"
+onclick="openSpecial()">
+
+<i class="fa-solid fa-ruler"></i>
+STD
+
 </button>
+
 </div>
 
 <textarea id="detail"></textarea>
 
-<div class="section" id="lblContainment">
-🟡 CONTAINMENT ACTION
 </div>
 
-<label id="lblRework">Rework</label>
-<textarea id="rework"></textarea>
+<!-- CONTAINMENT -->
 
-<div id="resultArea" style="display:none;">
-    <label id="lblResult">Result</label>
+<div class="card">
+
+<div class="card-title">
+🟡 Containment Action
+<span class="th-title">
+การแก้ไขเบื้องต้น
+</span>
+</div>
+
+<div class="label">
+Rework / การแก้ไข
+</div>
+
+<textarea id="reworkText"></textarea>
+
+<div style="height:10px;"></div>
+
+<div id="resultSection">
+
+    <div class="label">
+    Result / ผลลัพธ์
+    </div>
 
     <select id="containmentResult">
-        <option></option>
+        <option value=""></option>
         <option>-</option>
         <option>Rework OK</option>
         <option>Wait Rework</option>
@@ -1088,1117 +1521,1437 @@ textarea{
         <option>Reject</option>
         <option>Defect</option>
     </select>
+
 </div>
 
-<div class="inspection-box">
+</div>
 
-    <div class="result" id="lblInspection">
-        📊 INSPECTION RESULT
+<!-- INSPECTION -->
+
+<div class="card">
+
+<div class="card-title">
+📊 Inspection Result
+<span class="th-title">
+ผลการตรวจสอบ
+</span>
+</div>
+
+<!-- ROW 1 -->
+
+<div class="inspection-grid">
+
+<div>
+<div class="label">MFG NG Qty</div>
+<input type="number" id="mfgNgQty">
+</div>
+
+<div>
+<div class="label">OK Qty</div>
+<input type="number" id="mfgOkQty">
+</div>
+
+<div>
+<div class="label">NG Qty</div>
+<input type="number" id="mfgNgQtyResult" readonly>
+</div>
+
+<div>
+<div class="label">Result</div>
+<select id="mfgResult">
+<option value=""></option>
+<option>Rework</option>
+<option>Rework OK</option>
+<option>Wait Rework</option>
+<option>แลกเปลี่ยน</option>
+<option>Reject</option>
+<option>Defect</option>
+</select>
+</div>
+
+</div>
+
+<div style="height:10px;"></div>
+
+<!-- ROW 2 -->
+
+<div class="inspection-grid">
+
+<div>
+<div class="label">Check Stock</div>
+<input type="number" id="stockCheck">
+</div>
+
+<div>
+<div class="label">OK Qty</div>
+<input type="number" id="stockOkQty">
+</div>
+
+<div>
+<div class="label">NG Qty</div>
+<input type="number" id="stockNgQty" readonly>
+</div>
+
+<div>
+<div class="label">Result</div>
+<select id="stockResult">
+<option value=""></option>
+<option>Rework</option>
+<option>Rework OK</option>
+<option>Wait Rework</option>
+<option>แลกเปลี่ยน</option>
+<option>Reject</option>
+<option>Defect</option>
+</select>
+</div>
+
+</div>
+
+<div style="height:10px;"></div>
+
+<!-- ROW 3 -->
+
+<div class="inspection-grid">
+
+<div id="totalNgBox">
+<div class="label">Total NG</div>
+<input type="number" id="totalNg" readonly>
+</div>
+
+<div id="reworkQtyBox">
+<div class="label">Rework Qty</div>
+<input type="number" id="reworkQty" readonly>
+</div>
+
+<div id="defectQtyBox">
+<div class="label">Defect Qty</div>
+<input type="number" id="defectQty" readonly>
+</div>
+
+<div id="defectPercentBox">
+<div class="label">Defect %</div>
+<input type="number" id="defectPercent" readonly>
+</div>
+
+</div>
+
+</div>
+
+<!-- OK MARK -->
+
+<div class="card" id="okMarkCard">
+
+<div class="card-title">
+✅ OK Mark
+<span class="th-title">
+สัญลักษณ์ OK
+</span>
+</div>
+
+<div class="okmark-select">
+
+    <div class="mark-item" onclick="selectMark(this,'Green')">
+        <div class="circle green"></div>
+        <span>Green</span>
     </div>
 
-    <div class="inspection-grid">
+    <div class="mark-item" onclick="selectMark(this,'Yellow')">
+        <div class="circle yellow"></div>
+        <span>Yellow</span>
+    </div>
 
-        <div>
-            <label id="lblSkca">SKC-A MFG พบ NG</label>
-            <input type="number" id="skcaNg">
-        </div>
+    <div class="mark-item" onclick="selectMark(this,'Pink')">
+        <div class="circle pink"></div>
+        <span>Pink</span>
+    </div>
 
-        <div>
-            <label id="lblPartNg">Part NG</label>
-            <select id="partNg">
-                <option> </option>
-                <option>Rework</option>
-                <option>Rework OK</option>
-                <option>Wait Rework</option>
-                <option>แลกเปลี่ยน</option>
-                <option>Reject</option>
-                <option>Defect</option>
-            </select>
-        </div>
+    <div class="mark-item" onclick="selectMark(this,'Blue')">
+        <div class="circle blue"></div>
+        <span>Blue</span>
+    </div>
 
-        <div>
-            <label id="lblQty">Qty</label>
-            <input type="number" id="partNgQty">
-        </div>
+    <div class="mark-item" onclick="selectMark(this,'White')">
+        <div class="circle white"></div>
+        <span>White</span>
+    </div>
 
-<div id="reworkResultArea"
-     style="grid-column:1 / span 3; display:none; align-items:center; gap:10px;">
-
-    <label id="lblReworkResult" style="margin:0;width:120px;">
-ผลการ Rework
-</label>
-
-    <select id="reworkResult" style="flex:1;">
-        <option> </option>
-        <option>-</option>
-        <option>OK</option>
-        <option>Wait Rework</option>
-        <option>เปลี่ยนชิ้นงานใน Stock</option>
-        <option>Reject</option>
-        <option>Defect</option>
-    </select>
 </div>
 
-        <div>
-            <label id="lblStock">Check Stock</label>
-            <input type="number" id="stockNg">
-        </div>
+<input type="hidden" id="okMarkValue">
 
-        <div>
-            <label id="lblOk">OK Qty</label>
+<div id="okMarkBox" style="display:none;margin-top:15px;">
 
-            <input type="number" id="okQty">
-        </div>
+    <div class="label">
+        รายละเอียด OK Mark
+    </div>
 
-        <div>
-            <label id="lblNg">NG Qty</label>
-            <input type="number" id="ngQty" readonly>
-        </div>
+    <textarea
+    id="okMarkDetail"
+    placeholder="กรอกรายละเอียด"></textarea>
+
+</div>
+
+</div>
+
+<!-- REMARK -->
+
+<div class="card">
+
+    <div
+    class="card-title"
+    onclick="openRemark()"
+    style="cursor:pointer;">
+
+        📝 Remark
+
+        <span class="th-title">
+            หมายเหตุ (คลิกเพื่อเพิ่ม)
+        </span>
 
     </div>
 
-    <div class="total-ng-box">
+    <div id="remarkBox">
 
-<div id="partNgShowArea"
-     style="width:100%; display:none; align-items:center; gap:10px; margin-top:5px;">
+        <textarea
+        id="remarkText"
+        placeholder="กรอกหมายเหตุ">
+        </textarea>
 
-    <label id="lblPartNgShow" style="width:70px;margin:0;">
-        <b>Part NG</b>
-    </label>
-
-    <select id="partNgShow" style="flex:1; height:30px;">
-        <option> </option>
-        <option>-</option>
-        <option>Rework</option>
-        <option>Rework OK</option>
-        <option>Wait Rework</option>
-        <option>แลกเปลี่ยน</option>
-        <option>Reject</option>
-        <option>Defect</option>
-    </select>
+    </div>
 
 </div>
 
-<div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
-    <label id="lblTotalNg" style="width:70px;margin:0;">
-        <b>Total NG</b>
-    </label>
-    <input type="number" id="totalNg" readonly style="width:65px;">
-</div>
+<!-- PART DAMAGE -->
 
-    <span class="okmark-label">
-<b id="lblOkMark">OK Mark</b>
+<div class="card">
+
+<div
+class="card-title"
+onclick="openDamage()"
+style="cursor:pointer;">
+
+📦 Part Damage
+
+<span class="th-title">
+ชิ้นส่วนเสียหายร่วม (คลิกเพื่อเพิ่ม)
 </span>
 
-    <label><input type="radio" name="okmark" value="Green"> <span class="green"></span></label>
-
-    <label><input type="radio" name="okmark" value="Yellow"> <span class="yellow"></span></label>
-
-    <label><input type="radio" name="okmark" value="Pink"> <span class="pink"></span></label>
-
-    <label><input type="radio" name="okmark" value="Blue"> <span class="blue"></span></label>
-
-    <label><input type="radio" name="okmark" value="White"> <span class="white"></span></label>
-
-<div id="okMarkDetailArea" style="width:100%;display:none;">
-    <textarea
-        id="okMarkDetail"
-        placeholder="รายละเอียด เช่น Serial No.&#10;(กรณีไม่มีรายละเอียดไม่ต้องกรอก)"
-    ></textarea>
 </div>
 
-<div style="margin-top:10px;">
+<div
+id="damageBox"
+style="display:none;">
+
+<div id="damageList">
+
+<div class="damage-item">
+
+<input
+class="damage-partno"
+list="partList"
+placeholder="Part No."
+oninput="damagePartSearch(this)">
+
+<input
+class="damage-partname"
+placeholder="Part Name">
+
+<input
+placeholder="Qty">
 
 <button
 type="button"
-id="btnRemark"
-class="manual-btn"
-onclick="addRemark()">
-Remark
+onclick="this.parentElement.remove()">
+❌
 </button>
 
 </div>
 
-<div id="remarkArea" style="width:100%;"></div>
-
-<br>
-
-<div style="display:flex;align-items:center;gap:10px;">
-
-    <label id="lblDamage" style="margin:0;">
-        <b>Part เสียหายร่วม</b>
-    </label>
-
-    <input
-        type="number"
-        id="partCount"
-        min="0"
-        placeholder="จำนวน"
-        oninput="createPartFields()"
-        style="width:80px;height:30px;"
-    >
-
 </div>
 
-<div id="partArea"></div>
+<button
+type="button"
+class="review-btn"
+style="
+height:50px;
+font-size:14px;
+background:linear-gradient(135deg,#ffb300,#ff7800);
+margin-top:10px;"
+onclick="addDamageRow()">
+
+➕ Add Part Damage
+
+</button>
 
 </div>
 
 </div>
 
-<div id="reportOverlay" class="report-overlay">
+<button
+id="reviewBtn"
+class="review-btn floating-review"
+onclick="reviewReport()">
+
+🔍 Review Report
+
+</button>
+
+<div
+id="reportOverlay"
+class="report-overlay">
 
 <div class="report-sheet">
 
 <button
-    id="editBtn"
-    class="add-btn"
-    onclick="toggleEditReport()">
-    📝
+id="editBtn"
+class="add-btn"
+onclick="toggleEditReport()">
+📝
 </button>
 
 <div
-    id="report"
-    class="report report-content"
-    contenteditable="false">
+id="report"
+class="report-content"
+contenteditable="false">
 </div>
 
-        <div class="report-actions">
+<div class="report-actions">
 
 <button
-    class="btn-save" onclick="saveReport()">
-
-    <span>💾</span>
-    <span>Save</span>
-
+class="btn-save"
+onclick="saveReport()">
+💾 Save
 </button>
 
-<button class="btn-copy" onclick="copyReport()">
-    <span>📋</span>
-    <span>Copy</span>
+<button
+class="btn-copy"
+onclick="copyReport()">
+📋 Copy
 </button>
 
-<button class="btn-line" onclick="sendLine()">
-    <span>📤</span>
-    <span>LINE</span>
+<button
+class="btn-line"
+onclick="sendLine()">
+📤 LINE
 </button>
-
-        </div>
-
-    </div>
 
 </div>
 
 </div>
 
-<div id="stdOverlay" class="std-overlay">
-
-    <div class="std-box">
-
-<iframe
-    id="stdFrame"
-    src="special.html">
-</iframe>
-
-    </div>
+</div>
 
 </div>
 
 <script>
 
-document.getElementById("date").value =
-new Date().toISOString().split("T")[0];
+let selectedDate = new Date();
+
+function updateDate(){
+
+    const date =
+    selectedDate.toLocaleDateString(
+    "en-GB",
+    {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+    });
+
+    document.getElementById(
+    "dateBox"
+    ).innerHTML = date;
+
+}
+
+document
+.getElementById("headerDate")
+.addEventListener(
+"change",
+function(){
+
+    if(this.value){
+
+        selectedDate =
+        new Date(this.value);
+
+        updateDate();
+
+    }
+
+});
+
+document
+.getElementById("dateBoxWrap")
+.onclick = () => {
+
+    const picker =
+    document.getElementById("headerDate");
+
+    if(picker.showPicker){
+
+        picker.showPicker();
+
+    }else{
+
+        picker.click();
+
+    }
+
+};
+
+updateDate();
+
+</script>
+
+<script>
 
 let partMaster = {};
 let allPartNo = [];
 
 async function loadExcel(){
 
-    const response = await fetch("ข้อมูล Excel.xlsx");
+try{
 
-    const data = await response.arrayBuffer();
+    const response =
+    await fetch("ข้อมูล Excel.xlsx");
 
-    const workbook = XLSX.read(data,{
-        type:"array"
-    });
+    const data =
+    await response.arrayBuffer();
+
+    const workbook =
+    XLSX.read(data,{type:"array"});
 
     const sheet =
-    workbook.Sheets[workbook.SheetNames[0]];
+    workbook.Sheets[
+        workbook.SheetNames[0]
+    ];
 
     const rows =
     XLSX.utils.sheet_to_json(sheet);
 
     rows.forEach(row=>{
 
-const partNo = String(
-    row.PartNo || ""
-).trim();
+        const partNo =
+        String(row.PartNo || "").trim();
 
-        if(partNo){
+        if(!partNo) return;
 
-    if(!allPartNo.includes(partNo)){
-    allPartNo.push(partNo);
-}
-
-    partMaster[partNo] = {
-
-                partName:
-                row.PartName || "",
-
-                supplier:
-                row.Supplier || "",
-
-                model:
-                row.Model || ""
-
-            };
-
+        if(!allPartNo.includes(partNo)){
+            allPartNo.push(partNo);
         }
+
+        partMaster[partNo] = {
+
+            partName:
+            row.PartName || "",
+
+            supplier:
+            row.Supplier || "",
+
+            model:
+            row.Model || ""
+
+        };
 
     });
 
-    console.log(
-      "Excel Loaded : " +
-      Object.keys(partMaster).length
-    );
+}catch(err){
+
+    console.error(err);
+
+}
 
 }
 
 loadExcel();
 
-let partnameManual = false;
-let modelManual = false;
-let supplierManual = false;
+window.addEventListener("load",()=>{
 
-document.getElementById("partnameBtn").onclick = function(){
+  const partNo =
+  localStorage.getItem("scannedPartNo");
 
-if(!partnameManual){
+  if(!partNo) return;
 
-    partnameManual = true;
+  document.getElementById("partNo").value =
+  partNo;
 
-    partname.readOnly = false;
-    partname.value = "";
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("input"));
 
-    this.innerText = "Auto";
-    this.style.background = "#06C755";
-this.style.color = "#fff";
+  document.getElementById("partNo")
+  .dispatchEvent(new Event("change"));
 
-}else{
-
-    partnameManual = false;
-
-    partname.readOnly = true;
-
-    this.innerText = "Manual";
-this.style.background = "#d9d9d9";
-this.style.color = "#000";
-
-    fillPartData(partno.value);
-}
-
-        };
-
-document.getElementById("modelBtn").onclick = function(){
-
-    if(!modelManual){
-
-        modelManual = true;
-
-        model.readOnly = false;
-                model.value = "";
-
-        this.innerText = "Auto";
-                this.style.background = "#06C755";
-this.style.color = "#fff";
-
-    }else{
-
-        modelManual = false;
-
-        model.readOnly = true;
-
-        this.innerText = "Manual";
-this.style.background = "#d9d9d9";
-this.style.color = "#000";
-
-        fillPartData(partno.value);
-    }
-
-};
-
-document.getElementById("supplierBtn").onclick = function(){
-
-    if(!supplierManual){
-
-        supplierManual = true;
-
-        supplier.readOnly = false;
-
-        supplier.value = "";
-
-        this.innerText = "Auto";
-this.style.background = "#06C755";
-this.style.color = "#fff";    }else{
-
-        supplierManual = false;
-
-        supplier.readOnly = true;
-
-        this.innerText = "Manual";
-this.style.background = "#d9d9d9";
-this.style.color = "#000";
-fillPartData(partno.value);
-
-    }
-
-};
-
-document.getElementById("partno")
-.addEventListener("input", function(){
-
-    const keyword = this.value.trim();
-
-    if(keyword === ""){
-
-        if(!partnameManual) partname.value = "";
-        if(!modelManual) model.value = "";
-        if(!supplierManual) supplier.value = "";
-
-        partList.innerHTML = "";
-        return;
-    }
-
-    if(partMaster[keyword]){
-        fillPartData(keyword);
-        return;
-    }
-
-    if(keyword.length < 4){
-        partList.innerHTML = "";
-        return;
-    }
-
-    const result = allPartNo
-        .filter(p =>
-            p.startsWith(keyword) ||
-            p.includes("-" + keyword)
-        )
-        .slice(0,10);
-
-    partList.innerHTML = result
-        .map(p => `<option value="${p}"></option>`)
-        .join("");
+  localStorage.removeItem("scannedPartNo");
 
 });
+
+function editField(el){
+
+if(el.hasAttribute("readonly")){
+
+    el.dataset.autoValue = el.value;
+
+    el.removeAttribute("readonly");
+
+    el.value="";
+
+    setTimeout(()=>{
+
+        el.focus();
+
+    },50);
+
+}
+
+}
+
+function restoreAuto(el){
+
+if(el.value.trim()===""){
+
+    el.value = el.dataset.autoValue || "";
+
+}
+
+}
+
 function fillPartData(partNo){
 
-    if(!partMaster[partNo]) return;
+if(!partMaster[partNo]) return;
 
-    if(!partnameManual){
-        partname.value =
-        partMaster[partNo].partName;
-    }
+const partName =
+document.getElementById("partName");
 
-    if(!modelManual){
-        model.value =
-        partMaster[partNo].model;
-    }
+const model =
+document.getElementById("model");
 
-    if(!supplierManual){
-        supplier.value =
-        partMaster[partNo].supplier;
-    }
+const supplier =
+document.getElementById("supplier");
 
-}
+partName.setAttribute("readonly",true);
+model.setAttribute("readonly",true);
+supplier.setAttribute("readonly",true);
 
-function calculateNG(){
+partName.value =
+partMaster[partNo].partName || "";
 
-    let lineNg =
-    Number(document.getElementById("skcaNg").value || 0);
-document.getElementById("partNgQty").value =
-lineNg === 0 ? "" : lineNg;
+model.value =
+partMaster[partNo].model || "";
 
-    let stock =
-    Number(document.getElementById("stockNg").value || 0);
-
-    let ok =
-    Number(document.getElementById("okQty").value || 0);
-
-    let partQty =
-    Number(document.getElementById("partNgQty").value || 0);
-
-    let partType =
-    document.getElementById("partNg").value;
-
-let ngQty = stock - ok;
-
-if(ngQty < 0) ngQty = 0;
-
-if(
-document.getElementById("stockNg").value === "" &&
-document.getElementById("okQty").value === ""
-){
-    document.getElementById("ngQty").value = "";
-}else{
-    document.getElementById("ngQty").value = ngQty;
-}
-
-let total = ngQty + partQty;
-
-    document.getElementById("totalNg").value =
-(total === 0) ? "" : total;
-
-const partNgShowArea =
-document.getElementById("partNgShowArea");
-
-if(total > 0){
-
-    partNgShowArea.style.display = "flex";
-
-}else{
-
-    partNgShowArea.style.display = "none";
-
-    document.getElementById("partNgShow").value = "";
-}
+supplier.value =
+partMaster[partNo].supplier || "";
 
 }
 
-let reportVisible = false;
+document
+.getElementById("partNo")
+.addEventListener("input",function(){
+
+const keyword =
+this.value.trim();
+
+const list =
+document.getElementById("partList");
+
+if(keyword===""){
+
+document.getElementById("partName").value="";
+document.getElementById("model").value="";
+document.getElementById("supplier").value="";
+
+list.innerHTML="";
+return;
+
+}
+
+if(partMaster[keyword]){
+
+fillPartData(keyword);
+
+list.innerHTML="";
+return;
+
+}
+
+if(keyword.length < 4){
+
+list.innerHTML="";
+return;
+
+}
+
+const cleanKeyword =
+keyword
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const result =
+allPartNo
+.filter(p=>{
+
+const cleanPart =
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+return (
+
+p.toUpperCase().startsWith(keyword.toUpperCase())
+
+||
+
+p.toUpperCase().includes(keyword.toUpperCase())
+
+||
+
+cleanPart.includes(cleanKeyword)
+
+);
+
+})
+.slice(0,50);
+
+list.innerHTML =
+result.map(p=>
+`<option value="${p}"></option>`
+).join("");
+
+});
+
+document
+.getElementById("partNo")
+.addEventListener("change",function(){
+
+const key =
+this.value.trim();
+
+if(partMaster[key]){
+
+fillPartData(key);
+return;
+
+}
+
+const cleanKey =
+key
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const found =
+allPartNo.find(p=>
+
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase()
+
+=== cleanKey
+
+);
+
+if(found){
+
+this.value = found;
+
+fillPartData(found);
+
+}
+
+});
+
+</script>
+
+<script>
+
 let reportEditMode = false;
 
-function addRemark(){
-
-    const area = document.getElementById("remarkArea");
-
-    if(area.innerHTML.trim() !== ""){
-
-        area.innerHTML = "";
-
-    }else{
-
-        area.innerHTML = `
-            <textarea
-                id="remark1"
-                placeholder="Remark"
-            ></textarea>
-        `;
-    }
-
-}
-      
-function createPartFields(){
-
-    const count =
-    Number(document.getElementById("partCount").value || 0);
-
-    const area =
-    document.getElementById("partArea");
-
-    area.innerHTML = "";
-
-    for(let i=1;i<=count;i++){
-
-        area.innerHTML += `
-        <div class="part-box">
-
-            <div style="font-weight:bold;margin-bottom:10px;">
-                🔹 Part เสียหายร่วม ${i}
-            </div>
-
-            <label>Part No.</label>
-<input
-    type="text"
-    id="partNo${i}"
-    list="subPartList${i}"
-    autocomplete="off"
-    oninput="fillSubPart(${i})"
->
-
-<datalist id="subPartList${i}"></datalist>
-
-            <label>Part Name</label>
-            <input
-                type="text"
-                id="partName${i}"
-                readonly
-            >
-
-            <label>Qty.</label>
-            <div style="display:flex;align-items:center;gap:8px;">
-<input
-    type="number"
-    id="partQty${i}"
-    style="flex:1;"
-    oninput="updateUnit(${i})"
->
-                <span id="unit${i}">(Pcs.)</span>
-            </div>
-
-        </div>
-        `;
-    }
-}
-
-function updateUnit(index){
-
-    const qty =
-    Number(
-        document.getElementById(`partQty${index}`).value || 0
-    );
-
-    document.getElementById(`unit${index}`).innerText =
-    qty <= 1 ? "(Pc.)" : "(Pcs.)";
-
-}
-
-function fillSubPart(index){
-
-    const keyword =
-    document.getElementById(`partNo${index}`)
-    .value.trim();
-
-    const partName =
-    document.getElementById(`partName${index}`);
-
-    const list =
-    document.getElementById(`subPartList${index}`);
-
-    partName.value = "";
-
-    if(keyword === ""){
-        list.innerHTML = "";
-        return;
-    }
-
-    // มีใน Excel ตรงตัว
-    if(partMaster[keyword]){
-        partName.value =
-        partMaster[keyword].partName || "";
-        return;
-    }
-
-    // หา Part แม่ เช่น
-    // 5T216-5151-30 -> 5T216-5151
-    const parts = keyword.split("-");
-
-    if(parts.length >= 3){
-
-        const basePart =
-        `${parts[0]}-${parts[1]}`;
-
-        if(partMaster[basePart]){
-
-            partName.value =
-            partMaster[basePart].partName || "";
-
-            return;
-        }
-    }
-
-    if(keyword.length < 4){
-        list.innerHTML = "";
-        return;
-    }
-
-const result = allPartNo
-    .filter(p =>
-        p.startsWith(keyword) ||
-        p.includes("-" + keyword)
-    )
-    .slice(0,10);;
-
-    list.innerHTML = result
-        .map(p => `<option value="${p}"></option>`)
-        .join("");
+function unitPc(qty){
+  return Number(qty) === 1 ? "Pc." : "Pcs.";
 }
 
 function reviewReport(){
 
-if(reportVisible){
+let text = "";
 
-    document
-    .getElementById("reportOverlay")
-    .classList.remove("show");
+/* DATE */
+const reportDate =
+String(selectedDate.getDate()).padStart(2,"0") + "-" +
+String(selectedDate.getMonth()+1).padStart(2,"0") + "-" +
+selectedDate.getFullYear();
 
-    reportVisible = false;
-
-    document.body.style.overflow = "";
-
-    return;
-}
-
-    reportVisible = true;
-
-    let skca =
-    Number(document.getElementById("skcaNg").value || 0);
-
-    let stock =
-    Number(document.getElementById("stockNg").value || 0);
-
-    let ng =
-    Number(document.getElementById("ngQty").value || 0);
-
-let totalNg =
-document.getElementById("totalNg").value;
+const serialNumber =
+document.getElementById("serialNumber").value;
 
 const issueDoc =
-document.getElementById("document").value;
+document.getElementById("issueDoc").value;
 
-const okMark =
-document.querySelector(
-'input[name="okmark"]:checked'
-)?.value || "-";
+const lineStop =
+document.getElementById("lineStop").value;
 
-const okMarkDetail =
-document.getElementById("okMarkDetail")?.value || "";
+const issueDocValue =
+(issueDoc && issueDoc !== "-")
+? issueDoc
+: "-";
 
-const skcaUnit = skca == 1 ? "Pc." : "Pcs.";
-const stockUnit = stock == 1 ? "Pc." : "Pcs.";
-const okUnit = okQty.value == 1 ? "Pc." : "Pcs.";
-const ngUnit = ng == 1 ? "Pc." : "Pcs.";
-const partUnit = partNgQty.value == 1 ? "Pc." : "Pcs.";
-const totalUnit = totalNg == 1 ? "Pc." : "Pcs.";
+const lineStopValue =
+(lineStop && lineStop.trim() !== "")
+? lineStop + " min"
+: "-";
 
-const totalNgType =
-document.getElementById("partNgShow").value.trim();
+/* HEADER */
 
-let subPartsText = "";
+text += "PART PROBLEM INFORM\n";
+text += "Date : " + reportDate + "\n";
 
-const count =
-Number(document.getElementById("partCount").value || 0);
+if(document.getElementById("type").value)
+text += "Type : " + document.getElementById("type").value + "\n";
 
-for(let i=1;i<=count;i++){
+if(document.getElementById("product").value)
+text += "Product : " + document.getElementById("product").value + "\n";
 
-    const partNo =
-    document.getElementById(`partNo${i}`)?.value || "";
+if(document.getElementById("partNo").value)
+text += "Part No. : " + document.getElementById("partNo").value + "\n";
 
-    const partName =
-    document.getElementById(`partName${i}`)?.value || "";
+if(document.getElementById("partName").value)
+text += "Part Name : " + document.getElementById("partName").value + "\n";
 
-    const qty =
-    Number(document.getElementById(`partQty${i}`)?.value || 0);
+if(document.getElementById("model").value)
+text += "Model : " + document.getElementById("model").value + "\n";
 
-    const unit =
-    qty === 1 ? "Pc." : "Pcs.";
+if(document.getElementById("supplier").value)
+text += "Supplier : " + document.getElementById("supplier").value + "\n";
 
-subPartsText +=
-`Part No. : ${partNo}
-Part Name : ${partName}
-Qty. : ${qty} ${unit}
-`;
+if(serialNumber)
+text += "Serial Number : " + serialNumber + "\n";
+
+text += "Issue Doc : " + issueDocValue + "\n";
+text += "Line Stop : " + lineStopValue + "\n\n";
+
+/* PROBLEM */
+
+const problem =
+document.getElementById("problem").value.trim();
+
+const detail =
+document.getElementById("detail").value.trim();
+
+if(problem){
+
+text += "PROBLEM\n";
+text += problem + "\n";
+
 }
 
-let partDamageSection = "";
+if(detail){
 
-let remarkText = "";
+text += "Detail\n";
+text += detail + "\n";
 
-const value =
-document.getElementById("remark1")?.value.trim();
-
-if(value){
-    remarkText += `Remark : ${value}\n`;
 }
 
-const hasPartData =
-subPartsText
-.trim()
-.replace(/Part No\.\s*:\s*/g,"")
-.replace(/Part Name\s*:\s*/g,"")
-.replace(/Qty\.\s*:\s*0\s*Pcs?\./g,"")
-.trim();
-
-if(hasPartData){
-partDamageSection =
-`━━━━━━━━━━━━━━
-Part เสียหายร่วม
-${subPartsText.trim()}`;
-}
-
-let text = `PART PROBLEM INFORM\n`;
-
-if(date.value)
-text += `Date : ${date.value.split("-").reverse().join("-")}\n`;
-
-if(type.value)
-text += `Type : ${type.value}\n`;
-
-if(product.value)
-text += `Product : ${product.value}\n`;
-
-if(partno.value)
-text += `Part No. : ${partno.value}\n`;
-
-if(partname.value)
-text += `Part Name : ${partname.value}\n`;
-
-if(model.value)
-text += `Model : ${model.value}\n`;
-
-if(supplier.value)
-text += `Supplier : ${supplier.value}\n`;
-
-if(unitno.value)
-text += `Serial Number : ${unitno.value}\n`;
-
-text += `Issue Doc : ${issueDoc || "-"}\n`;
-
-if(linestop.value !== ""){
-    text += `Line Stop : ${linestop.value} min\n`;
-}else{
-    text += `Line Stop : -\n`;
-}
-
-if(problem.value)
-text += `\nProblem\n${problem.value}\n`;
-
-if(detail.value)
-text += `Detail\n${detail.value}\n`;
+/* CONTAINMENT */
 
 if(
-rework.value.trim() ||
-(containmentResult.value &&
-containmentResult.value !== "-")
+document.getElementById("reworkText").value.trim() ||
+document.getElementById("containmentResult").value.trim()
 ){
-text += `━━━━━━━━━━━━━━
-CONTAINMENT ACTION\n`;
 
-if(rework.value.trim())
-text += `Rework : ${rework.value}\n`;
+text += "━━━━━━━━━━━━━━\n";
+text += "CONTAINMENT ACTION\n";
 
-if(containmentResult.value &&
-containmentResult.value !== "-")
-text += `Result : ${containmentResult.value}\n`;
+if(document.getElementById("reworkText").value.trim()){
+
+text +=
+"Rework : " +
+document.getElementById("reworkText").value +
+"\n";
+
 }
 
+if(document.getElementById("containmentResult").value){
+
+text +=
+"Result : " +
+document.getElementById("containmentResult").value +
+"\n";
+
+}
+
+}
+
+/* INSPECTION */
+
+const mfgCheck =
+document.getElementById("mfgNgQty").value;
+
+const mfgResult =
+document.getElementById("mfgResult").value;
+
+const stockCheck =
+document.getElementById("stockCheck").value;
+
+const stockOk =
+document.getElementById("stockOkQty").value;
+
+const stockNg =
+document.getElementById("stockNgQty").value;
+
+const stockResult =
+document.getElementById("stockResult").value;
+
+const totalNg =
+document.getElementById("totalNg").value;
+
+const reworkQty =
+document.getElementById("reworkQty").value;
+
+const defectQty =
+document.getElementById("defectQty").value;
+
 if(
-skca ||
-partNgQty.value ||
-stock ||
-okQty.value ||
-ng ||
+mfgCheck ||
+stockCheck ||
 totalNg
 ){
-text += `━━━━━━━━━━━━━━
-INSPECTION RESULT\n`;
 
-if(skca)
-text += `SKC-A MFG พบ NG : ${skca} ${skcaUnit}\n`;
+text += "━━━━━━━━━━━━━━\n";
+text += "INSPECTION RESULT\n";
 
-if(partNgQty.value)
-text += `Part NG${partNg.value ? ` (${partNg.value})` : ""} : ${partNgQty.value} ${partUnit}\n`;
+if(mfgCheck){
 
-if(reworkResult.value && reworkResult.value !== "-")
-text += `ผลการ Rework : ${reworkResult.value}\n`;
+text +=
+"SKC-A MFG พบ NG : " +
+mfgCheck +
+" " +
+unitPc(mfgCheck) +
+"\n";
 
-if(stock != null && stock !== "")
-text += `Check Stock SKC : ${stock} ${stockUnit}\n`;
+}
 
-if(okQty.value !== "")
-text += `OK : ${okQty.value} ${okUnit}\n`;
+if(mfgCheck){
 
-if(document.getElementById("ngQty").value !== "")
-text += `NG : ${ng} ${ngUnit}\n`;
+text +=
+"Part NG" +
+(mfgResult ? " (" + mfgResult + ")" : "") +
+" : " +
+mfgCheck +
+" " +
+unitPc(mfgCheck) +
+"\n";
 
-// %Defect
-let defectPercent = "";
+}
 
-if(document.getElementById("partNgShow").value === "Defect"){
-    const totalCheck = Number(okQty.value || 0) + Number(totalNg);
+if(stockCheck){
 
-    if(totalCheck > 0){
-        defectPercent =
-        ((Number(totalNg) / totalCheck) * 100).toFixed(2);
-    }
+text +=
+"Check Stock : " +
+stockCheck +
+" " +
+unitPc(stockCheck) +
+"\n";
+
+}
+
+if(stockOk){
+
+text +=
+"OK : " +
+stockOk +
+" " +
+unitPc(stockOk) +
+"\n";
+
+}
+
+if(stockNg){
+
+text +=
+"NG" +
+(stockResult ? " (" + stockResult + ")" : "") +
+" : " +
+stockNg +
+" " +
+unitPc(stockNg) +
+"\n";
+
 }
 
 if(totalNg){
-    text += `Total NG${totalNgType ? ` (${totalNgType})` : ""} : ${totalNg} ${totalUnit}\n`;
 
-    if(defectPercent)
-        text += `%Defect : ${defectPercent}%\n`;
+text +=
+"Total NG : " +
+totalNg +
+" " +
+unitPc(totalNg) +
+"\n";
+
+}
+    
 }
 
-if(okMark !== "-"){
-    text += `OK Mark : ${okMark}\n`;
+/* OK MARK */
 
-    if(okMarkDetail.trim()){
-        text += `${okMarkDetail}\n`;
+const okMark =
+document.getElementById("okMarkValue").value;
+
+const okMarkDetail =
+document.getElementById("okMarkDetail").value.trim();
+
+if(okMark){
+
+    text += "━━━━━━━━━━━━━━\n";
+
+    text +=
+    "OK Mark : " +
+    okMark +
+    "\n";
+
+    if(okMarkDetail){
+
+        text +=
+        okMarkDetail +
+        "\n";
+
     }
-}
 
 }
 
-if(remarkText){
-text += `━━━━━━━━━━━━━━
-${remarkText}`;
+/* REMARK */
+
+const remarkText =
+document.getElementById("remarkText");
+
+if(
+remarkText &&
+remarkText.value.trim()
+){
+
+text += "━━━━━━━━━━━━━━\n";
+text += "Remark\n";
+text += remarkText.value + "\n";
+
 }
 
-if(partDamageSection){
-text += `${partDamageSection}\n`;
+/* PART DAMAGE */
+
+const rows =
+document.querySelectorAll(".damage-item");
+
+let damageText = "";
+
+rows.forEach(row=>{
+
+const inputs = row.querySelectorAll("input");
+
+const no   = inputs[0]?.value.trim() || "";
+const name = inputs[1]?.value.trim() || "";
+const qty  = inputs[2]?.value.trim() || "";
+
+if(no || name || qty){
+
+    if(damageText){
+        damageText += "\n";
+    }
+
+    damageText += `Part No : ${no}\n`;
+    damageText += `Part Name : ${name}\n`;
+
+    if(qty){
+        damageText += `Qty : ${qty} ${unitPc(qty)}`;
+    }
+
 }
 
-if(supplier.value){
-text += `━━━━━━━━━━━━━━
+});
+
+if(damageText){
+
+text += "━━━━━━━━━━━━━━\n";
+text += "Part Damage\n";
+text += damageText.trim() + "\n";
+
+}
+
+/* ACTION REQUEST */
+
+if(document.getElementById("supplier").value){
+
+text +=
+`━━━━━━━━━━━━━━
 ACTION REQUEST
-Supplier : ${supplier.value}
+Supplier : ${document.getElementById("supplier").value}
 1.ตรวจสอบ Stock คงเหลือทั้งหมด
 2.แจ้งจำนวน OK / NG
 3.แนบรูป Mark Check
 4.ตรวจสอบ Lot เดียวกันที่เกี่ยวข้อง
 5.ขยายผลไปยัง Spare Part (ถ้ามี)
 `;
+
 }
 
-text += `━━━━━━━━━━━━━━
-Photo : Attached`;
-      
-document.getElementById("report").innerText = text.trim();
+const finalText = text.trim();
 
-console.log(text);
+document.getElementById("report").innerText =
+finalText;
+
+saveHistory(finalText);
 
 document
 .getElementById("reportOverlay")
 .classList.add("show");
 
 document.body.style.overflow = "hidden";
-      
+
 }
-      
+
 document
-.querySelectorAll("input,select,textarea")
-.forEach(el => {
+.getElementById("reportOverlay")
+.addEventListener(
+"click",
+function(e){
 
-    el.addEventListener("input", () => {
-    calculateNG();
+if(e.target===this){
+
+this.classList.remove("show");
+
+document.body.style.overflow = "";
+
+}
+
 });
 
-el.addEventListener("change", () => {
-    calculateNG();
-});
+</script>
 
-});
+<script>
+
+function addDamageRow(){
+
+const row =
+document.createElement("div");
+
+row.className =
+"damage-item";
+
+row.innerHTML = `
+
+<input
+class="damage-partno"
+list="partList"
+placeholder="Part No."
+oninput="damagePartSearch(this)">
+
+<input
+class="damage-partname"
+placeholder="Part Name">
+
+<input
+placeholder="Qty">
+
+<button
+type="button"
+onclick="this.parentElement.remove()">
+❌
+</button>
+
+`;
+
+document
+.getElementById("damageList")
+.appendChild(row);
+
+}
+
+</script>
+
+<script>
+
+function damagePartSearch(input){
+
+const row =
+input.closest(".damage-item");
+
+const partNameBox =
+row.querySelector(".damage-partname");
+
+const keyword =
+input.value.trim();
+
+const list =
+document.getElementById("partList");
+
+if(keyword===""){
+
+partNameBox.value="";
+list.innerHTML="";
+return;
+
+}
+
+if(partMaster[keyword]){
+
+partNameBox.value =
+partMaster[keyword].partName || "";
+
+list.innerHTML="";
+return;
+
+}
+
+const cleanKeyword =
+keyword
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const result =
+allPartNo
+.filter(p=>{
+
+const cleanPart =
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+return(
+
+p.toUpperCase().startsWith(keyword.toUpperCase())
+
+||
+
+p.toUpperCase().includes(keyword.toUpperCase())
+
+||
+
+cleanPart.includes(cleanKeyword)
+
+);
+
+})
+.slice(0,50);
+
+list.innerHTML =
+result.map(p=>
+`<option value="${p}"></option>`
+).join("");
+
+}
+
+</script>
+
+<script>
+
+function calculateNG(){
+
+/* MFG */
+
+let mfgCheck =
+Number(document.getElementById("mfgNgQty").value || 0);
+
+let mfgOk =
+Number(document.getElementById("mfgOkQty").value || 0);
+
+let mfgNg = mfgCheck - mfgOk;
+
+if(mfgNg < 0){
+    mfgNg = 0;
+}
+
+document.getElementById("mfgNgQtyResult").value =
+mfgCheck === 0 ? "" : mfgNg;
+
+
+/* STOCK */
+
+let stockCheck =
+Number(document.getElementById("stockCheck").value || 0);
+
+let stockOk =
+Number(document.getElementById("stockOkQty").value || 0);
+
+let stockNg = stockCheck - stockOk;
+
+if(stockNg < 0){
+    stockNg = 0;
+}
+
+document.getElementById("stockNgQty").value =
+stockCheck === 0 ? "" : stockNg;
+
+
+/* TOTAL NG */
+
+let totalNg =
+mfgNg + stockNg;
+
+/* ถ้า NG ทั้ง 2 ช่องยังไม่มีข้อมูล ไม่ต้องโชว์ */
+
+if(mfgNg === 0 && stockNg === 0){
+
+    document.getElementById("totalNg").value = "";
+
+}else{
+
+    document.getElementById("totalNg").value = totalNg;
+
+}
+
+
+/* REWORK / DEFECT */
+
+let reworkQty = 0;
+let defectQty = 0;
+
+if(
+    ["Rework","Rework OK","Wait Rework"]
+    .includes(document.getElementById("mfgResult").value)
+){
+    reworkQty += mfgNg;
+}
+
+if(
+    ["Rework","Rework OK","Wait Rework"]
+    .includes(document.getElementById("stockResult").value)
+){
+    reworkQty += stockNg;
+}
+
+if(document.getElementById("mfgResult").value === "Defect"){
+    defectQty += mfgNg;
+}
+
+if(document.getElementById("stockResult").value === "Defect"){
+    defectQty += stockNg;
+}
+
+/* ยังไม่มีข้อมูล ไม่ต้องโชว์ */
+
+document.getElementById("reworkQty").value =
+reworkQty > 0 ? reworkQty : "";
+
+document.getElementById("defectQty").value =
+defectQty > 0 ? defectQty : "";
+
+
+/* DEFECT % */
+
+let totalChecked = mfgCheck + stockCheck;
+
+let defectPercent = "";
+
+if(defectQty > 0 && totalChecked > 0){
+
+    defectPercent =
+    ((defectQty / totalChecked) * 100).toFixed(2);
+
+}
+
+document.getElementById("defectPercent").value =
+defectPercent;
+
+/* SHOW / HIDE ROW 3 */
+
+document.getElementById("totalNgBox").style.display =
+totalNg > 0 ? "block" : "none";
+
+document.getElementById("reworkQtyBox").style.display =
+reworkQty > 0 ? "block" : "none";
+
+document.getElementById("defectQtyBox").style.display =
+defectQty > 0 ? "block" : "none";
+
+document.getElementById("defectPercentBox").style.display =
+defectPercent !== "" ? "block" : "none";
+
+/* OK MARK */
+
+if(stockOk > 0 || mfgOk > 0){
+
+    document.getElementById("okMarkCard").style.display =
+    "block";
+
+}else{
+
+    document.getElementById("okMarkCard").style.display =
+    "none";
+
+}
+
+}
+
+
+/* EVENT */
+
+document.getElementById("mfgNgQty")
+.addEventListener("input", calculateNG);
+
+document.getElementById("mfgOkQty")
+.addEventListener("input", calculateNG);
+
+document.getElementById("stockCheck")
+.addEventListener("input", calculateNG);
+
+document.getElementById("stockOkQty")
+.addEventListener("input", calculateNG);
+
+document.getElementById("mfgResult")
+.addEventListener("change", calculateNG);
+
+document.getElementById("stockResult")
+.addEventListener("change", calculateNG);
+
+document.getElementById("okMarkCard").style.display =
+"none";
 
 calculateNG();
 
-// document.getElementById("report").style.display = "none";
+</script>
 
-window.addEventListener("pageshow", () => {
+<script>
 
-    const std =
-    localStorage.getItem("selectedStd");
+const reworkText =
+document.getElementById("reworkText");
 
-    if(!std) return;
+const resultSection =
+document.getElementById("resultSection");
 
-    const fieldId =
-    localStorage.getItem("activeFieldId");
+function checkRework(){
 
-    if(fieldId){
+    if(reworkText.value.trim() === ""){
 
-        const field =
-        document.getElementById(fieldId);
+        resultSection.style.display = "none";
+        document.getElementById("containmentResult").value = "";
 
-        if(field){
+    }else{
 
-            field.value += " " + std;
-
-        }
+        resultSection.style.display = "block";
 
     }
 
-    localStorage.removeItem("selectedStd");
+}
 
-});
+reworkText.addEventListener(
+"input",
+checkRework
+);
 
-let activeField = null;
+checkRework();
 
-document.querySelectorAll("textarea,input")
-.forEach(el => {
+</script>
 
-    function saveField(){
+<script>
 
-        localStorage.setItem(
-            "activeFieldId",
-            el.id
-        );
+function selectMark(el,color){
+
+    if(el.classList.contains("active")){
+
+        el.classList.remove("active");
+
+        document.getElementById("okMarkValue").value = "";
+
+        document.getElementById("okMarkBox").style.display = "none";
+
+        return;
 
     }
 
-    el.addEventListener("focus", saveField);
-    el.addEventListener("click", saveField);
-    el.addEventListener("input", saveField);
-    el.addEventListener("touchstart", saveField);
+    document
+    .querySelectorAll(".mark-item")
+    .forEach(item=>item.classList.remove("active"));
 
-});
+    el.classList.add("active");
+
+    document.getElementById("okMarkValue").value = color;
+
+    document.getElementById("okMarkBox").style.display = "block";
+
+}
+
+</script>
+
+<script>
+
+function toggleEditReport(){
+
+const report =
+document.getElementById("report");
+
+const btn =
+document.getElementById("editBtn");
+
+if(!reportEditMode){
+
+    report.contentEditable = "true";
+
+    report.focus();
+
+    btn.innerHTML = "💾";
+
+    btn.style.background = "#4caf50";
+
+    reportEditMode = true;
+
+}else{
+
+    report.contentEditable = "false";
+
+    btn.innerHTML = "📝";
+
+    btn.style.background = "#2196f3";
+
+    reportEditMode = false;
+
+}
+
+}
 
 function saveReport(){
 
-    const text =
-    document.getElementById("report").innerText;
+const text =
+document.getElementById("report").innerText;
 
-    if(!text) return;
+const blob =
+new Blob([text],{
+type:"text/plain"
+});
 
-    const blob =
-    new Blob([text],{
-        type:"text/plain"
-    });
+const a =
+document.createElement("a");
 
-    const a =
-    document.createElement("a");
+a.href =
+URL.createObjectURL(blob);
 
-    a.href =
-    URL.createObjectURL(blob);
+a.download =
+"PART_PROBLEM_INFORM.txt";
 
-    a.download =
-    "Part_Report_" +
-    new Date().getTime() +
-    ".txt";
+a.click();
 
-    a.click();
-
-    URL.revokeObjectURL(a.href);
 }
 
 function copyReport(){
 
-    const text =
-    document.getElementById("report").innerText;
+navigator.clipboard.writeText(
 
-    const temp =
-    document.createElement("textarea");
+document.getElementById("report")
+.innerText
 
-    temp.value = text;
+);
 
-    document.body.appendChild(temp);
+alert("📋 Copy Report สำเร็จ");
 
-    temp.select();
-    temp.setSelectionRange(
-        0,
-        99999
-    );
-
-    document.execCommand("copy");
-
-    document.body.removeChild(temp);
-
-    const msg = document.createElement("div");
-
-msg.innerHTML = "📋 Copy Report สำเร็จ";
-
-msg.style.cssText = `
-position:fixed;
-top:80px;
-left:50%;
-transform:translateX(-50%);
-background:#4caf50;
-color:#fff;
-padding:12px 20px;
-border-radius:10px;
-z-index:999999;
-font-size:16px;
-text-align:center;
-white-space:nowrap;
-box-shadow:0 4px 12px rgba(0,0,0,0.3);
-`;
-
-document.body.appendChild(msg);
-
-setTimeout(()=>{
-    msg.remove();
-},2000);
-
-}
-
-function toggleEditReport(){
-
-    const report =
-    document.getElementById("report");
-
-    const btn =
-    document.getElementById("editBtn");
-
-    if(!reportEditMode){
-
-        report.contentEditable = "true";
-
-        report.focus();
-
-        btn.innerHTML = "💾";
-
-        btn.style.background = "#4caf50";
-
-        reportEditMode = true;
-
-    }else{
-
-        report.contentEditable = "false";
-
-        btn.innerHTML = "📝";
-
-        btn.style.background = "#2196f3";
-
-        reportEditMode = false;
-
-        const msg =
-        document.createElement("div");
-
-        msg.innerHTML = "💾 บันทึกข้อความแล้ว";
-
-        msg.style.cssText = `
-        position:fixed;
-        top:80px;
-        left:50%;
-        transform:translateX(-50%);
-        background:#4caf50;
-        color:#fff;
-        padding:12px 20px;
-        border-radius:10px;
-        z-index:999999;
-        `;
-
-        document.body.appendChild(msg);
-
-        setTimeout(()=>{
-            msg.remove();
-        },1500);
-    }
 }
 
 function sendLine(){
 
-    const text =
-    document.getElementById("report").innerText.trim();
+const text =
+document.getElementById("report")
+.innerText.trim();
 
-    if(!text){
+if(!text){
 
-        const msg = document.createElement("div");
+alert("กรุณากด Review Report ก่อน");
 
-        msg.innerHTML = "⚠️ กรุณากด Review Report ก่อน";
+return;
 
-        msg.style.cssText = `
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:#333;
-color:#fff;
-padding:15px 25px;
-border-radius:10px;
-z-index:9999;
-font-size:16px;
-text-align:center;
-white-space:nowrap;
-box-shadow:0 4px 12px rgba(0,0,0,0.3);
-`;
-
-        document.body.appendChild(msg);
-
-        setTimeout(()=>{
-            msg.remove();
-        },2000);
-
-        return;
-    }
+}
 
 location.href =
 "https://line.me/R/share?text=" +
@@ -2206,293 +2959,285 @@ encodeURIComponent(text);
 
 }
 
-let currentOkMark = null;
+</script>
 
-document.querySelectorAll('input[name="okmark"]')
-.forEach(radio => {
+<script>
 
-    radio.addEventListener("click", function(){
+let reportHistory =
+JSON.parse(
+localStorage.getItem("reportHistory") || "[]"
+);
 
-        const area =
-        document.getElementById("okMarkDetailArea");
+function saveHistory(text){
 
-        if(currentOkMark === this){
+const item = {
 
-            this.checked = false;
-            currentOkMark = null;
+id: Date.now(),
 
-            area.style.display = "none";
+date:
+new Date().toLocaleString(),
 
-            document.getElementById("okMarkDetail").value = "";
+content:text
 
-        }else{
+};
 
-            currentOkMark = this;
+reportHistory.unshift(item);
 
-            area.style.display = "block";
-        }
+if(reportHistory.length > 50){
+reportHistory = reportHistory.slice(0,50);
+}
 
-    });
+localStorage.setItem(
+"reportHistory",
+JSON.stringify(reportHistory)
+);
+
+renderHistory();
+
+}
+
+function renderHistory(){
+
+const box =
+document.getElementById("historyList");
+
+box.innerHTML = "";
+
+reportHistory.forEach(item=>{
+
+const lines =
+item.content.split("\n");
+
+const partNo =
+(lines.find(x=>x.startsWith("Part No.")) || "")
+.replace("Part No. : ","");
+
+const partName =
+(lines.find(x=>x.startsWith("Part Name")) || "")
+.replace("Part Name : ","");
+
+const model =
+(lines.find(x=>x.startsWith("Model")) || "")
+.replace("Model : ","");
+
+const supplier =
+(lines.find(x=>x.startsWith("Supplier")) || "")
+.replace("Supplier : ","");
+
+box.innerHTML += `
+<div class="history-item"
+onclick="loadHistory(${item.id})">
+
+<div class="history-item-title">
+${partNo}
+</div>
+
+<div class="history-partname">
+${partName}
+</div>
+
+<div class="history-detail">
+${model} • ${supplier}
+</div>
+
+<div class="history-item-time">
+${item.date}
+</div>
+
+<button
+type="button"
+class="history-delete"
+onclick="event.stopPropagation();deleteHistory(${item.id})">
+🗑 ลบ
+</button>
+
+</div>
+`;
 
 });
 
-function backToMenu(){
-    location.href = "home.html";
 }
 
-function openReport(){
+function deleteHistory(id){
 
-    document.getElementById("menuPage").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    document.getElementById("bottomNav").style.display = "flex";
-
+if(
+!confirm("ต้องการลบรายการนี้ใช่หรือไม่ ?")
+){
+return;
 }
 
-function openSpecial(){
+reportHistory =
+reportHistory.filter(x=>x.id!==id);
 
-    localStorage.setItem(
-        "activeFieldId",
-        "detail"
-    );
+localStorage.setItem(
+"reportHistory",
+JSON.stringify(reportHistory)
+);
 
-    document
-    .getElementById("stdOverlay")
-    .classList.add("show");
+renderHistory();
 
 }
 
-function receiveSpecial(text){
+function loadHistory(id){
 
-    const detail =
-    document.getElementById("detail");
+const found =
+reportHistory.find(x=>x.id===id);
 
-    if(detail.value.trim() !== ""){
-        detail.value += "\n";
-    }
+if(!found) return;
 
-    detail.value += text;
-
-    document
-    .getElementById("stdOverlay")
-    .classList.remove("show");
-
-}
-
-function changeLanguage(){
-
-    const lang =
-    Number(localStorage.getItem("language")) || 0;
-
-    const texts = {
-
-        EN:{
-            date:"Date",
-            type:"Type",
-            product:"Product",
-            partno:"Part No.",
-            partname:"Part Name",
-            model:"Model",
-            supplier:"Supplier",
-            serial:"Serial Number",
-            issue:"Issue Doc",
-            linestop:"Line Stop",
-            problem:"Problem",
-            detail:"Detail",
-            containment:"🟡 CONTAINMENT ACTION",
-            rework:"Rework",
-            result:"Result",
-            inspection:"📊 INSPECTION RESULT",
-            skca:"SKC-A MFG NG",
-            partng:"Part NG",
-            qty:"Qty",
-            reworkResult:"Rework Result",
-            stock:"Check Stock",
-            ok:"OK Qty",
-            ng:"NG Qty",
-            totalng:"Total NG",
-            okmark:"OK Mark",
-            remark:"Remark",
-            damage:"Part Damage"
-        },
-
-        TH:{
-            date:"วันที่",
-            type:"ประเภท",
-            product:"ผลิตภัณฑ์",
-            partno:"Part No.",
-            partname:"Part Name",
-            model:"Model",
-            supplier:"Supplier",
-            serial:"Serial Number",
-            issue:"Issue Doc",
-            linestop:"Line Stop",
-            problem:"ปัญหา",
-            detail:"รายละเอียด",
-            containment:"🟡 การแก้ไขเบื้องต้น",
-            rework:"แก้ไข",
-            result:"ผลลัพธ์",
-            inspection:"📊 ผลการตรวจสอบ",
-            skca:"SKC-A MFG พบ NG",
-            partng:"Part NG",
-            qty:"Qty",
-            reworkResult:"ผลการ Rework",
-            stock:"ตรวจ Stock",
-            ok:"OK Qty",
-            ng:"NG Qty",
-            totalng:"Total NG",
-            okmark:"OK Mark",
-            remark:"หมายเหตุ",
-            damage:"Part เสียหายร่วม"
-        },
-
-        JP:{
-            date:"日付",
-            type:"種類",
-            product:"製品",
-            partno:"Part No.",
-            partname:"部品名",
-            model:"モデル",
-            supplier:"サプライヤー",
-            serial:"シリアル番号",
-            issue:"帳票",
-            linestop:"ライン停止",
-            problem:"不具合",
-            detail:"詳細",
-            containment:"🟡 暫定対策",
-            rework:"手直し",
-            result:"結果",
-            inspection:"📊 検査結果",
-            skca:"SKC-A MFG NG",
-            partng:"Part NG",
-            qty:"数量",
-            reworkResult:"手直し結果",
-            stock:"在庫確認",
-            ok:"OK 数量",
-            ng:"NG 数量",
-            totalng:"Total NG",
-            okmark:"OK Mark",
-            remark:"備考",
-            damage:"関連不良部品"
-        }
-    };
-
-    const t =
-        lang === 1 ? texts.TH :
-        lang === 2 ? texts.JP :
-        texts.EN;
-
-    lblDate.innerText = t.date;
-    lblType.innerText = t.type;
-    lblProduct.innerText = t.product;
-    lblPartNo.innerText = t.partno;
-    lblPartName.innerText = t.partname;
-    lblModel.innerText = t.model;
-    lblSupplier.innerText = t.supplier;
-    lblSerial.innerText = t.serial;
-    lblIssue.innerText = t.issue;
-    lblLineStop.innerText = t.linestop;
-    lblProblem.innerText = t.problem;
-    lblDetail.innerText = t.detail;
-    lblContainment.innerText = t.containment;
-    lblRework.innerText = t.rework;
-    lblResult.innerText = t.result;
-    lblInspection.innerText = t.inspection;
-    lblSkca.innerText = t.skca;
-    lblPartNg.innerText = t.partng;
-    lblQty.innerText = t.qty;
-    lblReworkResult.innerText = t.reworkResult;
-    lblStock.innerText = t.stock;
-    lblOk.innerText = t.ok;
-    lblNg.innerText = t.ng;
-    lblPartNgShow.innerText = t.partng;
-    lblTotalNg.innerText = t.totalng;
-    lblOkMark.innerText = t.okmark;
-    btnRemark.innerText = t.remark;
-    lblDamage.innerText = t.damage;
-
-}
-
-localStorage.setItem("language","1");
-
-changeLanguage();
-
-const partNgBox =
-document.getElementById("partNg");
-
-const reworkResultArea =
-document.getElementById("reworkResultArea");
-
-function checkPartNg(){
-
-    if(partNgBox.value === "Rework"){
-
-        reworkResultArea.style.display = "flex";
-
-    }else{
-
-        reworkResultArea.style.display = "none";
-
-        document.getElementById("reworkResult").value = "";
-    }
-
-}
-
-partNgBox.addEventListener("change", checkPartNg);
-
-checkPartNg();
-
-const reworkBox =
-document.getElementById("rework");
-
-const resultArea =
-document.getElementById("resultArea");
-
-function checkRework(){
-
-    if(reworkBox.value.trim() !== ""){
-        resultArea.style.display = "block";
-    }else{
-        resultArea.style.display = "none";
-        document.getElementById("containmentResult").value = "";
-    }
-}
-
-reworkBox.addEventListener("input", checkRework);
-
-checkRework();
+document.getElementById("report").innerText =
+found.content;
 
 document
 .getElementById("reportOverlay")
-.addEventListener("click", function(e){
+.classList.add("show");
 
-    if(e.target === this){
+closeHistory();
 
-        this.classList.remove("show");
-        reportVisible = false;
+}
 
-        document.body.style.overflow = "";
-    }
+function openHistory(){
 
-});
+const panel =
+document.getElementById("historyPanel");
 
-document
-.getElementById("stdOverlay")
-.addEventListener("click", function(e){
+const overlay =
+document.getElementById("historyOverlay");
 
-    if(e.target === this){
+overlay.style.display = "block";
 
-        this.classList.remove("show");
+panel.classList.add("show");
+overlay.classList.add("show");
 
-    }
+}
 
-});
+function closeHistory(){
+
+const panel =
+document.getElementById("historyPanel");
+
+const overlay =
+document.getElementById("historyOverlay");
+
+panel.classList.remove("show");
+overlay.classList.remove("show");
+
+overlay.style.display = "none";
+
+/* บังคับ Safari รีเฟรชหน้าจอ */
+document.body.offsetHeight;
+
+setTimeout(()=>{
+    overlay.style.display = "";
+},50);
+
+}
+
+renderHistory();
+
+let startX = 0;
+
+document.addEventListener(
+"touchstart",
+e=>{
+startX = e.touches[0].clientX;
+}
+);
+
+document.addEventListener(
+"touchend",
+e=>{
+
+const endX =
+e.changedTouches[0].clientX;
+
+const diff =
+endX - startX;
+
+if(
+startX > window.innerWidth - 40 &&
+diff < -80
+){
+    openHistory();
+}
+
+if(diff > 80){
+    closeHistory();
+}
+
+}
+);
 
 </script>
 
 <script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
+
+function openRemark(){
+
+    const box =
+    document.getElementById("remarkBox");
+
+    const isHidden =
+    getComputedStyle(box).display === "none";
+
+    if(isHidden){
+
+        box.style.display = "block";
+
+        document.getElementById("remarkText").focus();
+
+    }else{
+
+        box.style.display = "none";
+
+    }
+
 }
+
+function openDamage(){
+
+const box =
+document.getElementById("damageBox");
+
+if(
+box.style.display === "none"
+||
+box.style.display === ""
+){
+
+    box.style.display = "block";
+
+}else{
+
+    box.style.display = "none";
+
+}
+
+}
+
+</script>
+
+<div id="stdOverlay" class="std-overlay">
+
+<div class="std-box">
+
+<iframe
+id="stdFrame"
+src="special.html">
+</iframe>
+
+</div>
+
+</div>
+
+<script>
+
+function openScanPage(){
+
+  location.href = "scan.html";
+
+}
+
 </script>
 
 </body>
