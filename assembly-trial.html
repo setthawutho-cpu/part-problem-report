@@ -1222,10 +1222,15 @@ background:#000;
 
 }
 
+#reader__dashboard,
+#reader__header_message{
+display:none !important;
+}
+
 #reader video{
 width:100% !important;
 height:100% !important;
-object-fit:contain !important;
+object-fit:cover !important;
 }
 
 #reader__scan_region{
@@ -1343,8 +1348,7 @@ Supplier Quality Report
 <button
 type="button"
 id="scanQrBtn"
-class="scan-btn"
-onclick="openScanPage()">
+class="scan-btn">
 <i class="fa-solid fa-qrcode"></i>
 </button>
 </div>
@@ -1965,26 +1969,6 @@ try{
 }
 
 loadExcel();
-
-window.addEventListener("load",()=>{
-
-  const partNo =
-  localStorage.getItem("scannedPartNo");
-
-  if(!partNo) return;
-
-  document.getElementById("partNo").value =
-  partNo;
-
-  document.getElementById("partNo")
-  .dispatchEvent(new Event("input"));
-
-  document.getElementById("partNo")
-  .dispatchEvent(new Event("change"));
-
-  localStorage.removeItem("scannedPartNo");
-
-});
 
 function editField(el){
 
@@ -3230,13 +3214,211 @@ src="special.html">
 
 </div>
 
+<div id="qrOverlay" class="std-overlay">
+
+  <div class="std-box">
+
+    <button
+      type="button"
+      class="qr-close"
+      onclick="stopQr()">
+      ←
+    </button>
+
+    <button
+      type="button"
+      class="qr-flash"
+      onclick="toggleTorch()">
+      🔦
+    </button>
+
+    <label class="qr-gallery">
+
+      🖼️
+
+<input
+type="file"
+id="qrFile"
+accept="image/*"
+capture="environment"
+hidden>
+
+    </label>
+
+    <div id="reader"></div>
+
+  </div>
+
+</div>
+
 <script>
 
-function openScanPage(){
+function openSpecial(){
 
-  location.href = "scan.html";
+document
+.getElementById("stdOverlay")
+.classList.add("show");
 
 }
+
+function receiveSpecial(text){
+
+const detail =
+document.getElementById("detail");
+
+if(detail.value.trim()!==""){
+detail.value += "\n";
+}
+
+detail.value += text;
+
+document
+.getElementById("stdOverlay")
+.classList.remove("show");
+
+}
+
+document
+.getElementById("stdOverlay")
+.addEventListener(
+"click",
+function(e){
+
+if(e.target===this){
+
+this.classList.remove("show");
+
+}
+
+});
+
+</script>
+
+<script>
+
+let qrScanner;
+
+let torchOn = false;
+
+document
+.getElementById("scanQrBtn")
+?.addEventListener("click", startQr);
+
+function startQr(){
+
+  document
+  .getElementById("reader")
+  .innerHTML = "";
+
+  document
+  .getElementById("qrOverlay")
+  .classList.add("show");
+
+  qrScanner =
+  new Html5Qrcode("reader");
+
+qrScanner.start(
+  { facingMode:"environment" },
+  {
+    fps:10,
+    qrbox:{
+      width:320,
+      height:320
+    }
+  },
+  onScanSuccess
+).catch(err=>{
+
+  console.log(err);
+
+  alert(err);
+
+});
+
+}
+
+async function toggleTorch(){
+
+  try{
+
+    torchOn = !torchOn;
+
+    await qrScanner.applyVideoConstraints({
+      advanced:[
+        {
+          torch:torchOn
+        }
+      ]
+    });
+
+  }catch(e){
+
+    alert("มือถือไม่รองรับไฟฉาย");
+
+  }
+
+}
+
+function onScanSuccess(decodedText){
+
+  stopQr();
+
+  const partNo =
+  decodedText.substring(3,13);
+
+  document.getElementById("partNo").value =
+  partNo;
+
+  document.getElementById("partNo")
+  .dispatchEvent(
+    new Event("input")
+  );
+
+  document.getElementById("partNo")
+  .dispatchEvent(
+    new Event("change")
+  );
+
+}
+
+function stopQr(){
+
+  if(qrScanner){
+
+    qrScanner.stop()
+    .then(()=>{
+
+      document
+      .getElementById("qrOverlay")
+      .classList.remove("show");
+
+      qrScanner.clear();
+
+      qrScanner = null;
+
+    });
+
+  }else{
+
+    document
+    .getElementById("qrOverlay")
+    .classList.remove("show");
+
+  }
+
+}
+
+document
+.getElementById("qrOverlay")
+?.addEventListener("click",function(e){
+
+  if(e.target===this){
+
+    stopQr();
+
+  }
+
+});
 
 </script>
 
