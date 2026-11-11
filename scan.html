@@ -160,7 +160,20 @@ function startScanner(){
       }
     },
 
-    function(decodedText){
+async function(decodedText){
+
+  document.getElementById(
+    "result"
+  ).value = decodedText;
+
+  localStorage.setItem(
+    "scannedPartNo",
+    decodedText
+  );
+
+  await qrScanner.stop();
+
+}
 
       document.getElementById(
         "result"
@@ -172,10 +185,9 @@ function startScanner(){
         decodedText
       );
 
-      alert(
-        "อ่านได้\n\n" +
-        decodedText
-      );
+document.getElementById(
+  "result"
+).value = decodedText;
 
     }
 
