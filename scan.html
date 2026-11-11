@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Scan Part</title>
+<title>QR Scanner</title>
 
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://unpkg.com/@zxing/browser"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
 <style>
 
@@ -20,36 +21,31 @@ html,
 body{
 width:100%;
 height:100%;
-overflow:hidden;
-background:#000;
+background:#111;
 font-family:Segoe UI,sans-serif;
+overflow:hidden;
 }
 
-#reader{
-position:fixed;
-inset:0;
+#video{
 width:100%;
-height:100%;
+height:60vh;
 background:#000;
-}
-
-#reader video{
-width:100% !important;
-height:100% !important;
-object-fit:contain !important;
+object-fit:contain;
 }
 
 .topbar{
+
 position:fixed;
-top:20px;
-left:20px;
-right:20px;
+
+top:15px;
+left:15px;
+right:15px;
 
 display:flex;
 justify-content:space-between;
-align-items:center;
 
 z-index:9999;
+
 }
 
 .btn{
@@ -60,33 +56,65 @@ height:52px;
 border:none;
 border-radius:50%;
 
-background:rgba(0,0,0,.55);
+background:rgba(0,0,0,.65);
 
 color:#fff;
 
-font-size:24px;
+font-size:22px;
+
+display:flex;
+align-items:center;
+justify-content:center;
 
 cursor:pointer;
+}
 
-backdrop-filter:blur(10px);
+.result{
+
+height:40vh;
+
+background:#f3f4f6;
+
+overflow:auto;
+
+padding:10px;
+}
+
+.box{
+
+background:#fff;
+
+border-radius:12px;
+
+padding:10px;
+
+margin-bottom:10px;
 }
 
 .title{
 
-position:fixed;
-
-bottom:40px;
-left:20px;
-right:20px;
-
-text-align:center;
-
-color:#fff;
-
-font-size:18px;
+font-size:13px;
 font-weight:700;
 
-z-index:9999;
+margin-bottom:6px;
+
+color:#555;
+}
+
+textarea{
+
+width:100%;
+height:120px;
+
+padding:10px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+resize:none;
+
+font-size:13px;
 }
 
 </style>
@@ -109,76 +137,134 @@ onclick="toggleTorch()">
 🔦
 </button>
 
+<label class="btn">
+
+🖼️
+
+<input
+id="fileInput"
+type="file"
+accept="image/*"
+hidden>
+
+</label>
+
 </div>
 
-<div id="reader"></div>
+<video
+id="video"
+autoplay
+playsinline>
+</video>
+
+<div class="result">
+
+<div class="box">
 
 <div class="title">
-สแกน QR Code
+QR RESULT
 </div>
+
+<textarea
+id="qrResult"
+readonly>
+</textarea>
+
+</div>
+
+<div class="box">
+
+<div class="title">
+OCR RESULT
+</div>
+
+<textarea
+id="ocrResult"
+readonly>
+</textarea>
+
+</div>
+
+</div>
+
+<canvas
+id="canvas"
+style="display:none;">
+</canvas>
 
 <script>
 
-let scanner = null;
-let torchOn = false;
+let stream;
+let track;
+let torchOn=false;
+let codeReader;
 
-startScanner();
+const video =
+document.getElementById("video");
 
-function startScanner(){
+const qrResult =
+document.getElementById("qrResult");
 
-  scanner =
-  new Html5Qrcode("reader");
+const ocrResult =
+document.getElementById("ocrResult");
 
-  scanner.start(
+startCamera();
 
-    {
-      facingMode:"environment"
-    },
-
-    {
-      fps:10,
-
-      qrbox:{
-        width:320,
-        height:320
-      }
-    },
-
-    onScanSuccess
-
-  ).catch(err=>{
-
-    console.error(err);
-
-    alert(
-      "ไม่สามารถเปิดกล้องได้"
-    );
-
-  });
-
-}
-
-async function onScanSuccess(decodedText){
-
-  alert(
-    "SCAN OK :\n\n" +
-    decodedText
-  );
+async function startCamera(){
 
   try{
 
-    await scanner.stop();
-    await scanner.clear();
+    stream =
+    await navigator.mediaDevices.getUserMedia({
 
-  }catch(e){}
+      video:{
+        facingMode:{
+          ideal:"environment"
+        }
+      }
 
-  localStorage.setItem(
-    "scannedPartNo",
-    decodedText
+    });
+
+    video.srcObject = stream;
+
+    track =
+    stream.getVideoTracks()[0];
+
+    startQR();
+
+  }catch(err){
+
+    alert("เปิดกล้องไม่สำเร็จ");
+
+    console.error(err);
+
+  }
+
+}
+
+async function startQR(){
+
+  codeReader =
+  new ZXing.BrowserQRCodeReader();
+
+  codeReader.decodeFromVideoElement(
+    video,
+    (result,error)=>{
+
+      if(result){
+
+        qrResult.value =
+        result.text;
+
+        localStorage.setItem(
+          "scannedPartNo",
+          result.text
+        );
+
+      }
+
+    }
   );
-
-  location.href =
-  "part-problem-inform.html";
 
 }
 
@@ -188,38 +274,119 @@ async function toggleTorch(){
 
     torchOn = !torchOn;
 
-    await scanner.applyVideoConstraints({
+    await track.applyConstraints({
+
       advanced:[
         {
           torch:torchOn
         }
       ]
+
     });
 
-  }catch(err){
+  }catch(e){
 
     alert(
-      "มือถือรุ่นนี้ไม่รองรับไฟฉายผ่าน Browser"
+      "มือถือไม่รองรับไฟฉาย"
     );
 
   }
 
 }
 
-async function goBack(){
+function goBack(){
 
-  try{
+  if(codeReader){
 
-    if(scanner){
+    codeReader.reset();
 
-      await scanner.stop();
-      await scanner.clear();
+  }
+
+  history.back();
+
+}
+
+document
+.getElementById("fileInput")
+.addEventListener(
+"change",
+readImage
+);
+
+async function readImage(e){
+
+  const file =
+  e.target.files[0];
+
+  if(!file) return;
+
+  const img =
+  new Image();
+
+  img.onload =
+  async ()=>{
+
+    try{
+
+      const tmpReader =
+      new ZXing.BrowserQRCodeReader();
+
+      const result =
+      await tmpReader.decodeFromImageElement(img);
+
+      qrResult.value =
+      result.text;
+
+    }catch(err){
+
+      qrResult.value =
+      "ไม่พบ QR Code";
 
     }
 
-  }catch(e){}
+    const canvas =
+    document.getElementById("canvas");
 
-  history.back();
+    const ctx =
+    canvas.getContext("2d");
+
+    canvas.width =
+    img.width;
+
+    canvas.height =
+    img.height;
+
+    ctx.drawImage(
+      img,
+      0,
+      0
+    );
+
+    ocrResult.value =
+    "กำลังอ่านข้อความ...";
+
+    try{
+
+      const ocr =
+      await Tesseract.recognize(
+        canvas,
+        "eng"
+      );
+
+      ocrResult.value =
+      ocr.data.text;
+
+    }catch(err){
+
+      ocrResult.value =
+      "อ่านข้อความไม่สำเร็จ";
+
+    }
+
+  };
+
+  img.src =
+  URL.createObjectURL(file);
 
 }
 
