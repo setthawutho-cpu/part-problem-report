@@ -1,0 +1,11 @@
+function onScanSuccess(decodedText){
+
+  localStorage.setItem(
+    "scannedPartNo",
+    decodedText
+  );
+
+  location.href =
+  "problem.html";
+
+}
