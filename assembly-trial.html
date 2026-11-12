@@ -13,6 +13,8 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <style>
 
 *{
@@ -525,6 +527,13 @@ font-size:13px;
 padding:0 12px;
 }
 
+#partNo,
+#partName,
+#model,
+#supplier{
+font-size:12px;
+}
+
 .field label{
 font-size:11px;
 line-height:1.5;
@@ -632,31 +641,65 @@ Part Information
 
 <div class="field">
 
-    <div class="field-header">
-        <label>Part No.</label>
+<div class="field-header">
 
-        <button class="scan-btn">
-            <i class="fa-solid fa-qrcode"></i>
-        </button>
-    </div>
+<label>Part No.</label>
 
-    <input placeholder="Part No.">
+<button
+type="button"
+id="scanQrBtn"
+class="scan-btn"
+onclick="openScanPage()">
+
+<i class="fa-solid fa-qrcode"></i>
+
+</button>
+
+</div>
+
+<input
+id="partNo"
+list="partList"
+placeholder="Part No.">
+
+<datalist id="partList"></datalist>
 
 </div>
 
 <div class="field">
-    <label>Part Name</label>
-    <input readonly>
+
+<label>Part Name</label>
+
+<input
+id="partName"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 <div class="field">
-    <label>Model</label>
-    <input readonly>
+
+<label>Model</label>
+
+<input
+id="model"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 <div class="field">
-    <label>Supplier</label>
-    <input readonly>
+
+<label>Supplier</label>
+
+<input
+id="supplier"
+readonly
+onclick="editField(this)"
+onblur="restoreAuto(this)">
+
 </div>
 
 </div>
@@ -804,6 +847,171 @@ topGrid.style.gridTemplateColumns =
 }
 
 });
+
+</script>
+
+<script>
+
+let partMaster = {};
+let allPartNo = [];
+
+async function loadExcel(){
+
+const response =
+await fetch("ข้อมูล Excel.xlsx");
+
+const data =
+await response.arrayBuffer();
+
+const workbook =
+XLSX.read(data,{type:"array"});
+
+const sheet =
+workbook.Sheets[
+workbook.SheetNames[0]
+];
+
+const rows =
+XLSX.utils.sheet_to_json(sheet);
+
+rows.forEach(row=>{
+
+const partNo =
+String(row.PartNo || "").trim();
+
+if(!partNo) return;
+
+allPartNo.push(partNo);
+
+partMaster[partNo] = {
+
+partName:
+row.PartName || "",
+
+model:
+row.Model || "",
+
+supplier:
+row.Supplier || ""
+
+};
+
+});
+
+}
+
+loadExcel();
+
+function editField(el){
+
+if(el.hasAttribute("readonly")){
+
+el.dataset.autoValue =
+el.value;
+
+el.removeAttribute("readonly");
+
+el.value = "";
+
+setTimeout(()=>{
+el.focus();
+},50);
+
+}
+
+}
+
+function restoreAuto(el){
+
+if(el.value.trim()===""){
+
+el.value =
+el.dataset.autoValue || "";
+
+}
+
+}
+
+function fillPartData(partNo){
+
+if(!partMaster[partNo]) return;
+
+document.getElementById("partName").value =
+partMaster[partNo].partName || "";
+
+document.getElementById("model").value =
+partMaster[partNo].model || "";
+
+document.getElementById("supplier").value =
+partMaster[partNo].supplier || "";
+
+}
+
+document
+.getElementById("partNo")
+.addEventListener("input",function(){
+
+const keyword =
+this.value.trim();
+
+const list =
+document.getElementById("partList");
+
+if(keyword===""){
+
+document.getElementById("partName").value="";
+document.getElementById("model").value="";
+document.getElementById("supplier").value="";
+
+list.innerHTML="";
+return;
+
+}
+
+if(partMaster[keyword]){
+
+fillPartData(keyword);
+
+list.innerHTML="";
+return;
+
+}
+
+const result =
+allPartNo
+.filter(p=>
+
+p.toUpperCase().includes(
+keyword.toUpperCase()
+)
+
+)
+.slice(0,50);
+
+list.innerHTML =
+result.map(p=>
+`<option value="${p}"></option>`
+).join("");
+
+});
+
+document
+.getElementById("partNo")
+.addEventListener("change",function(){
+
+if(partMaster[this.value]){
+
+fillPartData(this.value);
+
+}
+
+});
+
+function openScanPage(){
+
+location.href="scan.html";
+
+}
 
 </script>
 
