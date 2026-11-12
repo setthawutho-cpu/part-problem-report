@@ -881,7 +881,9 @@ String(row.PartNo || "").trim();
 
 if(!partNo) return;
 
+if(!allPartNo.includes(partNo)){
 allPartNo.push(partNo);
+}
 
 partMaster[partNo] = {
 
@@ -977,15 +979,41 @@ return;
 
 }
 
+const cleanKeyword =
+keyword
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
 const result =
 allPartNo
-.filter(p=>
+.filter(p=>{
+
+const cleanPart =
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+return(
+
+p.toUpperCase().startsWith(
+keyword.toUpperCase()
+)
+
+||
 
 p.toUpperCase().includes(
 keyword.toUpperCase()
 )
 
+||
+
+cleanPart.includes(
+cleanKeyword
 )
+
+);
+
+})
 .slice(0,50);
 
 list.innerHTML =
@@ -999,9 +1027,37 @@ document
 .getElementById("partNo")
 .addEventListener("change",function(){
 
-if(partMaster[this.value]){
+const key =
+this.value.trim();
 
-fillPartData(this.value);
+if(partMaster[key]){
+
+fillPartData(key);
+return;
+
+}
+
+const cleanKey =
+key
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase();
+
+const found =
+allPartNo.find(p=>
+
+p
+.replace(/[^A-Za-z0-9]/g,"")
+.toUpperCase()
+
+=== cleanKey
+
+);
+
+if(found){
+
+this.value = found;
+
+fillPartData(found);
 
 }
 
@@ -1012,6 +1068,48 @@ function openScanPage(){
 location.href="scan.html";
 
 }
+
+</script>
+
+<script>
+
+function receiveScannedPart(){
+
+const partNo =
+localStorage.getItem(
+"scannedPartNo"
+);
+
+if(!partNo) return;
+
+document.getElementById("partNo").value =
+partNo;
+
+document.getElementById("partNo")
+.dispatchEvent(
+new Event("input")
+);
+
+document.getElementById("partNo")
+.dispatchEvent(
+new Event("change")
+);
+
+localStorage.removeItem(
+"scannedPartNo"
+);
+
+}
+
+window.addEventListener(
+"load",
+receiveScannedPart
+);
+
+window.addEventListener(
+"pageshow",
+receiveScannedPart
+);
 
 </script>
 
