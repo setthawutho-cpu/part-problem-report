@@ -892,11 +892,11 @@ partMaster[partNo] = {
 partName:
 row.PartName || "",
 
-model:
-row.Model || "",
-
 supplier:
-row.Supplier || ""
+row.Supplier || "",
+
+model:
+row.Model || ""
 
 };
 
@@ -910,12 +910,33 @@ console.error(err);
 
 }
 
+loadExcel();
+
+function editField(el){
+
+if(el.hasAttribute("readonly")){
+
+el.dataset.autoValue = el.value;
+
+el.removeAttribute("readonly");
+
+el.value = "";
+
+setTimeout(()=>{
+
+el.focus();
+
+},50);
+
+}
+
+}
+
 function restoreAuto(el){
 
 if(el.value.trim()===""){
 
-el.value =
-el.dataset.autoValue || "";
+el.value = el.dataset.autoValue || "";
 
 }
 
@@ -925,13 +946,26 @@ function fillPartData(partNo){
 
 if(!partMaster[partNo]) return;
 
-document.getElementById("partName").value =
+const partName =
+document.getElementById("partName");
+
+const model =
+document.getElementById("model");
+
+const supplier =
+document.getElementById("supplier");
+
+partName.setAttribute("readonly",true);
+model.setAttribute("readonly",true);
+supplier.setAttribute("readonly",true);
+
+partName.value =
 partMaster[partNo].partName || "";
 
-document.getElementById("model").value =
+model.value =
 partMaster[partNo].model || "";
 
-document.getElementById("supplier").value =
+supplier.value =
 partMaster[partNo].supplier || "";
 
 }
@@ -966,6 +1000,13 @@ return;
 
 }
 
+if(keyword.length < 4){
+
+list.innerHTML="";
+return;
+
+}
+
 const cleanKeyword =
 keyword
 .replace(/[^A-Za-z0-9]/g,"")
@@ -980,23 +1021,17 @@ p
 .replace(/[^A-Za-z0-9]/g,"")
 .toUpperCase();
 
-return(
+return (
 
-p.toUpperCase().startsWith(
-keyword.toUpperCase()
-)
+p.toUpperCase().startsWith(keyword.toUpperCase())
 
 ||
 
-p.toUpperCase().includes(
-keyword.toUpperCase()
-)
+p.toUpperCase().includes(keyword.toUpperCase())
 
 ||
 
-cleanPart.includes(
-cleanKeyword
-)
+cleanPart.includes(cleanKeyword)
 
 );
 
@@ -1004,9 +1039,9 @@ cleanKeyword
 .slice(0,50);
 
 list.innerHTML =
-result.map(p=>
-`<option value="${p}"></option>`
-).join("");
+result.map(p =>
+`<option value="${p}"></option>`)
+.join("");
 
 });
 
@@ -1051,21 +1086,13 @@ fillPartData(found);
 });
 
 function openScanPage(){
-
 location.href="scan.html";
-
 }
-
-</script>
-
-<script>
 
 function receiveScannedPart(){
 
 const partNo =
-localStorage.getItem(
-"scannedPartNo"
-);
+localStorage.getItem("scannedPartNo");
 
 if(!partNo) return;
 
@@ -1073,18 +1100,12 @@ document.getElementById("partNo").value =
 partNo;
 
 document.getElementById("partNo")
-.dispatchEvent(
-new Event("input")
-);
+.dispatchEvent(new Event("input"));
 
 document.getElementById("partNo")
-.dispatchEvent(
-new Event("change")
-);
+.dispatchEvent(new Event("change"));
 
-localStorage.removeItem(
-"scannedPartNo"
-);
+localStorage.removeItem("scannedPartNo");
 
 }
 
