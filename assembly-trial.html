@@ -162,15 +162,16 @@ margin-bottom:10px;
 /* DETAIL */
 
 .top-grid{
-
 display:grid;
-
 grid-template-columns:
 1fr 1fr;
-
 gap:12px;
-
 }
+
+#setPackingField{
+display:none;
+}
+
 
 select{
 
@@ -525,21 +526,34 @@ id="dateBox">
 
 <div class="card">
 
-<div class="top-grid">
+<div class="top-grid" id="topGrid">
 
-<select>
+<select id="detailSelect">
 <option>Detail</option>
 <option>ยืมชิ้นส่วน</option>
 <option>คืนชิ้นส่วน</option>
 <option>Defect</option>
 </select>
 
-<select>
+<select id="locationSelect">
 <option>Location</option>
 <option>Box</option>
 <option>Rack</option>
 <option>Set Packing</option>
 </select>
+
+<div
+class="field"
+id="setPackingField"
+style="display:none;">
+
+<label>Set Packing No.</label>
+
+<input
+id="setPackingNo"
+placeholder="00001">
+
+</div>
 
 </div>
 
@@ -700,6 +714,39 @@ date + "<br>" + time;
 updateDate();
 
 setInterval(updateDate,1000);
+
+</script>
+
+<script>
+
+const locationSelect =
+document.getElementById("locationSelect");
+
+const setPackingField =
+document.getElementById("setPackingField");
+
+const topGrid =
+document.getElementById("topGrid");
+
+locationSelect.addEventListener("change",function(){
+
+if(this.value === "Set Packing"){
+
+setPackingField.style.display = "flex";
+
+topGrid.style.gridTemplateColumns =
+"1fr 1fr 1fr";
+
+}else{
+
+setPackingField.style.display = "none";
+
+topGrid.style.gridTemplateColumns =
+"1fr 1fr";
+
+}
+
+});
 
 </script>
 
