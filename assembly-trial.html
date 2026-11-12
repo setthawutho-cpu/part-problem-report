@@ -857,6 +857,8 @@ let allPartNo = [];
 
 async function loadExcel(){
 
+try{
+
 const response =
 await fetch("ข้อมูล Excel.xlsx");
 
@@ -900,24 +902,9 @@ row.Supplier || ""
 
 });
 
-}
+}catch(err){
 
-loadExcel();
-
-function editField(el){
-
-if(el.hasAttribute("readonly")){
-
-el.dataset.autoValue =
-el.value;
-
-el.removeAttribute("readonly");
-
-el.value = "";
-
-setTimeout(()=>{
-el.focus();
-},50);
+console.error(err);
 
 }
 
