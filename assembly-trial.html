@@ -194,14 +194,10 @@ outline:none;
 /* PART */
 
 .part-grid{
-
 display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
+grid-template-columns:1fr 70px 1fr;
 gap:12px;
-
+align-items:start;
 }
 
 .field{
@@ -273,6 +269,13 @@ cursor:pointer;
 
 .scan-btn:active{
 transform:scale(.95);
+}
+
+.scan-center{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding-top:28px;
 }
 
 /* BOTTOM */
@@ -455,6 +458,11 @@ gap:8px;
 gap:8px;
 }
 
+.part-grid{
+grid-template-columns:1fr 60px 1fr;
+gap:10px;
+}
+
 .bottom-grid{
 grid-template-columns:42% 58%;
 gap:8px;
@@ -558,46 +566,31 @@ Part Information
 <div class="part-grid">
 
 <div class="field">
-
-<div class="field-header">
-
-<label>Part No.</label>
-
-<button class="scan-btn">
-
-<i class="fa-solid fa-qrcode"></i>
-
-</button>
-
+    <label>Part No.</label>
+    <input placeholder="Part No.">
 </div>
 
-<input
-placeholder="Part No.">
-
+<div class="scan-center">
+    <button class="scan-btn">
+        <i class="fa-solid fa-qrcode"></i>
+    </button>
 </div>
 
 <div class="field">
-
-<label>Part Name</label>
-
-<input readonly>
-
+    <label>Part Name</label>
+    <input readonly>
 </div>
 
 <div class="field">
-
-<label>Model</label>
-
-<input readonly>
-
+    <label>Model</label>
+    <input readonly>
 </div>
 
+<div></div>
+
 <div class="field">
-
-<label>Supplier</label>
-
-<input readonly>
-
+    <label>Supplier</label>
+    <input readonly>
 </div>
 
 </div>
