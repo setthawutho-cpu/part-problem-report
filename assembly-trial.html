@@ -543,6 +543,61 @@ color:#fff;
 font-size:20px;
 }
 
+.action-sheet-overlay{
+position:fixed;
+inset:0;
+display:none;
+background:rgba(0,0,0,.15);
+z-index:999999;
+}
+
+.action-sheet-overlay.show{
+display:block;
+}
+
+.action-sheet{
+position:fixed;
+width:180px;
+background:#fff;
+border-radius:16px;
+padding:8px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+left:50%;
+top:45%;
+transform:translate(-50%,-50%);
+}
+
+.action-sheet button{
+width:100%;
+height:44px;
+border:none;
+background:#fff;
+font-size:16px;
+border-radius:10px;
+margin-bottom:4px;
+}
+
+.image-viewer{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:1000000;
+}
+
+.image-viewer.show{
+display:flex;
+}
+
+.image-viewer img{
+width:80%;
+max-width:800px;
+max-height:80vh;
+object-fit:contain;
+}
+
 /* MOBILE */
 
 @media(max-width:768px){
@@ -712,9 +767,20 @@ Part Loan / Return / Defect
 
 </div>
 
-<div
-class="date-box"
-id="dateBox">
+<div class="date-box" id="dateBoxWrap">
+
+<div id="dateBox"></div>
+
+<input
+type="date"
+id="headerDate"
+style="
+position:absolute;
+inset:0;
+opacity:0;
+cursor:pointer;
+">
+
 </div>
 
 </div>
@@ -935,19 +1001,19 @@ Review Report
 
 <script>
 
-function updateDate(){
+let selectedDate = new Date();
 
-const now = new Date();
+function updateDateTime(){
 
 const date =
-now.toLocaleDateString("en-GB",{
+selectedDate.toLocaleDateString("en-GB",{
 day:"2-digit",
 month:"short",
 year:"numeric"
 });
 
 const time =
-now.toLocaleTimeString("en-GB",{
+new Date().toLocaleTimeString("en-GB",{
 hour:"2-digit",
 minute:"2-digit"
 });
@@ -957,9 +1023,34 @@ date + "<br>" + time;
 
 }
 
-updateDate();
+document
+.getElementById("headerDate")
+.addEventListener("change",function(){
 
-setInterval(updateDate,1000);
+if(this.value){
+
+selectedDate =
+new Date(this.value);
+
+updateDateTime();
+
+}
+
+});
+
+document
+.getElementById("dateBoxWrap")
+.addEventListener("click",function(){
+
+document
+.getElementById("headerDate")
+.showPicker();
+
+});
+
+updateDateTime();
+
+setInterval(updateDateTime,1000);
 
 </script>
 
@@ -1506,10 +1597,6 @@ div.className = "photo-item";
 div.innerHTML =
 `<img src="${e.target.result}">`;
 
-div.onclick=function(){
-this.remove();
-};
-
 photoList.insertBefore(
 div,
 photoList.querySelector(".add-photo")
@@ -1520,6 +1607,137 @@ photoList.querySelector(".add-photo")
 reader.readAsDataURL(file);
 
 }
+
+});
+
+let selectedPhoto=null;
+
+document.addEventListener("click",function(e){
+
+const img =
+e.target.closest(".photo-item img");
+
+if(!img) return;
+
+selectedPhoto =
+img.closest(".photo-item");
+
+document
+.getElementById("actionSheet")
+.classList.add("show");
+
+});
+
+function closeActionSheet(){
+
+document
+.getElementById("actionSheet")
+.classList.remove("show");
+
+}
+
+function openPhoto(){
+
+const img =
+selectedPhoto.querySelector("img");
+
+document
+.getElementById("viewerImage").src =
+img.src;
+
+document
+.getElementById("imageViewer")
+.classList.add("show");
+
+closeActionSheet();
+
+}
+
+function deletePhoto(){
+
+selectedPhoto.remove();
+
+closeActionSheet();
+
+}
+
+function replacePhoto(){
+
+document
+.getElementById("replaceInput")
+.click();
+
+}
+
+document
+.getElementById("replaceInput")
+.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(!file || !selectedPhoto) return;
+
+const reader=
+new FileReader();
+
+reader.onload=function(e){
+
+selectedPhoto.innerHTML=
+`<img src="${e.target.result}">`;
+
+};
+
+reader.readAsDataURL(file);
+
+closeActionSheet();
+
+});
+
+const slider=
+document.getElementById("photoList");
+
+let isDown=false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener("mousedown",function(e){
+
+isDown=true;
+
+startX=
+e.pageX-slider.offsetLeft;
+
+scrollLeft=
+slider.scrollLeft;
+
+});
+
+slider.addEventListener(
+"mouseleave",
+()=>isDown=false
+);
+
+slider.addEventListener(
+"mouseup",
+()=>isDown=false
+);
+
+slider.addEventListener(
+"mousemove",
+function(e){
+
+if(!isDown) return;
+
+e.preventDefault();
+
+const x=
+e.pageX-slider.offsetLeft;
+
+const walk=
+(x-startX)*2;
+
+slider.scrollLeft=
+scrollLeft-walk;
 
 });
 
@@ -1583,6 +1801,48 @@ this.classList.remove("show");
 });
 
 </script>
+
+<div id="actionSheet" class="action-sheet-overlay">
+
+<div class="action-sheet">
+
+<button onclick="openPhoto()">
+เปิด
+</button>
+
+<button onclick="replacePhoto()">
+เปลี่ยนรูป
+</button>
+
+<button
+class="danger"
+onclick="deletePhoto()">
+ลบรูป
+</button>
+
+<button
+class="cancel"
+onclick="closeActionSheet()">
+ยกเลิก
+</button>
+
+</div>
+
+</div>
+
+<input
+type="file"
+id="replaceInput"
+hidden>
+
+<div
+id="imageViewer"
+class="image-viewer"
+onclick="this.classList.remove('show')">
+
+<img id="viewerImage">
+
+</div>
 
 </body>
 </html>
