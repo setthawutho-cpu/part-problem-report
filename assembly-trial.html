@@ -340,21 +340,41 @@ border-radius:0;
 .qty-number{
 width:120px;
 height:80px;
+border:none;
+outline:none;
+background:white;
+text-align:center;
 font-size:54px;
 font-weight:700;
-text-align:center;
-line-height:80px;
-background:white;
+appearance:textfield;
+}
+
+.qty-number::-webkit-inner-spin-button,
+.qty-number::-webkit-outer-spin-button{
+-webkit-appearance:none;
+margin:0;
 }
 
 .photo-list{
 display:flex;
 gap:8px;
+
 width:100%;
 max-width:100%;
+
 overflow-x:auto;
 overflow-y:hidden;
+
 white-space:nowrap;
+}
+
+.photo-list::-webkit-scrollbar{
+height:4px;
+}
+
+.photo-list::-webkit-scrollbar-thumb{
+background:#b8c7dd;
+border-radius:999px;
 }
 
 .photo-item{
@@ -546,8 +566,12 @@ font-size:18px;
 .qty-number{
 width:50px;
 height:40px;
+border:none;
+outline:none;
+background:white;
+text-align:center;
 font-size:26px;
-line-height:40px;
+font-weight:700;
 }
 
 .photo-item{
@@ -755,14 +779,16 @@ Qty
 
 <div class="qty-box">
 
-<button class="qty-btn">−</button>
+<button id="minus" class="qty-btn">−</button>
 
-<div class="qty-number">
-1
-</div>
+<input
+type="number"
+id="qty"
+class="qty-number"
+value="1"
+min="1">
 
-<button class="qty-btn">+
-</button>
+<button id="plus" class="qty-btn">+</button>
 
 </div>
 
@@ -778,12 +804,17 @@ Photo
 
 </div>
 
+<input
+type="file"
+id="photoInput"
+multiple
+hidden>
+
 <div class="photo-list">
 
-<div class="photo-item add-photo">
-
-<i class="fa-solid fa-plus"></i>
-
+<div class="photo-item add-photo"
+onclick="document.getElementById('photoInput').click()">
++
 </div>
 
 </div>
@@ -1160,6 +1191,26 @@ window.addEventListener(
 "pageshow",
 receiveScannedPart
 );
+
+</script>
+
+<script>
+
+const qty=document.getElementById('qty');
+
+document.getElementById('plus')
+.onclick=()=>{
+qty.value=
+Number(qty.value)+1;
+};
+
+document.getElementById('minus')
+.onclick=()=>{
+if(Number(qty.value)>1){
+qty.value=
+Number(qty.value)-1;
+}
+};
 
 </script>
 
