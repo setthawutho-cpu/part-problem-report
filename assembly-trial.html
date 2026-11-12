@@ -1302,40 +1302,103 @@ let reportEditMode=false;
 
 function reviewReport(){
 
-let text="";
+let text = "";
 
-text += "PART BORROWING FROM PL\n\n";
+const detail =
+document.getElementById("detailSelect");
 
-text += "Date : " +
-document.getElementById("dateBox").innerText.replace("\n"," ")
-+ "\n";
+const borrowLocation =
+document.getElementById("locationSelect");
 
-text += "Detail : " +
-(document.getElementById("detailSelect").value||"-")
-+ "\n";
+const partNo =
+document.getElementById("partNo");
 
-text += "Location : " +
-(document.getElementById("locationSelect").value||"-")
-+ "\n";
+const partName =
+document.getElementById("partName");
 
-text += "Part No : " +
-(document.getElementById("partNo").value||"-")
-+ "\n";
+const model =
+document.getElementById("model");
 
-text += "Part Name : " +
-(document.getElementById("partName").value||"-")
-+ "\n";
+const supplier =
+document.getElementById("supplier");
 
-text += "Model : " +
-(document.getElementById("model").value||"-")
-+ "\n";
+const qty =
+document.getElementById("qty");
 
-text += "Supplier : " +
-(document.getElementById("supplier").value||"-")
-+ "\n";
+if(detail.value === "ยืมชิ้นส่วน"){
 
-text += "Qty : " +
-(document.getElementById("qty").value||"1");
+const setPackingNo =
+document.getElementById("setPackingNo").value;
+
+let locationText = "";
+
+if(borrowLocation.value === "Set Packing"){
+
+locationText =
+`จาก Set Packing No. ${setPackingNo}`;
+
+}else if(borrowLocation.value){
+
+locationText =
+`จาก ${borrowLocation.value}`;
+
+}
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${locationText} ไปตรวจสอบ
+`;
+
+}else if(detail.value === "คืนชิ้นส่วน"){
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ที่ ${borrowLocation.value}` : ""}
+`;
+
+}else if(detail.value === "Defect"){
+
+text = `🚨 แจ้ง PL 🚨
+Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""} ไป Defect
+`;
+
+}
+
+const dateOnly =
+new Date().toLocaleDateString("en-GB",{
+day:"2-digit",
+month:"short",
+year:"numeric"
+});
+
+text += `Date : ${dateOnly}\n`;
+
+if(partNo.value)
+text += `Part No : ${partNo.value}\n`;
+
+if(partName.value)
+text += `Part Name : ${partName.value}\n`;
+
+if(model.value)
+text += `Model : ${model.value}\n`;
+
+if(supplier.value)
+text += `Supplier : ${supplier.value}\n`;
+
+const qtyValue =
+Number(qty.value);
+
+text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
+
+const remark =
+document.querySelector("textarea");
+
+if(remark && remark.value.trim() !== ""){
+
+text += `Remark : ${remark.value.trim()}\n`;
+
+}
+
+text += "━━━━━━━━━━━━━━\n";
+text += "📷 Photo : Attached";
 
 document.getElementById("report").innerText =
 text;
@@ -1357,15 +1420,21 @@ document.getElementById("editBtn");
 if(!reportEditMode){
 
 report.contentEditable="true";
+
 btn.innerHTML="💾";
+
 btn.style.background="#4caf50";
+
 reportEditMode=true;
 
 }else{
 
 report.contentEditable="false";
+
 btn.innerHTML="📝";
+
 btn.style.background="#2196f3";
+
 reportEditMode=false;
 
 }
@@ -1404,7 +1473,7 @@ document.getElementById("report").innerText
 function sendLine(){
 
 window.open(
-"https://line.me/R/share?text="+
+"https://line.me/R/share?text=" +
 encodeURIComponent(
 document.getElementById("report").innerText
 ),
@@ -1412,18 +1481,6 @@ document.getElementById("report").innerText
 );
 
 }
-
-document
-.getElementById("reportOverlay")
-.addEventListener("click",function(e){
-
-if(e.target===this){
-
-this.classList.remove("show");
-
-}
-
-});
 
 </script>
 
@@ -1510,6 +1567,22 @@ onclick="sendLine()">
 </div>
 
 </div>
+
+<script>
+
+document
+.getElementById("reportOverlay")
+.addEventListener("click",function(e){
+
+if(e.target===this){
+
+this.classList.remove("show");
+
+}
+
+});
+
+</script>
 
 </body>
 </html>
