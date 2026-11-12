@@ -392,6 +392,11 @@ height:100%;
 object-fit:cover;
 }
 
+.photo-item{
+position:relative;
+cursor:pointer;
+}
+
 .add-photo{
 display:flex;
 align-items:center;
@@ -817,10 +822,10 @@ multiple
 hidden>
 
 <div class="photo-list" id="photoList">
-
-<div class="photo-item add-photo"
-onclick="document.getElementById('photoInput').click()">
-+
+    <div class="photo-item add-photo"
+         onclick="document.getElementById('photoInput').click()">
+        +
+    </div>
 </div>
 
 </div>
@@ -1242,7 +1247,14 @@ div.className = "photo-item";
 div.innerHTML =
 `<img src="${e.target.result}">`;
 
-photoList.appendChild(div);
+div.onclick=function(){
+this.remove();
+};
+
+photoList.insertBefore(
+div,
+photoList.querySelector(".add-photo")
+);
 
 };
 
