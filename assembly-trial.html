@@ -6,7 +6,7 @@
 
 <meta
 name="viewport"
-content="width=device-width, initial-scale=1">
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>PART BORROWING V2</title>
 
@@ -20,6 +20,12 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:"Segoe UI",sans-serif;
+}
+
+html,
+body{
+overflow-x:hidden;
+touch-action:manipulation;
 }
 
 body{
@@ -466,9 +472,10 @@ padding:12px;
 }
 
 input,
-select{
+select,
+textarea{
 height:42px;
-font-size:13px;
+font-size:16px;
 padding:0 12px;
 }
 
