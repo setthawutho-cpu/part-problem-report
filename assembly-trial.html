@@ -473,6 +473,76 @@ cursor:pointer;
 margin-right:8px;
 }
 
+.report-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+align-items:flex-start;
+justify-content:center;
+padding-top:40px;
+z-index:99999;
+backdrop-filter:blur(3px);
+}
+
+.report-overlay.show{
+display:flex;
+}
+
+.report-sheet{
+position:relative;
+width:95%;
+max-width:700px;
+max-height:90vh;
+background:#fff;
+border-radius:24px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+.report-content{
+flex:1;
+overflow:auto;
+padding:20px;
+white-space:pre-wrap;
+line-height:1.5;
+color:#000;
+}
+
+.report-actions{
+display:flex;
+gap:8px;
+padding:12px;
+border-top:1px solid #ddd;
+}
+
+.report-actions button{
+flex:1;
+height:46px;
+border:none;
+border-radius:12px;
+color:#fff;
+font-weight:700;
+}
+
+.btn-save{background:#4caf50;}
+.btn-copy{background:#9c27b0;}
+.btn-line{background:#06C755;}
+
+.add-btn{
+position:absolute;
+top:10px;
+right:10px;
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:#2196f3;
+color:#fff;
+font-size:20px;
+}
+
 /* MOBILE */
 
 @media(max-width:768px){
@@ -854,7 +924,8 @@ placeholder="Add remark..."></textarea>
 </div>
 
 <button
-class="floating-review">
+class="floating-review"
+onclick="reviewReport()">
 
 <i class="fa-solid fa-file-lines"></i>
 
@@ -1227,6 +1298,137 @@ Number(qty.value)-1;
 
 <script>
 
+let reportEditMode=false;
+
+function reviewReport(){
+
+let text="";
+
+text += "PART BORROWING FROM PL\n\n";
+
+text += "Date : " +
+document.getElementById("dateBox").innerText.replace("\n"," ")
++ "\n";
+
+text += "Detail : " +
+(document.getElementById("detailSelect").value||"-")
++ "\n";
+
+text += "Location : " +
+(document.getElementById("locationSelect").value||"-")
++ "\n";
+
+text += "Part No : " +
+(document.getElementById("partNo").value||"-")
++ "\n";
+
+text += "Part Name : " +
+(document.getElementById("partName").value||"-")
++ "\n";
+
+text += "Model : " +
+(document.getElementById("model").value||"-")
++ "\n";
+
+text += "Supplier : " +
+(document.getElementById("supplier").value||"-")
++ "\n";
+
+text += "Qty : " +
+(document.getElementById("qty").value||"1");
+
+document.getElementById("report").innerText =
+text;
+
+document
+.getElementById("reportOverlay")
+.classList.add("show");
+
+}
+
+function toggleEditReport(){
+
+const report=
+document.getElementById("report");
+
+const btn=
+document.getElementById("editBtn");
+
+if(!reportEditMode){
+
+report.contentEditable="true";
+btn.innerHTML="💾";
+btn.style.background="#4caf50";
+reportEditMode=true;
+
+}else{
+
+report.contentEditable="false";
+btn.innerHTML="📝";
+btn.style.background="#2196f3";
+reportEditMode=false;
+
+}
+
+}
+
+function saveReport(){
+
+const text=
+document.getElementById("report").innerText;
+
+const blob=
+new Blob([text],{type:"text/plain"});
+
+const a=
+document.createElement("a");
+
+a.href=
+URL.createObjectURL(blob);
+
+a.download=
+"Borrowing_Report.txt";
+
+a.click();
+
+}
+
+function copyReport(){
+
+navigator.clipboard.writeText(
+document.getElementById("report").innerText
+);
+
+}
+
+function sendLine(){
+
+window.open(
+"https://line.me/R/share?text="+
+encodeURIComponent(
+document.getElementById("report").innerText
+),
+"_blank"
+);
+
+}
+
+document
+.getElementById("reportOverlay")
+.addEventListener("click",function(e){
+
+if(e.target===this){
+
+this.classList.remove("show");
+
+}
+
+});
+
+</script>
+
+<script>
+
 document.getElementById("photoInput")
 .addEventListener("change",function(){
 
@@ -1265,6 +1467,49 @@ reader.readAsDataURL(file);
 });
 
 </script>
+
+<div id="reportOverlay" class="report-overlay">
+
+<div class="report-sheet">
+
+<button
+id="editBtn"
+class="add-btn"
+onclick="toggleEditReport()">
+📝
+</button>
+
+<div
+id="report"
+class="report-content"
+contenteditable="false">
+</div>
+
+<div class="report-actions">
+
+<button
+class="btn-save"
+onclick="saveReport()">
+💾 Save
+</button>
+
+<button
+class="btn-copy"
+onclick="copyReport()">
+📋 Copy
+</button>
+
+<button
+class="btn-line"
+onclick="sendLine()">
+📤 LINE
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
