@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>PART BORROWING V2</title>
 
+  <!-- Google Fonts: Prompt & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome & SheetJS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
@@ -32,7 +38,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: "Inter", "Prompt", -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -44,7 +50,7 @@
     }
 
     body {
-      padding-bottom: calc(100px + env(safe-area-inset-bottom));
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
       min-height: 100vh;
     }
 
@@ -113,6 +119,7 @@
     .date-box {
       position: relative;
       min-width: 104px;
+      flex-shrink: 0;
       padding: 8px 12px;
       background: rgba(255, 255, 255, 0.16);
       border: 1px solid rgba(255, 255, 255, 0.25);
@@ -156,6 +163,7 @@
       padding: 18px;
       box-shadow: var(--shadow-sm);
       border: 1px solid rgba(226, 232, 240, 0.8);
+      min-width: 0;
     }
 
     .section-title {
@@ -171,6 +179,7 @@
     .section-title i {
       width: 30px;
       height: 30px;
+      flex-shrink: 0;
       border-radius: 9px;
       background: var(--primary-light);
       color: var(--primary);
@@ -250,7 +259,7 @@
     select, .select {
       -webkit-appearance: none;
       appearance: none;
-      padding-right: 36px;
+      padding-right: 34px;
       cursor: pointer;
     }
 
@@ -282,6 +291,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-width: 0;
     }
 
     .field label {
@@ -303,19 +313,19 @@
     }
 
     .input-with-btn input {
-      padding-right: 48px;
+      padding-right: 44px;
     }
 
     .scan-btn {
       position: absolute;
-      right: 6px;
-      width: 38px;
-      height: 38px;
+      right: 5px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
       background: var(--primary-light);
       border: none;
       color: var(--primary);
-      font-size: 17px;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -353,12 +363,13 @@
       border: 1.5px solid var(--border-color);
       border-radius: 16px;
       padding: 4px;
-      height: 64px;
+      height: 68px;
     }
 
     .qty-btn {
       width: 54px;
-      height: 54px;
+      height: 58px;
+      flex-shrink: 0;
       border: none;
       border-radius: 12px;
       font-size: 24px;
@@ -380,7 +391,8 @@
 
     .qty-number {
       flex: 1;
-      height: 54px;
+      min-width: 0;
+      height: 58px;
       border: none !important;
       background: transparent !important;
       box-shadow: none !important;
@@ -398,19 +410,28 @@
       margin: 0;
     }
 
-    /* Photo List */
-    .photo-list {
+    /* Photo Row: Fixed '+' on the left, scrollable photos on the right */
+    .photo-row {
       display: flex;
       align-items: center;
       gap: 10px;
       width: 100%;
+      min-width: 0;
+    }
+
+    .photo-list {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
       overflow-x: auto;
       overflow-y: hidden;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
     }
 
     .photo-list::-webkit-scrollbar {
-      height: 5px;
+      height: 4px;
     }
 
     .photo-list::-webkit-scrollbar-thumb {
@@ -482,7 +503,7 @@
       pointer-events: auto;
       width: 100%;
       max-width: 960px;
-      height: 56px;
+      height: 54px;
       border: none;
       border-radius: 18px;
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
@@ -764,50 +785,69 @@
       opacity: 1;
     }
 
-    /* ================= RESPONSIVE BREAKPOINTS ================= */
+    /* ================= RESPONSIVE (MOBILE 2-COLUMN LIKE DESKTOP) ================= */
     @media (max-width: 820px) {
       .bottom-grid {
-        grid-template-columns: 220px 1fr;
+        grid-template-columns: 1fr 1.45fr;
       }
     }
 
     @media (max-width: 600px) {
       .header {
-        padding: calc(12px + env(safe-area-inset-top)) 14px 14px;
-        border-radius: 0 0 22px 22px;
+        padding: calc(10px + env(safe-area-inset-top)) 12px 14px;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .header-inner {
+        gap: 8px;
       }
 
       .header-title {
-        font-size: 16px;
-      }
-
-      .header-sub {
-        font-size: 11px;
-      }
-
-      .back-btn {
-        width: 38px;
-        height: 38px;
         font-size: 15px;
       }
 
+      .header-sub {
+        font-size: 10.5px;
+      }
+
+      .back-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+
       .date-box {
-        min-width: 90px;
+        min-width: 86px;
         padding: 6px 8px;
-        font-size: 11px;
+        font-size: 10.5px;
+        border-radius: 12px;
       }
 
       .container {
-        padding: 12px;
-        gap: 12px;
+        padding: 10px;
+        gap: 10px;
       }
 
       .card {
-        padding: 14px;
+        padding: 12px;
         border-radius: 18px;
       }
 
+      .section-title {
+        font-size: 14px;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .section-title i {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+        border-radius: 8px;
+      }
+
       .top-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
 
@@ -816,46 +856,103 @@
       }
 
       .info-card h3 {
-        font-size: 12px;
+        font-size: 11.5px;
         margin-bottom: 6px;
       }
 
+      .select-wrap::after {
+        right: 10px;
+        font-size: 10px;
+      }
+
       input, select, textarea {
-        height: 44px;
-        font-size: 14px;
-        padding: 0 12px;
-        border-radius: 12px;
+        height: 40px;
+        font-size: 13px;
+        padding: 0 10px;
+        border-radius: 11px;
+      }
+
+      select, .select {
+        padding-right: 26px;
       }
 
       .part-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 8px;
+      }
+
+      .field {
+        gap: 4px;
+      }
+
+      .field label {
+        font-size: 11.5px;
+      }
+
+      .input-with-btn input {
+        padding-right: 36px;
+      }
+
+      .scan-btn {
+        right: 4px;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        border-radius: 8px;
       }
 
       .bottom-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 8px;
       }
 
       .qty-box {
-        height: 56px;
+        height: 54px;
+        border-radius: 13px;
+        padding: 3px;
       }
 
       .qty-btn {
-        width: 64px;
+        width: 34px;
         height: 46px;
-        font-size: 22px;
+        font-size: 18px;
+        border-radius: 10px;
       }
 
       .qty-number {
         height: 46px;
-        font-size: 26px;
+        font-size: 22px;
+      }
+
+      .photo-row, .photo-list {
+        gap: 6px;
       }
 
       .photo-item {
-        width: 62px;
-        height: 62px;
-        flex: 0 0 62px;
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        border-radius: 12px;
+      }
+
+      .add-photo {
+        font-size: 20px;
+      }
+
+      textarea {
+        height: 76px;
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .floating-wrap {
+        padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
+      }
+
+      .floating-review {
+        height: 48px;
+        font-size: 15px;
+        border-radius: 15px;
       }
     }
   </style>
@@ -885,7 +982,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <div class="container">
     <!-- DETAIL & LOCATION -->
     <div class="top-grid" id="topGrid">
       <div class="card info-card">
@@ -979,10 +1076,11 @@
 
         <input type="file" id="photoInput" accept="image/*" multiple hidden>
 
-        <div class="photo-list" id="photoList">
+        <div class="photo-row">
           <div class="photo-item add-photo" onclick="document.getElementById('photoInput').click()" title="เพิ่มรูปภาพ">
             <i class="fa-solid fa-plus"></i>
           </div>
+          <div class="photo-list" id="photoList"></div>
         </div>
       </div>
     </div>
@@ -995,7 +1093,7 @@
       </div>
       <textarea placeholder="Add remark..."></textarea>
     </div>
-  </main>
+  </div>
 
   <!-- FLOATING REVIEW BUTTON -->
   <div class="floating-wrap">
@@ -1059,7 +1157,7 @@
 
   <input type="file" id="replaceInput" accept="image/*" hidden>
 
-  <!-- FULLSCREEN IMAGE VIEWER -->
+  <!-- IMAGE VIEWER -->
   <div id="imageViewer" class="image-viewer" onclick="this.classList.remove('show')">
     <img id="viewerImage" alt="Preview">
   </div>
@@ -1115,16 +1213,9 @@
     const topGrid = document.getElementById("topGrid");
 
     function updateTopGridLayout() {
-      const isMobile = window.innerWidth <= 600;
       if (locationSelect.value === "Set Packing") {
         setPackingField.style.display = "flex";
-        if (isMobile) {
-          topGrid.style.gridTemplateColumns = "1fr 1fr";
-          setPackingField.style.gridColumn = "1 / -1";
-        } else {
-          topGrid.style.gridTemplateColumns = "1fr 1fr 1.2fr";
-          setPackingField.style.gridColumn = "auto";
-        }
+        topGrid.style.gridTemplateColumns = "1fr 1fr 1.15fr";
       } else {
         setPackingField.style.display = "none";
         topGrid.style.gridTemplateColumns = "1fr 1fr";
@@ -1410,7 +1501,7 @@
           const div = document.createElement("div");
           div.className = "photo-item";
           div.innerHTML = `<img src="${e.target.result}" alt="Attached">`;
-          photoList.insertBefore(div, photoList.querySelector(".add-photo"));
+          photoList.appendChild(div);
         };
         reader.readAsDataURL(file);
       }
