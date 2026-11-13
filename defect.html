@@ -42,12 +42,16 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
-      overflow-x: hidden;
-      touch-action: manipulation;
-      background-color: var(--bg-app);
-      color: var(--text-main);
-    }
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  touch-action: pan-y;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+}
+
 
     body {
       padding-bottom: calc(96px + env(safe-area-inset-bottom));
@@ -865,12 +869,12 @@
         font-size: 10px;
       }
 
-      input, select, textarea {
-        height: 40px;
-        font-size: 13px;
-        padding: 0 10px;
-        border-radius: 11px;
-      }
+input, select, textarea {
+  height: 40px;
+  font-size: 16px;
+  padding: 0 10px;
+  border-radius: 11px;
+}
 
       select, .select {
         padding-right: 26px;
