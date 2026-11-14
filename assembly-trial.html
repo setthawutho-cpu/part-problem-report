@@ -1,1257 +1,1247 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PART PROBLEM INFORM - Modern SQE</title>
-<style>
-  :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #eff6ff;
-    --bg: #f1f5f9;
-    --card: #ffffff;
-    --text: #0f172a;
-    --text-muted: #64748b;
-    --border: #cbd5e1;
-    --border-light: #e2e8f0;
-    --success: #16a34a;
-    --success-bg: #dcfce7;
-    --warning: #d97706;
-    --warning-bg: #fef3c7;
-    --danger: #dc2626;
-    --danger-bg: #fee2e2;
-    --radius: 16px;
-    --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PART PROBLEM INFORM MODERN - Supplier Quality Report</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --success: #16a34a;
+      --success-light: #dcfce7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif;
-    -webkit-tap-highlight-color: transparent;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  body {
-    background-color: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    padding-bottom: 100px;
-  }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 100px;
+      line-height: 1.5;
+    }
 
-  /* Header */
-  .app-header {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-    color: white;
-    padding: 18px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    /* Header */
+    .app-header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
 
-  .header-title h1 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  .header-title p {
-    font-size: 0.78rem;
-    color: #93c5fd;
-    margin-top: 2px;
-  }
+    .header-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
 
-  .btn-history {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-  }
+    .header-title p {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
 
-  .btn-history:active {
-    transform: scale(0.96);
-    background: rgba(255, 255, 255, 0.25);
-  }
+    .btn-icon-header {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
 
-  .badge-count {
-    background: #ef4444;
-    color: white;
-    font-size: 0.7rem;
-    padding: 1px 6px;
-    border-radius: 999px;
-    font-weight: 700;
-  }
+    .btn-icon-header:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
 
-  /* Container */
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+    .container {
+      max-width: 720px;
+      margin: 16px auto;
+      padding: 0 14px;
+    }
 
-  /* Card */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-light);
-  }
+    /* Card */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
 
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-light);
-  }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .card-title {
-    font-size: 0.98rem;
-    font-weight: 700;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Form Controls */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  @media (max-width: 520px) {
+    /* Form Controls */
     .form-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .form-group.full {
-    grid-column: 1 / -1;
-  }
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  input[type="text"],
-  input[type="number"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 11px 13px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    color: var(--text);
-    background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 75px;
-  }
-
-  /* Input with camera/scan button */
-  .input-action-wrap {
-    display: flex;
-    gap: 8px;
-  }
-
-  .btn-icon {
-    background: var(--primary-light);
-    color: var(--primary);
-    border: 1.5px solid #bfdbfe;
-    border-radius: 10px;
-    padding: 0 14px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-
-  .btn-icon:active {
-    transform: scale(0.95);
-    background: #dbeafe;
-  }
-
-  /* Segmented Pills / Radio Chips */
-  .pill-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .pill-item {
-    flex: 1;
-    min-width: fit-content;
-  }
-
-  .pill-item input {
-    display: none;
-  }
-
-  .pill-item label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 9px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    cursor: pointer;
-    background: #f8fafc;
-    transition: all 0.15s;
-    text-align: center;
-  }
-
-  .pill-item input:checked + label {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-  }
-
-  /* Color Chips for OK Mark */
-  .color-group {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-  }
-
-  .color-chip input { display: none; }
-  .color-chip label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 4px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    background: #fff;
-  }
-
-  .dot {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.2);
-  }
-
-  .color-chip input:checked + label {
-    border-color: var(--primary);
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-  }
-
-  /* KPI Summary Dashboard */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 480px) {
-    .kpi-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .kpi-box {
-    padding: 12px 10px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid var(--border-light);
-    background: #f8fafc;
-  }
-
-  .kpi-box.ok { background: var(--success-bg); border-color: #86efac; color: #14532d; }
-  .kpi-box.ng { background: var(--danger-bg); border-color: #fca5a5; color: #7f1d1d; }
-  .kpi-box.rate { background: var(--warning-bg); border-color: #fcd34d; color: #78350f; }
-
-  .kpi-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    opacity: 0.85;
-  }
-
-  .kpi-val {
-    font-size: 1.35rem;
-    font-weight: 800;
-    margin-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Sub-sections inside Inspection */
-  .sub-panel {
-    background: #f8fafc;
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-  }
-
-  .sub-panel-title {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #334155;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .qty-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr;
-    gap: 8px;
-  }
-
-  @media (max-width: 480px) {
-    .qty-row {
+      display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
-    .qty-row .form-group:last-child {
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group.full {
       grid-column: 1 / -1;
     }
-  }
 
-  /* Breakdown formula bar */
-  .formula-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #eff6ff;
-    border: 1px dashed #93c5fd;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-    color: #1e40af;
-    font-weight: 600;
-  }
-
-  /* Collapsible / Dynamic Sections */
-  .toggle-btn {
-    width: 100%;
-    padding: 12px;
-    background: #f8fafc;
-    border: 1.5px dashed var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.15s;
-  }
-
-  .toggle-btn:hover {
-    background: #f1f5f9;
-    border-color: var(--primary);
-    color: var(--primary);
-  }
-
-  .damage-item {
-    display: grid;
-    grid-template-columns: 1.2fr 1.5fr 0.7fr auto;
-    gap: 8px;
-    align-items: center;
-    background: #fff;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-top: 8px;
-  }
-
-  @media (max-width: 520px) {
-    .damage-item {
-      grid-template-columns: 1fr 1fr;
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 5px;
     }
-  }
 
-  .btn-remove {
-    background: var(--danger-bg);
-    color: var(--danger);
-    border: none;
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-weight: 700;
-    cursor: pointer;
-  }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #f8fafc;
+      transition: border-color 0.2s, background 0.2s;
+    }
 
-  /* Photo Preview */
-  .photo-preview {
-    margin-top: 8px;
-    display: none;
-    position: relative;
-    width: 100%;
-    max-height: 200px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
 
-  .photo-preview img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-  }
+    input[readonly] {
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 700;
+    }
 
-  /* Sticky Bottom Action Bar */
-  .bottom-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid var(--border);
-    padding: 12px 16px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    z-index: 99;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
-  }
+    /* Part No with Camera */
+    .input-with-btn {
+      display: flex;
+      gap: 8px;
+    }
 
-  .bottom-bar-inner {
-    max-width: 720px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.4fr;
-    gap: 8px;
-  }
+    .btn-cam {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: 0.2s;
+    }
 
-  .btn-action {
-    border: none;
-    border-radius: 12px;
-    padding: 12px 10px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: transform 0.1s;
-  }
+    .btn-cam:hover {
+      background: var(--primary-hover);
+    }
 
-  .btn-action:active { transform: scale(0.97); }
-  .btn-review { background: #e2e8f0; color: #0f172a; }
-  .btn-save { background: var(--primary); color: white; }
-  .btn-line { background: #06c755; color: white; }
+    /* Pill / Radio Selector */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-  /* Modal */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 200;
-  }
+    .pill-option {
+      flex: 1;
+      min-width: fit-content;
+    }
 
-  .modal-backdrop.open { display: flex; }
+    .pill-option input {
+      display: none;
+    }
 
-  .modal-box {
-    background: white;
-    border-radius: 18px;
-    width: 100%;
-    max-width: 540px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-  }
+    .pill-option span {
+      display: block;
+      text-align: center;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
 
-  .modal-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-light);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 1.05rem;
-  }
+    .pill-option input:checked + span {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.15);
+    }
 
-  .modal-body {
-    padding: 16px 20px;
-    overflow-y: auto;
-    font-size: 0.9rem;
-  }
+    .pill-option.danger input:checked + span {
+      border-color: var(--danger);
+      background: var(--danger-light);
+      color: var(--danger);
+    }
 
-  .report-preview-text {
-    background: #f8fafc;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    white-space: pre-wrap;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.85rem;
-    line-height: 1.55;
-    color: #1e293b;
-  }
+    .pill-option.success input:checked + span {
+      border-color: var(--success);
+      background: var(--success-light);
+      color: var(--success);
+    }
 
-  .modal-footer {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border-light);
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-  }
+    .pill-option.warning input:checked + span {
+      border-color: var(--warning);
+      background: var(--warning-light);
+      color: var(--warning);
+    }
 
-  .history-card {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 10px;
-    background: #f8fafc;
-  }
+    /* KPI Summary Dashboard */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-  .history-card-top {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
+    .kpi-box {
+      padding: 12px 8px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
 
-  .toast {
-    position: fixed;
-    top: 76px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-    background: #0f172a;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.25s;
-    z-index: 300;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
-  }
+    .kpi-box.check { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .kpi-box.ok { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+    .kpi-box.ng { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+    .kpi-box.rate { background: #fffbeb; border-color: #fde68a; color: #92400e; }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-</style>
+    .kpi-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .kpi-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    /* Inspection Sub-section */
+    .sub-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .sub-box-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .qty-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .summary-strip {
+      display: flex;
+      justify-content: space-between;
+      background: #e2e8f0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* OK Mark Colors */
+    .color-pills {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .color-pill input { display: none; }
+    .color-pill span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 4px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+
+    .color-pill input:checked + span {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Photo Preview */
+    .photo-preview-box {
+      margin-top: 10px;
+      display: none;
+      position: relative;
+    }
+
+    .photo-preview-box img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .btn-remove-photo {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(220, 38, 38, 0.9);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Dynamic Part Damage */
+    .damage-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .btn-del-item {
+      background: var(--danger-light);
+      color: var(--danger);
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-add-outline {
+      width: 100%;
+      padding: 10px;
+      border: 1.5px dashed #94a3b8;
+      border-radius: 10px;
+      background: transparent;
+      color: #475569;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-add-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Bottom Action Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      z-index: 99;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+    }
+
+    .bottom-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+      gap: 8px;
+    }
+
+    .btn-action {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: 0.15s;
+    }
+
+    .btn-review { background: #e2e8f0; color: #1e293b; }
+    .btn-save { background: var(--primary); color: #fff; }
+    .btn-copy { background: #0f172a; color: #fff; }
+    .btn-line { background: #06c755; color: #fff; }
+
+    .btn-action:active { transform: scale(0.97); }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 200;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 520px;
+      border-radius: 18px;
+      padding: 20px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .report-preview-text {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      white-space: pre-wrap;
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #1e293b;
+    }
+
+    .history-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 480px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .kpi-value { font-size: 1.15rem; }
+      .btn-action { font-size: 0.78rem; padding: 10px 4px; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="app-header">
-  <div class="header-title">
-    <h1>📋 PART PROBLEM INFORM</h1>
-    <p>Supplier Quality Report • Modern SQE System</p>
-  </div>
-  <button type="button" class="btn-history" onclick="openHistoryModal()">
-    🕘 History <span class="badge-count" id="historyCount">0</span>
-  </button>
-</header>
-
-<div id="toast" class="toast">บันทึกข้อมูลเรียบร้อย</div>
-
-<main class="container">
-  <form id="sqeForm" oninput="calculateMetrics()">
-
-    <!-- Section 1: Classification & Issue Doc -->
-    <section class="card">
-      <div class="card-header">
-        <div class="card-title">🏷️ ประเภทการแจ้ง & เอกสาร (Classification)</div>
-        <button type="button" style="background:none;border:none;color:var(--primary);font-size:0.8rem;font-weight:600;cursor:pointer;" onclick="resetForm()">ล้างฟอร์ม</button>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>PART PROBLEM INFORM</h1>
+        <p>Supplier Quality Report • Modern Edition</p>
       </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn-icon-header" onclick="resetForm()" title="ล้างข้อมูลฟอร์ม">🔄 ใหม่</button>
+        <button type="button" class="btn-icon-header" onclick="openHistoryModal()">🕘 ประวัติ (<span id="historyCount">0</span>)</button>
+      </div>
+    </div>
+  </header>
 
-      <div class="form-grid">
+  <div class="container">
+    <form id="reportForm">
+
+      <!-- Section 1: Part Information -->
+      <div class="card">
+        <div class="card-title">
+          <span>📦 Part Information (ข้อมูลชิ้นส่วน)</span>
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;" id="currentDateBadge"></span>
+        </div>
+
         <div class="form-group">
           <label>Type / ประเภทปัญหา</label>
           <div class="pill-group">
-            <div class="pill-item">
-              <input type="radio" name="issueType" id="typeNew" value="New" checked>
-              <label for="typeNew">🆕 New</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="issueType" id="typeRe" value="Reoccurred">
-              <label for="typeRe">🔁 Reoccurred</label>
-            </div>
+            <label class="pill-option">
+              <input type="radio" name="reportType" value="New" checked>
+              <span>🆕 New (พบใหม่)</span>
+            </label>
+            <label class="pill-option danger">
+              <input type="radio" name="reportType" value="Reoccurred">
+              <span>🔁 Reoccurred (เกิดซ้ำ)</span>
+            </label>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Issue Doc / เอกสารที่ออก</label>
-          <div class="pill-group">
-            <div class="pill-item">
-              <input type="radio" name="issueDoc" id="docNone" value="-" checked>
-              <label for="docNone">-</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="issueDoc" id="docUAR" value="UAR">
-              <label for="docUAR">UAR</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="issueDoc" id="docPAR" value="PAR">
-              <label for="docPAR">PAR</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="issueDoc" id="docStop" value="Line Stop">
-              <label for="docStop" style="color:#dc2626;">🛑 Line Stop</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group full">
           <label>Product / กลุ่มผลิตภัณฑ์</label>
           <div class="pill-group">
-            <div class="pill-item">
-              <input type="radio" name="product" id="prodCombine" value="Combine" checked>
-              <label for="prodCombine">Combine</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="product" id="prodCombineW" value="Combine Welding">
-              <label for="prodCombineW">Combine Welding</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="product" id="prodSH" value="SH">
-              <label for="prodSH">SH</label>
-            </div>
-            <div class="pill-item">
-              <input type="radio" name="product" id="prodSHW" value="SH Welding">
-              <label for="prodSHW">SH Welding</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: Part Information -->
-    <section class="card">
-      <div class="card-header">
-        <div class="card-title">📦 ข้อมูลชิ้นส่วน (Part Information)</div>
-      </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Part No. <span style="color:#ef4444;">*</span></label>
-          <div class="input-action-wrap">
-            <input type="text" id="partNo" placeholder="ระบุหรือสแกน Part No." required>
-            <button type="button" class="btn-icon" title="แนบรูปถ่าย / สแกน" onclick="document.getElementById('photoInput').click()">📷</button>
-            <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(event)">
+            <label class="pill-option">
+              <input type="radio" name="product" value="Combine" checked>
+              <span>Combine</span>
+            </label>
+            <label class="pill-option">
+              <input type="radio" name="product" value="Combine Welding">
+              <span>Combine Welding</span>
+            </label>
+            <label class="pill-option">
+              <input type="radio" name="product" value="SH">
+              <span>SH</span>
+            </label>
+            <label class="pill-option">
+              <input type="radio" name="product" value="SH Welding">
+              <span>SH Welding</span>
+            </label>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Part Name <span style="color:#ef4444;">*</span></label>
-          <input type="text" id="partName" placeholder="ชื่อชิ้นส่วน" required>
-        </div>
-
-        <div class="form-group">
-          <label>Model</label>
-          <input type="text" id="model" placeholder="รุ่นรถ / โมเดล">
-        </div>
-
-        <div class="form-group">
-          <label>Supplier</label>
-          <input type="text" id="supplier" placeholder="ชื่อซัพพลายเออร์">
-        </div>
-
-        <div class="form-group full">
-          <label>Serial Number / Lot No.</label>
-          <input type="text" id="serialNo" placeholder="หมายเลขล็อต หรือ Serial Number">
-        </div>
-
-        <div class="form-group full">
-          <div id="photoPreviewWrap" class="photo-preview">
-            <img id="photoPreviewImg" src="" alt="Part Photo">
-            <button type="button" onclick="removePhoto()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:8px;padding:4px 10px;font-size:0.8rem;cursor:pointer;">✕ ลบรูป</button>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="partNo">Part No. * (รหัสชิ้นส่วน)</label>
+            <div class="input-with-btn">
+              <input type="text" id="partNo" placeholder="ระบุ Part No. เช่น 5T051-1234-0" required>
+              <button type="button" class="btn-cam" onclick="document.getElementById('photoInput').click()" title="ถ่ายรูป / แนบรูปชิ้นงาน">📷</button>
+              <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(event)">
+            </div>
+            <div class="photo-preview-box" id="photoPreviewBox">
+              <img id="photoPreviewImg" src="" alt="Part Problem Preview">
+              <button type="button" class="btn-remove-photo" onclick="removePhoto()">✕ ลบรูป</button>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Section 3: Problem Detail & Containment -->
-    <section class="card">
-      <div class="card-header">
-        <div class="card-title">⚠️ รายละเอียดปัญหา & การแก้ไขเบื้องต้น</div>
-      </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Problem / หัวข้อปัญหา <span style="color:#ef4444;">*</span></label>
-          <input type="text" id="problemTitle" placeholder="เช่น รอยบุบ, รูไม่ตรง, เกลียวเสีย" required>
-        </div>
-
-        <div class="form-group">
-          <label>STD / ค่ามาตรฐาน</label>
-          <input type="text" id="stdSpec" placeholder="ระบุค่า Spec / มาตรฐาน (ถ้ามี)">
-        </div>
-
-        <div class="form-group full">
-          <label>Detail / รายละเอียดอาการที่พบ</label>
-          <textarea id="problemDetail" placeholder="อธิบายลักษณะปัญหา ตำแหน่งที่พบ หรือสาเหตุเบื้องต้น..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>🟡 Containment / การแก้ไขเบื้องต้น</label>
-          <input type="text" id="reworkAction" placeholder="ระบุวิธีการ Rework / คัดแยก">
-        </div>
-
-        <div class="form-group">
-          <label>Result / ผลลัพธ์เบื้องต้น</label>
-          <select id="containmentResult">
-            <option value="-">- เลือกผลลัพธ์ -</option>
-            <option value="Rework OK">✅ Rework OK</option>
-            <option value="Wait Rework">⏳ Wait Rework</option>
-            <option value="เปลี่ยนชิ้นงานใน Stock">🔄 เปลี่ยนชิ้นงานใน Stock</option>
-            <option value="Reject">❌ Reject</option>
-            <option value="Defect">⚠️ Defect</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Inspection Result with Real-Time Formulas -->
-    <section class="card">
-      <div class="card-header">
-        <div class="card-title">📊 ผลการตรวจสอบ (Inspection Result)</div>
-        <span style="font-size:0.75rem;color:var(--primary);font-weight:600;">คำนวณอัตโนมัติ</span>
-      </div>
-
-      <!-- KPI Summary Cards -->
-      <div class="kpi-grid">
-        <div class="kpi-box">
-          <div class="kpi-label">Check Qty</div>
-          <div class="kpi-val" id="kpiCheck">0</div>
-        </div>
-        <div class="kpi-box ok">
-          <div class="kpi-label">OK Qty</div>
-          <div class="kpi-val" id="kpiOk">0</div>
-        </div>
-        <div class="kpi-box ng">
-          <div class="kpi-label">Total NG</div>
-          <div class="kpi-val" id="kpiNg">0</div>
-        </div>
-        <div class="kpi-box rate">
-          <div class="kpi-label">Defect %</div>
-          <div class="kpi-val" id="kpiRate">0.00%</div>
-        </div>
-      </div>
-
-      <!-- 1. MFG Line Inspection -->
-      <div class="sub-panel">
-        <div class="sub-panel-title">
-          <span>🏭 1. งานในไลน์ผลิต (MFG Line)</span>
-          <span id="mfgSubtotal" style="font-size:0.78rem;color:var(--text-muted);">รวม: 0 ชิ้น</span>
-        </div>
-        <div class="qty-row">
           <div class="form-group">
-            <label>OK Qty</label>
-            <input type="number" id="mfgOk" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+            <label for="partName">Part Name (ชื่อชิ้นส่วน)</label>
+            <input type="text" id="partName" placeholder="ระบุชื่อชิ้นส่วน">
           </div>
+
           <div class="form-group">
-            <label>NG Qty</label>
-            <input type="number" id="mfgNg" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+            <label for="model">Model (รุ่น)</label>
+            <input type="text" id="model" placeholder="เช่น DC70, DC105">
           </div>
+
           <div class="form-group">
-            <label>จัดการงาน NG (MFG)</label>
-            <select id="mfgAction">
+            <label for="supplier">Supplier (ผู้ผลิต)</label>
+            <input type="text" id="supplier" placeholder="ระบุชื่อ Supplier">
+          </div>
+
+          <div class="form-group">
+            <label for="serialNo">Serial Number / Lot</label>
+            <input type="text" id="serialNo" placeholder="ระบุ S/N หรือ Lot No.">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Issue Doc (เอกสารที่ออก)</label>
+          <div class="pill-group">
+            <label class="pill-option">
+              <input type="radio" name="issueDoc" value="-" checked>
+              <span>- ไม่มี -</span>
+            </label>
+            <label class="pill-option warning">
+              <input type="radio" name="issueDoc" value="UAR">
+              <span>UAR</span>
+            </label>
+            <label class="pill-option warning">
+              <input type="radio" name="issueDoc" value="PAR">
+              <span>PAR</span>
+            </label>
+            <label class="pill-option danger">
+              <input type="radio" name="issueDoc" value="Line Stop">
+              <span>🛑 Line Stop</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Problem Detail -->
+      <div class="card">
+        <div class="card-title">
+          <span>⚠️ Problem Detail (รายละเอียดปัญหา)</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="problemTitle">Problem / หัวข้อปัญหา *</label>
+            <input type="text" id="problemTitle" placeholder="เช่น รูไม่ตรง, รอยเชื่อมไม่สมบูรณ์, ชิ้นงานบุบ" required>
+          </div>
+
+          <div class="form-group full">
+            <label for="problemDetail">Detail / รายละเอียดเพิ่มเติม</label>
+            <textarea id="problemDetail" rows="2" placeholder="อธิบายลักษณะอาการ ตำแหน่งที่พบ หรือผลกระทบ..."></textarea>
+          </div>
+
+          <div class="form-group full" style="margin-bottom:0;">
+            <label for="stdSpec">STD / ค่ามาตรฐานอ้างอิง</label>
+            <input type="text" id="stdSpec" placeholder="เช่น ค่ามาตรฐาน 10.0 ± 0.5 mm หรือ Drawing No.">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Inspection Result & Formulas -->
+      <div class="card">
+        <div class="card-title">
+          <span>📊 Inspection Result (ผลการตรวจสอบ & สูตรคำนวณ)</span>
+        </div>
+
+        <!-- Real-time KPI Summary -->
+        <div class="kpi-grid">
+          <div class="kpi-box check">
+            <div class="kpi-label">Check Qty</div>
+            <div class="kpi-value" id="kpiCheck">0</div>
+          </div>
+          <div class="kpi-box ok">
+            <div class="kpi-label">OK Qty</div>
+            <div class="kpi-value" id="kpiOk">0</div>
+          </div>
+          <div class="kpi-box ng">
+            <div class="kpi-label">NG Qty</div>
+            <div class="kpi-value" id="kpiNg">0</div>
+          </div>
+          <div class="kpi-box rate">
+            <div class="kpi-label">Defect %</div>
+            <div class="kpi-value" id="kpiRate">0.0%</div>
+          </div>
+        </div>
+
+        <!-- 1. MFG Line Inspection -->
+        <div class="sub-box">
+          <div class="sub-box-title">
+            <span>1. MFG Line (ตรวจสอบหน้าไลน์ผลิต)</span>
+            <span id="mfgSubtotalBadge" style="color:var(--primary);">รวมตรวจ: 0 ชิ้น</span>
+          </div>
+          <div class="qty-row">
+            <div>
+              <label for="mfgOk">OK Qty</label>
+              <input type="number" id="mfgOk" min="0" value="0" oninput="calculateAll()">
+            </div>
+            <div>
+              <label for="mfgNg">NG Qty</label>
+              <input type="number" id="mfgNg" min="0" value="0" oninput="calculateAll()">
+            </div>
+            <div>
+              <label for="mfgResult">NG Result</label>
+              <select id="mfgResult" onchange="calculateAll()">
+                <option value="Rework">Rework (รอซ่อม)</option>
+                <option value="Rework OK">Rework OK (ซ่อมผ่าน)</option>
+                <option value="Exchange">แลกเปลี่ยน</option>
+                <option value="Reject">Reject (คืนผู้ผลิต)</option>
+                <option value="Defect">Defect (งานเสีย)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Check Stock Inspection -->
+        <div class="sub-box">
+          <div class="sub-box-title">
+            <span>2. Check Stock (ตรวจสอบในคลังสินค้า)</span>
+            <span id="stockSubtotalBadge" style="color:var(--primary);">รวมตรวจ: 0 ชิ้น</span>
+          </div>
+          <div class="qty-row">
+            <div>
+              <label for="stockOk">OK Qty</label>
+              <input type="number" id="stockOk" min="0" value="0" oninput="calculateAll()">
+            </div>
+            <div>
+              <label for="stockNg">NG Qty</label>
+              <input type="number" id="stockNg" min="0" value="0" oninput="calculateAll()">
+            </div>
+            <div>
+              <label for="stockResult">NG Result</label>
+              <select id="stockResult" onchange="calculateAll()">
+                <option value="Rework">Rework (รอซ่อม)</option>
+                <option value="Rework OK">Rework OK (ซ่อมผ่าน)</option>
+                <option value="Exchange">แลกเปลี่ยน</option>
+                <option value="Reject">Reject (คืนผู้ผลิต)</option>
+                <option value="Defect">Defect (งานเสีย)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auto Calculated Breakdown -->
+        <div class="summary-strip">
+          <span>🔧 Rework: <strong id="sumRework" style="color:#d97706;">0</strong></span>
+          <span>🔄 Exchange: <strong id="sumExchange" style="color:#2563eb;">0</strong></span>
+          <span>❌ Defect/Reject: <strong id="sumDefect" style="color:#dc2626;">0</strong></span>
+        </div>
+      </div>
+
+      <!-- Section 4: Containment Action & OK Mark -->
+      <div class="card">
+        <div class="card-title">
+          <span>🟡 Containment Action & OK Mark</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="containmentAction">การแก้ไขเบื้องต้น (Rework / Action)</label>
+            <input type="text" id="containmentAction" placeholder="เช่น คัดแยก, เจียรแต่ง, เปลี่ยน Lot ใหม่">
+          </div>
+
+          <div class="form-group">
+            <label for="containmentResult">Result / ผลลัพธ์</label>
+            <select id="containmentResult">
+              <option value="-">- เลือกผลลัพธ์ -</option>
               <option value="Rework OK">Rework OK</option>
               <option value="Wait Rework">Wait Rework</option>
-              <option value="แลกเปลี่ยน">แลกเปลี่ยน</option>
+              <option value="เปลี่ยนชิ้นงานใน Stock">เปลี่ยนชิ้นงานใน Stock</option>
               <option value="Reject">Reject</option>
               <option value="Defect">Defect</option>
             </select>
           </div>
         </div>
-      </div>
 
-      <!-- 2. Check Stock Inspection -->
-      <div class="sub-panel">
-        <div class="sub-panel-title">
-          <span>🏬 2. เช็กสต็อก (Check Stock)</span>
-          <span id="stockSubtotal" style="font-size:0.78rem;color:var(--text-muted);">รวม: 0 ชิ้น</span>
-        </div>
-        <div class="qty-row">
-          <div class="form-group">
-            <label>OK Qty</label>
-            <input type="number" id="stockOk" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
-          </div>
-          <div class="form-group">
-            <label>NG Qty</label>
-            <input type="number" id="stockNg" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
-          </div>
-          <div class="form-group">
-            <label>จัดการงาน NG (Stock)</label>
-            <select id="stockAction">
-              <option value="Rework OK">Rework OK</option>
-              <option value="Wait Rework">Wait Rework</option>
-              <option value="แลกเปลี่ยน">แลกเปลี่ยน</option>
-              <option value="Reject">Reject</option>
-              <option value="Defect">Defect</option>
-            </select>
+        <div class="form-group">
+          <label>✅ OK Mark (สัญลักษณ์สีที่แต้มบนชิ้นงานผ่าน)</label>
+          <div class="color-pills">
+            <label class="color-pill">
+              <input type="radio" name="okMark" value="Green" checked>
+              <span><i class="dot" style="background:#22c55e;"></i>Green</span>
+            </label>
+            <label class="color-pill">
+              <input type="radio" name="okMark" value="Yellow">
+              <span><i class="dot" style="background:#eab308;"></i>Yellow</span>
+            </label>
+            <label class="color-pill">
+              <input type="radio" name="okMark" value="Pink">
+              <span><i class="dot" style="background:#ec4899;"></i>Pink</span>
+            </label>
+            <label class="color-pill">
+              <input type="radio" name="okMark" value="Blue">
+              <span><i class="dot" style="background:#3b82f6;"></i>Blue</span>
+            </label>
+            <label class="color-pill">
+              <input type="radio" name="okMark" value="White">
+              <span><i class="dot" style="background:#ffffff;"></i>White</span>
+            </label>
           </div>
         </div>
-      </div>
 
-      <!-- Formula Breakdown Summary -->
-      <div class="formula-bar">
-        <span>🔧 Rework Qty: <strong id="calcRework">0</strong></span>
-        <span>❌ Defect/Reject Qty: <strong id="calcDefect">0</strong></span>
-      </div>
-    </section>
-
-    <!-- Section 5: OK Mark, Part Damage & Remark -->
-    <section class="card">
-      <div class="card-header">
-        <div class="card-title">✅ สัญลักษณ์ OK & ข้อมูลเพิ่มเติม</div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:14px;">
-        <label>สีสัญลักษณ์ OK Mark</label>
-        <div class="color-group">
-          <div class="color-chip">
-            <input type="radio" name="okColor" id="colGreen" value="Green" checked>
-            <label for="colGreen"><span class="dot" style="background:#22c55e;"></span>Green</label>
-          </div>
-          <div class="color-chip">
-            <input type="radio" name="okColor" id="colYellow" value="Yellow">
-            <label for="colYellow"><span class="dot" style="background:#eab308;"></span>Yellow</label>
-          </div>
-          <div class="color-chip">
-            <input type="radio" name="okColor" id="colPink" value="Pink">
-            <label for="colPink"><span class="dot" style="background:#ec4899;"></span>Pink</label>
-          </div>
-          <div class="color-chip">
-            <input type="radio" name="okColor" id="colBlue" value="Blue">
-            <label for="colBlue"><span class="dot" style="background:#3b82f6;"></span>Blue</label>
-          </div>
-          <div class="color-chip">
-            <input type="radio" name="okColor" id="colWhite" value="White">
-            <label for="colWhite"><span class="dot" style="background:#ffffff;"></span>White</label>
-          </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="okMarkDetail">รายละเอียดตำแหน่ง OK Mark / Remark</label>
+          <input type="text" id="okMarkDetail" placeholder="เช่น แต้มสีเขียวข้างรูน็อต หรือหมายเหตุเพิ่มเติม">
         </div>
       </div>
 
-      <div class="form-group" style="margin-bottom:14px;">
-        <label>รายละเอียด OK Mark (ตำแหน่งแต้มสี / ระบุเพิ่มเติม)</label>
-        <input type="text" id="okMarkDetail" placeholder="เช่น แต้มสีเขียวที่มุมขวาบนของชิ้นงาน">
-      </div>
+      <!-- Section 5: Co-damaged Parts -->
+      <div class="card">
+        <div class="card-title">
+          <span>📦 Part Damage (ชิ้นส่วนเสียหายร่วม)</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">ถ้ามี</span>
+        </div>
 
-      <!-- Dynamic Part Damage List -->
-      <div style="margin-bottom:14px;">
-        <label style="margin-bottom:6px;">📦 Part Damage / ชิ้นส่วนเสียหายร่วม</label>
         <div id="damageList"></div>
-        <button type="button" class="toggle-btn" style="margin-top:8px;" onclick="addDamageRow()">
-          ➕ เพิ่มรายการชิ้นส่วนเสียหายร่วม
-        </button>
+
+        <button type="button" class="btn-add-outline" onclick="addDamageRow()">➕ เพิ่มรายการชิ้นส่วนเสียหายร่วม</button>
       </div>
 
-      <div class="form-group">
-        <label>📝 Remark / หมายเหตุเพิ่มเติม</label>
-        <textarea id="remark" placeholder="ระบุหมายเหตุ ผู้แจ้ง หรือผู้รับผิดชอบ..."></textarea>
+    </form>
+  </div>
+
+  <!-- Bottom Sticky Action Bar -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <button type="button" class="btn-action btn-review" onclick="openReviewModal()">🔍 Review</button>
+      <button type="button" class="btn-action btn-save" onclick="saveReport()">💾 Save</button>
+      <button type="button" class="btn-action btn-copy" onclick="copyReportText()">📋 Copy</button>
+      <button type="button" class="btn-action btn-line" onclick="shareToLine()">📤 LINE</button>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-backdrop" id="reviewModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size:1.05rem;">🔍 Review Report (ตรวจสอบรายงาน)</h3>
+        <button type="button" onclick="closeModal('reviewModal')" style="border:none; background:none; font-size:1.3rem; cursor:pointer;">✕</button>
       </div>
-    </section>
-
-  </form>
-</main>
-
-<!-- Bottom Sticky Bar -->
-<div class="bottom-bar">
-  <div class="bottom-bar-inner">
-    <button type="button" class="btn-action btn-review" onclick="openReviewModal()">🔍 Review</button>
-    <button type="button" class="btn-action btn-save" onclick="saveReport()">💾 Save</button>
-    <button type="button" class="btn-action btn-line" onclick="shareToLine()">📤 LINE / Copy</button>
-  </div>
-</div>
-
-<!-- Review Modal -->
-<div id="reviewModal" class="modal-backdrop" onclick="if(event.target===this)closeModal('reviewModal')">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span>🔍 ตรวจสอบสรุปรายงาน (Review Report)</span>
-      <button type="button" style="background:none;border:none;font-size:1.2rem;cursor:pointer;" onclick="closeModal('reviewModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="reviewTextContent" class="report-preview-text"></div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn-action btn-review" style="padding:10px 16px;" onclick="copyReportText()">📋 Copy ข้อความ</button>
-      <button type="button" class="btn-action btn-line" style="padding:10px 16px;" onclick="shareToLine()">📤 ส่งเข้า LINE</button>
+      <div class="modal-body">
+        <div class="report-preview-text" id="reviewTextOutput"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+        <button type="button" class="btn-action btn-copy" onclick="copyReportText()">📋 คัดลอกข้อความ</button>
+        <button type="button" class="btn-action btn-line" onclick="shareToLine()">📤 ส่งเข้า LINE</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- History Modal -->
-<div id="historyModal" class="modal-backdrop" onclick="if(event.target===this)closeModal('historyModal')">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span>🕘 ประวัติการบันทึก (Report History)</span>
-      <button type="button" style="background:none;border:none;font-size:1.2rem;cursor:pointer;" onclick="closeModal('historyModal')">✕</button>
-    </div>
-    <div class="modal-body" id="historyListContainer">
-      <p style="text-align:center;color:var(--text-muted);padding:20px;">ยังไม่มีประวัติการบันทึก</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn-action btn-review" style="padding:8px 14px;" onclick="closeModal('historyModal')">ปิดหน้าต่าง</button>
+  <!-- History Modal -->
+  <div class="modal-backdrop" id="historyModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size:1.05rem;">🕘 Report History (ประวัติที่บันทึก)</h3>
+        <button type="button" onclick="closeModal('historyModal')" style="border:none; background:none; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="modal-body" id="historyListContainer"></div>
     </div>
   </div>
-</div>
 
-<script>
-  const STORAGE_KEY = 'sqe_part_problem_reports_v1';
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
-  // Initialize
-  window.addEventListener('DOMContentLoaded', () => {
-    calculateMetrics();
-    updateHistoryBadge();
-  });
+  <script>
+    const STORAGE_KEY = 'part_problem_inform_modern_v1';
+    let currentPhotoDataUrl = '';
 
-  // Core Formula Calculations
-  function calculateMetrics() {
-    const mfgOk = Math.max(0, parseInt(document.getElementById('mfgOk').value) || 0);
-    const mfgNg = Math.max(0, parseInt(document.getElementById('mfgNg').value) || 0);
-    const mfgAction = document.getElementById('mfgAction').value;
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      document.getElementById('currentDateBadge').textContent = now.toLocaleDateString('th-TH', {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      calculateAll();
+      updateHistoryCount();
+    });
 
-    const stockOk = Math.max(0, parseInt(document.getElementById('stockOk').value) || 0);
-    const stockNg = Math.max(0, parseInt(document.getElementById('stockNg').value) || 0);
-    const stockAction = document.getElementById('stockAction').value;
-
-    // Subtotals
-    const mfgTotal = mfgOk + mfgNg;
-    const stockTotal = stockOk + stockNg;
-
-    // Grand Totals
-    const totalOk = mfgOk + stockOk;
-    const totalNg = mfgNg + stockNg;
-    const totalCheck = totalOk + totalNg;
-
-    // Defect % Formula: (Total NG / Check Qty) * 100
-    const defectRate = totalCheck > 0 ? ((totalNg / totalCheck) * 100).toFixed(2) : '0.00';
-
-    // Rework vs Defect/Reject Breakdown
-    let reworkQty = 0;
-    let defectQty = 0;
-
-    if (mfgAction === 'Rework OK' || mfgAction === 'Wait Rework') {
-      reworkQty += mfgNg;
-    } else {
-      defectQty += mfgNg;
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
     }
 
-    if (stockAction === 'Rework OK' || stockAction === 'Wait Rework') {
-      reworkQty += stockNg;
-    } else {
-      defectQty += stockNg;
+    // Real-time Formula Calculations
+    function calculateAll() {
+      const mfgOk = Math.max(0, parseInt(document.getElementById('mfgOk').value) || 0);
+      const mfgNg = Math.max(0, parseInt(document.getElementById('mfgNg').value) || 0);
+      const mfgRes = document.getElementById('mfgResult').value;
+
+      const stockOk = Math.max(0, parseInt(document.getElementById('stockOk').value) || 0);
+      const stockNg = Math.max(0, parseInt(document.getElementById('stockNg').value) || 0);
+      const stockRes = document.getElementById('stockResult').value;
+
+      const mfgTotal = mfgOk + mfgNg;
+      const stockTotal = stockOk + stockNg;
+
+      const totalOk = mfgOk + stockOk;
+      const totalNg = mfgNg + stockNg;
+      const totalCheck = totalOk + totalNg;
+
+      const defectPercent = totalCheck > 0 ? ((totalNg / totalCheck) * 100).toFixed(1) : '0.0';
+
+      // Breakdown by Result Type
+      let reworkQty = 0;
+      let exchangeQty = 0;
+      let defectRejectQty = 0;
+
+      const categorize = (qty, res) => {
+        if (res === 'Rework' || res === 'Rework OK') reworkQty += qty;
+        else if (res === 'Exchange') exchangeQty += qty;
+        else defectRejectQty += qty;
+      };
+
+      categorize(mfgNg, mfgRes);
+      categorize(stockNg, stockRes);
+
+      // Update UI
+      document.getElementById('mfgSubtotalBadge').textContent = `รวมตรวจ: ${mfgTotal} ชิ้น`;
+      document.getElementById('stockSubtotalBadge').textContent = `รวมตรวจ: ${stockTotal} ชิ้น`;
+
+      document.getElementById('kpiCheck').textContent = totalCheck;
+      document.getElementById('kpiOk').textContent = totalOk;
+      document.getElementById('kpiNg').textContent = totalNg;
+      document.getElementById('kpiRate').textContent = `${defectPercent}%`;
+
+      document.getElementById('sumRework').textContent = reworkQty;
+      document.getElementById('sumExchange').textContent = exchangeQty;
+      document.getElementById('sumDefect').textContent = defectRejectQty;
+
+      return {
+        mfgOk, mfgNg, mfgRes, mfgTotal,
+        stockOk, stockNg, stockRes, stockTotal,
+        totalCheck, totalOk, totalNg, defectPercent,
+        reworkQty, exchangeQty, defectRejectQty
+      };
     }
 
-    // Update UI
-    document.getElementById('mfgSubtotal').textContent = `รวม: ${mfgTotal.toLocaleString()} ชิ้น`;
-    document.getElementById('stockSubtotal').textContent = `รวม: ${stockTotal.toLocaleString()} ชิ้น`;
+    // Photo Handling
+    function handlePhotoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentPhotoDataUrl = e.target.result;
+        document.getElementById('photoPreviewImg').src = currentPhotoDataUrl;
+        document.getElementById('photoPreviewBox').style.display = 'block';
+        showToast('📷 แนบรูปภาพเรียบร้อย');
+      };
+      reader.readAsDataURL(file);
+    }
 
-    document.getElementById('kpiCheck').textContent = totalCheck.toLocaleString();
-    document.getElementById('kpiOk').textContent = totalOk.toLocaleString();
-    document.getElementById('kpiNg').textContent = totalNg.toLocaleString();
-    document.getElementById('kpiRate').textContent = `${defectRate}%`;
+    function removePhoto() {
+      currentPhotoDataUrl = '';
+      document.getElementById('photoInput').value = '';
+      document.getElementById('photoPreviewBox').style.display = 'none';
+    }
 
-    document.getElementById('calcRework').textContent = reworkQty.toLocaleString();
-    document.getElementById('calcDefect').textContent = defectQty.toLocaleString();
+    // Dynamic Part Damage Rows
+    function addDamageRow(partNo = '', partName = '', qty = 1) {
+      const container = document.getElementById('damageList');
+      const div = document.createElement('div');
+      div.className = 'damage-item';
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <strong style="font-size:0.82rem; color:#334155;">ชิ้นส่วนเสียหายร่วม</strong>
+          <button type="button" class="btn-del-item" onclick="this.closest('.damage-item').remove()">✕ ลบ</button>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1.2fr 0.6fr; gap:8px;">
+          <input type="text" class="dmg-part-no" placeholder="Part No." value="${partNo}">
+          <input type="text" class="dmg-part-name" placeholder="Part Name" value="${partName}">
+          <input type="number" class="dmg-qty" min="1" placeholder="Qty" value="${qty}">
+        </div>
+      `;
+      container.appendChild(div);
+    }
 
-    return {
-      mfgOk, mfgNg, mfgAction, mfgTotal,
-      stockOk, stockNg, stockAction, stockTotal,
-      totalCheck, totalOk, totalNg, defectRate,
-      reworkQty, defectQty
-    };
-  }
+    // Collect Form Data
+    function getFormData() {
+      const calc = calculateAll();
+      const reportType = document.querySelector('input[name="reportType"]:checked')?.value || 'New';
+      const product = document.querySelector('input[name="product"]:checked')?.value || '-';
+      const issueDoc = document.querySelector('input[name="issueDoc"]:checked')?.value || '-';
+      const okMark = document.querySelector('input[name="okMark"]:checked')?.value || '-';
 
-  // Dynamic Part Damage Rows
-  function addDamageRow(partNo = '', partName = '', qty = 1) {
-    const container = document.getElementById('damageList');
-    const row = document.createElement('div');
-    row.className = 'damage-item';
-    row.innerHTML = `
-      <input type="text" placeholder="Part No." class="dmg-no" value="${partNo}">
-      <input type="text" placeholder="Part Name / อาการ" class="dmg-name" value="${partName}">
-      <input type="number" min="1" placeholder="Qty" class="dmg-qty" value="${qty}">
-      <button type="button" class="btn-remove" onclick="this.parentElement.remove()">✕</button>
-    `;
-    container.appendChild(row);
-  }
-
-  // Photo Upload Preview
-  function handlePhotoUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      document.getElementById('photoPreviewImg').src = evt.target.result;
-      document.getElementById('photoPreviewWrap').style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function removePhoto() {
-    document.getElementById('photoInput').value = '';
-    document.getElementById('photoPreviewImg').src = '';
-    document.getElementById('photoPreviewWrap').style.display = 'none';
-  }
-
-  // Build Formatted Report Text
-  function generateReportText() {
-    const m = calculateMetrics();
-    const issueType = document.querySelector('input[name="issueType"]:checked')?.value || '-';
-    const issueDoc = document.querySelector('input[name="issueDoc"]:checked')?.value || '-';
-    const product = document.querySelector('input[name="product"]:checked')?.value || '-';
-    const okColor = document.querySelector('input[name="okColor"]:checked')?.value || '-';
-
-    const partNo = document.getElementById('partNo').value.trim() || '-';
-    const partName = document.getElementById('partName').value.trim() || '-';
-    const model = document.getElementById('model').value.trim() || '-';
-    const supplier = document.getElementById('supplier').value.trim() || '-';
-    const serialNo = document.getElementById('serialNo').value.trim() || '-';
-
-    const problemTitle = document.getElementById('problemTitle').value.trim() || '-';
-    const stdSpec = document.getElementById('stdSpec').value.trim() || '-';
-    const problemDetail = document.getElementById('problemDetail').value.trim() || '-';
-    const reworkAction = document.getElementById('reworkAction').value.trim() || '-';
-    const containmentResult = document.getElementById('containmentResult').value;
-    const okMarkDetail = document.getElementById('okMarkDetail').value.trim() || '-';
-    const remark = document.getElementById('remark').value.trim() || '-';
-
-    // Collect Part Damages
-    const dmgRows = document.querySelectorAll('.damage-item');
-    let dmgText = '';
-    if (dmgRows.length > 0) {
-      const items = [];
-      dmgRows.forEach((r, idx) => {
-        const dNo = r.querySelector('.dmg-no').value.trim();
-        const dName = r.querySelector('.dmg-name').value.trim();
-        const dQty = r.querySelector('.dmg-qty').value || 1;
-        if (dNo || dName) {
-          items.push(`  ${idx + 1}. ${dNo} ${dName} (${dQty} pcs)`);
+      const damages = [];
+      document.querySelectorAll('.damage-item').forEach(item => {
+        const pNo = item.querySelector('.dmg-part-no').value.trim();
+        const pName = item.querySelector('.dmg-part-name').value.trim();
+        const qty = item.querySelector('.dmg-qty').value || 1;
+        if (pNo || pName) {
+          damages.push({ partNo: pNo, partName: pName, qty });
         }
       });
-      if (items.length > 0) {
-        dmgText = `
-📦 Part Damage (เสียหายร่วม):
-${items.join('
-')}`;
+
+      return {
+        id: Date.now(),
+        timestamp: new Date().toLocaleString('th-TH'),
+        reportType,
+        product,
+        partNo: document.getElementById('partNo').value.trim() || '-',
+        partName: document.getElementById('partName').value.trim() || '-',
+        model: document.getElementById('model').value.trim() || '-',
+        supplier: document.getElementById('supplier').value.trim() || '-',
+        serialNo: document.getElementById('serialNo').value.trim() || '-',
+        issueDoc,
+        problemTitle: document.getElementById('problemTitle').value.trim() || '-',
+        problemDetail: document.getElementById('problemDetail').value.trim() || '-',
+        stdSpec: document.getElementById('stdSpec').value.trim() || '-',
+        containmentAction: document.getElementById('containmentAction').value.trim() || '-',
+        containmentResult: document.getElementById('containmentResult').value,
+        okMark,
+        okMarkDetail: document.getElementById('okMarkDetail').value.trim() || '-',
+        damages,
+        calc
+      };
+    }
+
+    // Generate Formatted Report String
+    function generateReportText() {
+      const d = getFormData();
+      const c = d.calc;
+
+      let text = `🚨 *PART PROBLEM INFORM*
+`;
+      text += `📅 วันที่: ${d.timestamp}
+`;
+      text += `📌 ประเภท: ${d.reportType} | กลุ่ม: ${d.product}
+`;
+      if (d.issueDoc !== '-') text += `📄 เอกสาร: ${d.issueDoc}
+`;
+      text += `━━━━━━━━━━━━━━━━━━━━
+`;
+      text += `📦 *ข้อมูลชิ้นส่วน*
+`;
+      text += `• Part No.: ${d.partNo}
+`;
+      text += `• Part Name: ${d.partName}
+`;
+      text += `• Model: ${d.model}
+`;
+      text += `• Supplier: ${d.supplier}
+`;
+      if (d.serialNo !== '-') text += `• S/N / Lot: ${d.serialNo}
+`;
+      text += `━━━━━━━━━━━━━━━━━━━━
+`;
+      text += `⚠️ *รายละเอียดปัญหา*
+`;
+      text += `• ปัญหา: ${d.problemTitle}
+`;
+      if (d.problemDetail !== '-') text += `• รายละเอียด: ${d.problemDetail}
+`;
+      if (d.stdSpec !== '-') text += `• STD: ${d.stdSpec}
+`;
+      text += `━━━━━━━━━━━━━━━━━━━━
+`;
+      text += `📊 *ผลการตรวจสอบ (Inspection)*
+`;
+      text += `• MFG Line: OK ${c.mfgOk} / NG ${c.mfgNg} (${c.mfgRes})
+`;
+      text += `• Stock: OK ${c.stockOk} / NG ${c.stockNg} (${c.stockRes})
+`;
+      text += `• สรุปรวม: ตรวจ ${c.totalCheck} | OK ${c.totalOk} | NG ${c.totalNg} (${c.defectPercent}%)
+`;
+      text += `  └ Rework: ${c.reworkQty} | Exchange: ${c.exchangeQty} | Defect/Reject: ${c.defectRejectQty}
+`;
+      text += `━━━━━━━━━━━━━━━━━━━━
+`;
+      text += `🟡 *Containment & OK Mark*
+`;
+      text += `• การแก้ไข: ${d.containmentAction} (${d.containmentResult})
+`;
+      text += `• OK Mark: สี ${d.okMark}`;
+      if (d.okMarkDetail !== '-') text += ` (${d.okMarkDetail})`;
+      text += `
+`;
+
+      if (d.damages.length > 0) {
+        text += `━━━━━━━━━━━━━━━━━━━━
+`;
+        text += `💥 *ชิ้นส่วนเสียหายร่วม (${d.damages.length} รายการ)*
+`;
+        d.damages.forEach((item, idx) => {
+          text += `${idx + 1}. ${item.partNo} (${item.partName}) x ${item.qty}
+`;
+        });
+      }
+
+      return text;
+    }
+
+    // Actions
+    function openReviewModal() {
+      document.getElementById('reviewTextOutput').textContent = generateReportText();
+      document.getElementById('reviewModal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function copyReportText() {
+      const text = generateReportText();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('📋 คัดลอกรายงานลงคลิปบอร์ดแล้ว');
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('📋 คัดลอกรายงานลงคลิปบอร์ดแล้ว');
+      });
+    }
+
+    function shareToLine() {
+      const text = encodeURIComponent(generateReportText());
+      window.open(`https://line.me/R/msg/text/?${text}`, '_blank');
+    }
+
+    function saveReport() {
+      const partNo = document.getElementById('partNo').value.trim();
+      const problem = document.getElementById('problemTitle').value.trim();
+      if (!partNo || !problem) {
+        showToast('⚠️ กรุณากรอก Part No. และหัวข้อปัญหาก่อนบันทึก');
+        return;
+      }
+
+      const data = getFormData();
+      data.reportText = generateReportText();
+
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      history.unshift(data);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 50)));
+
+      updateHistoryCount();
+      showToast('💾 บันทึกรายงานเรียบร้อยแล้ว');
+    }
+
+    function updateHistoryCount() {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      document.getElementById('historyCount').textContent = history.length;
+    }
+
+    function openHistoryModal() {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const container = document.getElementById('historyListContainer');
+
+      if (history.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#64748b; padding:24px;">ยังไม่มีประวัติการบันทึก</p>';
+      } else {
+        container.innerHTML = history.map((item, index) => `
+          <div class="history-item">
+            <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:#64748b; margin-bottom:4px;">
+              <span>${item.timestamp}</span>
+              <span style="font-weight:700; color:#dc2626;">NG: ${item.calc.totalNg} (${item.calc.defectPercent}%)</span>
+            </div>
+            <div style="font-weight:700; color:#0f172a;">${item.partNo} - ${item.partName}</div>
+            <div style="font-size:0.85rem; color:#334155; margin:4px 0 8px;">ปัญหา: ${item.problemTitle}</div>
+            <div style="display:flex; gap:8px;">
+              <button type="button" onclick="copyHistoryItem(${index})" style="padding:5px 10px; border:none; border-radius:6px; background:#0f172a; color:#fff; font-size:0.78rem; cursor:pointer;">📋 Copy</button>
+              <button type="button" onclick="lineHistoryItem(${index})" style="padding:5px 10px; border:none; border-radius:6px; background:#06c755; color:#fff; font-size:0.78rem; cursor:pointer;">📤 LINE</button>
+              <button type="button" onclick="deleteHistoryItem(${index})" style="padding:5px 10px; border:none; border-radius:6px; background:#fee2e2; color:#dc2626; font-size:0.78rem; cursor:pointer; margin-left:auto;">ลบ</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('historyModal').style.display = 'flex';
+    }
+
+    function copyHistoryItem(idx) {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (history[idx]) {
+        navigator.clipboard.writeText(history[idx].reportText);
+        showToast('📋 คัดลอกประวัติรายงานแล้ว');
       }
     }
 
-    const now = new Date().toLocaleString('th-TH', {
-      dateStyle: 'short',
-      timeStyle: 'short'
-    });
-
-    return `🚨 PART PROBLEM INFORM (SQE)
-📅 วันที่/เวลา: ${now}
-🏷️ ประเภท: ${issueType} | เอกสาร: ${issueDoc}
-🏭 Product: ${product}
-
-📦 PART INFORMATION
-• Part No.: ${partNo}
-• Part Name: ${partName}
-• Model: ${model} | Supplier: ${supplier}
-• Serial/Lot: ${serialNo}
-
-⚠️ PROBLEM & CONTAINMENT
-• ปัญหา: ${problemTitle} (STD: ${stdSpec})
-• รายละเอียด: ${problemDetail}
-• การแก้ไขเบื้องต้น: ${reworkAction}
-• ผลลัพธ์: ${containmentResult}
-
-📊 INSPECTION RESULT
-• Check Qty: ${m.totalCheck.toLocaleString()} | OK: ${m.totalOk.toLocaleString()} | Total NG: ${m.totalNg.toLocaleString()}
-• Defect Rate: ${m.defectRate}%
-• MFG Line: OK ${m.mfgOk} / NG ${m.mfgNg} (${m.mfgAction})
-• Check Stock: OK ${m.stockOk} / NG ${m.stockNg} (${m.stockAction})
-• สรุปยอด NG: Rework ${m.reworkQty} | Defect/Reject ${m.defectQty}
-
-✅ OK Mark: ${okColor} (${okMarkDetail})${dmgText}
-📝 Remark: ${remark}`;
-  }
-
-  // Modal Controls
-  function openReviewModal() {
-    document.getElementById('reviewTextContent').textContent = generateReportText();
-    document.getElementById('reviewModal').classList.add('open');
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('open');
-  }
-
-  // Copy & LINE Share
-  function copyReportText() {
-    const text = generateReportText();
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('📋 คัดลอกรายงานลงคลิปบอร์ดแล้ว');
-    }).catch(() => {
-      alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาคัดลอกในหน้า Review');
-    });
-  }
-
-  function shareToLine() {
-    const text = generateReportText();
-    navigator.clipboard.writeText(text).catch(() => {});
-    showToast('📋 คัดลอกข้อความแล้ว กำลังเปิด LINE...');
-    const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
-    setTimeout(() => {
-      window.open(lineUrl, '_blank');
-    }, 400);
-  }
-
-  // LocalStorage Save & History
-  function saveReport() {
-    const partNo = document.getElementById('partNo').value.trim();
-    const problemTitle = document.getElementById('problemTitle').value.trim();
-
-    if (!partNo || !problemTitle) {
-      showToast('⚠️ กรุณากรอก Part No. และหัวข้อปัญหา');
-      return;
+    function lineHistoryItem(idx) {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (history[idx]) {
+        window.open(`https://line.me/R/msg/text/?${encodeURIComponent(history[idx].reportText)}`, '_blank');
+      }
     }
 
-    const metrics = calculateMetrics();
-    const record = {
-      id: Date.now(),
-      timestamp: new Date().toLocaleString('th-TH'),
-      partNo,
-      partName: document.getElementById('partName').value.trim() || '-',
-      problemTitle,
-      defectRate: metrics.defectRate,
-      totalNg: metrics.totalNg,
-      reportText: generateReportText()
-    };
-
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    existing.unshift(record);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(0, 50)));
-
-    updateHistoryBadge();
-    showToast('💾 บันทึกรายงานลงประวัติเรียบร้อย');
-  }
-
-  function updateHistoryBadge() {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    document.getElementById('historyCount').textContent = existing.length;
-  }
-
-  function openHistoryModal() {
-    const container = document.getElementById('historyListContainer');
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-
-    if (existing.length === 0) {
-      container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">ยังไม่มีประวัติการบันทึก</p>';
-    } else {
-      container.innerHTML = existing.map((item, idx) => `
-        <div class="history-card">
-          <div class="history-card-top">
-            <span>${item.partNo} - ${item.partName}</span>
-            <span style="color:var(--danger);font-size:0.82rem;">NG: ${item.totalNg} (${item.defectRate}%)</span>
-          </div>
-          <div style="font-size:0.82rem;color:#334155;margin-bottom:6px;">ปัญหา: ${item.problemTitle}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--text-muted);">
-            <span>🕒 ${item.timestamp}</span>
-            <div style="display:flex;gap:6px;">
-              <button type="button" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.75rem;" onclick="copyHistoryItem(${idx})">📋 Copy</button>
-              <button type="button" style="background:var(--danger-bg);color:var(--danger);border:none;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:0.75rem;" onclick="deleteHistoryItem(${idx})">ลบ</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
+    function deleteHistoryItem(idx) {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      history.splice(idx, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      updateHistoryCount();
+      openHistoryModal();
+      showToast('🗑️ ลบประวัติแล้ว');
     }
-    document.getElementById('historyModal').classList.add('open');
-  }
 
-  function copyHistoryItem(idx) {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    if (existing[idx]) {
-      navigator.clipboard.writeText(existing[idx].reportText);
-      showToast('📋 คัดลอกรายงานย้อนหลังแล้ว');
+    function resetForm() {
+      if (confirm('ต้องการล้างข้อมูลในฟอร์มเพื่อเริ่มรายการใหม่หรือไม่?')) {
+        document.getElementById('reportForm').reset();
+        document.getElementById('damageList').innerHTML = '';
+        removePhoto();
+        calculateAll();
+        showToast('🔄 ล้างฟอร์มเรียบร้อย');
+      }
     }
-  }
-
-  function deleteHistoryItem(idx) {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    existing.splice(idx, 1);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-    updateHistoryBadge();
-    openHistoryModal();
-  }
-
-  function resetForm() {
-    if (confirm('ต้องการล้างข้อมูลในฟอร์มทั้งหมดหรือไม่?')) {
-      document.getElementById('sqeForm').reset();
-      document.getElementById('damageList').innerHTML = '';
-      removePhoto();
-      calculateMetrics();
-      showToast('🧹 ล้างข้อมูลฟอร์มแล้ว');
-    }
-  }
-
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-</script>
+  </script>
 </body>
 </html>
