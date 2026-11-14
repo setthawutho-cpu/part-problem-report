@@ -43,9 +43,8 @@
     }
 
 html, body {
-  overflow: hidden;
-  touch-action: none;
-  height: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
   background-color: var(--bg-app);
   color: var(--text-main);
 }
@@ -56,16 +55,18 @@ body {
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
 
-    /* ================= HEADER ================= */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-      padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
-      border-radius: 0 0 26px 26px;
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(30, 64, 175, 0.22);
+/* ================= HEADER ================= */
+.header {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 100;
+background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
+border-radius: 0 0 26px 26px;
+color: #ffffff;
+box-shadow: 0 8px 24px rgba(30, 64, 175, 0.22);
     }
 
     .header-inner {
@@ -149,15 +150,15 @@ body {
       cursor: pointer;
     }
 
-    /* ================= CONTAINER & CARDS ================= */
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+/* ================= CONTAINER & CARDS ================= */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 110px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
     .card {
       background: var(--surface);
@@ -1582,6 +1583,14 @@ body {
       }
     });
   </script>
+
+<script>
+document.addEventListener("focusin", function () {
+  setTimeout(function () {
+    window.scrollTo(0, 0);
+  }, 100);
+});
+</script>
 
 </body>
 </html>
