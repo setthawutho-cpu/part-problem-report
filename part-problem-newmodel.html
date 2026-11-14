@@ -1,1 +1,333 @@
-<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PART PROBLEM INFORM MODERN</title><style>:root{--primary:#2563eb;--bg:#f1f5f9;--surface:#fff;--border:#e2e8f0}*{box-sizing:border-box;font-family:Inter,Prompt,sans-serif}body{margin:0;background:var(--bg)}.header{background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;padding:18px;border-radius:0 0 24px 24px}.container{max-width:960px;margin:auto;padding:12px 16px 100px}.card{background:#fff;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}.part-grid,.inspect-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;margin-bottom:6px;color:#64748b;font-size:13px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:14px}.partno-wrap{display:flex;gap:8px}.qr{width:48px;border:none;background:#eff6ff;border-radius:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f8fafc;padding:12px;border-radius:16px;text-align:center}.review{position:fixed;left:16px;right:16px;bottom:16px;height:54px;border:none;border-radius:18px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;font-weight:700}@media(max-width:768px){.part-grid,.inspect-grid{grid-template-columns:1fr 1fr}}</style></head><body><div class="header"><h2>PART PROBLEM INFORM</h2><div>Supplier Quality Report</div></div><div class="container"><div class="card"><h3>📦 Part Information</h3><div class="field"><label>Part No.</label><div class="partno-wrap"><input placeholder="Part No."><button class="qr">📷</button></div></div><div class="part-grid"><div class="field"><label>Part Name</label><input></div><div class="field"><label>Model</label><input></div><div class="field"><label>Supplier</label><input></div><div class="field"><label>Product</label><input></div></div></div><div class="card"><h3>⚠ Problem Detail</h3><div class="field"><label>Problem</label><textarea></textarea></div><div class="field"><label>Detail</label><textarea></textarea></div></div><div class="card"><h3>📊 Inspection Result</h3><div class="stats"><div class="stat"><div>Check</div><strong>0</strong></div><div class="stat"><div>OK</div><strong>0</strong></div><div class="stat"><div>NG</div><strong>0</strong></div></div><br><div class="inspect-grid"><div class="field"><label>Check Qty</label><input type="number"></div><div class="field"><label>OK Qty</label><input type="number"></div><div class="field"><label>NG Result</label><select><option>Rework</option><option>Reject</option><option>Defect</option></select></div></div></div></div><button class="review">Review Report</button></body></html>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PART PROBLEM INFORM - Supplier Quality Report</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 16px;
+    color: #333;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 20px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  .header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #1a237e;
+  }
+  .header span {
+    font-size: 12px;
+    color: #666;
+  }
+  .btn-history {
+    background: #e8eaf6;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #1a237e;
+    font-weight: bold;
+  }
+  .section-title {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 18px 0 10px;
+    padding: 6px 10px;
+    background: #f1f3f4;
+    border-radius: 6px;
+  }
+  .form-group {
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #444;
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .summary-box {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    text-align: center;
+  }
+  .summary-item label {
+    font-size: 11px;
+    color: #666;
+  }
+  .summary-item input {
+    text-align: center;
+    font-weight: bold;
+    background: #eee;
+  }
+  .ok-marks {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .ok-marks label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .btn {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+  }
+  .btn-review { background: #5c6bc0; width: 100%; margin-top: 12px; }
+  .btn-save { background: #2e7d32; }
+  .btn-copy { background: #0288d1; }
+  .btn-line { background: #00b900; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div>
+      <h2>PART PROBLEM INFORM</h2>
+      <span>Supplier Quality Report</span>
+    </div>
+    <button class="btn-history" type="button">🕘 Report History</button>
+  </div>
+
+  <!-- ข้อมูล Part -->
+  <div class="row-2">
+    <div class="form-group">
+      <label>Part No.</label>
+      <input type="text" id="partNo" placeholder="ระบุ Part No.">
+    </div>
+    <div class="form-group">
+      <label>Part Name</label>
+      <input type="text" id="partName" placeholder="ระบุ Part Name">
+    </div>
+  </div>
+
+  <div class="row-2">
+    <div class="form-group">
+      <label>Model</label>
+      <input type="text" id="model" placeholder="ระบุ Model">
+    </div>
+    <div class="form-group">
+      <label>Supplier</label>
+      <input type="text" id="supplier" placeholder="ระบุ Supplier">
+    </div>
+  </div>
+
+  <!-- Problem Detail -->
+  <div class="section-title">⚠ Problem Detail รายละเอียดปัญหา</div>
+  <div class="form-group">
+    <label>Problem / ปัญหา</label>
+    <input type="text" id="problem" placeholder="ระบุปัญหาที่พบ">
+  </div>
+  <div class="form-group">
+    <label>Detail / รายละเอียด</label>
+    <textarea id="detail" placeholder="อธิบายรายละเอียดเพิ่มเติม"></textarea>
+  </div>
+  <div class="form-group">
+    <label>STD</label>
+    <input type="text" id="std" placeholder="ระบุมาตรฐาน (STD)">
+  </div>
+
+  <!-- Containment Action -->
+  <div class="section-title">🟡 Containment Action การแก้ไขเบื้องต้น</div>
+  <div class="row-2">
+    <div class="form-group">
+      <label>Rework / การแก้ไข</label>
+      <input type="text" id="reworkAction" placeholder="ระบุวิธีการแก้ไข">
+    </div>
+    <div class="form-group">
+      <label>Result / ผลลัพธ์</label>
+      <select id="containmentResult">
+        <option value="-">-</option>
+        <option value="Rework OK">Rework OK</option>
+        <option value="Wait Rework">Wait Rework</option>
+        <option value="เปลี่ยนชิ้นงานใน Stock">เปลี่ยนชิ้นงานใน Stock</option>
+        <option value="Reject">Reject</option>
+        <option value="Defect">Defect</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Inspection Result (ตัดแถว MFG NG Qty ออกแล้ว เหลือเฉพาะ Check Stock) -->
+  <div class="section-title">📊 Inspection Result ผลการตรวจสอบ</div>
+  <label style="color:#1a237e;">Check Stock</label>
+  <div class="row-3">
+    <div class="form-group">
+      <label>OK Qty</label>
+      <input type="number" id="stockOkQty" value="0" min="0" oninput="calculateTotals()">
+    </div>
+    <div class="form-group">
+      <label>NG Qty</label>
+      <input type="number" id="stockNgQty" value="0" min="0" oninput="calculateTotals()">
+    </div>
+    <div class="form-group">
+      <label>Result</label>
+      <select id="stockResult" onchange="calculateTotals()">
+        <option value="Rework">Rework</option>
+        <option value="Rework OK">Rework OK</option>
+        <option value="Wait Rework">Wait Rework</option>
+        <option value="แลกเปลี่ยน">แลกเปลี่ยน</option>
+        <option value="Reject">Reject</option>
+        <option value="Defect">Defect</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-box">
+    <div class="summary-grid">
+      <div class="summary-item">
+        <label>Total NG</label>
+        <input type="text" id="totalNg" value="0" readonly>
+      </div>
+      <div class="summary-item">
+        <label>Rework Qty</label>
+        <input type="number" id="reworkQty" value="0" min="0">
+      </div>
+      <div class="summary-item">
+        <label>Defect Qty</label>
+        <input type="number" id="defectQty" value="0" min="0">
+      </div>
+      <div class="summary-item">
+        <label>Defect %</label>
+        <input type="text" id="defectPercent" value="0.00%" readonly>
+      </div>
+    </div>
+  </div>
+
+  <!-- OK Mark -->
+  <div class="section-title">✅ OK Mark สัญลักษณ์ OK</div>
+  <div class="ok-marks">
+    <label><input type="checkbox" name="okMark" value="Green"> Green</label>
+    <label><input type="checkbox" name="okMark" value="Yellow"> Yellow</label>
+    <label><input type="checkbox" name="okMark" value="Pink"> Pink</label>
+    <label><input type="checkbox" name="okMark" value="Blue"> Blue</label>
+    <label><input type="checkbox" name="okMark" value="White"> White</label>
+  </div>
+  <div class="form-group">
+    <label>รายละเอียด OK Mark</label>
+    <input type="text" id="okMarkDetail" placeholder="ระบุรายละเอียด OK Mark">
+  </div>
+
+  <!-- Buttons -->
+  <button class="btn btn-review" type="button" onclick="reviewReport()">🔍 Review Report</button>
+  
+  <div class="action-buttons">
+    <button class="btn btn-save" type="button" onclick="alert('บันทึกข้อมูลสำเร็จ')">💾 Save</button>
+    <button class="btn btn-copy" type="button" onclick="copyReport()">📋 Copy</button>
+    <button class="btn btn-line" type="button" onclick="alert('ส่งข้อมูลไปยัง LINE')">📤 LINE</button>
+  </div>
+</div>
+
+<script>
+  function calculateTotals() {
+    const okQty = parseFloat(document.getElementById('stockOkQty').value) || 0;
+    const ngQty = parseFloat(document.getElementById('stockNgQty').value) || 0;
+    const totalCheck = okQty + ngQty;
+
+    document.getElementById('totalNg').value = ngQty;
+    
+    let percent = 0;
+    if (totalCheck > 0) {
+      percent = (ngQty / totalCheck) * 100;
+    }
+    document.getElementById('defectPercent').value = percent.toFixed(2) + '%';
+  }
+
+  function generateReportText() {
+    const marks = Array.from(document.querySelectorAll('input[name="okMark"]:checked'))
+                       .map(el => el.value).join(', ') || '-';
+    return `📋 PART PROBLEM INFORM
+Part No: ${document.getElementById('partNo').value || '-'}
+Part Name: ${document.getElementById('partName').value || '-'}
+Model: ${document.getElementById('model').value || '-'}
+Supplier: ${document.getElementById('supplier').value || '-'}
+
+⚠ Problem: ${document.getElementById('problem').value || '-'}
+Detail: ${document.getElementById('detail').value || '-'}
+STD: ${document.getElementById('std').value || '-'}
+
+🟡 Containment: ${document.getElementById('reworkAction').value || '-'} (${document.getElementById('containmentResult').value})
+
+📊 Check Stock: OK=${document.getElementById('stockOkQty').value}, NG=${document.getElementById('stockNgQty').value} (${document.getElementById('stockResult').value})
+Total NG: ${document.getElementById('totalNg').value} | Rework: ${document.getElementById('reworkQty').value} | Defect: ${document.getElementById('defectQty').value} (${document.getElementById('defectPercent').value})
+
+✅ OK Mark: ${marks} (${document.getElementById('okMarkDetail').value || '-'})`;
+  }
+
+  function reviewReport() {
+    alert(generateReportText());
+  }
+
+  function copyReport() {
+    navigator.clipboard.writeText(generateReportText());
+    alert('คัดลอกรายงานเรียบร้อยแล้ว');
+  }
+</script>
+
+</body>
+</html>
