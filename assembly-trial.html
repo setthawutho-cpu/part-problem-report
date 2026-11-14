@@ -1,1848 +1,1257 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<title>PART BORROWING V2</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PART PROBLEM INFORM - Modern SQE</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Segoe UI",sans-serif;
-}
-
-html,
-body{
-overflow-x:hidden;
-touch-action:manipulation;
-}
-
-body{
-background:#eef4fb;
-color:#1d3557;
-padding-bottom:100px;
-}
-
-/* HEADER */
-
-.header{
-
-background:
-linear-gradient(
-135deg,
-#2b93ff,
-#0057ff
-);
-
-padding:20px;
-
-border-radius:
-0 0 30px 30px;
-
-color:white;
-
-box-shadow:
-0 8px 24px
-rgba(0,87,255,.20);
-
-}
-
-.header-top{
-
-display:flex;
-align-items:center;
-gap:12px;
-
-}
-
-.back-btn{
-
-width:46px;
-height:46px;
-
-border:none;
-
-border-radius:50%;
-
-background:white;
-
-color:#2563eb;
-
-font-size:18px;
-
-cursor:pointer;
-
-}
-
-.header-info{
-flex:1;
-}
-
-.header-title{
-
-font-size:28px;
-font-weight:700;
-
-}
-
-.header-sub{
-
-font-size:13px;
-opacity:.9;
-
-}
-
-.date-box{
-
-min-width:110px;
-
-padding:8px 10px;
-
-background:
-rgba(255,255,255,.20);
-
-backdrop-filter:blur(12px);
-
-border-radius:16px;
-
-text-align:center;
-
-font-size:12px;
-font-weight:600;
-
-}
-
-/* PAGE */
-
-.container{
-
-max-width:1000px;
-
-margin:auto;
-
-padding:12px;
-
-}
-
-/* CARD */
-
-.card{
-
-background:white;
-
-border-radius:24px;
-
-padding:16px;
-
-margin-bottom:12px;
-
-box-shadow:
-0 5px 18px rgba(0,0,0,.05);
-
-}
-
-.section-title{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:18px;
-font-weight:700;
-margin-bottom:12px;
-}
-
-/* DETAIL */
-
-.top-grid{
-display:grid;
-grid-template-columns:
-1fr 1fr;
-gap:12px;
-}
-
-.info-card{
-padding:12px;
-}
-
-.info-card h3{
-margin-bottom:8px;
-font-size:16px;
-font-weight:700;
-text-align:center;
-color:#173c83;
-}
-    
-#setPackingField{
-display:none;
-}
-
-.select{
-width:100%;
-height:54px;
-border:none;
-outline:none;
-padding:0 16px;
-border-radius:16px;
-font-size:18px;
-background:#fff;
-color:#000;
--webkit-appearance:none;
-appearance:none;
-}
-
-select{
-
-width:100%;
-height:54px;
-
-border:none;
-
-background:#f4f7fc;
-
-border-radius:16px;
-
-padding:0 15px;
-
-font-size:15px;
-
-outline:none;
-
-}
-
-/* PART */
-
-.part-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.field{
-
-display:flex;
-flex-direction:column;
-
-gap:6px;
-
-}
-
-.field label{
-
-font-size:15px;
-font-weight:700;
-
-color:#64748b;
-
-}
-
-.field-header{
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-
-}
-
-input{
-
-width:100%;
-height:54px;
-
-border:none;
-
-background:#f4f7fc;
-
-border-radius:16px;
-
-padding:0 15px;
-
-font-size:15px;
-
-outline:none;
-
-}
-
-.scan-btn{
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-padding:0;
-
-width:auto;
-height:auto;
-
-background:none;
-border:none;
-
-color:#2563eb;
-
-font-size:16px;
-
-cursor:pointer;
-
-}
-
-.scan-btn:active{
-transform:scale(.95);
-}
-
-/* BOTTOM */
-
-.bottom-grid{
-display:grid;
-grid-template-columns:
-280px 1fr;
-gap:16px;
-margin-top:16px;
-}
-
-.qty-card,
-.photo-card{
-padding:14px;
-overflow:hidden;
-}
-
-.qty-box{
-margin-top:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:white;
-border-radius:18px;
-overflow:hidden;
-gap:0;
-}
-
-.qty-btn{
-width:70px;
-height:80px;
-border:none;
-font-size:36px;
-background:white;
-cursor:pointer;
-border-radius:0;
-}
-
-.qty-number{
-width:120px;
-height:80px;
-border:none;
-outline:none;
-background:white;
-text-align:center;
-font-size:54px;
-font-weight:700;
-appearance:textfield;
-}
-
-.qty-number::-webkit-inner-spin-button,
-.qty-number::-webkit-outer-spin-button{
--webkit-appearance:none;
-margin:0;
-}
-
-.photo-list{
-display:flex;
-gap:8px;
-
-width:100%;
-max-width:100%;
-
-overflow-x:auto;
-overflow-y:hidden;
-
-white-space:nowrap;
-}
-
-.photo-list::-webkit-scrollbar{
-height:4px;
-}
-
-.photo-list::-webkit-scrollbar-thumb{
-background:#b8c7dd;
-border-radius:999px;
-}
-
-.photo-item{
-width:70px;
-height:70px;
-flex:0 0 70px;
-border-radius:12px;
-overflow:hidden;
-background:#fff;
-}
-
-.photo-item img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.photo-item{
-position:relative;
-cursor:pointer;
-}
-
-.add-photo{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
-color:#1f8fff;
-cursor:pointer;
-border:none;
-}
-
-textarea{
-
-width:100%;
-
-height:110px;
-
-border:none;
-
-outline:none;
-
-background:#f4f7fc;
-
-border-radius:16px;
-
-padding:12px;
-
-resize:none;
-
-font-size:14px;
-
-}
-
-/* REVIEW BUTTON */
-
-.floating-review{
-
-position:fixed;
-
-left:16px;
-right:16px;
-
-bottom:16px;
-
-height:62px;
-
-border:none;
-
-border-radius:999px;
-
-background:
-linear-gradient(
-135deg,
-#2b93ff,
-#0057ff
-);
-
-color:white;
-
-font-size:18px;
-font-weight:700;
-
-box-shadow:
-0 12px 30px
-rgba(0,87,255,.35);
-
-z-index:999;
-
-cursor:pointer;
-
-}
-
-.floating-review i{
-margin-right:8px;
-}
-
-.report-overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.35);
-display:none;
-align-items:flex-start;
-justify-content:center;
-padding-top:40px;
-z-index:99999;
-backdrop-filter:blur(3px);
-}
-
-.report-overlay.show{
-display:flex;
-}
-
-.report-sheet{
-position:relative;
-width:95%;
-max-width:700px;
-max-height:90vh;
-background:#fff;
-border-radius:24px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-}
-
-.report-content{
-flex:1;
-overflow:auto;
-padding:20px;
-white-space:pre-wrap;
-line-height:1.5;
-color:#000;
-}
-
-.report-actions{
-display:flex;
-gap:8px;
-padding:12px;
-border-top:1px solid #ddd;
-}
-
-.report-actions button{
-flex:1;
-height:46px;
-border:none;
-border-radius:12px;
-color:#fff;
-font-weight:700;
-}
-
-.btn-save{background:#4caf50;}
-.btn-copy{background:#9c27b0;}
-.btn-line{background:#06C755;}
-
-.add-btn{
-position:absolute;
-top:10px;
-right:10px;
-width:42px;
-height:42px;
-border:none;
-border-radius:50%;
-background:#2196f3;
-color:#fff;
-font-size:20px;
-}
-
-.action-sheet-overlay{
-position:fixed;
-inset:0;
-display:none;
-background:rgba(0,0,0,.15);
-z-index:999999;
-}
-
-.action-sheet-overlay.show{
-display:block;
-}
-
-.action-sheet{
-position:fixed;
-width:180px;
-background:#fff;
-border-radius:16px;
-padding:8px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-left:50%;
-top:45%;
-transform:translate(-50%,-50%);
-}
-
-.action-sheet button{
-width:100%;
-height:44px;
-border:none;
-background:#fff;
-font-size:16px;
-border-radius:10px;
-margin-bottom:4px;
-}
-
-.image-viewer{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1000000;
-}
-
-.image-viewer.show{
-display:flex;
-}
-
-.image-viewer img{
-width:80%;
-max-width:800px;
-max-height:80vh;
-object-fit:contain;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.header-title{
-font-size:18px;
-}
-
-.date-box{
-font-size:10px;
-}
-
-.top-grid{
-gap:8px;
-}
-
-.info-card{
-padding:7px;
-}
-
-.info-card h3{
-font-size:11px;
-margin-bottom:6px;
-text-align:center;
-}
-
-.select{
-height:32px;
-font-size:10px;
-
-background:#fff;
-color:#000;
-
--webkit-appearance:none;
-appearance:none;
-}
-
-#setPackingNo{
-font-size:10px;
-}
-
-.part-grid{
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-
-.bottom-grid{
-display:grid;
-grid-template-columns:
-1fr 1.9fr;
-gap:10px;
-}
-
-.card{
-padding:12px;
-}
-
-input,
-select,
-textarea{
-height:42px;
-font-size:13px;
-padding:0 12px;
-}
-
-#partNo,
-#partName,
-#model,
-#supplier{
-font-size:12px;
-}
-
-.field label{
-font-size:11px;
-line-height:1.5;
-}
-
-.section-title{
-font-size:15px;
-margin-bottom:12px;
-}
-
-.qty-card,
-.photo-card{
-padding:12px;
-height:120px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-}
-
-.qty-box{
-margin-top:12px;
-}
-
-.qty-btn{
-width:32px;
-height:40px;
-font-size:18px;
-}
-
-.qty-number{
-width:50px;
-height:40px;
-border:none;
-outline:none;
-background:white;
-text-align:center;
-font-size:26px;
-font-weight:700;
-}
-
-.photo-item{
-width:52px;
-height:52px;
-flex:0 0 52px;
-border-radius:10px;
-overflow:hidden;
-}
-
-.photo-list{
-display:flex;
-gap:8px;
-align-items:center;
-width:100%;
-max-width:100%;
-height:52px;
-overflow-x:auto;
-overflow-y:hidden;
-flex-wrap:nowrap;
-white-space:nowrap;
-margin-top:auto;
-margin-bottom:auto;
-}
-
-.photo-list::-webkit-scrollbar{
-display:none;
-}
-
-}
-    
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #cbd5e1;
+    --border-light: #e2e8f0;
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --radius: 16px;
+    --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: 100px;
+  }
+
+  /* Header */
+  .app-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: white;
+    padding: 18px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-title h1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-title p {
+    font-size: 0.78rem;
+    color: #93c5fd;
+    margin-top: 2px;
+  }
+
+  .btn-history {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .btn-history:active {
+    transform: scale(0.96);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .badge-count {
+    background: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  /* Container */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-light);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .card-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Form Controls */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 520px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 75px;
+  }
+
+  /* Input with camera/scan button */
+  .input-action-wrap {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1.5px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .btn-icon:active {
+    transform: scale(0.95);
+    background: #dbeafe;
+  }
+
+  /* Segmented Pills / Radio Chips */
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill-item {
+    flex: 1;
+    min-width: fit-content;
+  }
+
+  .pill-item input {
+    display: none;
+  }
+
+  .pill-item label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: #f8fafc;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .pill-item input:checked + label {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  }
+
+  /* Color Chips for OK Mark */
+  .color-group {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .color-chip input { display: none; }
+  .color-chip label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #fff;
+  }
+
+  .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .color-chip input:checked + label {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+
+  /* KPI Summary Dashboard */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .kpi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .kpi-box {
+    padding: 12px 10px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-light);
+    background: #f8fafc;
+  }
+
+  .kpi-box.ok { background: var(--success-bg); border-color: #86efac; color: #14532d; }
+  .kpi-box.ng { background: var(--danger-bg); border-color: #fca5a5; color: #7f1d1d; }
+  .kpi-box.rate { background: var(--warning-bg); border-color: #fcd34d; color: #78350f; }
+
+  .kpi-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .kpi-val {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sub-sections inside Inspection */
+  .sub-panel {
+    background: #f8fafc;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .sub-panel-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .qty-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .qty-row {
+      grid-template-columns: 1fr 1fr;
+    }
+    .qty-row .form-group:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Breakdown formula bar */
+  .formula-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eff6ff;
+    border: 1px dashed #93c5fd;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #1e40af;
+    font-weight: 600;
+  }
+
+  /* Collapsible / Dynamic Sections */
+  .toggle-btn {
+    width: 100%;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+
+  .toggle-btn:hover {
+    background: #f1f5f9;
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .damage-item {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 0.7fr auto;
+    gap: 8px;
+    align-items: center;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 520px) {
+    .damage-item {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .btn-remove {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Photo Preview */
+  .photo-preview {
+    margin-top: 8px;
+    display: none;
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .photo-preview img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Sticky Bottom Action Bar */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 99;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+  }
+
+  .bottom-bar-inner {
+    max-width: 720px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr;
+    gap: 8px;
+  }
+
+  .btn-action {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.1s;
+  }
+
+  .btn-action:active { transform: scale(0.97); }
+  .btn-review { background: #e2e8f0; color: #0f172a; }
+  .btn-save { background: var(--primary); color: white; }
+  .btn-line { background: #06c755; color: white; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 200;
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal-box {
+    background: white;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 540px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+  }
+
+  .report-preview-text {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    white-space: pre-wrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #1e293b;
+  }
+
+  .modal-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .history-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+  }
+
+  .history-card-top {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .toast {
+    position: fixed;
+    top: 76px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: #0f172a;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 300;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 </style>
 </head>
-
 <body>
 
-<header class="header">
-
-<div class="header-top">
-
-<button
-class="back-btn">
-
-<i class="fa-solid fa-arrow-left"></i>
-
-</button>
-
-<div class="header-info">
-
-<div class="header-title">
-PART BORROWING FROM PL
-</div>
-
-<div class="header-sub">
-Part Loan / Return / Defect
-</div>
-
-</div>
-
-<div class="date-box" id="dateBoxWrap">
-
-<div id="dateBox"></div>
-
-<input
-type="date"
-id="headerDate"
-style="
-position:absolute;
-inset:0;
-opacity:0;
-cursor:pointer;
-">
-
-</div>
-
-</div>
-
+<header class="app-header">
+  <div class="header-title">
+    <h1>📋 PART PROBLEM INFORM</h1>
+    <p>Supplier Quality Report • Modern SQE System</p>
+  </div>
+  <button type="button" class="btn-history" onclick="openHistoryModal()">
+    🕘 History <span class="badge-count" id="historyCount">0</span>
+  </button>
 </header>
 
-<div class="container">
+<div id="toast" class="toast">บันทึกข้อมูลเรียบร้อย</div>
 
-<!-- DETAIL -->
+<main class="container">
+  <form id="sqeForm" oninput="calculateMetrics()">
 
-<div class="top-grid" id="topGrid">
+    <!-- Section 1: Classification & Issue Doc -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">🏷️ ประเภทการแจ้ง & เอกสาร (Classification)</div>
+        <button type="button" style="background:none;border:none;color:var(--primary);font-size:0.8rem;font-weight:600;cursor:pointer;" onclick="resetForm()">ล้างฟอร์ม</button>
+      </div>
 
-<div class="card info-card">
-<h3>Detail</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Type / ประเภทปัญหา</label>
+          <div class="pill-group">
+            <div class="pill-item">
+              <input type="radio" name="issueType" id="typeNew" value="New" checked>
+              <label for="typeNew">🆕 New</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="issueType" id="typeRe" value="Reoccurred">
+              <label for="typeRe">🔁 Reoccurred</label>
+            </div>
+          </div>
+        </div>
 
-<select id="detailSelect" class="select">
-<option></option>
-<option>ยืมชิ้นส่วน</option>
-<option>คืนชิ้นส่วน</option>
-<option>Defect</option>
-</select>
+        <div class="form-group">
+          <label>Issue Doc / เอกสารที่ออก</label>
+          <div class="pill-group">
+            <div class="pill-item">
+              <input type="radio" name="issueDoc" id="docNone" value="-" checked>
+              <label for="docNone">-</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="issueDoc" id="docUAR" value="UAR">
+              <label for="docUAR">UAR</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="issueDoc" id="docPAR" value="PAR">
+              <label for="docPAR">PAR</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="issueDoc" id="docStop" value="Line Stop">
+              <label for="docStop" style="color:#dc2626;">🛑 Line Stop</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Product / กลุ่มผลิตภัณฑ์</label>
+          <div class="pill-group">
+            <div class="pill-item">
+              <input type="radio" name="product" id="prodCombine" value="Combine" checked>
+              <label for="prodCombine">Combine</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="product" id="prodCombineW" value="Combine Welding">
+              <label for="prodCombineW">Combine Welding</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="product" id="prodSH" value="SH">
+              <label for="prodSH">SH</label>
+            </div>
+            <div class="pill-item">
+              <input type="radio" name="product" id="prodSHW" value="SH Welding">
+              <label for="prodSHW">SH Welding</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Part Information -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">📦 ข้อมูลชิ้นส่วน (Part Information)</div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Part No. <span style="color:#ef4444;">*</span></label>
+          <div class="input-action-wrap">
+            <input type="text" id="partNo" placeholder="ระบุหรือสแกน Part No." required>
+            <button type="button" class="btn-icon" title="แนบรูปถ่าย / สแกน" onclick="document.getElementById('photoInput').click()">📷</button>
+            <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(event)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Part Name <span style="color:#ef4444;">*</span></label>
+          <input type="text" id="partName" placeholder="ชื่อชิ้นส่วน" required>
+        </div>
+
+        <div class="form-group">
+          <label>Model</label>
+          <input type="text" id="model" placeholder="รุ่นรถ / โมเดล">
+        </div>
+
+        <div class="form-group">
+          <label>Supplier</label>
+          <input type="text" id="supplier" placeholder="ชื่อซัพพลายเออร์">
+        </div>
+
+        <div class="form-group full">
+          <label>Serial Number / Lot No.</label>
+          <input type="text" id="serialNo" placeholder="หมายเลขล็อต หรือ Serial Number">
+        </div>
+
+        <div class="form-group full">
+          <div id="photoPreviewWrap" class="photo-preview">
+            <img id="photoPreviewImg" src="" alt="Part Photo">
+            <button type="button" onclick="removePhoto()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:8px;padding:4px 10px;font-size:0.8rem;cursor:pointer;">✕ ลบรูป</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Problem Detail & Containment -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">⚠️ รายละเอียดปัญหา & การแก้ไขเบื้องต้น</div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Problem / หัวข้อปัญหา <span style="color:#ef4444;">*</span></label>
+          <input type="text" id="problemTitle" placeholder="เช่น รอยบุบ, รูไม่ตรง, เกลียวเสีย" required>
+        </div>
+
+        <div class="form-group">
+          <label>STD / ค่ามาตรฐาน</label>
+          <input type="text" id="stdSpec" placeholder="ระบุค่า Spec / มาตรฐาน (ถ้ามี)">
+        </div>
+
+        <div class="form-group full">
+          <label>Detail / รายละเอียดอาการที่พบ</label>
+          <textarea id="problemDetail" placeholder="อธิบายลักษณะปัญหา ตำแหน่งที่พบ หรือสาเหตุเบื้องต้น..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🟡 Containment / การแก้ไขเบื้องต้น</label>
+          <input type="text" id="reworkAction" placeholder="ระบุวิธีการ Rework / คัดแยก">
+        </div>
+
+        <div class="form-group">
+          <label>Result / ผลลัพธ์เบื้องต้น</label>
+          <select id="containmentResult">
+            <option value="-">- เลือกผลลัพธ์ -</option>
+            <option value="Rework OK">✅ Rework OK</option>
+            <option value="Wait Rework">⏳ Wait Rework</option>
+            <option value="เปลี่ยนชิ้นงานใน Stock">🔄 เปลี่ยนชิ้นงานใน Stock</option>
+            <option value="Reject">❌ Reject</option>
+            <option value="Defect">⚠️ Defect</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Inspection Result with Real-Time Formulas -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">📊 ผลการตรวจสอบ (Inspection Result)</div>
+        <span style="font-size:0.75rem;color:var(--primary);font-weight:600;">คำนวณอัตโนมัติ</span>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-box">
+          <div class="kpi-label">Check Qty</div>
+          <div class="kpi-val" id="kpiCheck">0</div>
+        </div>
+        <div class="kpi-box ok">
+          <div class="kpi-label">OK Qty</div>
+          <div class="kpi-val" id="kpiOk">0</div>
+        </div>
+        <div class="kpi-box ng">
+          <div class="kpi-label">Total NG</div>
+          <div class="kpi-val" id="kpiNg">0</div>
+        </div>
+        <div class="kpi-box rate">
+          <div class="kpi-label">Defect %</div>
+          <div class="kpi-val" id="kpiRate">0.00%</div>
+        </div>
+      </div>
+
+      <!-- 1. MFG Line Inspection -->
+      <div class="sub-panel">
+        <div class="sub-panel-title">
+          <span>🏭 1. งานในไลน์ผลิต (MFG Line)</span>
+          <span id="mfgSubtotal" style="font-size:0.78rem;color:var(--text-muted);">รวม: 0 ชิ้น</span>
+        </div>
+        <div class="qty-row">
+          <div class="form-group">
+            <label>OK Qty</label>
+            <input type="number" id="mfgOk" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+          </div>
+          <div class="form-group">
+            <label>NG Qty</label>
+            <input type="number" id="mfgNg" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+          </div>
+          <div class="form-group">
+            <label>จัดการงาน NG (MFG)</label>
+            <select id="mfgAction">
+              <option value="Rework OK">Rework OK</option>
+              <option value="Wait Rework">Wait Rework</option>
+              <option value="แลกเปลี่ยน">แลกเปลี่ยน</option>
+              <option value="Reject">Reject</option>
+              <option value="Defect">Defect</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Check Stock Inspection -->
+      <div class="sub-panel">
+        <div class="sub-panel-title">
+          <span>🏬 2. เช็กสต็อก (Check Stock)</span>
+          <span id="stockSubtotal" style="font-size:0.78rem;color:var(--text-muted);">รวม: 0 ชิ้น</span>
+        </div>
+        <div class="qty-row">
+          <div class="form-group">
+            <label>OK Qty</label>
+            <input type="number" id="stockOk" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+          </div>
+          <div class="form-group">
+            <label>NG Qty</label>
+            <input type="number" id="stockNg" min="0" value="0" onfocus="if(this.value=='0')this.value=''" onblur="if(this.value=='')this.value='0'">
+          </div>
+          <div class="form-group">
+            <label>จัดการงาน NG (Stock)</label>
+            <select id="stockAction">
+              <option value="Rework OK">Rework OK</option>
+              <option value="Wait Rework">Wait Rework</option>
+              <option value="แลกเปลี่ยน">แลกเปลี่ยน</option>
+              <option value="Reject">Reject</option>
+              <option value="Defect">Defect</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formula Breakdown Summary -->
+      <div class="formula-bar">
+        <span>🔧 Rework Qty: <strong id="calcRework">0</strong></span>
+        <span>❌ Defect/Reject Qty: <strong id="calcDefect">0</strong></span>
+      </div>
+    </section>
+
+    <!-- Section 5: OK Mark, Part Damage & Remark -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">✅ สัญลักษณ์ OK & ข้อมูลเพิ่มเติม</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px;">
+        <label>สีสัญลักษณ์ OK Mark</label>
+        <div class="color-group">
+          <div class="color-chip">
+            <input type="radio" name="okColor" id="colGreen" value="Green" checked>
+            <label for="colGreen"><span class="dot" style="background:#22c55e;"></span>Green</label>
+          </div>
+          <div class="color-chip">
+            <input type="radio" name="okColor" id="colYellow" value="Yellow">
+            <label for="colYellow"><span class="dot" style="background:#eab308;"></span>Yellow</label>
+          </div>
+          <div class="color-chip">
+            <input type="radio" name="okColor" id="colPink" value="Pink">
+            <label for="colPink"><span class="dot" style="background:#ec4899;"></span>Pink</label>
+          </div>
+          <div class="color-chip">
+            <input type="radio" name="okColor" id="colBlue" value="Blue">
+            <label for="colBlue"><span class="dot" style="background:#3b82f6;"></span>Blue</label>
+          </div>
+          <div class="color-chip">
+            <input type="radio" name="okColor" id="colWhite" value="White">
+            <label for="colWhite"><span class="dot" style="background:#ffffff;"></span>White</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px;">
+        <label>รายละเอียด OK Mark (ตำแหน่งแต้มสี / ระบุเพิ่มเติม)</label>
+        <input type="text" id="okMarkDetail" placeholder="เช่น แต้มสีเขียวที่มุมขวาบนของชิ้นงาน">
+      </div>
+
+      <!-- Dynamic Part Damage List -->
+      <div style="margin-bottom:14px;">
+        <label style="margin-bottom:6px;">📦 Part Damage / ชิ้นส่วนเสียหายร่วม</label>
+        <div id="damageList"></div>
+        <button type="button" class="toggle-btn" style="margin-top:8px;" onclick="addDamageRow()">
+          ➕ เพิ่มรายการชิ้นส่วนเสียหายร่วม
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label>📝 Remark / หมายเหตุเพิ่มเติม</label>
+        <textarea id="remark" placeholder="ระบุหมายเหตุ ผู้แจ้ง หรือผู้รับผิดชอบ..."></textarea>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<!-- Bottom Sticky Bar -->
+<div class="bottom-bar">
+  <div class="bottom-bar-inner">
+    <button type="button" class="btn-action btn-review" onclick="openReviewModal()">🔍 Review</button>
+    <button type="button" class="btn-action btn-save" onclick="saveReport()">💾 Save</button>
+    <button type="button" class="btn-action btn-line" onclick="shareToLine()">📤 LINE / Copy</button>
+  </div>
 </div>
 
-<div class="card info-card">
-<h3>Location</h3>
-
-<select id="locationSelect" class="select">
-<option></option>
-<option>Box</option>
-<option>Rack</option>
-<option>Set Packing</option>
-</select>
-</div>
-
-<div
-class="card info-card"
-id="setPackingField"
-style="display:none;">
-
-<h3>Set Packing No.</h3>
-
-<input
-id="setPackingNo"
-class="select"
-placeholder="00001">
-
-</div>
-
-</div>
-
-<!-- PART -->
-
-<div class="card">
-
-<div class="section-title">
-
-<i class="fa-solid fa-box"></i>
-
-Part Information
-
-</div>
-
-<div class="part-grid">
-
-<div class="field">
-
-<div class="field-header">
-
-<label>Part No.</label>
-
-<button
-type="button"
-id="scanQrBtn"
-class="scan-btn"
-onclick="openScanPage()">
-
-<i class="fa-solid fa-qrcode"></i>
-
-</button>
-
-</div>
-
-<input
-id="partNo"
-list="partList"
-placeholder="Part No.">
-
-<datalist id="partList"></datalist>
-
-</div>
-
-<div class="field">
-
-<label>Part Name</label>
-
-<input
-id="partName"
-readonly
-onclick="editField(this)"
-onblur="restoreAuto(this)">
-
-</div>
-
-<div class="field">
-
-<label>Model</label>
-
-<input
-id="model"
-readonly
-onclick="editField(this)"
-onblur="restoreAuto(this)">
-
-</div>
-
-<div class="field">
-
-<label>Supplier</label>
-
-<input
-id="supplier"
-readonly
-onclick="editField(this)"
-onblur="restoreAuto(this)">
-
-</div>
-
-</div>
-
-</div>
-
-<!-- QTY + PHOTO -->
-
-<div class="bottom-grid">
-
-<div class="card qty-card">
-
-<div class="section-title">
-<i class="fa-solid fa-hashtag"></i>
-Qty
-
-</div>
-
-<div class="qty-box">
-
-<button id="minus" class="qty-btn">−</button>
-
-<input
-type="number"
-id="qty"
-class="qty-number"
-value="1"
-min="1">
-
-<button id="plus" class="qty-btn">+</button>
-
-</div>
-
-</div>
-
-<div class="card photo-card">
-
-<div class="section-title">
-
-<i class="fa-solid fa-camera"></i>
-
-Photo
-
-</div>
-
-<input
-type="file"
-id="photoInput"
-multiple
-hidden>
-
-<div class="photo-list" id="photoList">
-    <div class="photo-item add-photo"
-         onclick="document.getElementById('photoInput').click()">
-        +
+<!-- Review Modal -->
+<div id="reviewModal" class="modal-backdrop" onclick="if(event.target===this)closeModal('reviewModal')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>🔍 ตรวจสอบสรุปรายงาน (Review Report)</span>
+      <button type="button" style="background:none;border:none;font-size:1.2rem;cursor:pointer;" onclick="closeModal('reviewModal')">✕</button>
     </div>
+    <div class="modal-body">
+      <div id="reviewTextContent" class="report-preview-text"></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-action btn-review" style="padding:10px 16px;" onclick="copyReportText()">📋 Copy ข้อความ</button>
+      <button type="button" class="btn-action btn-line" style="padding:10px 16px;" onclick="shareToLine()">📤 ส่งเข้า LINE</button>
+    </div>
+  </div>
 </div>
 
-</div>
-
-</div>
-
-</div>
-
-<!-- REMARK -->
-
-<div class="card">
-
-<div class="section-title">
-
-<i class="fa-solid fa-note-sticky"></i>
-
-Remark
-
-</div>
-
-<textarea
-placeholder="Add remark..."></textarea>
-
-</div>
-
-</div>
-
-<button
-class="floating-review"
-onclick="reviewReport()">
-
-<i class="fa-solid fa-file-lines"></i>
-
-Review Report
-
-</button>
-
-<script>
-
-let selectedDate = new Date();
-
-function updateDateTime(){
-
-const date =
-selectedDate.toLocaleDateString("en-GB",{
-day:"2-digit",
-month:"short",
-year:"numeric"
-});
-
-const time =
-new Date().toLocaleTimeString("en-GB",{
-hour:"2-digit",
-minute:"2-digit"
-});
-
-document.getElementById("dateBox").innerHTML =
-date + "<br>" + time;
-
-}
-
-document
-.getElementById("headerDate")
-.addEventListener("change",function(){
-
-if(this.value){
-
-selectedDate =
-new Date(this.value);
-
-updateDateTime();
-
-}
-
-});
-
-document
-.getElementById("dateBoxWrap")
-.addEventListener("click",function(){
-
-document
-.getElementById("headerDate")
-.showPicker();
-
-});
-
-updateDateTime();
-
-setInterval(updateDateTime,1000);
-
-</script>
-
-<script>
-
-const locationSelect =
-document.getElementById("locationSelect");
-
-const setPackingField =
-document.getElementById("setPackingField");
-
-const topGrid =
-document.getElementById("topGrid");
-
-locationSelect.addEventListener("change",function(){
-
-if(this.value === "Set Packing"){
-
-setPackingField.style.display = "block";
-
-topGrid.style.gridTemplateColumns =
-"1fr 1fr 1.2fr";
-
-}else{
-
-setPackingField.style.display = "none";
-
-topGrid.style.gridTemplateColumns =
-"1fr 1fr";
-
-}
-
-});
-
-</script>
-
-<script>
-
-let partMaster = {};
-let allPartNo = [];
-
-async function loadExcel(){
-
-try{
-
-const response =
-await fetch("ข้อมูล Excel.xlsx");
-
-const data =
-await response.arrayBuffer();
-
-const workbook =
-XLSX.read(data,{type:"array"});
-
-const sheet =
-workbook.Sheets[
-workbook.SheetNames[0]
-];
-
-const rows =
-XLSX.utils.sheet_to_json(sheet);
-
-rows.forEach(row=>{
-
-const partNo =
-String(row.PartNo || "").trim();
-
-if(!partNo) return;
-
-if(!allPartNo.includes(partNo)){
-allPartNo.push(partNo);
-}
-
-partMaster[partNo] = {
-
-partName:
-row.PartName || "",
-
-supplier:
-row.Supplier || "",
-
-model:
-row.Model || ""
-
-};
-
-});
-
-}catch(err){
-
-console.error(err);
-
-}
-
-}
-
-loadExcel();
-
-function editField(el){
-
-if(el.hasAttribute("readonly")){
-
-el.dataset.autoValue = el.value;
-
-el.removeAttribute("readonly");
-
-el.value = "";
-
-setTimeout(()=>{
-
-el.focus();
-
-},50);
-
-}
-
-}
-
-function restoreAuto(el){
-
-if(el.value.trim()===""){
-
-el.value = el.dataset.autoValue || "";
-
-}
-
-}
-
-function fillPartData(partNo){
-
-if(!partMaster[partNo]) return;
-
-const partName =
-document.getElementById("partName");
-
-const model =
-document.getElementById("model");
-
-const supplier =
-document.getElementById("supplier");
-
-partName.setAttribute("readonly",true);
-model.setAttribute("readonly",true);
-supplier.setAttribute("readonly",true);
-
-partName.value =
-partMaster[partNo].partName || "";
-
-model.value =
-partMaster[partNo].model || "";
-
-supplier.value =
-partMaster[partNo].supplier || "";
-
-}
-
-document
-.getElementById("partNo")
-.addEventListener("input",function(){
-
-const keyword =
-this.value.trim();
-
-const list =
-document.getElementById("partList");
-
-if(keyword===""){
-
-document.getElementById("partName").value="";
-document.getElementById("model").value="";
-document.getElementById("supplier").value="";
-
-document.getElementById("partName")
-.setAttribute("readonly",true);
-
-document.getElementById("model")
-.setAttribute("readonly",true);
-
-document.getElementById("supplier")
-.setAttribute("readonly",true);
-
-list.innerHTML="";
-return;
-
-}
-
-if(partMaster[keyword]){
-
-fillPartData(keyword);
-
-list.innerHTML="";
-return;
-
-}
-
-if(keyword.length < 4){
-
-list.innerHTML="";
-return;
-
-}
-
-const cleanKeyword =
-keyword
-.replace(/[^A-Za-z0-9]/g,"")
-.toUpperCase();
-
-const result =
-allPartNo
-.filter(p=>{
-
-const cleanPart =
-p
-.replace(/[^A-Za-z0-9]/g,"")
-.toUpperCase();
-
-return (
-
-p.toUpperCase().startsWith(keyword.toUpperCase())
-
-||
-
-p.toUpperCase().includes(keyword.toUpperCase())
-
-||
-
-cleanPart.includes(cleanKeyword)
-
-);
-
-})
-.slice(0,50);
-
-list.innerHTML =
-result.map(p =>
-`<option value="${p}"></option>`)
-.join("");
-
-});
-
-document
-.getElementById("partNo")
-.addEventListener("change",function(){
-
-const key =
-this.value.trim();
-
-if(partMaster[key]){
-
-fillPartData(key);
-return;
-
-}
-
-const cleanKey =
-key
-.replace(/[^A-Za-z0-9]/g,"")
-.toUpperCase();
-
-const found =
-allPartNo.find(p=>
-
-p
-.replace(/[^A-Za-z0-9]/g,"")
-.toUpperCase()
-
-=== cleanKey
-
-);
-
-if(found){
-
-this.value = found;
-
-fillPartData(found);
-
-}
-
-});
-
-function openScanPage(){
-location.href="scan.html";
-}
-
-function receiveScannedPart(){
-
-const partNo =
-localStorage.getItem("scannedPartNo");
-
-if(!partNo) return;
-
-document.getElementById("partNo").value =
-partNo;
-
-document.getElementById("partNo")
-.dispatchEvent(new Event("input"));
-
-document.getElementById("partNo")
-.dispatchEvent(new Event("change"));
-
-localStorage.removeItem("scannedPartNo");
-
-}
-
-window.addEventListener(
-"load",
-receiveScannedPart
-);
-
-window.addEventListener(
-"pageshow",
-receiveScannedPart
-);
-
-</script>
-
-<script>
-
-const qty=document.getElementById('qty');
-
-document.getElementById('plus')
-.onclick=()=>{
-qty.value=
-Number(qty.value)+1;
-};
-
-document.getElementById('minus')
-.onclick=()=>{
-if(Number(qty.value)>1){
-qty.value=
-Number(qty.value)-1;
-}
-};
-
-</script>
-
-<script>
-
-let reportEditMode=false;
-
-function reviewReport(){
-
-let text = "";
-
-const detail =
-document.getElementById("detailSelect");
-
-const borrowLocation =
-document.getElementById("locationSelect");
-
-const partNo =
-document.getElementById("partNo");
-
-const partName =
-document.getElementById("partName");
-
-const model =
-document.getElementById("model");
-
-const supplier =
-document.getElementById("supplier");
-
-const qty =
-document.getElementById("qty");
-
-if(detail.value === "ยืมชิ้นส่วน"){
-
-const setPackingNo =
-document.getElementById("setPackingNo").value;
-
-let locationText = "";
-
-if(borrowLocation.value === "Set Packing"){
-
-locationText =
-`จาก Set Packing No. ${setPackingNo}`;
-
-}else if(borrowLocation.value){
-
-locationText =
-`จาก ${borrowLocation.value}`;
-
-}
-
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วน${locationText} ไปตรวจสอบ
-`;
-
-}else if(detail.value === "คืนชิ้นส่วน"){
-
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วนมาคืน${borrowLocation.value ? `ที่ ${borrowLocation.value}` : ""}
-`;
-
-}else if(detail.value === "Defect"){
-
-text = `🚨 แจ้ง PL 🚨
-Ins. นำชิ้นส่วน${borrowLocation.value ? `ใน ${borrowLocation.value}` : ""} ไป Defect
-`;
-
-}
-
-const dateOnly =
-new Date().toLocaleDateString("en-GB",{
-day:"2-digit",
-month:"short",
-year:"numeric"
-});
-
-text += `Date : ${dateOnly}\n`;
-
-if(partNo.value)
-text += `Part No : ${partNo.value}\n`;
-
-if(partName.value)
-text += `Part Name : ${partName.value}\n`;
-
-if(model.value)
-text += `Model : ${model.value}\n`;
-
-if(supplier.value)
-text += `Supplier : ${supplier.value}\n`;
-
-const qtyValue =
-Number(qty.value);
-
-text += `Qty : ${qtyValue} ${qtyValue === 1 ? "Pc." : "Pcs."}\n`;
-
-const remark =
-document.querySelector("textarea");
-
-if(remark && remark.value.trim() !== ""){
-
-text += `Remark : ${remark.value.trim()}\n`;
-
-}
-
-text += "━━━━━━━━━━━━━━\n";
-text += "📷 Photo : Attached";
-
-document.getElementById("report").innerText =
-text;
-
-document
-.getElementById("reportOverlay")
-.classList.add("show");
-
-}
-
-function toggleEditReport(){
-
-const report=
-document.getElementById("report");
-
-const btn=
-document.getElementById("editBtn");
-
-if(!reportEditMode){
-
-report.contentEditable="true";
-
-btn.innerHTML="💾";
-
-btn.style.background="#4caf50";
-
-reportEditMode=true;
-
-}else{
-
-report.contentEditable="false";
-
-btn.innerHTML="📝";
-
-btn.style.background="#2196f3";
-
-reportEditMode=false;
-
-}
-
-}
-
-function saveReport(){
-
-const text=
-document.getElementById("report").innerText;
-
-const blob=
-new Blob([text],{type:"text/plain"});
-
-const a=
-document.createElement("a");
-
-a.href=
-URL.createObjectURL(blob);
-
-a.download=
-"Borrowing_Report.txt";
-
-a.click();
-
-}
-
-function copyReport(){
-
-navigator.clipboard.writeText(
-document.getElementById("report").innerText
-);
-
-}
-
-function sendLine(){
-
-window.open(
-"https://line.me/R/share?text=" +
-encodeURIComponent(
-document.getElementById("report").innerText
-),
-"_blank"
-);
-
-}
-
-</script>
-
-<script>
-
-document.getElementById("photoInput")
-.addEventListener("change",function(){
-
-const photoList =
-document.getElementById("photoList");
-
-for(const file of this.files){
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
-const div =
-document.createElement("div");
-
-div.className = "photo-item";
-
-div.innerHTML =
-`<img src="${e.target.result}">`;
-
-photoList.insertBefore(
-div,
-photoList.querySelector(".add-photo")
-);
-
-};
-
-reader.readAsDataURL(file);
-
-}
-
-});
-
-let selectedPhoto=null;
-
-document.addEventListener("click",function(e){
-
-const img =
-e.target.closest(".photo-item img");
-
-if(!img) return;
-
-selectedPhoto =
-img.closest(".photo-item");
-
-document
-.getElementById("actionSheet")
-.classList.add("show");
-
-});
-
-function closeActionSheet(){
-
-document
-.getElementById("actionSheet")
-.classList.remove("show");
-
-}
-
-function openPhoto(){
-
-const img =
-selectedPhoto.querySelector("img");
-
-document
-.getElementById("viewerImage").src =
-img.src;
-
-document
-.getElementById("imageViewer")
-.classList.add("show");
-
-closeActionSheet();
-
-}
-
-function deletePhoto(){
-
-selectedPhoto.remove();
-
-closeActionSheet();
-
-}
-
-function replacePhoto(){
-
-document
-.getElementById("replaceInput")
-.click();
-
-}
-
-document
-.getElementById("replaceInput")
-.addEventListener("change",function(){
-
-const file=this.files[0];
-
-if(!file || !selectedPhoto) return;
-
-const reader=
-new FileReader();
-
-reader.onload=function(e){
-
-selectedPhoto.innerHTML=
-`<img src="${e.target.result}">`;
-
-};
-
-reader.readAsDataURL(file);
-
-closeActionSheet();
-
-});
-
-const slider=
-document.getElementById("photoList");
-
-let isDown=false;
-let startX;
-let scrollLeft;
-
-slider.addEventListener("mousedown",function(e){
-
-isDown=true;
-
-startX=
-e.pageX-slider.offsetLeft;
-
-scrollLeft=
-slider.scrollLeft;
-
-});
-
-slider.addEventListener(
-"mouseleave",
-()=>isDown=false
-);
-
-slider.addEventListener(
-"mouseup",
-()=>isDown=false
-);
-
-slider.addEventListener(
-"mousemove",
-function(e){
-
-if(!isDown) return;
-
-e.preventDefault();
-
-const x=
-e.pageX-slider.offsetLeft;
-
-const walk=
-(x-startX)*2;
-
-slider.scrollLeft=
-scrollLeft-walk;
-
-});
-
-</script>
-
-<div id="reportOverlay" class="report-overlay">
-
-<div class="report-sheet">
-
-<button
-id="editBtn"
-class="add-btn"
-onclick="toggleEditReport()">
-📝
-</button>
-
-<div
-id="report"
-class="report-content"
-contenteditable="false">
-</div>
-
-<div class="report-actions">
-
-<button
-class="btn-save"
-onclick="saveReport()">
-💾 Save
-</button>
-
-<button
-class="btn-copy"
-onclick="copyReport()">
-📋 Copy
-</button>
-
-<button
-class="btn-line"
-onclick="sendLine()">
-📤 LINE
-</button>
-
-</div>
-
-</div>
-
+<!-- History Modal -->
+<div id="historyModal" class="modal-backdrop" onclick="if(event.target===this)closeModal('historyModal')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>🕘 ประวัติการบันทึก (Report History)</span>
+      <button type="button" style="background:none;border:none;font-size:1.2rem;cursor:pointer;" onclick="closeModal('historyModal')">✕</button>
+    </div>
+    <div class="modal-body" id="historyListContainer">
+      <p style="text-align:center;color:var(--text-muted);padding:20px;">ยังไม่มีประวัติการบันทึก</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-action btn-review" style="padding:8px 14px;" onclick="closeModal('historyModal')">ปิดหน้าต่าง</button>
+    </div>
+  </div>
 </div>
 
 <script>
+  const STORAGE_KEY = 'sqe_part_problem_reports_v1';
 
-document
-.getElementById("reportOverlay")
-.addEventListener("click",function(e){
+  // Initialize
+  window.addEventListener('DOMContentLoaded', () => {
+    calculateMetrics();
+    updateHistoryBadge();
+  });
 
-if(e.target===this){
+  // Core Formula Calculations
+  function calculateMetrics() {
+    const mfgOk = Math.max(0, parseInt(document.getElementById('mfgOk').value) || 0);
+    const mfgNg = Math.max(0, parseInt(document.getElementById('mfgNg').value) || 0);
+    const mfgAction = document.getElementById('mfgAction').value;
 
-this.classList.remove("show");
+    const stockOk = Math.max(0, parseInt(document.getElementById('stockOk').value) || 0);
+    const stockNg = Math.max(0, parseInt(document.getElementById('stockNg').value) || 0);
+    const stockAction = document.getElementById('stockAction').value;
 
-}
+    // Subtotals
+    const mfgTotal = mfgOk + mfgNg;
+    const stockTotal = stockOk + stockNg;
 
-});
+    // Grand Totals
+    const totalOk = mfgOk + stockOk;
+    const totalNg = mfgNg + stockNg;
+    const totalCheck = totalOk + totalNg;
 
+    // Defect % Formula: (Total NG / Check Qty) * 100
+    const defectRate = totalCheck > 0 ? ((totalNg / totalCheck) * 100).toFixed(2) : '0.00';
+
+    // Rework vs Defect/Reject Breakdown
+    let reworkQty = 0;
+    let defectQty = 0;
+
+    if (mfgAction === 'Rework OK' || mfgAction === 'Wait Rework') {
+      reworkQty += mfgNg;
+    } else {
+      defectQty += mfgNg;
+    }
+
+    if (stockAction === 'Rework OK' || stockAction === 'Wait Rework') {
+      reworkQty += stockNg;
+    } else {
+      defectQty += stockNg;
+    }
+
+    // Update UI
+    document.getElementById('mfgSubtotal').textContent = `รวม: ${mfgTotal.toLocaleString()} ชิ้น`;
+    document.getElementById('stockSubtotal').textContent = `รวม: ${stockTotal.toLocaleString()} ชิ้น`;
+
+    document.getElementById('kpiCheck').textContent = totalCheck.toLocaleString();
+    document.getElementById('kpiOk').textContent = totalOk.toLocaleString();
+    document.getElementById('kpiNg').textContent = totalNg.toLocaleString();
+    document.getElementById('kpiRate').textContent = `${defectRate}%`;
+
+    document.getElementById('calcRework').textContent = reworkQty.toLocaleString();
+    document.getElementById('calcDefect').textContent = defectQty.toLocaleString();
+
+    return {
+      mfgOk, mfgNg, mfgAction, mfgTotal,
+      stockOk, stockNg, stockAction, stockTotal,
+      totalCheck, totalOk, totalNg, defectRate,
+      reworkQty, defectQty
+    };
+  }
+
+  // Dynamic Part Damage Rows
+  function addDamageRow(partNo = '', partName = '', qty = 1) {
+    const container = document.getElementById('damageList');
+    const row = document.createElement('div');
+    row.className = 'damage-item';
+    row.innerHTML = `
+      <input type="text" placeholder="Part No." class="dmg-no" value="${partNo}">
+      <input type="text" placeholder="Part Name / อาการ" class="dmg-name" value="${partName}">
+      <input type="number" min="1" placeholder="Qty" class="dmg-qty" value="${qty}">
+      <button type="button" class="btn-remove" onclick="this.parentElement.remove()">✕</button>
+    `;
+    container.appendChild(row);
+  }
+
+  // Photo Upload Preview
+  function handlePhotoUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      document.getElementById('photoPreviewImg').src = evt.target.result;
+      document.getElementById('photoPreviewWrap').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto() {
+    document.getElementById('photoInput').value = '';
+    document.getElementById('photoPreviewImg').src = '';
+    document.getElementById('photoPreviewWrap').style.display = 'none';
+  }
+
+  // Build Formatted Report Text
+  function generateReportText() {
+    const m = calculateMetrics();
+    const issueType = document.querySelector('input[name="issueType"]:checked')?.value || '-';
+    const issueDoc = document.querySelector('input[name="issueDoc"]:checked')?.value || '-';
+    const product = document.querySelector('input[name="product"]:checked')?.value || '-';
+    const okColor = document.querySelector('input[name="okColor"]:checked')?.value || '-';
+
+    const partNo = document.getElementById('partNo').value.trim() || '-';
+    const partName = document.getElementById('partName').value.trim() || '-';
+    const model = document.getElementById('model').value.trim() || '-';
+    const supplier = document.getElementById('supplier').value.trim() || '-';
+    const serialNo = document.getElementById('serialNo').value.trim() || '-';
+
+    const problemTitle = document.getElementById('problemTitle').value.trim() || '-';
+    const stdSpec = document.getElementById('stdSpec').value.trim() || '-';
+    const problemDetail = document.getElementById('problemDetail').value.trim() || '-';
+    const reworkAction = document.getElementById('reworkAction').value.trim() || '-';
+    const containmentResult = document.getElementById('containmentResult').value;
+    const okMarkDetail = document.getElementById('okMarkDetail').value.trim() || '-';
+    const remark = document.getElementById('remark').value.trim() || '-';
+
+    // Collect Part Damages
+    const dmgRows = document.querySelectorAll('.damage-item');
+    let dmgText = '';
+    if (dmgRows.length > 0) {
+      const items = [];
+      dmgRows.forEach((r, idx) => {
+        const dNo = r.querySelector('.dmg-no').value.trim();
+        const dName = r.querySelector('.dmg-name').value.trim();
+        const dQty = r.querySelector('.dmg-qty').value || 1;
+        if (dNo || dName) {
+          items.push(`  ${idx + 1}. ${dNo} ${dName} (${dQty} pcs)`);
+        }
+      });
+      if (items.length > 0) {
+        dmgText = `
+📦 Part Damage (เสียหายร่วม):
+${items.join('
+')}`;
+      }
+    }
+
+    const now = new Date().toLocaleString('th-TH', {
+      dateStyle: 'short',
+      timeStyle: 'short'
+    });
+
+    return `🚨 PART PROBLEM INFORM (SQE)
+📅 วันที่/เวลา: ${now}
+🏷️ ประเภท: ${issueType} | เอกสาร: ${issueDoc}
+🏭 Product: ${product}
+
+📦 PART INFORMATION
+• Part No.: ${partNo}
+• Part Name: ${partName}
+• Model: ${model} | Supplier: ${supplier}
+• Serial/Lot: ${serialNo}
+
+⚠️ PROBLEM & CONTAINMENT
+• ปัญหา: ${problemTitle} (STD: ${stdSpec})
+• รายละเอียด: ${problemDetail}
+• การแก้ไขเบื้องต้น: ${reworkAction}
+• ผลลัพธ์: ${containmentResult}
+
+📊 INSPECTION RESULT
+• Check Qty: ${m.totalCheck.toLocaleString()} | OK: ${m.totalOk.toLocaleString()} | Total NG: ${m.totalNg.toLocaleString()}
+• Defect Rate: ${m.defectRate}%
+• MFG Line: OK ${m.mfgOk} / NG ${m.mfgNg} (${m.mfgAction})
+• Check Stock: OK ${m.stockOk} / NG ${m.stockNg} (${m.stockAction})
+• สรุปยอด NG: Rework ${m.reworkQty} | Defect/Reject ${m.defectQty}
+
+✅ OK Mark: ${okColor} (${okMarkDetail})${dmgText}
+📝 Remark: ${remark}`;
+  }
+
+  // Modal Controls
+  function openReviewModal() {
+    document.getElementById('reviewTextContent').textContent = generateReportText();
+    document.getElementById('reviewModal').classList.add('open');
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  // Copy & LINE Share
+  function copyReportText() {
+    const text = generateReportText();
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('📋 คัดลอกรายงานลงคลิปบอร์ดแล้ว');
+    }).catch(() => {
+      alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาคัดลอกในหน้า Review');
+    });
+  }
+
+  function shareToLine() {
+    const text = generateReportText();
+    navigator.clipboard.writeText(text).catch(() => {});
+    showToast('📋 คัดลอกข้อความแล้ว กำลังเปิด LINE...');
+    const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
+    setTimeout(() => {
+      window.open(lineUrl, '_blank');
+    }, 400);
+  }
+
+  // LocalStorage Save & History
+  function saveReport() {
+    const partNo = document.getElementById('partNo').value.trim();
+    const problemTitle = document.getElementById('problemTitle').value.trim();
+
+    if (!partNo || !problemTitle) {
+      showToast('⚠️ กรุณากรอก Part No. และหัวข้อปัญหา');
+      return;
+    }
+
+    const metrics = calculateMetrics();
+    const record = {
+      id: Date.now(),
+      timestamp: new Date().toLocaleString('th-TH'),
+      partNo,
+      partName: document.getElementById('partName').value.trim() || '-',
+      problemTitle,
+      defectRate: metrics.defectRate,
+      totalNg: metrics.totalNg,
+      reportText: generateReportText()
+    };
+
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    existing.unshift(record);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(0, 50)));
+
+    updateHistoryBadge();
+    showToast('💾 บันทึกรายงานลงประวัติเรียบร้อย');
+  }
+
+  function updateHistoryBadge() {
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    document.getElementById('historyCount').textContent = existing.length;
+  }
+
+  function openHistoryModal() {
+    const container = document.getElementById('historyListContainer');
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    if (existing.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">ยังไม่มีประวัติการบันทึก</p>';
+    } else {
+      container.innerHTML = existing.map((item, idx) => `
+        <div class="history-card">
+          <div class="history-card-top">
+            <span>${item.partNo} - ${item.partName}</span>
+            <span style="color:var(--danger);font-size:0.82rem;">NG: ${item.totalNg} (${item.defectRate}%)</span>
+          </div>
+          <div style="font-size:0.82rem;color:#334155;margin-bottom:6px;">ปัญหา: ${item.problemTitle}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--text-muted);">
+            <span>🕒 ${item.timestamp}</span>
+            <div style="display:flex;gap:6px;">
+              <button type="button" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.75rem;" onclick="copyHistoryItem(${idx})">📋 Copy</button>
+              <button type="button" style="background:var(--danger-bg);color:var(--danger);border:none;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:0.75rem;" onclick="deleteHistoryItem(${idx})">ลบ</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    document.getElementById('historyModal').classList.add('open');
+  }
+
+  function copyHistoryItem(idx) {
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (existing[idx]) {
+      navigator.clipboard.writeText(existing[idx].reportText);
+      showToast('📋 คัดลอกรายงานย้อนหลังแล้ว');
+    }
+  }
+
+  function deleteHistoryItem(idx) {
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    existing.splice(idx, 1);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+    updateHistoryBadge();
+    openHistoryModal();
+  }
+
+  function resetForm() {
+    if (confirm('ต้องการล้างข้อมูลในฟอร์มทั้งหมดหรือไม่?')) {
+      document.getElementById('sqeForm').reset();
+      document.getElementById('damageList').innerHTML = '';
+      removePhoto();
+      calculateMetrics();
+      showToast('🧹 ล้างข้อมูลฟอร์มแล้ว');
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
 </script>
-
-<div id="actionSheet" class="action-sheet-overlay">
-
-<div class="action-sheet">
-
-<button onclick="openPhoto()">
-เปิด
-</button>
-
-<button onclick="replacePhoto()">
-เปลี่ยนรูป
-</button>
-
-<button
-class="danger"
-onclick="deletePhoto()">
-ลบรูป
-</button>
-
-<button
-class="cancel"
-onclick="closeActionSheet()">
-ยกเลิก
-</button>
-
-</div>
-
-</div>
-
-<input
-type="file"
-id="replaceInput"
-hidden>
-
-<div
-id="imageViewer"
-class="image-viewer"
-onclick="this.classList.remove('show')">
-
-<img id="viewerImage">
-
-</div>
-
 </body>
 </html>
