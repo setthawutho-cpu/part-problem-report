@@ -1,68 +1,81 @@
-.bottom-nav{
-    position:fixed;
-
-    bottom:10px;
-    left:10px;
-    right:10px;
-
-    width:auto;
-    height:65px;
-
-    background:rgba(255,255,255,0.25);
-
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,255,255,0.6);
-
-    border-radius:30px;
-
-    display:flex;
-
-    z-index:99999;
-
-    box-sizing:border-box;
-    padding-bottom:env(safe-area-inset-bottom);
-
-    box-shadow:0 4px 15px rgba(0,0,0,.1);
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  
+  /* เอฟเฟกต์กระจกฝ้า (Glassmorphism) */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  
+  /* รองรับขอบจอมือถือรุ่นใหม่ (เช่น iPhone) */
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+  z-index: 1000;
 }
 
-.bottom-nav button{
-    flex:1;
-    border:none;
-    background:transparent;
-    color:#333;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    padding:0;
-    margin:0;
-    overflow:hidden;
-    cursor:pointer;
-
-    font-size:22px;
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #64748b; /* สีเทาตอนไม่ได้เลือก */
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.bottom-nav button span{
-    font-size:9px;
-    margin-top:2px;
-    text-align:center;
-    white-space:nowrap;
-    width:100%;
+.nav-icon svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.2s ease;
 }
 
-.bottom-nav button:active{
-    background:rgba(255,255,255,.25);
+.nav-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
-.bottom-nav button.active{
-    background:rgba(0,0,0,.08);
-    color:#333;
+/* สถานะเมื่อถูกเลือก (Active) */
+.nav-item.active {
+  color: #2563eb; /* สีน้ำเงินหลัก */
+  background: rgba(37, 99, 235, 0.08);
+}
 
-    border-radius:20px;
+.nav-item.active .nav-icon svg {
+  transform: translateY(-2px);
+  stroke-width: 2.4;
+}
 
-    margin:6px;
+.nav-item.active .nav-label {
+  font-weight: 600;
+}
+
+/* เอฟเฟกต์ตอนกด (Micro-interaction) */
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+/* รองรับ Dark Mode อัตโนมัติ */
+@media (prefers-color-scheme: dark) {
+  .bottom-nav {
+    background: rgba(15, 23, 42, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nav-item {
+    color: #94a3b8;
+  }
+  .nav-item.active {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.15);
+  }
 }
