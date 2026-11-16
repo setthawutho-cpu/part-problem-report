@@ -1,81 +1,80 @@
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  /* ย้าย safe-area มาไว้ที่ bottom แทน padding เพื่อไม่ให้แคปซูลบวมเบี้ยว */
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  left: 12px;
+  right: 12px;
+  max-width: 480px; /* ป้องกันแถบยืดยาวเกินไปเมื่อเปิดบน iPad หรือจอคอม */
+  margin: 0 auto;
+  height: 64px;
+
+  /* สไตล์กระจกใสเดิมของคุณ + เพิ่มเงาสะท้อนขอบด้านใน */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 32px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  
-  /* เอฟเฟกต์กระจกฝ้า (Glassmorphism) */
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  
-  /* รองรับขอบจอมือถือรุ่นใหม่ (เช่น iPhone) */
-  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
-  z-index: 1000;
+  padding: 6px; /* คุมระยะห่างรอบปุ่มจากตรงนี้แทนการใส่ margin ที่ .active */
+  gap: 4px;
+  z-index: 99999;
+  box-sizing: border-box;
 }
 
-.nav-item {
+.bottom-nav .nav-item {
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+  color: #475569;
+  border-radius: 26px; /* โค้งรับกับขอบนอก (32px - 6px = 26px) */
+
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: #64748b; /* สีเทาตอนไม่ได้เลือก */
-  gap: 4px;
-  padding: 6px 12px;
-  border-radius: 12px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
-.nav-icon svg {
-  width: 22px;
-  height: 22px;
+.bottom-nav .icon svg {
+  width: 21px;
+  height: 21px;
+  display: block;
   transition: transform 0.2s ease;
 }
 
-.nav-label {
-  font-size: 11px;
+.bottom-nav .nav-item span {
+  font-size: 10px;
   font-weight: 500;
+  margin-top: 3px;
+  text-align: center;
+  white-space: nowrap;
   letter-spacing: 0.2px;
 }
 
-/* สถานะเมื่อถูกเลือก (Active) */
-.nav-item.active {
-  color: #2563eb; /* สีน้ำเงินหลัก */
-  background: rgba(37, 99, 235, 0.08);
+/* สถานะ Active ที่สมมาตรและไม่กระตุก */
+.bottom-nav .nav-item.active {
+  background: rgba(255, 255, 255, 0.75);
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.nav-item.active .nav-icon svg {
-  transform: translateY(-2px);
-  stroke-width: 2.4;
+.bottom-nav .nav-item.active .icon svg {
+  transform: translateY(-1px) scale(1.05);
+  stroke-width: 2.3;
 }
 
-.nav-item.active .nav-label {
-  font-weight: 600;
+.bottom-nav .nav-item.active span {
+  font-weight: 700;
 }
 
-/* เอฟเฟกต์ตอนกด (Micro-interaction) */
-.nav-item:active {
+/* เอฟเฟกต์ยุบตัวเบาๆ ตอนนิ้วแตะ */
+.bottom-nav .nav-item:active {
   transform: scale(0.92);
-}
-
-/* รองรับ Dark Mode อัตโนมัติ */
-@media (prefers-color-scheme: dark) {
-  .bottom-nav {
-    background: rgba(15, 23, 42, 0.85);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .nav-item {
-    color: #94a3b8;
-  }
-  .nav-item.active {
-    color: #60a5fa;
-    background: rgba(96, 165, 250, 0.15);
-  }
 }
