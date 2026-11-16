@@ -1,80 +1,68 @@
-.bottom-nav {
-  position: fixed;
-  /* ย้าย safe-area มาไว้ที่ bottom แทน padding เพื่อไม่ให้แคปซูลบวมเบี้ยว */
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  left: 12px;
-  right: 12px;
-  max-width: 480px; /* ป้องกันแถบยืดยาวเกินไปเมื่อเปิดบน iPad หรือจอคอม */
-  margin: 0 auto;
-  height: 64px;
+.bottom-nav{
+    position:fixed;
 
-  /* สไตล์กระจกใสเดิมของคุณ + เพิ่มเงาสะท้อนขอบด้านใน */
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 32px;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    bottom:10px;
+    left:10px;
+    right:10px;
 
-  display: flex;
-  align-items: center;
-  padding: 6px; /* คุมระยะห่างรอบปุ่มจากตรงนี้แทนการใส่ margin ที่ .active */
-  gap: 4px;
-  z-index: 99999;
-  box-sizing: border-box;
+    width:auto;
+    height:65px;
+
+    background:rgba(255,255,255,0.25);
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.6);
+
+    border-radius:30px;
+
+    display:flex;
+
+    z-index:99999;
+
+    box-sizing:border-box;
+    padding-bottom:env(safe-area-inset-bottom);
+
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
 }
 
-.bottom-nav .nav-item {
-  flex: 1;
-  height: 100%;
-  text-decoration: none;
-  color: #475569;
-  border-radius: 26px; /* โค้งรับกับขอบนอก (32px - 6px = 26px) */
+.bottom-nav button{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:#333;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  -webkit-tap-highlight-color: transparent;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+    cursor:pointer;
+
+    font-size:22px;
 }
 
-.bottom-nav .icon svg {
-  width: 21px;
-  height: 21px;
-  display: block;
-  transition: transform 0.2s ease;
+.bottom-nav button span{
+    font-size:9px;
+    margin-top:2px;
+    text-align:center;
+    white-space:nowrap;
+    width:100%;
 }
 
-.bottom-nav .nav-item span {
-  font-size: 10px;
-  font-weight: 500;
-  margin-top: 3px;
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
+.bottom-nav button:active{
+    background:rgba(255,255,255,.25);
 }
 
-/* สถานะ Active ที่สมมาตรและไม่กระตุก */
-.bottom-nav .nav-item.active {
-  background: rgba(255, 255, 255, 0.75);
-  color: #0f172a;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
+.bottom-nav button.active{
+    background:rgba(0,0,0,.08);
+    color:#333;
 
-.bottom-nav .nav-item.active .icon svg {
-  transform: translateY(-1px) scale(1.05);
-  stroke-width: 2.3;
-}
+    border-radius:20px;
 
-.bottom-nav .nav-item.active span {
-  font-weight: 700;
-}
-
-/* เอฟเฟกต์ยุบตัวเบาๆ ตอนนิ้วแตะ */
-.bottom-nav .nav-item:active {
-  transform: scale(0.92);
+    margin:6px;
 }
