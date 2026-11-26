@@ -1,719 +1,622 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#dfeaf3">
-
-<title>HB Calculator</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-body{
-    width:100%;
-    min-height:100vh;
-    background:#1a1a1a;
-    font-family:Arial,sans-serif;
-    touch-action:manipulation;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    overflow:hidden;
-}
-
-#app{
-    width:100%;
-    max-width:500px;
-
-    height:900px;
-
-    display:flex;
-    flex-direction:column;
-
-    padding:20px;
-
-    overflow:hidden;
-
-    overscroll-behavior:none;
-    touch-action:none;
-
-    background:#000;
-
-    border-radius:25px;
-
-    box-shadow:
-        0 0 30px rgba(0,0,0,.5),
-        0 0 80px rgba(255,255,255,.08);
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    margin-top:0px;
-    margin-bottom:10px;
-}
-
-.iconBtn{
-    width:56px;
-    height:56px;
-    border:none;
-    border-radius:50%;
-    background:#2c2c2e;
-    color:#fff;
-    font-size:28px;
-}
-
-.display{
-    height:200px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-
-    padding:20px 10px;
-
-    overflow:hidden;
-}
-
-#display{
-    color:#fff;
-    font-size:32px;
-    text-align:right;
-    width:100%;
-    margin-bottom:3px;
-}
-
-.pad{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:4px;
-    flex:1;
-}
-
-.btn{
-    width:92%;
-    margin:auto;
-
-    aspect-ratio:1;
-    border:none;
-    border-radius:50%;
-
-    font-size:32px;
-
-    background:#333;
-    color:#fff;
-}
-
-.gray{
-    background:#707070;
-}
-
-.orange{
-    background:#f5a033;
-}
-
-.btn:active{
-    transform:scale(.92);
-    filter:brightness(1.4);
-    box-shadow:0 0 20px rgba(255,255,255,.4);
-}
-
-.history{
-    position:fixed;
-    inset:0;
-    background:#111;
-    color:#fff;
-    z-index:1000;
-
-    transform:translateY(-100%);
-    transition:.3s;
-}
-
-.history.show{
-    transform:translateY(0);
-}
-
-.historyHeader{
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #333;
-}
-
-.historyContent{
-    height:calc(100% - 70px);
-    overflow:auto;
-    padding:10px;
-}
-
-.historyItem{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:10px;
-    border-bottom:1px solid #222;
-}
-
-.delBtn{
-    background:#ff3b30;
-    color:#fff;
-    border:none;
-    padding:6px 10px;
-    border-radius:8px;
-}
-
-.modePanel{
-    position:fixed;
-    right:-270px;
-    top:0;
-
-    width:260px;
-    height:100dvh;
-
-    background:#111;
-    z-index:999;
-
-    transition:.3s;
-    padding-top:80px;
-    overflow-y:auto;
-}
-
-.modePanel.show{
-    right:0;
-}
-
-.modeBtn{
-    width:92%;
-    margin:6px auto;
-    display:block;
-
-    padding:15px;
-
-    border:none;
-    border-radius:12px;
-
-    font-size:18px;
-
-    background:#262626;
-    color:#fff;
-}
-
-.hbPage{
-    width:100%;
-    height:0;
-    overflow:hidden;
-}
-
-.hbInput{
-    width:100%;
-    height:34px;
-    margin-bottom:3px;
-    border:none;
-    border-radius:8px;
-    background:#222;
-    color:#fff;
-    font-size:15px;
-    padding:6px 12px;
-    line-height:34px;
-}
-
-.hbInput.active{
-    border:2px solid #f5a033;
-    box-shadow:0 0 8px rgba(245,160,51,.5);
-}
-
-@media (max-width:767px){
-
-    body{
-        background:#000;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#070a12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HB Calculator">
+  <title>HB Calculator</title>
+  <style>
+    :root {
+      --bg-outer: #05080f;
+      --bg-app: #0d1320;
+      --bg-card: rgba(255, 255, 255, 0.06);
+      --bg-card-active: rgba(255, 255, 255, 0.14);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.35);
+      --danger: #ef4444;
     }
 
-    #app{
-        max-width:100%;
-        height:100dvh;
-        height:100dvh;
-        border-radius:0;
-        box-shadow:none;
-
-        padding-top:0;
-        padding-bottom:calc(55px + env(safe-area-inset-bottom));
-        padding-left:20px;
-        padding-right:20px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
 
-}
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg-outer);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-</style>
+    #app {
+      width: 100%;
+      max-width: 440px;
+      height: min(860px, 100dvh);
+      display: flex;
+      flex-direction: column;
+      padding: calc(16px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));
+      gap: 14px;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.14), transparent 38%),
+        radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.14), transparent 42%),
+        var(--bg-app);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.3px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.16);
+      color: var(--accent);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      font-weight: 700;
+    }
+
+    .topActions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .iconBtn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 0.12s ease, background 0.2s ease;
+    }
+
+    .iconBtn:active {
+      transform: scale(0.92);
+      background: var(--bg-card-active);
+    }
+
+    .display {
+      min-height: 175px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    #subDisplay {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+      min-height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #display {
+      color: var(--text);
+      font-size: 38px;
+      font-weight: 700;
+      text-align: right;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #display.error {
+      color: var(--danger);
+      font-size: 24px;
+    }
+
+    .hbPage {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .hbPage.active {
+      display: grid;
+    }
+
+    .hbField {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hbField label {
+      font-size: 11px;
+      color: var(--muted);
+      padding-left: 4px;
+      font-weight: 600;
+    }
+
+    .hbInput {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(10, 15, 28, 0.9);
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 0 10px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .hbInput.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    .pad {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      flex: 1;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 25px;
+      font-weight: 500;
+      background: var(--bg-card);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.92);
+      background: var(--bg-card-active);
+    }
+
+    .gray {
+      background: rgba(148, 163, 184, 0.16);
+      color: #e2e8f0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .orange {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(234, 88, 12, 0.28);
+    }
+
+    .history, .modePanel {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 13, 22, 0.97);
+      backdrop-filter: blur(18px);
+      z-index: 1000;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .history {
+      transform: translateY(-100%);
+      display: flex;
+      flex-direction: column;
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .history.show {
+      transform: translateY(0);
+    }
+
+    .historyHeader {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .historyContent {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .historyItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .delBtn {
+      background: rgba(239, 68, 68, 0.16);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .modePanel {
+      left: auto;
+      right: 0;
+      width: 280px;
+      transform: translateX(100%);
+      padding: calc(20px + env(safe-area-inset-top)) 16px 20px;
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    .modePanel.show {
+      transform: translateX(0);
+    }
+
+    .modeTitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-left: 4px;
+      font-weight: 600;
+    }
+
+    .modeBtn {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 15px;
+      text-align: left;
+      background: var(--bg-card);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .modeBtn.activeMode {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: var(--accent);
+      color: #fde68a;
+      font-weight: 600;
+    }
+
+    @media (max-width: 767px) {
+      #app {
+        max-width: 100%;
+        border-radius: 0;
+        border: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div id="app">
-
-<div class="topbar">
-<button class="iconBtn" onclick="toggleHistory()">🕒</button>
-<button class="iconBtn" onclick="toggleMode()">🧮</button>
-</div>
-
-<div class="display">
-
-    <div id="display">0</div>
-
-    <div id="hbPage" class="hbPage">
+  <div id="app">
+    <div class="topbar">
+      <div class="brand">
+        <span>HB Calculator</span>
+        <span class="badge" id="modeBadge">CALC</span>
+      </div>
+      <div class="topActions">
+        <button class="iconBtn" onclick="toggleHistory()" title="ประวัติ">🕒</button>
+        <button class="iconBtn" onclick="toggleMode()" title="โหมด">🧮</button>
+      </div>
     </div>
 
-</div>
+    <div class="display">
+      <div id="subDisplay"></div>
+      <div id="display">0</div>
+      <div id="hbPage" class="hbPage">
+        <div class="hbField">
+          <label for="hbF">Force (F)</label>
+          <input class="hbInput" id="hbF" placeholder="0" onclick="setInput('hbF')" readonly>
+        </div>
+        <div class="hbField">
+          <label for="hbD">Ball Dia (D)</label>
+          <input class="hbInput" id="hbD" placeholder="0" onclick="setInput('hbD')" readonly>
+        </div>
+        <div class="hbField">
+          <label for="hbX">Indent (X)</label>
+          <input class="hbInput" id="hbX" placeholder="0" onclick="setInput('hbX')" readonly>
+        </div>
+      </div>
+    </div>
 
-<div class="pad" id="calculatorPad">
+    <div class="pad" id="calculatorPad">
+      <button class="btn gray" onclick="backspace()">⌫</button>
+      <button class="btn gray" onclick="clearAll()">AC</button>
+      <button class="btn gray" onclick="input('%')">%</button>
+      <button class="btn orange" onclick="input('/')">÷</button>
 
-<button class="btn gray" onclick="backspace()">⌫</button>
-<button class="btn gray" onclick="clearAll()">AC</button>
-<button class="btn gray" onclick="input('%')">%</button>
-<button class="btn orange" onclick="input('/')">÷</button>
+      <button class="btn" onclick="input('7')">7</button>
+      <button class="btn" onclick="input('8')">8</button>
+      <button class="btn" onclick="input('9')">9</button>
+      <button class="btn orange" onclick="input('*')">×</button>
 
-<button class="btn" onclick="input('7')">7</button>
-<button class="btn" onclick="input('8')">8</button>
-<button class="btn" onclick="input('9')">9</button>
-<button class="btn orange" onclick="input('*')">×</button>
+      <button class="btn" onclick="input('4')">4</button>
+      <button class="btn" onclick="input('5')">5</button>
+      <button class="btn" onclick="input('6')">6</button>
+      <button class="btn orange" onclick="input('-')">−</button>
 
-<button class="btn" onclick="input('4')">4</button>
-<button class="btn" onclick="input('5')">5</button>
-<button class="btn" onclick="input('6')">6</button>
-<button class="btn orange" onclick="input('-')">−</button>
+      <button class="btn" onclick="input('1')">1</button>
+      <button class="btn" onclick="input('2')">2</button>
+      <button class="btn" onclick="input('3')">3</button>
+      <button class="btn orange" onclick="input('+')">+</button>
 
-<button class="btn" onclick="input('1')">1</button>
-<button class="btn" onclick="input('2')">2</button>
-<button class="btn" onclick="input('3')">3</button>
-<button class="btn orange" onclick="input('+')">+</button>
+      <button class="btn" onclick="plusminus()">±</button>
+      <button class="btn" onclick="input('0')">0</button>
+      <button class="btn" onclick="input('.')">.</button>
+      <button class="btn orange" onclick="calculate()">=</button>
+    </div>
+  </div>
 
-<button class="btn" onclick="plusminus()">±</button>
-<button class="btn" onclick="input('0')">0</button>
-<button class="btn" onclick="input('.')">.</button>
-<button class="btn orange" onclick="calculate()">=</button>
+  <div class="history" id="history">
+    <div class="historyHeader">
+      <h3>History</h3>
+      <div style="display:flex; gap:8px;">
+        <button class="delBtn" onclick="clearHistory()">Clear</button>
+        <button class="delBtn" onclick="toggleHistory()">Close</button>
+      </div>
+    </div>
+    <div class="historyContent" id="historyList"></div>
+  </div>
 
-</div>
-</div>
+  <div class="modePanel" id="modePanel">
+    <div class="modeTitle">เลือกโหมดการคำนวณ</div>
+    <button class="modeBtn activeMode" onclick="selectMode('CALC', this)">🔢 Standard Calc</button>
+    <button class="modeBtn" onclick="selectMode('HB', this)">⚙️ HB Hardness</button>
+    <button class="modeBtn" onclick="selectMode('Position', this)">⌖ Position</button>
+    <button class="modeBtn" onclick="selectMode('Circularity', this)">○ Circularity</button>
+    <button class="modeBtn" onclick="selectMode('Flatness', this)">▱ Flatness</button>
+    <button class="modeBtn" onclick="selectMode('Parallelism', this)">∥ Parallelism</button>
+    <button class="modeBtn" onclick="selectMode('Perpendicularity', this)">⊥ Perpendicularity</button>
+    <button class="modeBtn" onclick="selectMode('Concentricity', this)">◎ Concentricity</button>
+    <button class="modeBtn" onclick="selectMode('Circular Runout', this)">↗ Circular Runout</button>
+    <button class="modeBtn" onclick="selectMode('Total Runout', this)">⇉ Total Runout</button>
+  </div>
 
-<div class="history" id="history">
+  <script>
+    let expression = "";
+    let activeInput = null;
+    let currentMode = "CALC";
 
-<div class="historyHeader">
-<h3>History</h3>
+    const display = document.getElementById("display");
+    const subDisplay = document.getElementById("subDisplay");
+    const hbPage = document.getElementById("hbPage");
+    const modeBadge = document.getElementById("modeBadge");
 
-<div>
-<button class="delBtn" onclick="clearHistory()">
-Clear
-</button>
-
-<button class="delBtn" onclick="toggleHistory()">
-Close
-</button>
-</div>
-
-</div>
-
-<div class="historyContent" id="historyList"></div>
-
-</div>
-
-<div class="modePanel" id="modePanel">
-
-<button class="modeBtn" onclick="selectMode('HB')">HB</button>
-
-<button class="modeBtn" onclick="selectMode('Position')">
-⌖ Position
-</button>
-
-<button class="modeBtn" onclick="selectMode('Circularity')">
-○ Circularity
-</button>
-
-<button class="modeBtn" onclick="selectMode('Flatness')">
-▱ Flatness
-</button>
-
-<button class="modeBtn" onclick="selectMode('Parallelism')">
-∥ Parallelism
-</button>
-
-<button class="modeBtn" onclick="selectMode('Perpendicularity')">
-⊥ Perpendicularity
-</button>
-
-<button class="modeBtn" onclick="selectMode('Concentricity')">
-◎ Concentricity
-</button>
-
-<button class="modeBtn" onclick="selectMode('Circular Runout')">
-↗ Circular Runout
-</button>
-
-<button class="modeBtn" onclick="selectMode('Total Runout')">
-⇉ Total Runout
-</button>
-
-</div>
-
-<script>
-
-document.addEventListener("click",function(e){
-
-    const panel =
-        document.getElementById("modePanel");
-
-    const btn =
-        e.target.closest(".iconBtn");
-
-    if(
-        panel.classList.contains("show") &&
-        !panel.contains(e.target) &&
-        !btn
-    ){
+    document.addEventListener("click", (e) => {
+      const panel = document.getElementById("modePanel");
+      const btn = e.target.closest(".iconBtn");
+      if (panel.classList.contains("show") && !panel.contains(e.target) && !btn) {
         panel.classList.remove("show");
-    }
-
-});
-
-let expression="";
-let activeInput=null;
-let currentMode="CALC";
-
-const display=document.getElementById("display");
-document.getElementById("hbPage").innerHTML="";
-
-function setInput(id){
-
-    document
-    .querySelectorAll(".hbInput")
-    .forEach(el=>{
-        el.classList.remove("active");
-        el.blur();
+      }
     });
 
-    activeInput=id;
+    function setInput(id) {
+      document.querySelectorAll(".hbInput").forEach(el => el.classList.remove("active"));
+      activeInput = id;
+      const box = document.getElementById(id);
+      if (box) box.classList.add("active");
+    }
 
-    let box=document.getElementById(id);
+    function updateDisplay(text, isError = false) {
+      display.classList.toggle("error", isError);
+      display.textContent = text;
+    }
 
-    box.classList.add("active");
+    function update() {
+      updateDisplay(expression === "" ? "0" : expression, false);
+    }
 
-    box.blur();
-}
-
-function update(){
-display.textContent=
-expression==="" ? "0" : expression;
-}
-
-function input(v){
-
-    if(activeInput){
-
-        let box =
-        document.getElementById(activeInput);
-
+    function input(v) {
+      if (activeInput) {
+        const box = document.getElementById(activeInput);
+        if (v === "." && box.value.includes(".")) return;
         box.value += v;
-
         return;
+      }
+      expression += v;
+      update();
     }
 
-    expression += v;
-    update();
-}
-
-function clearAll(){
-
-    if(activeInput){
-
-        let box =
-        document.getElementById(activeInput);
-
-        box.value = "";
-
+    function clearAll() {
+      subDisplay.textContent = "";
+      if (activeInput) {
+        document.getElementById(activeInput).value = "";
         return;
+      }
+      expression = "";
+      update();
     }
 
-    expression="";
-    update();
-
-}
-
-function backspace(){
-
-    if(activeInput){
-
-        let box =
-        document.getElementById(activeInput);
-
-box.value =
-box.value.slice(0,-1);
-
+    function backspace() {
+      if (activeInput) {
+        const box = document.getElementById(activeInput);
+        box.value = box.value.slice(0, -1);
         return;
+      }
+      expression = expression.slice(0, -1);
+      update();
     }
 
-    expression =
-    expression.slice(0,-1);
-
-    update();
-
-}
-
-function plusminus(){
-
-if(expression==="") return;
-
-if(expression.startsWith("-")){
-expression=
-expression.substring(1);
-}else{
-expression="-"+expression;
-}
-
-update();
-}
-
-function toggleHistory(){
-document
-.getElementById("history")
-.classList
-.toggle("show");
-}
-
-function toggleMode(){
-document
-.getElementById("modePanel")
-.classList
-.toggle("show");
-}
-
-function selectMode(mode){
-
-    document
-    .getElementById("modePanel")
-    .classList.remove("show");
-
-    if(mode==="HB"){
-
-    currentMode="HB";
-
-    document
-    .getElementById("calculatorPad")
-    .style.display="grid";
-
-        document
-        .getElementById("hbPage")
-        .style.display="block";
-
-        document
-        .getElementById("hbPage")
-        .style.height="130px";
-
-        document
-        .getElementById("hbPage")
-        .className="hbPage";
-
-        document
-        .getElementById("hbPage")
-.innerHTML=`
-
-<input
-class="hbInput"
-id="hbF"
-placeholder="Force"
-onclick="setInput('hbF')"
-readonly>
-
-<input
-class="hbInput"
-id="hbD"
-placeholder="Ball Diameter"
-onclick="setInput('hbD')"
-readonly>
-
-<input
-class="hbInput"
-id="hbX"
-placeholder="Indentation"
-onclick="setInput('hbX')"
-readonly>
-
-`;
-
-display.innerHTML=
-'<span style="font-size:32px">HB</span>';
-
-setInput("hbF");
-
+    function plusminus() {
+      if (activeInput) {
+        const box = document.getElementById(activeInput);
+        if (!box.value) return;
+        box.value = box.value.startsWith("-") ? box.value.slice(1) : "-" + box.value;
+        return;
+      }
+      if (!expression) return;
+      expression = expression.startsWith("-") ? expression.slice(1) : "-" + expression;
+      update();
     }
 
-}
+    function toggleHistory() {
+      document.getElementById("history").classList.toggle("show");
+    }
 
-function getHistory(){
+    function toggleMode() {
+      document.getElementById("modePanel").classList.toggle("show");
+    }
 
-return JSON.parse(
-localStorage.getItem("calcHistory")
-|| "[]"
-);
+    function selectMode(mode, btnEl) {
+      document.getElementById("modePanel").classList.remove("show");
+      document.querySelectorAll(".modeBtn").forEach(b => b.classList.remove("activeMode"));
+      if (btnEl) btnEl.classList.add("activeMode");
 
-}
+      currentMode = mode;
+      modeBadge.textContent = mode;
+      subDisplay.textContent = "";
 
-function saveHistory(txt){
+      if (mode === "HB") {
+        activeInput = null;
+        hbPage.classList.add("active");
+        updateDisplay("HB", false);
+        setInput("hbF");
+      } else {
+        activeInput = null;
+        hbPage.classList.remove("active");
+        update();
+      }
+    }
 
-let data=getHistory();
+    function getHistory() {
+      return JSON.parse(localStorage.getItem("calcHistory") || "[]");
+    }
 
-data.unshift(txt);
+    function saveHistory(txt) {
+      const data = getHistory();
+      data.unshift(txt);
+      localStorage.setItem("calcHistory", JSON.stringify(data.slice(0, 50)));
+      renderHistory();
+    }
 
-localStorage.setItem(
-"calcHistory",
-JSON.stringify(data)
-);
+    function renderHistory() {
+      const data = getHistory();
+      const list = document.getElementById("historyList");
+      if (!data.length) {
+        list.innerHTML = `<div style="color:var(--muted); text-align:center; padding:24px;">ยังไม่มีประวัติการคำนวณ</div>`;
+        return;
+      }
+      list.innerHTML = data.map((item, index) => `
+        <div class="historyItem">
+          <span>${item}</span>
+          <button class="delBtn" onclick="deleteHistory(${index})">ลบ</button>
+        </div>
+      `).join("");
+    }
 
-renderHistory();
+    function deleteHistory(index) {
+      const data = getHistory();
+      data.splice(index, 1);
+      localStorage.setItem("calcHistory", JSON.stringify(data));
+      renderHistory();
+    }
 
-}
+    function clearHistory() {
+      localStorage.removeItem("calcHistory");
+      renderHistory();
+    }
 
-function renderHistory(){
-
-let data=getHistory();
-
-let html="";
-
-data.forEach((item,index)=>{
-
-html+=`
-<div class="historyItem">
-<div>${item}</div>
-<button
-class="delBtn"
-onclick="deleteHistory(${index})">
-X
-</button>
-</div>
-`;
-
-});
-
-document.getElementById(
-"historyList"
-).innerHTML=html;
-
-}
-
-function deleteHistory(index){
-
-let data=getHistory();
-
-data.splice(index,1);
-
-localStorage.setItem(
-"calcHistory",
-JSON.stringify(data)
-);
-
-
-renderHistory();
-
-}
-
-function clearHistory(){
-
-    localStorage.removeItem(
-        "calcHistory"
-    );
-
-    renderHistory();
-
-}
-
-function calculate(){
-
-    if(currentMode==="HB"){
+    function calculate() {
+      if (currentMode === "HB") {
         calculateHB();
         return;
-    }
-
-    try{
-
-        let exp = expression;
-
-        exp = exp.replace(
-            /(\d+(\.\d+)?)%/g,
-            "($1/100)"
-        );
-
-        let result = eval(exp);
-
-        saveHistory(
-            expression+" = "+result
-        );
-
-        expression = String(result);
-
+      }
+      try {
+        const exp = expression.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
+        const result = Function(`"use strict"; return (${exp})`)();
+        if (!Number.isFinite(result)) throw new Error("Math");
+        const cleanResult = Number(result.toFixed(8));
+        subDisplay.textContent = `${expression} =`;
+        saveHistory(`${expression} = ${cleanResult}`);
+        expression = String(cleanResult);
         update();
-
-    }catch{
-
-        display.textContent="Error";
-        expression="";
+      } catch {
+        updateDisplay("Error", true);
+        expression = "";
+      }
     }
-}
 
-function calculateHB(){
+    function calculateHB() {
+      const F = parseFloat(document.getElementById("hbF").value) || 0;
+      const D = parseFloat(document.getElementById("hbD").value) || 0;
+      const X = parseFloat(document.getElementById("hbX").value) || 0;
 
-let F = parseFloat(
-    document.getElementById("hbF").value
-) || 0;
+      if (D <= 0 || F <= 0 || X <= 0 || X >= D) {
+        subDisplay.textContent = "ตรวจสอบค่า F, D, X (ต้องมากกว่า 0 และ X < D)";
+        updateDisplay("Input Error", true);
+        return;
+      }
 
-let D = parseFloat(
-    document.getElementById("hbD").value
-) || 0;
+      const denom = Math.PI * D * (D - Math.sqrt(D * D - X * X));
+      if (denom <= 0) {
+        updateDisplay("Input Error", true);
+        return;
+      }
 
-let X = parseFloat(
-    document.getElementById("hbX").value
-) || 0;
+      const HB = (2 * F) / denom;
+      const formatted = `${HB.toFixed(1)} HB`;
+      subDisplay.textContent = `F=${F} | D=${D} | X=${X}`;
+      updateDisplay(formatted, false);
+      saveHistory(`HB (F=${F}, D=${D}, X=${X}) = ${formatted}`);
+    }
 
-if(D<=0 || F<=0 || X<=0){
-    display.innerText="Input Error";
-    return;
-}
-
-if(X>=D){
-    display.innerText="Input Error";
-    return;
-}
-
-    let HB=
-    (2*F)/
-    (3.14159*D*
-    (D-Math.sqrt(D*D-X*X)));
-
-    display.innerText=
-    HB.toFixed(1)+" HB";
-
-}
-
-renderHistory();
-
-</script>
-
+    renderHistory();
+  </script>
 </body>
 </html>
