@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070a12">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="HB Calculator">
-  <title>HB Calculator</title>
+  <meta name="apple-mobile-web-app-title" content="HB & GD&T Calc">
+  <title>HB & GD&T Calculator Pro</title>
   <style>
     :root {
       --bg-outer: #05080f;
@@ -19,6 +19,7 @@
       --muted: #94a3b8;
       --accent: #f59e0b;
       --accent-glow: rgba(245, 158, 11, 0.35);
+      --cyan: #38bdf8;
       --danger: #ef4444;
     }
 
@@ -45,11 +46,11 @@
     #app {
       width: 100%;
       max-width: 440px;
-      height: min(860px, 100dvh);
+      height: min(880px, 100dvh);
       display: flex;
       flex-direction: column;
-      padding: calc(16px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));
-      gap: 14px;
+      padding: calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+      gap: 12px;
       background:
         radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.14), transparent 38%),
         radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.14), transparent 42%),
@@ -72,7 +73,7 @@
       align-items: center;
       gap: 8px;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: 0.3px;
     }
 
@@ -92,13 +93,13 @@
     }
 
     .iconBtn {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border: 1px solid var(--border);
       border-radius: 14px;
       background: var(--bg-card);
       color: var(--text);
-      font-size: 18px;
+      font-size: 17px;
       cursor: pointer;
       display: grid;
       place-items: center;
@@ -111,23 +112,32 @@
     }
 
     .display {
-      min-height: 175px;
+      min-height: 195px;
       background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 16px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      gap: 12px;
+      gap: 8px;
       overflow: hidden;
+    }
+
+    #formulaHint {
+      color: var(--cyan);
+      font-size: 11px;
+      opacity: 0.9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     #subDisplay {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
       text-align: right;
-      min-height: 18px;
+      min-height: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -135,7 +145,7 @@
 
     #display {
       color: var(--text);
-      font-size: 38px;
+      font-size: 34px;
       font-weight: 700;
       text-align: right;
       width: 100%;
@@ -146,47 +156,51 @@
 
     #display.error {
       color: var(--danger);
-      font-size: 24px;
+      font-size: 22px;
     }
 
-    .hbPage {
+    #dynamicFields {
       display: none;
-      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+      width: 100%;
     }
 
-    .hbPage.active {
+    #dynamicFields.active {
       display: grid;
     }
 
-    .hbField {
+    .cols-1 { grid-template-columns: 1fr; }
+    .cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .fieldBox {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
-    .hbField label {
+    .fieldBox label {
       font-size: 11px;
       color: var(--muted);
       padding-left: 4px;
       font-weight: 600;
     }
 
-    .hbInput {
+    .calcInput, .calcSelect {
       width: 100%;
-      height: 40px;
+      height: 38px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: rgba(10, 15, 28, 0.9);
+      background: rgba(10, 15, 28, 0.92);
       color: var(--text);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       padding: 0 10px;
       outline: none;
       transition: all 0.2s ease;
     }
 
-    .hbInput.active {
+    .calcInput.active {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-glow);
       background: rgba(245, 158, 11, 0.12);
@@ -195,14 +209,14 @@
     .pad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 9px;
       flex: 1;
     }
 
     .btn {
       border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 25px;
+      border-radius: 18px;
+      font-size: 24px;
       font-weight: 500;
       background: var(--bg-card);
       color: var(--text);
@@ -220,7 +234,7 @@
     .gray {
       background: rgba(148, 163, 184, 0.16);
       color: #e2e8f0;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 600;
     }
 
@@ -235,7 +249,7 @@
     .history, .modePanel {
       position: fixed;
       inset: 0;
-      background: rgba(9, 13, 22, 0.97);
+      background: rgba(9, 13, 22, 0.98);
       backdrop-filter: blur(18px);
       z-index: 1000;
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
@@ -273,11 +287,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
       padding: 12px 14px;
       border-radius: 14px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      font-size: 14px;
+      font-size: 13px;
+      line-height: 1.4;
     }
 
     .delBtn {
@@ -289,14 +305,15 @@
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .modePanel {
       left: auto;
       right: 0;
-      width: 280px;
+      width: 295px;
       transform: translateX(100%);
-      padding: calc(20px + env(safe-area-inset-top)) 16px 20px;
+      padding: calc(18px + env(safe-area-inset-top)) 16px 24px;
       border-left: 1px solid var(--border);
       overflow-y: auto;
     }
@@ -305,21 +322,26 @@
       transform: translateX(0);
     }
 
-    .modeTitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-      padding-left: 4px;
-      font-weight: 600;
+    .modeSection {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--cyan);
+      margin: 14px 0 8px 4px;
+      font-weight: 700;
+    }
+
+    .modeSection:first-child {
+      margin-top: 0;
     }
 
     .modeBtn {
       width: 100%;
-      margin-bottom: 8px;
-      padding: 13px 14px;
+      margin-bottom: 7px;
+      padding: 12px 14px;
       border: 1px solid var(--border);
       border-radius: 14px;
-      font-size: 15px;
+      font-size: 14px;
       text-align: left;
       background: var(--bg-card);
       color: var(--text);
@@ -347,7 +369,7 @@
   <div id="app">
     <div class="topbar">
       <div class="brand">
-        <span>HB Calculator</span>
+        <span>Engineering Calc</span>
         <span class="badge" id="modeBadge">CALC</span>
       </div>
       <div class="topActions">
@@ -357,22 +379,10 @@
     </div>
 
     <div class="display">
+      <div id="formulaHint">Standard Calculator</div>
       <div id="subDisplay"></div>
       <div id="display">0</div>
-      <div id="hbPage" class="hbPage">
-        <div class="hbField">
-          <label for="hbF">Force (F)</label>
-          <input class="hbInput" id="hbF" placeholder="0" onclick="setInput('hbF')" readonly>
-        </div>
-        <div class="hbField">
-          <label for="hbD">Ball Dia (D)</label>
-          <input class="hbInput" id="hbD" placeholder="0" onclick="setInput('hbD')" readonly>
-        </div>
-        <div class="hbField">
-          <label for="hbX">Indent (X)</label>
-          <input class="hbInput" id="hbX" placeholder="0" onclick="setInput('hbX')" readonly>
-        </div>
-      </div>
+      <div id="dynamicFields"></div>
     </div>
 
     <div class="pad" id="calculatorPad">
@@ -415,17 +425,20 @@
   </div>
 
   <div class="modePanel" id="modePanel">
-    <div class="modeTitle">เลือกโหมดการคำนวณ</div>
+    <div class="modeSection">เครื่องคิดเลข & ความแข็ง</div>
     <button class="modeBtn activeMode" onclick="selectMode('CALC', this)">🔢 Standard Calc</button>
     <button class="modeBtn" onclick="selectMode('HB', this)">⚙️ HB Hardness</button>
-    <button class="modeBtn" onclick="selectMode('Position', this)">⌖ Position</button>
-    <button class="modeBtn" onclick="selectMode('Circularity', this)">○ Circularity</button>
-    <button class="modeBtn" onclick="selectMode('Flatness', this)">▱ Flatness</button>
-    <button class="modeBtn" onclick="selectMode('Parallelism', this)">∥ Parallelism</button>
-    <button class="modeBtn" onclick="selectMode('Perpendicularity', this)">⊥ Perpendicularity</button>
-    <button class="modeBtn" onclick="selectMode('Concentricity', this)">◎ Concentricity</button>
-    <button class="modeBtn" onclick="selectMode('Circular Runout', this)">↗ Circular Runout</button>
-    <button class="modeBtn" onclick="selectMode('Total Runout', this)">⇉ Total Runout</button>
+    <button class="modeBtn" onclick="selectMode('CONVERT', this)">🔄 แปลงค่าความแข็ง (HB/HV/HRC/HRA/HRB)</button>
+
+    <div class="modeSection">GD&T (Form & Location & Runout)</div>
+    <button class="modeBtn" onclick="selectMode('Position', this)">⌖ Position (ตำแหน่ง)</button>
+    <button class="modeBtn" onclick="selectMode('Circularity', this)">○ Circularity (ความกลม)</button>
+    <button class="modeBtn" onclick="selectMode('Flatness', this)">▱ Flatness (ความเรียบ)</button>
+    <button class="modeBtn" onclick="selectMode('Parallelism', this)">∥ Parallelism (ความขนาน)</button>
+    <button class="modeBtn" onclick="selectMode('Perpendicularity', this)">⊥ Perpendicularity (ความตั้งฉาก)</button>
+    <button class="modeBtn" onclick="selectMode('Concentricity', this)">◎ Concentricity (ความร่วมศูนย์)</button>
+    <button class="modeBtn" onclick="selectMode('Circular Runout', this)">↗ Circular Runout (การส่ายวงกลม)</button>
+    <button class="modeBtn" onclick="selectMode('Total Runout', this)">⇉ Total Runout (การส่ายรวม)</button>
   </div>
 
   <script>
@@ -435,8 +448,201 @@
 
     const display = document.getElementById("display");
     const subDisplay = document.getElementById("subDisplay");
-    const hbPage = document.getElementById("hbPage");
+    const formulaHint = document.getElementById("formulaHint");
+    const dynamicFields = document.getElementById("dynamicFields");
     const modeBadge = document.getElementById("modeBadge");
+
+    // ตารางเทียบค่าความแข็งมาตรฐาน ASTM E140 (โดยประมาณสำหรับเหล็กกล้า)
+    // [HB, HV, HRC, HRA, HRB]
+    const HARDNESS_TABLE = [
+      [80,  80,  null, null, 41],
+      [90,  90,  null, null, 48],
+      [100, 100, null, null, 55],
+      [110, 110, null, null, 62],
+      [120, 120, null, null, 67],
+      [130, 130, null, null, 72],
+      [140, 140, null, null, 77],
+      [150, 150, null, null, 81],
+      [160, 160, null, null, 84],
+      [170, 170, null, null, 87],
+      [180, 180, null, null, 89],
+      [190, 190, null, null, 92],
+      [200, 200, null, null, 94],
+      [210, 210, null, null, 96],
+      [220, 220, null, null, 97],
+      [228, 240, 20.3, 60.7, 98],
+      [238, 250, 22.2, 61.6, 99.5],
+      [247, 260, 24.0, 62.4, 101],
+      [257, 270, 25.6, 63.1, null],
+      [266, 280, 27.1, 63.8, null],
+      [276, 290, 28.5, 64.5, null],
+      [285, 300, 29.8, 65.2, null],
+      [295, 310, 31.0, 65.8, null],
+      [304, 320, 32.2, 66.4, null],
+      [314, 330, 33.3, 67.0, null],
+      [323, 340, 34.4, 67.6, null],
+      [333, 350, 35.5, 68.1, null],
+      [342, 360, 36.6, 68.7, null],
+      [352, 370, 37.7, 69.2, null],
+      [361, 380, 38.8, 69.8, null],
+      [371, 390, 39.8, 70.3, null],
+      [380, 400, 40.8, 70.8, null],
+      [390, 410, 41.8, 71.4, null],
+      [399, 420, 42.7, 71.8, null],
+      [409, 430, 43.6, 72.3, null],
+      [418, 440, 44.5, 72.8, null],
+      [428, 450, 45.3, 73.3, null],
+      [437, 460, 46.1, 73.6, null],
+      [447, 470, 46.9, 74.1, null],
+      [456, 480, 47.7, 74.5, null],
+      [466, 490, 48.4, 74.9, null],
+      [475, 500, 49.1, 75.3, null],
+      [485, 510, 49.8, 75.7, null],
+      [494, 520, 50.5, 76.1, null],
+      [504, 530, 51.1, 76.4, null],
+      [513, 540, 51.7, 76.7, null],
+      [523, 550, 52.3, 77.0, null],
+      [532, 560, 53.0, 77.4, null],
+      [542, 570, 53.6, 77.8, null],
+      [551, 580, 54.1, 78.0, null],
+      [561, 590, 54.7, 78.4, null],
+      [570, 600, 55.2, 78.6, null],
+      [580, 610, 55.7, 78.9, null],
+      [589, 620, 56.3, 79.2, null],
+      [599, 630, 56.8, 79.5, null],
+      [608, 640, 57.3, 79.8, null],
+      [618, 650, 57.8, 80.0, null],
+      [627, 660, 58.3, 80.3, null],
+      [637, 670, 58.8, 80.6, null],
+      [646, 680, 59.2, 80.8, null],
+      [656, 690, 59.7, 81.1, null],
+      [665, 700, 60.1, 81.3, null],
+      [684, 720, 61.0, 81.8, null],
+      [703, 740, 61.8, 82.2, null],
+      [722, 760, 62.5, 82.6, null],
+      [741, 780, 63.3, 83.0, null],
+      [760, 800, 64.0, 83.4, null],
+      [779, 820, 64.7, 83.8, null],
+      [798, 840, 65.3, 84.1, null],
+      [817, 860, 65.9, 84.4, null],
+      [836, 880, 66.4, 84.7, null],
+      [855, 900, 67.0, 85.0, null],
+      [893, 940, 68.0, 85.6, null]
+    ];
+
+    const SCALE_INDEX = { HB: 0, HV: 1, HRC: 2, HRA: 3, HRB: 4 };
+
+    function convertHardnessValue(val, fromScale, toScale) {
+      if (fromScale === toScale) return val;
+      const fi = SCALE_INDEX[fromScale];
+      const ti = SCALE_INDEX[toScale];
+
+      // กรองเฉพาะแถวที่มีค่าทั้งต้นทางและปลายทาง
+      const validRows = HARDNESS_TABLE.filter(r => r[fi] !== null && r[ti] !== null);
+      if (!validRows.length) return null;
+
+      const minVal = validRows[0][fi];
+      const maxVal = validRows[validRows.length - 1][fi];
+      if (val < minVal || val > maxVal) return { outOfRange: true, min: minVal, max: maxVal };
+
+      for (let i = 0; i < validRows.length - 1; i++) {
+        const x0 = validRows[i][fi];
+        const x1 = validRows[i + 1][fi];
+        if (val >= x0 && val <= x1) {
+          const y0 = validRows[i][ti];
+          const y1 = validRows[i + 1][ti];
+          const ratio = (val - x0) / (x1 - x0);
+          return y0 + ratio * (y1 - y0);
+        }
+      }
+      return validRows[validRows.length - 1][ti];
+    }
+
+    const MODE_CONFIG = {
+      CALC: {
+        hint: "Standard Calculator",
+        cols: "",
+        fields: []
+      },
+      HB: {
+        hint: "HB = 2F / [πD(D - √(D² - X²))]",
+        cols: "cols-3",
+        fields: [
+          { id: "hbF", label: "Force (F)", placeholder: "เช่น 3000" },
+          { id: "hbD", label: "Ball Dia (D)", placeholder: "เช่น 10" },
+          { id: "hbX", label: "Indent (X)", placeholder: "เช่น 3.2" }
+        ]
+      },
+      CONVERT: {
+        hint: "ASTM E140 Hardness Conversion",
+        cols: "cols-2",
+        isConvert: true
+      },
+      Position: {
+        hint: "True Position = 2 × √(ΔX² + ΔY²)",
+        cols: "cols-2",
+        fields: [
+          { id: "posX", label: "ค่าเบี่ยงเบน ΔX", placeholder: "0.00" },
+          { id: "posY", label: "ค่าเบี่ยงเบน ΔY", placeholder: "0.00" }
+        ]
+      },
+      Circularity: {
+        hint: "Circularity = R_max − R_min (ความกลม)",
+        cols: "cols-2",
+        fields: [
+          { id: "cirMax", label: "รัศมีสูงสุด (R_max)", placeholder: "0.00" },
+          { id: "cirMin", label: "รัศมีต่ำสุด (R_min)", placeholder: "0.00" }
+        ]
+      },
+      Flatness: {
+        hint: "Flatness = Z_max − Z_min (ความเรียบระนาบ)",
+        cols: "cols-2",
+        fields: [
+          { id: "flatMax", label: "จุดสูงสุด (Z_max)", placeholder: "0.00" },
+          { id: "flatMin", label: "จุดต่ำสุด (Z_min)", placeholder: "0.00" }
+        ]
+      },
+      Parallelism: {
+        hint: "Parallelism = |H_max − H_min| เทียบ Datum",
+        cols: "cols-2",
+        fields: [
+          { id: "parMax", label: "ค่าสูงสุด (Max)", placeholder: "0.00" },
+          { id: "parMin", label: "ค่าต่ำสุด (Min)", placeholder: "0.00" }
+        ]
+      },
+      Perpendicularity: {
+        hint: "Perpendicularity = |Dev_max − Dev_min| เทียบฉาก",
+        cols: "cols-2",
+        fields: [
+          { id: "perpMax", label: "เบี่ยงเบนบวก (Max)", placeholder: "0.00" },
+          { id: "perpMin", label: "เบี่ยงเบนลบ (Min)", placeholder: "0.00" }
+        ]
+      },
+      Concentricity: {
+        hint: "Concentricity = 2 × √(ΔX² + ΔY²) ความร่วมศูนย์",
+        cols: "cols-2",
+        fields: [
+          { id: "conX", label: "เยื้องศูนย์ ΔX", placeholder: "0.00" },
+          { id: "conY", label: "เยื้องศูนย์ ΔY", placeholder: "0.00" }
+        ]
+      },
+      "Circular Runout": {
+        hint: "Circular Runout = TIR_max − TIR_min (1 รอบ)",
+        cols: "cols-2",
+        fields: [
+          { id: "crunMax", label: "เข็มสูงสุด (Max)", placeholder: "0.00" },
+          { id: "crunMin", label: "เข็มต่ำสุด (Min)", placeholder: "0.00" }
+        ]
+      },
+      "Total Runout": {
+        hint: "Total Runout = TIR_max − TIR_min (ตลอดแนว)",
+        cols: "cols-2",
+        fields: [
+          { id: "trunMax", label: "เข็มสูงสุดรวม (Max)", placeholder: "0.00" },
+          { id: "trunMin", label: "เข็มต่ำสุดรวม (Min)", placeholder: "0.00" }
+        ]
+      }
+    };
 
     document.addEventListener("click", (e) => {
       const panel = document.getElementById("modePanel");
@@ -447,7 +653,7 @@
     });
 
     function setInput(id) {
-      document.querySelectorAll(".hbInput").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".calcInput").forEach(el => el.classList.remove("active"));
       activeInput = id;
       const box = document.getElementById(id);
       if (box) box.classList.add("active");
@@ -465,6 +671,7 @@
     function input(v) {
       if (activeInput) {
         const box = document.getElementById(activeInput);
+        if (!box) return;
         if (v === "." && box.value.includes(".")) return;
         box.value += v;
         return;
@@ -476,7 +683,8 @@
     function clearAll() {
       subDisplay.textContent = "";
       if (activeInput) {
-        document.getElementById(activeInput).value = "";
+        document.querySelectorAll(".calcInput").forEach(el => el.value = "");
+        updateDisplay("0", false);
         return;
       }
       expression = "";
@@ -486,7 +694,7 @@
     function backspace() {
       if (activeInput) {
         const box = document.getElementById(activeInput);
-        box.value = box.value.slice(0, -1);
+        if (box) box.value = box.value.slice(0, -1);
         return;
       }
       expression = expression.slice(0, -1);
@@ -496,7 +704,7 @@
     function plusminus() {
       if (activeInput) {
         const box = document.getElementById(activeInput);
-        if (!box.value) return;
+        if (!box || !box.value) return;
         box.value = box.value.startsWith("-") ? box.value.slice(1) : "-" + box.value;
         return;
       }
@@ -519,29 +727,196 @@
       if (btnEl) btnEl.classList.add("activeMode");
 
       currentMode = mode;
-      modeBadge.textContent = mode;
+      modeBadge.textContent = mode === "CONVERT" ? "CONVERT" : mode;
       subDisplay.textContent = "";
+      activeInput = null;
 
-      if (mode === "HB") {
-        activeInput = null;
-        hbPage.classList.add("active");
-        updateDisplay("HB", false);
-        setInput("hbF");
-      } else {
-        activeInput = null;
-        hbPage.classList.remove("active");
+      const cfg = MODE_CONFIG[mode];
+      formulaHint.textContent = cfg.hint;
+
+      if (mode === "CALC") {
+        dynamicFields.className = "";
+        dynamicFields.innerHTML = "";
         update();
+        return;
+      }
+
+      if (cfg.isConvert) {
+        dynamicFields.className = "active cols-2";
+        dynamicFields.innerHTML = `
+          <div class="fieldBox">
+            <label for="convPair">คู่แปลงค่า</label>
+            <select class="calcSelect" id="convPair" onchange="onConvertPairChange()">
+              <option value="HB_HV">HB ➔ HV</option>
+              <option value="HV_HRC">HV ➔ HRC</option>
+              <option value="HRC_HRA">HRC ➔ HRA</option>
+              <option value="HRA_HRB">HRA ➔ HRB</option>
+              <option value="HRC_HB">HRC ➔ HB</option>
+              <option value="HV_HB">HV ➔ HB</option>
+              <option value="HRB_HB">HRB ➔ HB</option>
+            </select>
+          </div>
+          <div class="fieldBox">
+            <label for="convVal" id="convValLabel">ค่า HB</label>
+            <input class="calcInput" id="convVal" placeholder="กรอกตัวเลข" onclick="setInput('convVal')" readonly>
+          </div>
+        `;
+        updateDisplay("0.0 HV", false);
+        setInput("convVal");
+        return;
+      }
+
+      dynamicFields.className = `active ${cfg.cols}`;
+      dynamicFields.innerHTML = cfg.fields.map(f => `
+        <div class="fieldBox">
+          <label for="${f.id}">${f.label}</label>
+          <input class="calcInput" id="${f.id}" placeholder="${f.placeholder}" onclick="setInput('${f.id}')" readonly>
+        </div>
+      `).join("");
+
+      updateDisplay("0.000", false);
+      if (cfg.fields.length > 0) {
+        setInput(cfg.fields[0].id);
       }
     }
 
+    function onConvertPairChange() {
+      const pair = document.getElementById("convPair").value;
+      const [fromS, toS] = pair.split("_");
+      document.getElementById("convValLabel").textContent = `ค่า ${fromS}`;
+      updateDisplay(`0.0 ${toS}`, false);
+      subDisplay.textContent = "";
+      setInput("convVal");
+    }
+
+    function getVal(id) {
+      const el = document.getElementById(id);
+      return el && el.value !== "" ? parseFloat(el.value) : NaN;
+    }
+
+    function calculate() {
+      if (currentMode === "CALC") {
+        try {
+          const exp = expression.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
+          const result = Function(`"use strict"; return (${exp})`)();
+          if (!Number.isFinite(result)) throw new Error("Math");
+          const cleanResult = Number(result.toFixed(8));
+          subDisplay.textContent = `${expression} =`;
+          saveHistory(`${expression} = ${cleanResult}`);
+          expression = String(cleanResult);
+          update();
+        } catch {
+          updateDisplay("Error", true);
+          expression = "";
+        }
+        return;
+      }
+
+      if (currentMode === "HB") {
+        const F = getVal("hbF");
+        const D = getVal("hbD");
+        const X = getVal("hbX");
+        if (isNaN(F) || isNaN(D) || isNaN(X) || D <= 0 || F <= 0 || X <= 0 || X >= D) {
+          subDisplay.textContent = "กรอก F, D, X > 0 และ X < D";
+          updateDisplay("Input Error", true);
+          return;
+        }
+        const denom = Math.PI * D * (D - Math.sqrt(D * D - X * X));
+        const HB = (2 * F) / denom;
+        const out = `${HB.toFixed(1)} HB`;
+        subDisplay.textContent = `F=${F} | D=${D} | X=${X}`;
+        updateDisplay(out, false);
+        saveHistory(`HB (F=${F}, D=${D}, X=${X}) = ${out}`);
+        return;
+      }
+
+      if (currentMode === "CONVERT") {
+        const pair = document.getElementById("convPair").value;
+        const [fromS, toS] = pair.split("_");
+        const val = getVal("convVal");
+        if (isNaN(val)) {
+          subDisplay.textContent = `กรุณากรอกค่า ${fromS}`;
+          updateDisplay("Input Error", true);
+          return;
+        }
+        const res = convertHardnessValue(val, fromS, toS);
+        if (res === null) {
+          subDisplay.textContent = `ไม่สามารถเทียบค่า ${fromS} เป็น ${toS} ได้โดยตรง`;
+          updateDisplay("N/A", true);
+          return;
+        }
+        if (typeof res === "object" && res.outOfRange) {
+          subDisplay.textContent = `ช่วงที่รองรับสำหรับ ${fromS}➔${toS}: ${res.min} – ${res.max}`;
+          updateDisplay("Out of Range", true);
+          return;
+        }
+        const out = `${res.toFixed(1)} ${toS}`;
+        subDisplay.textContent = `${val} ${fromS} ➔ ${toS} (ASTM E140)`;
+        updateDisplay(out, false);
+        saveHistory(`แปลงค่า: ${val} ${fromS} = ${out}`);
+        return;
+      }
+
+      // โหมด GD&T ทั้ง 8 โหมด
+      if (currentMode === "Position") {
+        const dx = getVal("posX");
+        const dy = getVal("posY");
+        if (isNaN(dx) || isNaN(dy)) return showErr("กรอกค่า ΔX และ ΔY");
+        const tp = 2 * Math.sqrt(dx * dx + dy * dy);
+        const out = `⌀ ${tp.toFixed(4)}`;
+        subDisplay.textContent = `ΔX=${dx}, ΔY=${dy}`;
+        updateDisplay(out, false);
+        saveHistory(`Position (ΔX=${dx}, ΔY=${dy}) = ${out}`);
+        return;
+      }
+
+      if (currentMode === "Concentricity") {
+        const dx = getVal("conX");
+        const dy = getVal("conY");
+        if (isNaN(dx) || isNaN(dy)) return showErr("กรอกค่าเยื้องศูนย์ ΔX และ ΔY");
+        const con = 2 * Math.sqrt(dx * dx + dy * dy);
+        const out = `⌀ ${con.toFixed(4)}`;
+        subDisplay.textContent = `ΔX=${dx}, ΔY=${dy}`;
+        updateDisplay(out, false);
+        saveHistory(`Concentricity (ΔX=${dx}, ΔY=${dy}) = ${out}`);
+        return;
+      }
+
+      const rangeModes = {
+        Circularity: ["cirMax", "cirMin", "Circularity"],
+        Flatness: ["flatMax", "flatMin", "Flatness"],
+        Parallelism: ["parMax", "parMin", "Parallelism"],
+        Perpendicularity: ["perpMax", "perpMin", "Perpendicularity"],
+        "Circular Runout": ["crunMax", "crunMin", "Circular Runout"],
+        "Total Runout": ["trunMax", "trunMin", "Total Runout"]
+      };
+
+      if (rangeModes[currentMode]) {
+        const [idMax, idMin, label] = rangeModes[currentMode];
+        const vMax = getVal(idMax);
+        const vMin = getVal(idMin);
+        if (isNaN(vMax) || isNaN(vMin)) return showErr("กรอกค่า Max และ Min ให้ครบ");
+        const diff = Math.abs(vMax - vMin);
+        const out = `${diff.toFixed(4)} mm`;
+        subDisplay.textContent = `Max=${vMax}, Min=${vMin}`;
+        updateDisplay(out, false);
+        saveHistory(`${label} (${vMax} - ${vMin}) = ${out}`);
+      }
+    }
+
+    function showErr(msg) {
+      subDisplay.textContent = msg;
+      updateDisplay("Input Error", true);
+    }
+
     function getHistory() {
-      return JSON.parse(localStorage.getItem("calcHistory") || "[]");
+      return JSON.parse(localStorage.getItem("calcHistoryPro") || "[]");
     }
 
     function saveHistory(txt) {
       const data = getHistory();
       data.unshift(txt);
-      localStorage.setItem("calcHistory", JSON.stringify(data.slice(0, 50)));
+      localStorage.setItem("calcHistoryPro", JSON.stringify(data.slice(0, 60)));
       renderHistory();
     }
 
@@ -563,57 +938,13 @@
     function deleteHistory(index) {
       const data = getHistory();
       data.splice(index, 1);
-      localStorage.setItem("calcHistory", JSON.stringify(data));
+      localStorage.setItem("calcHistoryPro", JSON.stringify(data));
       renderHistory();
     }
 
     function clearHistory() {
-      localStorage.removeItem("calcHistory");
+      localStorage.removeItem("calcHistoryPro");
       renderHistory();
-    }
-
-    function calculate() {
-      if (currentMode === "HB") {
-        calculateHB();
-        return;
-      }
-      try {
-        const exp = expression.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
-        const result = Function(`"use strict"; return (${exp})`)();
-        if (!Number.isFinite(result)) throw new Error("Math");
-        const cleanResult = Number(result.toFixed(8));
-        subDisplay.textContent = `${expression} =`;
-        saveHistory(`${expression} = ${cleanResult}`);
-        expression = String(cleanResult);
-        update();
-      } catch {
-        updateDisplay("Error", true);
-        expression = "";
-      }
-    }
-
-    function calculateHB() {
-      const F = parseFloat(document.getElementById("hbF").value) || 0;
-      const D = parseFloat(document.getElementById("hbD").value) || 0;
-      const X = parseFloat(document.getElementById("hbX").value) || 0;
-
-      if (D <= 0 || F <= 0 || X <= 0 || X >= D) {
-        subDisplay.textContent = "ตรวจสอบค่า F, D, X (ต้องมากกว่า 0 และ X < D)";
-        updateDisplay("Input Error", true);
-        return;
-      }
-
-      const denom = Math.PI * D * (D - Math.sqrt(D * D - X * X));
-      if (denom <= 0) {
-        updateDisplay("Input Error", true);
-        return;
-      }
-
-      const HB = (2 * F) / denom;
-      const formatted = `${HB.toFixed(1)} HB`;
-      subDisplay.textContent = `F=${F} | D=${D} | X=${X}`;
-      updateDisplay(formatted, false);
-      saveHistory(`HB (F=${F}, D=${D}, X=${X}) = ${formatted}`);
     }
 
     renderHistory();
