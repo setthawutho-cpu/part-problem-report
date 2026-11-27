@@ -13,7 +13,7 @@
       --bg-outer: #05080f;
       --bg-app: #0d1320;
       --bg-card: rgba(255, 255, 255, 0.06);
-      --bg-card-active: rgba(255, 255, 255, 0.14);
+      --bg-card-active: rgba(255, 255, 255, 0.22);
       --border: rgba(255, 255, 255, 0.1);
       --text: #f8fafc;
       --muted: #94a3b8;
@@ -120,12 +120,14 @@
       display: grid;
       place-items: center;
       padding: 0;
-      transition: transform 0.12s ease, background 0.2s ease;
+      touch-action: manipulation;
+      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.12s ease, border-color 0.12s ease;
     }
 
-    .iconBtn:active {
-      transform: scale(0.92);
-      background: var(--bg-card-active);
+    .iconBtn:active, .iconBtn.pressed {
+      transform: scale(0.88);
+      background: rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.5);
     }
 
     .display {
@@ -255,12 +257,15 @@
     }
 
     .btn {
+      position: relative;
+      overflow: hidden;
       width: 100%;
       height: 100%;
       min-width: 0;
       min-height: 0;
       padding: 0;
       border: 1px solid var(--border);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.45);
       border-radius: clamp(12px, 3.2vw, 16px);
       font-size: clamp(18px, 5.2vw, 23px);
       font-weight: 500;
@@ -269,12 +274,17 @@
       cursor: pointer;
       display: grid;
       place-items: center;
-      transition: transform 0.1s ease, background 0.15s ease;
+      touch-action: manipulation;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: transform 0.07s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.1s ease, box-shadow 0.07s ease, border-color 0.1s ease;
     }
 
-    .btn:active {
-      transform: scale(0.93);
+    .btn:active, .btn.pressed {
+      transform: translateY(2px) scale(0.93);
       background: var(--bg-card-active);
+      border-color: rgba(255, 255, 255, 0.35);
+      border-bottom-width: 1px;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25), inset 0 2px 6px rgba(0, 0, 0, 0.45);
     }
 
     .gray {
@@ -284,12 +294,41 @@
       font-weight: 600;
     }
 
+    .gray:active, .gray.pressed {
+      background: rgba(148, 163, 184, 0.34);
+      border-color: rgba(226, 232, 240, 0.45);
+    }
+
     .orange {
       background: linear-gradient(135deg, #f59e0b, #ea580c);
       border: none;
+      border-bottom: 3px solid #9a3412;
       color: #fff;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .orange:active, .orange.pressed {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      border-bottom-width: 1px;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.65), inset 0 2px 6px rgba(124, 45, 18, 0.5);
+    }
+
+    /* Ripple effect when touched */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.38);
+      transform: scale(0);
+      animation: rippleAnim 0.42s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(2.8);
+        opacity: 0;
+      }
     }
 
     .history, .modePanel {
@@ -355,6 +394,13 @@
       font-weight: 600;
       cursor: pointer;
       flex-shrink: 0;
+      touch-action: manipulation;
+      transition: transform 0.08s ease, background 0.12s ease;
+    }
+
+    .delBtn:active, .delBtn.pressed {
+      transform: scale(0.9);
+      background: rgba(239, 68, 68, 0.35);
     }
 
     .modePanel {
@@ -398,7 +444,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.15s ease;
+      touch-action: manipulation;
+      transition: transform 0.08s ease, background 0.12s ease;
+    }
+
+    .modeBtn:active, .modeBtn.pressed {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .modeBtn.activeMode {
@@ -408,6 +460,7 @@
       font-weight: 600;
     }
 
+    /* ล็อกเต็มจอพอดี 100% บนมือถือ (แก้ปัญหาล้นจอบน OPPO / Android) */
     @media (max-width: 767px) {
       #app {
         position: fixed;
@@ -422,6 +475,7 @@
       }
     }
 
+    /* ปรับอัตโนมัติสำหรับหน้าจอที่มีความสูงน้อย (เช่น เปิดในแอปแชท หรือจอ Split Screen) */
     @media (max-height: 640px) {
       #app {
         padding: max(6px, env(safe-area-inset-top)) 10px max(8px, env(safe-area-inset-bottom));
@@ -671,12 +725,80 @@
     let expression = "";
     let activeInput = null;
     let currentMode = "CALC";
+    let audioCtx = null;
 
     const display = document.getElementById("display");
     const subDisplay = document.getElementById("subDisplay");
     const formulaTag = document.getElementById("formulaTag");
     const dynamicInputs = document.getElementById("dynamicInputs");
     const modeBadge = document.getElementById("modeBadge");
+
+    // ระบบเสียงคลิกเบาๆ + สั่น Haptic + แสงกระเพื่อมเมื่อสัมผัสปุ่ม
+    function playTapFeedback(isAction = false) {
+      // 1. สั่นเบาๆ บนมือถือ Android / OPPO
+      if (navigator.vibrate) {
+        try {
+          navigator.vibrate(isAction ? 18 : 10);
+        } catch {}
+      }
+
+      // 2. เสียงคลิกนุ่มๆ แบบปุ่มสัมผัส (ไม่ต้องโหลดไฟล์เสียงภายนอก)
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(isAction ? 520 : 680, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.025);
+
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.026);
+      } catch {}
+    }
+
+    function createRipple(btn, e) {
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const clientX = e.clientX !== undefined ? e.clientX : rect.left + rect.width / 2;
+      const clientY = e.clientY !== undefined ? e.clientY : rect.top + rect.height / 2;
+
+      const circle = document.createElement("span");
+      circle.className = "ripple";
+      circle.style.width = circle.style.height = `${size}px`;
+      circle.style.left = `${clientX - rect.left - size / 2}px`;
+      circle.style.top = `${clientY - rect.top - size / 2}px`;
+
+      btn.appendChild(circle);
+      setTimeout(() => circle.remove(), 450);
+    }
+
+    // ดักจับการสัมผัสปุ่มทุกปุ่มในแอปให้ยุบตัวทันทีที่นิ้วแตะ (PointerDown)
+    document.addEventListener("pointerdown", (e) => {
+      const btn = e.target.closest(".btn, .iconBtn, .modeBtn, .delBtn");
+      if (!btn) return;
+      btn.classList.add("pressed");
+      const isAction = btn.classList.contains("orange") || btn.classList.contains("gray");
+      playTapFeedback(isAction);
+      if (btn.classList.contains("btn")) {
+        createRipple(btn, e);
+      }
+    });
+
+    ["pointerup", "pointercancel", "pointerleave"].forEach(evt => {
+      document.addEventListener(evt, (e) => {
+        const btn = e.target.closest(".btn, .iconBtn, .modeBtn, .delBtn");
+        if (btn) btn.classList.remove("pressed");
+      }, true);
+    });
 
     document.addEventListener("click", (e) => {
       const panel = document.getElementById("modePanel");
