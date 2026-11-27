@@ -12,9 +12,9 @@
     :root {
       --bg-outer: #05080f;
       --bg-app: #0d1320;
-      --bg-card: rgba(255, 255, 255, 0.06);
-      --bg-card-active: rgba(255, 255, 255, 0.22);
-      --border: rgba(255, 255, 255, 0.1);
+      --bg-card: rgba(255, 255, 255, 0.065);
+      --bg-card-active: rgba(255, 255, 255, 0.16);
+      --border: rgba(255, 255, 255, 0.11);
       --text: #f8fafc;
       --muted: #94a3b8;
       --accent: #f59e0b;
@@ -52,7 +52,7 @@
       display: flex;
       flex-direction: column;
       padding: max(8px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom));
-      gap: clamp(6px, 1.2dvh, 10px);
+      gap: clamp(6px, 1.1dvh, 10px);
       background:
         radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.14), transparent 38%),
         radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.14), transparent 42%),
@@ -112,6 +112,7 @@
       width: clamp(34px, 9vw, 40px);
       height: clamp(34px, 9vw, 40px);
       border: 1px solid var(--border);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.45);
       border-radius: 12px;
       background: var(--bg-card);
       color: var(--text);
@@ -120,27 +121,29 @@
       display: grid;
       place-items: center;
       padding: 0;
+      position: relative;
+      overflow: hidden;
       touch-action: manipulation;
-      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.12s ease, border-color 0.12s ease;
+      transition: transform 0.06s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.12s ease, border-bottom-width 0.06s ease;
     }
 
-    .iconBtn:active, .iconBtn.pressed {
-      transform: scale(0.88);
-      background: rgba(56, 189, 248, 0.22);
-      border-color: rgba(56, 189, 248, 0.5);
+    .iconBtn.pressed, .iconBtn:active {
+      transform: translateY(2px) scale(0.95);
+      border-bottom-width: 1px;
+      background: var(--bg-card-active);
     }
 
     .display {
       flex: 0 0 auto;
-      min-height: clamp(92px, 18dvh, 155px);
+      min-height: clamp(92px, 17dvh, 155px);
       background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: clamp(8px, 1.5dvh, 12px) 12px;
+      padding: clamp(8px, 1.4dvh, 12px) 12px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      gap: clamp(4px, 0.8dvh, 6px);
+      gap: clamp(4px, 0.7dvh, 6px);
       overflow: hidden;
       min-width: 0;
     }
@@ -173,7 +176,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 0 1 auto;
-      max-width: 55%;
+      max-width: 58%;
     }
 
     #display {
@@ -195,7 +198,7 @@
 
     .dynamicInputs {
       display: none;
-      gap: 6px;
+      gap: 5px;
       width: 100%;
       min-width: 0;
     }
@@ -207,6 +210,7 @@
     .cols-1 { grid-template-columns: minmax(0, 1fr); }
     .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .fieldBox {
       display: flex;
@@ -215,8 +219,12 @@
       min-width: 0;
     }
 
+    .fieldBox.span-2 {
+      grid-column: span 2;
+    }
+
     .fieldBox label {
-      font-size: clamp(10px, 2.5vw, 11px);
+      font-size: clamp(9.5px, 2.4vw, 10.5px);
       color: var(--muted);
       padding-left: 2px;
       font-weight: 600;
@@ -228,22 +236,22 @@
     .calcInput, .calcSelect {
       width: 100%;
       min-width: 0;
-      height: clamp(30px, 4.4dvh, 36px);
+      height: clamp(29px, 4.2dvh, 35px);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 9px;
       background: rgba(10, 15, 28, 0.92);
       color: var(--text);
-      font-size: clamp(12px, 3.4vw, 14px);
+      font-size: clamp(12px, 3.3vw, 14px);
       font-weight: 600;
       padding: 0 7px;
       outline: none;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
 
     .calcInput.active {
       border-color: var(--accent);
       box-shadow: 0 0 0 2px var(--accent-glow);
-      background: rgba(245, 158, 11, 0.14);
+      background: rgba(245, 158, 11, 0.16);
     }
 
     .pad {
@@ -256,77 +264,80 @@
       gap: clamp(5px, 1.1dvh, 9px);
     }
 
+    /* Tactile 3D Button Styling */
     .btn {
-      position: relative;
-      overflow: hidden;
       width: 100%;
       height: 100%;
       min-width: 0;
       min-height: 0;
       padding: 0;
-      border: 1px solid var(--border);
-      border-bottom: 3px solid rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 3.5px solid rgba(0, 0, 0, 0.52);
       border-radius: clamp(12px, 3.2vw, 16px);
       font-size: clamp(18px, 5.2vw, 23px);
       font-weight: 500;
-      background: var(--bg-card);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
       color: var(--text);
       cursor: pointer;
       display: grid;
       place-items: center;
+      position: relative;
+      overflow: hidden;
       touch-action: manipulation;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      transition: transform 0.07s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.1s ease, box-shadow 0.07s ease, border-color 0.1s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: transform 0.05s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  box-shadow 0.05s ease,
+                  border-bottom-width 0.05s ease,
+                  background 0.12s ease;
     }
 
-    .btn:active, .btn.pressed {
-      transform: translateY(2px) scale(0.93);
-      background: var(--bg-card-active);
-      border-color: rgba(255, 255, 255, 0.35);
+    .btn.pressed, .btn:active {
+      transform: translateY(2.5px) scale(0.955);
       border-bottom-width: 1px;
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25), inset 0 2px 6px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 2px 5px rgba(0, 0, 0, 0.35);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .gray {
-      background: rgba(148, 163, 184, 0.16);
+      background: linear-gradient(180deg, rgba(148, 163, 184, 0.24), rgba(148, 163, 184, 0.14));
+      border-bottom-color: rgba(0, 0, 0, 0.58);
       color: #e2e8f0;
       font-size: clamp(15px, 4.2vw, 18px);
       font-weight: 600;
     }
 
-    .gray:active, .gray.pressed {
-      background: rgba(148, 163, 184, 0.34);
-      border-color: rgba(226, 232, 240, 0.45);
+    .gray.pressed, .gray:active {
+      background: rgba(148, 163, 184, 0.32);
     }
 
     .orange {
-      background: linear-gradient(135deg, #f59e0b, #ea580c);
-      border: none;
-      border-bottom: 3px solid #9a3412;
+      background: linear-gradient(180deg, #f59e0b, #d97706);
+      border: 1px solid rgba(253, 230, 138, 0.35);
+      border-bottom: 3.5px solid #92400e;
       color: #fff;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    .orange:active, .orange.pressed {
-      background: linear-gradient(135deg, #fbbf24, #f97316);
+    .orange.pressed, .orange:active {
+      background: linear-gradient(180deg, #fbbf24, #ea580c);
       border-bottom-width: 1px;
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.65), inset 0 2px 6px rgba(124, 45, 18, 0.5);
+      box-shadow: 0 1px 4px rgba(217, 119, 6, 0.4), inset 0 2px 6px rgba(120, 53, 15, 0.45);
     }
 
-    /* Ripple effect when touched */
+    /* Ripple Wave Animation */
     .ripple {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.38);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0) 70%);
       transform: scale(0);
-      animation: rippleAnim 0.42s ease-out forwards;
+      animation: rippleAnim 0.38s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
       pointer-events: none;
     }
 
     @keyframes rippleAnim {
       to {
-        transform: scale(2.8);
+        transform: scale(2.4);
         opacity: 0;
       }
     }
@@ -394,19 +405,18 @@
       font-weight: 600;
       cursor: pointer;
       flex-shrink: 0;
-      touch-action: manipulation;
-      transition: transform 0.08s ease, background 0.12s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .delBtn:active, .delBtn.pressed {
-      transform: scale(0.9);
-      background: rgba(239, 68, 68, 0.35);
+    .delBtn:active {
+      transform: scale(0.94);
     }
 
     .modePanel {
       left: auto;
       right: 0;
-      width: min(295px, 84vw);
+      width: min(305px, 85vw);
       transform: translateX(100%);
       padding: max(16px, env(safe-area-inset-top)) 14px max(24px, env(safe-area-inset-bottom));
       border-left: 1px solid var(--border);
@@ -444,13 +454,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      touch-action: manipulation;
-      transition: transform 0.08s ease, background 0.12s ease;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.08s ease, background 0.15s ease;
     }
 
-    .modeBtn:active, .modeBtn.pressed {
-      transform: scale(0.96);
-      background: rgba(255, 255, 255, 0.15);
+    .modeBtn:active {
+      transform: scale(0.97);
     }
 
     .modeBtn.activeMode {
@@ -460,7 +470,6 @@
       font-weight: 600;
     }
 
-    /* ล็อกเต็มจอพอดี 100% บนมือถือ (แก้ปัญหาล้นจอบน OPPO / Android) */
     @media (max-width: 767px) {
       #app {
         position: fixed;
@@ -475,7 +484,6 @@
       }
     }
 
-    /* ปรับอัตโนมัติสำหรับหน้าจอที่มีความสูงน้อย (เช่น เปิดในแอปแชท หรือจอ Split Screen) */
     @media (max-height: 640px) {
       #app {
         padding: max(6px, env(safe-area-inset-top)) 10px max(8px, env(safe-area-inset-bottom));
@@ -490,7 +498,7 @@
         border-radius: 14px;
       }
       .calcInput, .calcSelect {
-        height: 28px;
+        height: 27px;
         font-size: 12px;
       }
       .pad {
@@ -511,6 +519,7 @@
         <span class="badge" id="modeBadge">Standard Calc</span>
       </div>
       <div class="topActions">
+        <button class="iconBtn" id="soundBtn" onclick="toggleSound()" title="เสียงกดปุ่ม">🔊</button>
         <button class="iconBtn" onclick="toggleHistory()" title="ประวัติ">🕒</button>
         <button class="iconBtn" onclick="toggleMode()" title="เลือกโหมด">☰</button>
       </div>
@@ -570,6 +579,10 @@
     <button class="modeBtn" onclick="selectMode('HB', this)">⚙️ HB Hardness</button>
     <button class="modeBtn" onclick="selectMode('CONVERT', this)">🔄 แปลงค่าความแข็ง (HB/HV/HRC/HRA/HRB)</button>
 
+    <div class="modeGroupTitle">ความลึกผิวชุบแข็ง (Effective Case Depth)</div>
+    <button class="modeBtn" onclick="selectMode('ECD_INDUCTION', this)">⚡ Effective Case Depth: Induction</button>
+    <button class="modeBtn" onclick="selectMode('ECD_CARB', this)">🔥 Effective Case Depth: Carburizing</button>
+
     <div class="modeGroupTitle">งานวัดละเอียด GD&amp;T</div>
     <button class="modeBtn" onclick="selectMode('Position', this)">⌖ Position</button>
     <button class="modeBtn" onclick="selectMode('Circularity', this)">○ Circularity</button>
@@ -582,6 +595,105 @@
   </div>
 
   <script>
+    /* ================= Tactile Feedback Engine (Vibration + Sound + Ripple) ================= */
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("soundBtn");
+      btn.textContent = soundEnabled ? "🔊" : "🔇";
+      if (soundEnabled) playTactileClick("action");
+    }
+
+    function playTactileClick(type = "num") {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (!audioCtx) return;
+        if (audioCtx.state === "suspended") audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        if (type === "eq") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(780, now + 0.035);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+        } else if (type === "action") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(420, now);
+          osc.frequency.exponentialRampToValueAtTime(220, now + 0.03);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        } else {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(280, now + 0.024);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+        }
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } catch {}
+    }
+
+    function triggerHaptic(ms = 12) {
+      try {
+        if (navigator.vibrate) navigator.vibrate(ms);
+      } catch {}
+    }
+
+    function spawnRipple(el, clientX, clientY) {
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      ripple.style.width = ripple.style.height = `${size}px`;
+      const x = (clientX ? clientX - rect.left : rect.width / 2) - size / 2;
+      const y = (clientY ? clientY - rect.top : rect.height / 2) - size / 2;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      el.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 400);
+    }
+
+    document.addEventListener("pointerdown", (e) => {
+      const target = e.target.closest(".btn, .iconBtn, .modeBtn, .delBtn");
+      if (!target) return;
+
+      target.classList.add("pressed");
+      spawnRipple(target, e.clientX, e.clientY);
+
+      if (target.classList.contains("orange")) {
+        triggerHaptic(16);
+        playTactileClick(target.textContent.trim() === "=" ? "eq" : "action");
+      } else if (target.classList.contains("gray")) {
+        triggerHaptic(14);
+        playTactileClick("action");
+      } else {
+        triggerHaptic(10);
+        playTactileClick("num");
+      }
+    });
+
+    const clearPressed = () => {
+      document.querySelectorAll(".pressed").forEach(el => el.classList.remove("pressed"));
+    };
+    document.addEventListener("pointerup", clearPressed);
+    document.addEventListener("pointercancel", clearPressed);
+    document.addEventListener("pointerleave", clearPressed);
+
+    /* ================= Hardness & GD&T Calculation Engine ================= */
     const ASTM_TABLE = [
       { hb: 653, hv: 690, hrc: 60.0, hra: 81.2, hrb: null },
       { hb: 615, hv: 649, hrc: 58.0, hra: 80.1, hrb: null },
@@ -647,6 +759,18 @@
         formula: "ASTM E140 Standard Conversion",
         cols: 2,
         isConvert: true
+      },
+      ECD_INDUCTION: {
+        badge: "⚡ ECD Induction",
+        formula: "ECD = d1 + (d2 - d1) × (H1 - H_lim) / (H1 - H2)",
+        isECD: true,
+        ecdType: "INDUCTION"
+      },
+      ECD_CARB: {
+        badge: "🔥 ECD Carburizing",
+        formula: "CHD = d1 + (d2 - d1) × (H1 - H_lim) / (H1 - H2)",
+        isECD: true,
+        ecdType: "CARBURIZING"
       },
       Position: {
         badge: "⌖ Position",
@@ -725,80 +849,12 @@
     let expression = "";
     let activeInput = null;
     let currentMode = "CALC";
-    let audioCtx = null;
 
     const display = document.getElementById("display");
     const subDisplay = document.getElementById("subDisplay");
     const formulaTag = document.getElementById("formulaTag");
     const dynamicInputs = document.getElementById("dynamicInputs");
     const modeBadge = document.getElementById("modeBadge");
-
-    // ระบบเสียงคลิกเบาๆ + สั่น Haptic + แสงกระเพื่อมเมื่อสัมผัสปุ่ม
-    function playTapFeedback(isAction = false) {
-      // 1. สั่นเบาๆ บนมือถือ Android / OPPO
-      if (navigator.vibrate) {
-        try {
-          navigator.vibrate(isAction ? 18 : 10);
-        } catch {}
-      }
-
-      // 2. เสียงคลิกนุ่มๆ แบบปุ่มสัมผัส (ไม่ต้องโหลดไฟล์เสียงภายนอก)
-      try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        if (!audioCtx) audioCtx = new AudioContext();
-        if (audioCtx.state === "suspended") audioCtx.resume();
-
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(isAction ? 520 : 680, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.025);
-
-        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.026);
-      } catch {}
-    }
-
-    function createRipple(btn, e) {
-      const rect = btn.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const clientX = e.clientX !== undefined ? e.clientX : rect.left + rect.width / 2;
-      const clientY = e.clientY !== undefined ? e.clientY : rect.top + rect.height / 2;
-
-      const circle = document.createElement("span");
-      circle.className = "ripple";
-      circle.style.width = circle.style.height = `${size}px`;
-      circle.style.left = `${clientX - rect.left - size / 2}px`;
-      circle.style.top = `${clientY - rect.top - size / 2}px`;
-
-      btn.appendChild(circle);
-      setTimeout(() => circle.remove(), 450);
-    }
-
-    // ดักจับการสัมผัสปุ่มทุกปุ่มในแอปให้ยุบตัวทันทีที่นิ้วแตะ (PointerDown)
-    document.addEventListener("pointerdown", (e) => {
-      const btn = e.target.closest(".btn, .iconBtn, .modeBtn, .delBtn");
-      if (!btn) return;
-      btn.classList.add("pressed");
-      const isAction = btn.classList.contains("orange") || btn.classList.contains("gray");
-      playTapFeedback(isAction);
-      if (btn.classList.contains("btn")) {
-        createRipple(btn, e);
-      }
-    });
-
-    ["pointerup", "pointercancel", "pointerleave"].forEach(evt => {
-      document.addEventListener(evt, (e) => {
-        const btn = e.target.closest(".btn, .iconBtn, .modeBtn, .delBtn");
-        if (btn) btn.classList.remove("pressed");
-      }, true);
-    });
 
     document.addEventListener("click", (e) => {
       const panel = document.getElementById("modePanel");
@@ -840,9 +896,14 @@
     function clearAll() {
       subDisplay.textContent = "";
       if (currentMode !== "CALC") {
-        document.querySelectorAll(".calcInput").forEach(el => el.value = "");
+        document.querySelectorAll(".calcInput").forEach(el => {
+          if (el.id !== "ecdLimit") el.value = "";
+        });
         if (currentMode === "CONVERT") {
           updateConvertPlaceholder();
+        } else if (currentMode === "ECD_INDUCTION" || currentMode === "ECD_CARB") {
+          updateECDModeUI();
+          updateDisplay("0.000 mm", false);
         } else {
           updateDisplay("0", false);
         }
@@ -894,6 +955,70 @@
       updateDisplay(`0 ${cfg.labelTo}`, false);
     }
 
+    function updateECDModeUI() {
+      const presetEl = document.getElementById("ecdPreset");
+      const limitBox = document.getElementById("ecdLimit");
+      const limitLabel = document.getElementById("ecdLimitLabel");
+      const d1Label = document.getElementById("ecdD1Label");
+      const h1Label = document.getElementById("ecdH1Label");
+      const d2Label = document.getElementById("ecdD2Label");
+      const h2Label = document.getElementById("ecdH2Label");
+      if (!presetEl || !limitBox) return;
+
+      const val = presetEl.value;
+      if (val === "ISO3754_80") {
+        limitLabel.textContent = "ความแข็งผิว (HV_surf)";
+        limitBox.placeholder = "เช่น 700 (คิด 80%)";
+        if (limitBox.value === "550" || limitBox.value === "513" || limitBox.value === "50") limitBox.value = "";
+        d1Label.textContent = "ระยะ d1 (mm)";
+        h1Label.textContent = "ความแข็ง H1 (HV)";
+        d2Label.textContent = "ระยะ d2 (mm)";
+        h2Label.textContent = "ความแข็ง H2 (HV)";
+        formulaTag.textContent = "ISO 3754: H_lim = 0.80 × HV_surf";
+      } else if (val === "ISO2639_550") {
+        limitLabel.textContent = "เกณฑ์ตัดสิน (HV)";
+        limitBox.value = "550";
+        d1Label.textContent = "ระยะ d1 (mm)";
+        h1Label.textContent = "ความแข็ง H1 (HV)";
+        d2Label.textContent = "ระยะ d2 (mm)";
+        h2Label.textContent = "ความแข็ง H2 (HV)";
+        formulaTag.textContent = "ISO 2639 / ISO 18203 (550 HV)";
+      } else if (val === "SAEJ423_513") {
+        limitLabel.textContent = "เกณฑ์ตัดสิน (HV)";
+        limitBox.value = "513";
+        d1Label.textContent = "ระยะ d1 (mm)";
+        h1Label.textContent = "ความแข็ง H1 (HV)";
+        d2Label.textContent = "ระยะ d2 (mm)";
+        h2Label.textContent = "ความแข็ง H2 (HV)";
+        formulaTag.textContent = "SAE J423 (50 HRC ≈ 513 HV)";
+      } else if (val === "SAEJ423_50HRC") {
+        limitLabel.textContent = "เกณฑ์ตัดสิน (HRC)";
+        limitBox.value = "50";
+        d1Label.textContent = "ระยะ d1 (mm)";
+        h1Label.textContent = "ความแข็ง H1 (HRC)";
+        d2Label.textContent = "ระยะ d2 (mm)";
+        h2Label.textContent = "ความแข็ง H2 (HRC)";
+        formulaTag.textContent = "SAE J423 (50 HRC Cutoff)";
+      } else if (val === "HARRIS_CARB") {
+        limitLabel.textContent = "ค่าคงที่ K (mm/√hr)";
+        limitBox.value = "0.55";
+        d1Label.textContent = "เวลาอบชุบ t (ชม.)";
+        h1Label.textContent = "อุณหภูมิ (°C) [ใส่ 925]";
+        d2Label.textContent = "— ไม่ต้องกรอก (ใส่ 0) —";
+        h2Label.textContent = "— ไม่ต้องกรอก (ใส่ 0) —";
+        formulaTag.textContent = "Harris Formula: ECD = K × √t";
+      } else {
+        limitLabel.textContent = "เกณฑ์ตัดสิน (H_lim)";
+        limitBox.placeholder = "เช่น 550 หรือ 50";
+        d1Label.textContent = "ระยะ d1 (mm)";
+        h1Label.textContent = "ความแข็ง H1 (≥ H_lim)";
+        d2Label.textContent = "ระยะ d2 (mm)";
+        h2Label.textContent = "ความแข็ง H2 (≤ H_lim)";
+        formulaTag.textContent = "ECD = d1 + (d2 - d1)×(H1 - H_lim)/(H1 - H2)";
+      }
+      setInput("ecdD1");
+    }
+
     function selectMode(mode, btnEl) {
       document.getElementById("modePanel").classList.remove("show");
       document.querySelectorAll(".modeBtn").forEach(b => b.classList.remove("activeMode"));
@@ -939,6 +1064,54 @@
         return;
       }
 
+      if (cfg.isECD) {
+        const isInd = cfg.ecdType === "INDUCTION";
+        dynamicInputs.className = "dynamicInputs active cols-2";
+        dynamicInputs.innerHTML = `
+          <div class="fieldBox">
+            <label for="ecdPreset">มาตรฐาน / วิธีคำนวณ</label>
+            <select class="calcSelect" id="ecdPreset" onchange="updateECDModeUI()">
+              ${isInd ? `
+                <option value="SAEJ423_50HRC">SAE J423 (50 HRC)</option>
+                <option value="SAEJ423_513">SAE J423 (513 HV)</option>
+                <option value="ISO3754_80">ISO 3754 (0.8 × HVผิว)</option>
+                <option value="CUSTOM">กำหนดเกณฑ์เอง (H_lim)</option>
+              ` : `
+                <option value="ISO2639_550">ISO 2639 (550 HV)</option>
+                <option value="SAEJ423_513">SAE J423 (513 HV)</option>
+                <option value="SAEJ423_50HRC">SAE J423 (50 HRC)</option>
+                <option value="CUSTOM">กำหนดเกณฑ์เอง (H_lim)</option>
+                <option value="HARRIS_CARB">ประมาณจากเวลา (K√t)</option>
+              `}
+            </select>
+          </div>
+          <div class="fieldBox">
+            <label id="ecdLimitLabel" for="ecdLimit">เกณฑ์ตัดสิน (H_lim)</label>
+            <input class="calcInput" id="ecdLimit" placeholder="0" onclick="setInput('ecdLimit')" readonly>
+          </div>
+          <div class="fieldBox">
+            <label id="ecdD1Label" for="ecdD1">ระยะ d1 (mm)</label>
+            <input class="calcInput" id="ecdD1" placeholder="0.00" onclick="setInput('ecdD1')" readonly>
+          </div>
+          <div class="fieldBox">
+            <label id="ecdH1Label" for="ecdH1">ความแข็ง H1 (≥ H_lim)</label>
+            <input class="calcInput" id="ecdH1" placeholder="0" onclick="setInput('ecdH1')" readonly>
+          </div>
+          <div class="fieldBox">
+            <label id="ecdD2Label" for="ecdD2">ระยะ d2 (mm)</label>
+            <input class="calcInput" id="ecdD2" placeholder="0.00" onclick="setInput('ecdD2')" readonly>
+          </div>
+          <div class="fieldBox">
+            <label id="ecdH2Label" for="ecdH2">ความแข็ง H2 (≤ H_lim)</label>
+            <input class="calcInput" id="ecdH2" placeholder="0" onclick="setInput('ecdH2')" readonly>
+          </div>
+        `;
+        updateECDModeUI();
+        updateDisplay("0.000 mm", false);
+        setInput("ecdD1");
+        return;
+      }
+
       dynamicInputs.className = `dynamicInputs active cols-${cfg.cols}`;
       dynamicInputs.innerHTML = cfg.fields.map(f => `
         <div class="fieldBox">
@@ -949,7 +1122,7 @@
 
       updateDisplay("0", false);
       if (cfg.fields.length > 0) {
-        setInput(cfg.fields[0].id);
+        setInput(cfg.fields.id);
       }
     }
 
@@ -1007,7 +1180,7 @@
         .sort((a, b) => a[fromKey] - b[fromKey]);
 
       if (!validRows.length) return null;
-      const minVal = validRows[0][fromKey];
+      const minVal = validRows[fromKey];
       const maxVal = validRows[validRows.length - 1][fromKey];
 
       if (val < minVal || val > maxVal) {
@@ -1086,6 +1259,58 @@
         subDisplay.textContent = `${val} ${cfg.labelFrom} ➔`;
         updateDisplay(formatted, false);
         saveHistory(`แปลงค่า: ${val} ${cfg.labelFrom} = ${formatted}`);
+        return;
+      }
+
+      if (currentMode === "ECD_INDUCTION" || currentMode === "ECD_CARB") {
+        const preset = document.getElementById("ecdPreset").value;
+        const limitInput = parseFloat(document.getElementById("ecdLimit").value);
+        const d1 = parseFloat(document.getElementById("ecdD1").value);
+        const h1 = parseFloat(document.getElementById("ecdH1").value);
+        const d2 = parseFloat(document.getElementById("ecdD2").value);
+        const h2 = parseFloat(document.getElementById("ecdH2").value);
+
+        const modeName = currentMode === "ECD_INDUCTION" ? "ECD Induction" : "ECD Carburizing";
+
+        if (preset === "HARRIS_CARB") {
+          if (isNaN(limitInput) || isNaN(d1) || limitInput <= 0 || d1 < 0) {
+            subDisplay.textContent = "กรอกค่า K และเวลาอบชุบ t (ชม.)";
+            updateDisplay("Input Error", true);
+            return;
+          }
+          const ecd = limitInput * Math.sqrt(d1);
+          const res = `${ecd.toFixed(3)} mm`;
+          subDisplay.textContent = `K=${limitInput}, t=${d1} hr`;
+          updateDisplay(res, false);
+          saveHistory(`${modeName} (K=${limitInput}, t=${d1}hr) = ${res}`);
+          return;
+        }
+
+        if (isNaN(limitInput) || isNaN(d1) || isNaN(h1) || isNaN(d2) || isNaN(h2)) {
+          subDisplay.textContent = "กรอกข้อมูลให้ครบทั้ง 5 ช่อง";
+          updateDisplay("Input Error", true);
+          return;
+        }
+
+        const hLim = preset === "ISO3754_80" ? 0.80 * limitInput : limitInput;
+
+        if (h1 === h2) {
+          subDisplay.textContent = "ค่า H1 และ H2 ต้องไม่เท่ากัน";
+          updateDisplay("Math Error", true);
+          return;
+        }
+
+        if (!((h1 >= hLim && hLim >= h2) || (h1 <= hLim && hLim <= h2))) {
+          subDisplay.textContent = `H_lim (${hLim.toFixed(1)}) ต้องอยู่ระหว่าง H1 และ H2`;
+          updateDisplay("Range Error", true);
+          return;
+        }
+
+        const ecd = d1 + ((d2 - d1) * (h1 - hLim)) / (h1 - h2);
+        const res = `${ecd.toFixed(3)} mm`;
+        subDisplay.textContent = `H_lim=${hLim.toFixed(1)} | (${d1}→${d2}mm)`;
+        updateDisplay(res, false);
+        saveHistory(`${modeName} [H_lim=${hLim.toFixed(1)}] (${d1}mm:${h1}, ${d2}mm:${h2}) = ${res}`);
         return;
       }
 
